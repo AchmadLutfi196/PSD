@@ -4,7 +4,7 @@ Halo 👋, perkenalkan saya:
 
 - **Nama**  : Achmad Lutfi Madhani  
 - **NIM**   : 230411100059  
-- **Email** : achmadlutfi59@gmail.com  
+- **Email** : achmadlutfi149@gmail.com  
 
 Saya saat ini menempuh pendidikan di **Universitas Trunojoyo Madura**,  
 program studi **Teknik Informatika**.  
