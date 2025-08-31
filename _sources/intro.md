@@ -11,7 +11,6 @@ program studi **Teknik Informatika**.
  
 
 📌 **Tujuan saya membuat Jupyter Book ini** adalah sebagai wadah dokumentasi  
-dan publikasi proyek-proyek **Sains Data**, sehingga dapat dipelajari kembali  
-serta bermanfaat bagi orang lain.  
+dan publikasi proyek-proyek Mata Kuliah **Proyek Sains Data**.
 
 ```{tableofcontents}
