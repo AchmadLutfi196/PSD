@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Data Exploration &#8212; My sample book</title>
+    <title>Eksplorasi Data Iris Dataset &#8212; My sample book</title>
   
   
   
@@ -179,9 +179,9 @@
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="BusinessProblem.html">Business Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="BusinessProblem.html">Business Problem Analysis – Dataset Iris</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DataUnderstanding.html">Data Understanding</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Data Exploration</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Eksplorasi Data Iris Dataset</a></li>
 </ul>
 
     </div>
@@ -367,7 +367,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Data Exploration</h1>
+    <h1>Eksplorasi Data Iris Dataset</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -377,7 +377,13 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-dataset-dari-kagglehub">1. Import Dataset dari KaggleHub</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nilai-minimum-dan-maksimum-dari-setiap-kolom">1. Nilai Minimum dan Maksimum dari Setiap Kolom</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rata-rata-dari-setiap-kolom">2. Rata-rata dari Setiap Kolom</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rata-rata-per-kelas">3. Rata-rata per Kelas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jumlah-setiap-kelas-grafik-batang">4. Jumlah Setiap Kelas (Grafik Batang)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-tambahan-perbandingan-rata-rata-per-kolom">5. Visualisasi Tambahan: Perbandingan Rata-rata per Kolom</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#heatmap-rata-rata-per-kelas">6. Heatmap Rata-rata per Kelas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ringkasan-hasil-eksplorasi">7. Ringkasan Hasil Eksplorasi</a></li>
 </ul>
             </nav>
         </div>
@@ -389,64 +395,65 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="data-exploration">
-<h1>Data Exploration<a class="headerlink" href="#data-exploration" title="Link to this heading">#</a></h1>
-<section id="import-dataset-dari-kagglehub">
-<h2>1. Import Dataset dari KaggleHub<a class="headerlink" href="#import-dataset-dari-kagglehub" title="Link to this heading">#</a></h2>
+  <section class="tex2jax_ignore mathjax_ignore" id="eksplorasi-data-iris-dataset">
+<h1>Eksplorasi Data Iris Dataset<a class="headerlink" href="#eksplorasi-data-iris-dataset" title="Link to this heading">#</a></h1>
+<p>Notebook ini berisi analisis eksplorasi data untuk dataset Iris yang mencakup:</p>
+<ul class="simple">
+<li><p>Nilai minimum dan maksimum dari setiap kolom</p></li>
+<li><p>Rata-rata dari setiap kolom</p></li>
+<li><p>Jumlah setiap kelas yang ditampilkan dalam grafik batang</p></li>
+</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">pip</span> install kagglehub[pandas-datasets]
-
-<span class="c1"># Import library</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">kagglehub</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">kagglehub</span><span class="w"> </span><span class="kn">import</span> <span class="n">KaggleDatasetAdapter</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import library yang diperlukan</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
 
-<span class="c1"># Load dataset dari Kaggle</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">kagglehub</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span>
-    <span class="n">KaggleDatasetAdapter</span><span class="o">.</span><span class="n">PANDAS</span><span class="p">,</span>
-    <span class="s2">&quot;lainguyn123/student-performance-factors&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;StudentPerformanceFactors.csv&quot;</span>  
-<span class="p">)</span>
+<span class="c1"># Set style untuk visualisasi</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;default&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_palette</span><span class="p">(</span><span class="s2">&quot;husl&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load data dari file CSV</span>
+<span class="c1"># Menggunakan delimiter &#39;;&#39; dan mengganti koma dengan titik untuk decimal</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data_iris.csv&#39;</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;;&#39;</span><span class="p">)</span>
 
-<span class="c1"># Lihat 5 baris pertama</span>
+<span class="c1"># Tampilkan informasi dasar tentang dataset</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Informasi Dataset:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Jumlah baris: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Jumlah kolom: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Nama kolom:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Informasi Dataset:
+Jumlah baris: 150
+Jumlah kolom: 6
+
+Nama kolom:
+[&#39;id&#39;, &#39;Class&#39;, &#39;sepal length&#39;, &#39;sepal width&#39;, &#39;petal length&#39;, &#39;petal width&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Tampilkan 5 baris pertama data</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;5 Baris Pertama Data:&quot;</span><span class="p">)</span>
 <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: kagglehub[pandas-datasets] in /usr/local/python/3.12.1/lib/python3.12/site-packages (0.3.13)
-Requirement already satisfied: packaging in /home/codespace/.local/lib/python3.12/site-packages (from kagglehub[pandas-datasets]) (25.0)
-Requirement already satisfied: pyyaml in /home/codespace/.local/lib/python3.12/site-packages (from kagglehub[pandas-datasets]) (6.0.2)
-Requirement already satisfied: requests in /home/codespace/.local/lib/python3.12/site-packages (from kagglehub[pandas-datasets]) (2.32.4)
-Requirement already satisfied: tqdm in /usr/local/python/3.12.1/lib/python3.12/site-packages (from kagglehub[pandas-datasets]) (4.67.1)
-Requirement already satisfied: pandas in /home/codespace/.local/lib/python3.12/site-packages (from kagglehub[pandas-datasets]) (2.3.1)
-Requirement already satisfied: numpy&gt;=1.26.0 in /home/codespace/.local/lib/python3.12/site-packages (from pandas-&gt;kagglehub[pandas-datasets]) (2.3.1)
-Requirement already satisfied: python-dateutil&gt;=2.8.2 in /home/codespace/.local/lib/python3.12/site-packages (from pandas-&gt;kagglehub[pandas-datasets]) (2.9.0.post0)
-Requirement already satisfied: pytz&gt;=2020.1 in /home/codespace/.local/lib/python3.12/site-packages (from pandas-&gt;kagglehub[pandas-datasets]) (2025.2)
-Requirement already satisfied: tzdata&gt;=2022.7 in /home/codespace/.local/lib/python3.12/site-packages (from pandas-&gt;kagglehub[pandas-datasets]) (2025.2)
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: six&gt;=1.5 in /home/codespace/.local/lib/python3.12/site-packages (from python-dateutil&gt;=2.8.2-&gt;pandas-&gt;kagglehub[pandas-datasets]) (1.17.0)
-Requirement already satisfied: charset_normalizer&lt;4,&gt;=2 in /home/codespace/.local/lib/python3.12/site-packages (from requests-&gt;kagglehub[pandas-datasets]) (3.4.2)
-Requirement already satisfied: idna&lt;4,&gt;=2.5 in /home/codespace/.local/lib/python3.12/site-packages (from requests-&gt;kagglehub[pandas-datasets]) (3.10)
-Requirement already satisfied: urllib3&lt;3,&gt;=1.21.1 in /home/codespace/.local/lib/python3.12/site-packages (from requests-&gt;kagglehub[pandas-datasets]) (2.5.0)
-Requirement already satisfied: certifi&gt;=2017.4.17 in /home/codespace/.local/lib/python3.12/site-packages (from requests-&gt;kagglehub[pandas-datasets]) (2025.7.9)
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold">[</span><span class=" -Color -Color-Blue">notice</span><span class=" -Color -Color-Bold">]</span> A new release of pip is available: <span class=" -Color -Color-Red">25.1.1</span> -&gt; <span class=" -Color -Color-Green">25.2</span>
-<span class=" -Color -Color-Bold">[</span><span class=" -Color -Color-Blue">notice</span><span class=" -Color -Color-Bold">]</span> To update, run: <span class=" -Color -Color-Green">python3 -m pip install --upgrade pip</span>
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Note: you may need to restart the kernel to use updated packages.
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/usr/local/python/3.12.1/lib/python3.12/site-packages/tqdm/auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
-  from .autonotebook import tqdm as notebook_tqdm
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_35113/214524819.py:9: DeprecationWarning: Use dataset_load() instead of load_dataset(). load_dataset() will be removed in a future version.
-  df = kagglehub.load_dataset(
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5 Baris Pertama Data:
 </pre></div>
 </div>
 <div class="output text_html"><div>
@@ -467,143 +474,59 @@ Requirement already satisfied: certifi&gt;=2017.4.17 in /home/codespace/.local/l
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>Hours_Studied</th>
-      <th>Attendance</th>
-      <th>Parental_Involvement</th>
-      <th>Access_to_Resources</th>
-      <th>Extracurricular_Activities</th>
-      <th>Sleep_Hours</th>
-      <th>Previous_Scores</th>
-      <th>Motivation_Level</th>
-      <th>Internet_Access</th>
-      <th>Tutoring_Sessions</th>
-      <th>Family_Income</th>
-      <th>Teacher_Quality</th>
-      <th>School_Type</th>
-      <th>Peer_Influence</th>
-      <th>Physical_Activity</th>
-      <th>Learning_Disabilities</th>
-      <th>Parental_Education_Level</th>
-      <th>Distance_from_Home</th>
-      <th>Gender</th>
-      <th>Exam_Score</th>
+      <th>id</th>
+      <th>Class</th>
+      <th>sepal length</th>
+      <th>sepal width</th>
+      <th>petal length</th>
+      <th>petal width</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>23</td>
-      <td>84</td>
-      <td>Low</td>
-      <td>High</td>
-      <td>No</td>
-      <td>7</td>
-      <td>73</td>
-      <td>Low</td>
-      <td>Yes</td>
-      <td>0</td>
-      <td>Low</td>
-      <td>Medium</td>
-      <td>Public</td>
-      <td>Positive</td>
-      <td>3</td>
-      <td>No</td>
-      <td>High School</td>
-      <td>Near</td>
-      <td>Male</td>
-      <td>67</td>
+      <td>1</td>
+      <td>Iris-setosa</td>
+      <td>5,1</td>
+      <td>3,5</td>
+      <td>1,4</td>
+      <td>0,2</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>19</td>
-      <td>64</td>
-      <td>Low</td>
-      <td>Medium</td>
-      <td>No</td>
-      <td>8</td>
-      <td>59</td>
-      <td>Low</td>
-      <td>Yes</td>
       <td>2</td>
-      <td>Medium</td>
-      <td>Medium</td>
-      <td>Public</td>
-      <td>Negative</td>
-      <td>4</td>
-      <td>No</td>
-      <td>College</td>
-      <td>Moderate</td>
-      <td>Female</td>
-      <td>61</td>
+      <td>Iris-setosa</td>
+      <td>4,9</td>
+      <td>3</td>
+      <td>1,4</td>
+      <td>0,2</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>24</td>
-      <td>98</td>
-      <td>Medium</td>
-      <td>Medium</td>
-      <td>Yes</td>
-      <td>7</td>
-      <td>91</td>
-      <td>Medium</td>
-      <td>Yes</td>
-      <td>2</td>
-      <td>Medium</td>
-      <td>Medium</td>
-      <td>Public</td>
-      <td>Neutral</td>
-      <td>4</td>
-      <td>No</td>
-      <td>Postgraduate</td>
-      <td>Near</td>
-      <td>Male</td>
-      <td>74</td>
+      <td>3</td>
+      <td>Iris-setosa</td>
+      <td>4,7</td>
+      <td>3,2</td>
+      <td>1,3</td>
+      <td>0,2</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>29</td>
-      <td>89</td>
-      <td>Low</td>
-      <td>Medium</td>
-      <td>Yes</td>
-      <td>8</td>
-      <td>98</td>
-      <td>Medium</td>
-      <td>Yes</td>
-      <td>1</td>
-      <td>Medium</td>
-      <td>Medium</td>
-      <td>Public</td>
-      <td>Negative</td>
       <td>4</td>
-      <td>No</td>
-      <td>High School</td>
-      <td>Moderate</td>
-      <td>Male</td>
-      <td>71</td>
+      <td>Iris-setosa</td>
+      <td>4,6</td>
+      <td>3,1</td>
+      <td>1,5</td>
+      <td>0,2</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>19</td>
-      <td>92</td>
-      <td>Medium</td>
-      <td>Medium</td>
-      <td>Yes</td>
-      <td>6</td>
-      <td>65</td>
-      <td>Medium</td>
-      <td>Yes</td>
-      <td>3</td>
-      <td>Medium</td>
-      <td>High</td>
-      <td>Public</td>
-      <td>Neutral</td>
-      <td>4</td>
-      <td>No</td>
-      <td>College</td>
-      <td>Near</td>
-      <td>Female</td>
-      <td>70</td>
+      <td>5</td>
+      <td>Iris-setosa</td>
+      <td>5</td>
+      <td>3,6</td>
+      <td>1,4</td>
+      <td>0,2</td>
     </tr>
   </tbody>
 </table>
@@ -611,42 +534,21 @@ Requirement already satisfied: certifi&gt;=2017.4.17 in /home/codespace/.local/l
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Info umum</span>
-<span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Konversi kolom numerik yang menggunakan koma sebagai decimal separator</span>
+<span class="n">numeric_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sepal length&#39;</span><span class="p">,</span> <span class="s1">&#39;sepal width&#39;</span><span class="p">,</span> <span class="s1">&#39;petal length&#39;</span><span class="p">,</span> <span class="s1">&#39;petal width&#39;</span><span class="p">]</span>
 
-<span class="c1"># Statistik deskriptif</span>
-<span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">numeric_columns</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="c1"># Konversi koma ke titik untuk decimal</span>
+        <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Data setelah konversi:&quot;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
-RangeIndex: 6607 entries, 0 to 6606
-Data columns (total 20 columns):
- #   Column                      Non-Null Count  Dtype 
----  ------                      --------------  ----- 
- 0   Hours_Studied               6607 non-null   int64 
- 1   Attendance                  6607 non-null   int64 
- 2   Parental_Involvement        6607 non-null   object
- 3   Access_to_Resources         6607 non-null   object
- 4   Extracurricular_Activities  6607 non-null   object
- 5   Sleep_Hours                 6607 non-null   int64 
- 6   Previous_Scores             6607 non-null   int64 
- 7   Motivation_Level            6607 non-null   object
- 8   Internet_Access             6607 non-null   object
- 9   Tutoring_Sessions           6607 non-null   int64 
- 10  Family_Income               6607 non-null   object
- 11  Teacher_Quality             6529 non-null   object
- 12  School_Type                 6607 non-null   object
- 13  Peer_Influence              6607 non-null   object
- 14  Physical_Activity           6607 non-null   int64 
- 15  Learning_Disabilities       6607 non-null   object
- 16  Parental_Education_Level    6517 non-null   object
- 17  Distance_from_Home          6540 non-null   object
- 18  Gender                      6607 non-null   object
- 19  Exam_Score                  6607 non-null   int64 
-dtypes: int64(7), object(13)
-memory usage: 1.0+ MB
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Data setelah konversi:
 </pre></div>
 </div>
 <div class="output text_html"><div>
@@ -667,281 +569,59 @@ memory usage: 1.0+ MB
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>Hours_Studied</th>
-      <th>Attendance</th>
-      <th>Parental_Involvement</th>
-      <th>Access_to_Resources</th>
-      <th>Extracurricular_Activities</th>
-      <th>Sleep_Hours</th>
-      <th>Previous_Scores</th>
-      <th>Motivation_Level</th>
-      <th>Internet_Access</th>
-      <th>Tutoring_Sessions</th>
-      <th>Family_Income</th>
-      <th>Teacher_Quality</th>
-      <th>School_Type</th>
-      <th>Peer_Influence</th>
-      <th>Physical_Activity</th>
-      <th>Learning_Disabilities</th>
-      <th>Parental_Education_Level</th>
-      <th>Distance_from_Home</th>
-      <th>Gender</th>
-      <th>Exam_Score</th>
+      <th>id</th>
+      <th>Class</th>
+      <th>sepal length</th>
+      <th>sepal width</th>
+      <th>petal length</th>
+      <th>petal width</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>count</th>
-      <td>6607.000000</td>
-      <td>6607.000000</td>
-      <td>6607</td>
-      <td>6607</td>
-      <td>6607</td>
-      <td>6607.00000</td>
-      <td>6607.000000</td>
-      <td>6607</td>
-      <td>6607</td>
-      <td>6607.000000</td>
-      <td>6607</td>
-      <td>6529</td>
-      <td>6607</td>
-      <td>6607</td>
-      <td>6607.000000</td>
-      <td>6607</td>
-      <td>6517</td>
-      <td>6540</td>
-      <td>6607</td>
-      <td>6607.000000</td>
+      <th>0</th>
+      <td>1</td>
+      <td>Iris-setosa</td>
+      <td>5.1</td>
+      <td>3.5</td>
+      <td>1.4</td>
+      <td>0.2</td>
     </tr>
     <tr>
-      <th>unique</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>3</td>
-      <td>3</td>
+      <th>1</th>
       <td>2</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <td>Iris-setosa</td>
+      <td>4.9</td>
+      <td>3.0</td>
+      <td>1.4</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>2</th>
       <td>3</td>
-      <td>2</td>
-      <td>NaN</td>
-      <td>3</td>
-      <td>3</td>
-      <td>2</td>
-      <td>3</td>
-      <td>NaN</td>
-      <td>2</td>
-      <td>3</td>
-      <td>3</td>
-      <td>2</td>
-      <td>NaN</td>
+      <td>Iris-setosa</td>
+      <td>4.7</td>
+      <td>3.2</td>
+      <td>1.3</td>
+      <td>0.2</td>
     </tr>
     <tr>
-      <th>top</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Medium</td>
-      <td>Medium</td>
-      <td>Yes</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Medium</td>
-      <td>Yes</td>
-      <td>NaN</td>
-      <td>Low</td>
-      <td>Medium</td>
-      <td>Public</td>
-      <td>Positive</td>
-      <td>NaN</td>
-      <td>No</td>
-      <td>High School</td>
-      <td>Near</td>
-      <td>Male</td>
-      <td>NaN</td>
+      <th>3</th>
+      <td>4</td>
+      <td>Iris-setosa</td>
+      <td>4.6</td>
+      <td>3.1</td>
+      <td>1.5</td>
+      <td>0.2</td>
     </tr>
     <tr>
-      <th>freq</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>3362</td>
-      <td>3319</td>
-      <td>3938</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>3351</td>
-      <td>6108</td>
-      <td>NaN</td>
-      <td>2672</td>
-      <td>3925</td>
-      <td>4598</td>
-      <td>2638</td>
-      <td>NaN</td>
-      <td>5912</td>
-      <td>3223</td>
-      <td>3884</td>
-      <td>3814</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>mean</th>
-      <td>19.975329</td>
-      <td>79.977448</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>7.02906</td>
-      <td>75.070531</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>1.493719</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>2.967610</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>67.235659</td>
-    </tr>
-    <tr>
-      <th>std</th>
-      <td>5.990594</td>
-      <td>11.547475</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>1.46812</td>
-      <td>14.399784</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>1.230570</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>1.031231</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>3.890456</td>
-    </tr>
-    <tr>
-      <th>min</th>
-      <td>1.000000</td>
-      <td>60.000000</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>4.00000</td>
-      <td>50.000000</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>0.000000</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>0.000000</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>55.000000</td>
-    </tr>
-    <tr>
-      <th>25%</th>
-      <td>16.000000</td>
-      <td>70.000000</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>6.00000</td>
-      <td>63.000000</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>1.000000</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>2.000000</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>65.000000</td>
-    </tr>
-    <tr>
-      <th>50%</th>
-      <td>20.000000</td>
-      <td>80.000000</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>7.00000</td>
-      <td>75.000000</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>1.000000</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>3.000000</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>67.000000</td>
-    </tr>
-    <tr>
-      <th>75%</th>
-      <td>24.000000</td>
-      <td>90.000000</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>8.00000</td>
-      <td>88.000000</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>2.000000</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>4.000000</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>69.000000</td>
-    </tr>
-    <tr>
-      <th>max</th>
-      <td>44.000000</td>
-      <td>100.000000</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>10.00000</td>
-      <td>100.000000</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>8.000000</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>6.000000</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>101.000000</td>
+      <th>4</th>
+      <td>5</td>
+      <td>Iris-setosa</td>
+      <td>5.0</td>
+      <td>3.6</td>
+      <td>1.4</td>
+      <td>0.2</td>
     </tr>
   </tbody>
 </table>
@@ -949,78 +629,482 @@ memory usage: 1.0+ MB
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Informasi tipe data</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tipe Data:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">dtypes</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Informasi statistik deskriptif:&quot;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Hours_Studied                  0
-Attendance                     0
-Parental_Involvement           0
-Access_to_Resources            0
-Extracurricular_Activities     0
-Sleep_Hours                    0
-Previous_Scores                0
-Motivation_Level               0
-Internet_Access                0
-Tutoring_Sessions              0
-Family_Income                  0
-Teacher_Quality               78
-School_Type                    0
-Peer_Influence                 0
-Physical_Activity              0
-Learning_Disabilities          0
-Parental_Education_Level      90
-Distance_from_Home            67
-Gender                         0
-Exam_Score                     0
-dtype: int64
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tipe Data:
+id                int64
+Class            object
+sepal length    float64
+sepal width     float64
+petal length    float64
+petal width     float64
+dtype: object
 
-<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Exam_Score&quot;</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Distribusi Nilai Ujian&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Score&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Jumlah Siswa&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+Informasi statistik deskriptif:
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/4a66e1f4fbfd72d6cdf6b25b2429164dbdf25e7fa300cf77e5be5f1488178f01.png" src="_images/4a66e1f4fbfd72d6cdf6b25b2429164dbdf25e7fa300cf77e5be5f1488178f01.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;Parental_Involvement&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Exam_Score&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Hubungan Keterlibatan Orang Tua vs Nilai Ujian&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>sepal length</th>
+      <th>sepal width</th>
+      <th>petal length</th>
+      <th>petal width</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>150.000000</td>
+      <td>150.000000</td>
+      <td>150.000000</td>
+      <td>150.000000</td>
+      <td>150.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>75.500000</td>
+      <td>5.843333</td>
+      <td>3.054000</td>
+      <td>3.758667</td>
+      <td>1.198667</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>43.445368</td>
+      <td>0.828066</td>
+      <td>0.433594</td>
+      <td>1.764420</td>
+      <td>0.763161</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>1.000000</td>
+      <td>4.300000</td>
+      <td>2.000000</td>
+      <td>1.000000</td>
+      <td>0.100000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>38.250000</td>
+      <td>5.100000</td>
+      <td>2.800000</td>
+      <td>1.600000</td>
+      <td>0.300000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>75.500000</td>
+      <td>5.800000</td>
+      <td>3.000000</td>
+      <td>4.350000</td>
+      <td>1.300000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>112.750000</td>
+      <td>6.400000</td>
+      <td>3.300000</td>
+      <td>5.100000</td>
+      <td>1.800000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>150.000000</td>
+      <td>7.900000</td>
+      <td>4.400000</td>
+      <td>6.900000</td>
+      <td>2.500000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<section id="nilai-minimum-dan-maksimum-dari-setiap-kolom">
+<h2>1. Nilai Minimum dan Maksimum dari Setiap Kolom<a class="headerlink" href="#nilai-minimum-dan-maksimum-dari-setiap-kolom" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Hitung min dan max untuk setiap kolom numerik</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;NILAI MINIMUM DAN MAKSIMUM SETIAP KOLOM&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">50</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">numeric_columns</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">min_val</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+        <span class="n">max_val</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">col</span><span class="si">:</span><span class="s2">15</span><span class="si">}</span><span class="s2">: Min = </span><span class="si">{</span><span class="n">min_val</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, Max = </span><span class="si">{</span><span class="n">max_val</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Buat DataFrame untuk visualisasi yang lebih rapi</span>
+<span class="n">min_max_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;Kolom&#39;</span><span class="p">:</span> <span class="n">numeric_columns</span><span class="p">,</span>
+    <span class="s1">&#39;Minimum&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">numeric_columns</span> <span class="k">if</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">],</span>
+    <span class="s1">&#39;Maksimum&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">numeric_columns</span> <span class="k">if</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+<span class="p">})</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Tabel Min-Max:&quot;</span><span class="p">)</span>
+<span class="n">min_max_df</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/76d5fc94d1e0bfe2f7c8d765b29444a2621ce30b00885984ff2c7c76ca75bfc1.png" src="_images/76d5fc94d1e0bfe2f7c8d765b29444a2621ce30b00885984ff2c7c76ca75bfc1.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NILAI MINIMUM DAN MAKSIMUM SETIAP KOLOM
+==================================================
+sepal length   : Min = 4.30, Max = 7.90
+sepal width    : Min = 2.00, Max = 4.40
+petal length   : Min = 1.00, Max = 6.90
+petal width    : Min = 0.10, Max = 2.50
+
+Tabel Min-Max:
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Kolom</th>
+      <th>Minimum</th>
+      <th>Maksimum</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>sepal length</td>
+      <td>4.3</td>
+      <td>7.9</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>sepal width</td>
+      <td>2.0</td>
+      <td>4.4</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>petal length</td>
+      <td>1.0</td>
+      <td>6.9</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>petal width</td>
+      <td>0.1</td>
+      <td>2.5</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="rata-rata-dari-setiap-kolom">
+<h2>2. Rata-rata dari Setiap Kolom<a class="headerlink" href="#rata-rata-dari-setiap-kolom" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Hitung rata-rata untuk setiap kolom numerik</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;RATA-RATA SETIAP KOLOM&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">30</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">numeric_columns</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">mean_val</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">col</span><span class="si">:</span><span class="s2">15</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">mean_val</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Buat DataFrame untuk rata-rata</span>
+<span class="n">mean_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;Kolom&#39;</span><span class="p">:</span> <span class="n">numeric_columns</span><span class="p">,</span>
+    <span class="s1">&#39;Rata-rata&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">numeric_columns</span> <span class="k">if</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+<span class="p">})</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Tabel Rata-rata:&quot;</span><span class="p">)</span>
+<span class="n">mean_df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>RATA-RATA SETIAP KOLOM
+==============================
+sepal length   : 5.84
+sepal width    : 3.05
+petal length   : 3.76
+petal width    : 1.20
+
+Tabel Rata-rata:
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Kolom</th>
+      <th>Rata-rata</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>sepal length</td>
+      <td>5.843333</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>sepal width</td>
+      <td>3.054000</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>petal length</td>
+      <td>3.758667</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>petal width</td>
+      <td>1.198667</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="rata-rata-per-kelas">
+<h2>3. Rata-rata per Kelas<a class="headerlink" href="#rata-rata-per-kelas" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Hitung rata-rata setiap kolom berdasarkan kelas</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;RATA-RATA SETIAP KOLOM BERDASARKAN KELAS&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">45</span><span class="p">)</span>
+
+<span class="n">class_means</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Class&#39;</span><span class="p">)[</span><span class="n">numeric_columns</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">class_means</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>RATA-RATA SETIAP KOLOM BERDASARKAN KELAS
+=============================================
+                 sepal length  sepal width  petal length  petal width
+Class                                                                
+Iris-setosa              5.01         3.42          1.46         0.24
+Iris-versicolor          5.94         2.77          4.26         1.33
+Iris-virginica           6.59         2.97          5.55         2.03
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="jumlah-setiap-kelas-grafik-batang">
+<h2>4. Jumlah Setiap Kelas (Grafik Batang)<a class="headerlink" href="#jumlah-setiap-kelas-grafik-batang" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Hitung jumlah setiap kelas</span>
+<span class="n">class_counts</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Class&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;JUMLAH SETIAP KELAS:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">20</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">class_name</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">class_counts</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">class_name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2"> sampel&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Total sampel: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>JUMLAH SETIAP KELAS:
+====================
+Iris-setosa: 50 sampel
+Iris-versicolor: 50 sampel
+Iris-virginica: 50 sampel
+
+Total sampel: 150
+</pre></div>
+</div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">corr</span><span class="p">(</span><span class="n">numeric_only</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;coolwarm&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Heatmap Korelasi&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Buat grafik batang untuk jumlah setiap kelas</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># Grafik batang dengan warna yang berbeda</span>
+<span class="n">bars</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">class_counts</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">class_counts</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> 
+               <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;#FF6B6B&#39;</span><span class="p">,</span> <span class="s1">&#39;#4ECDC4&#39;</span><span class="p">,</span> <span class="s1">&#39;#45B7D1&#39;</span><span class="p">],</span> 
+               <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.2</span><span class="p">)</span>
+
+<span class="c1"># Tambahkan nilai di atas setiap batang</span>
+<span class="k">for</span> <span class="n">bar</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">bars</span><span class="p">,</span> <span class="n">class_counts</span><span class="o">.</span><span class="n">values</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">bar</span><span class="o">.</span><span class="n">get_x</span><span class="p">()</span> <span class="o">+</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">,</span> 
+             <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">),</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Distribusi Jumlah Setiap Kelas Iris&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Kelas Iris&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Jumlah Sampel&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/e75f4b6927ea56ff6cdfd6f3465244e6580170670cedd60c728a5dad6115d7e6.png" src="_images/e75f4b6927ea56ff6cdfd6f3465244e6580170670cedd60c728a5dad6115d7e6.png" />
+<img alt="_images/d6b0bedff6499ff59d9a5aeb17cae8d43cda023a57d1d3a9d4fd827edefacf44.png" src="_images/d6b0bedff6499ff59d9a5aeb17cae8d43cda023a57d1d3a9d4fd827edefacf44.png" />
+</div>
+</div>
+</section>
+<section id="visualisasi-tambahan-perbandingan-rata-rata-per-kolom">
+<h2>5. Visualisasi Tambahan: Perbandingan Rata-rata per Kolom<a class="headerlink" href="#visualisasi-tambahan-perbandingan-rata-rata-per-kolom" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Grafik batang untuk rata-rata setiap kolom</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="n">means</span> <span class="o">=</span> <span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">numeric_columns</span> <span class="k">if</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+<span class="n">bars</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">numeric_columns</span><span class="p">)),</span> <span class="n">means</span><span class="p">,</span> 
+               <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;#FFB6C1&#39;</span><span class="p">,</span> <span class="s1">&#39;#98FB98&#39;</span><span class="p">,</span> <span class="s1">&#39;#87CEEB&#39;</span><span class="p">,</span> <span class="s1">&#39;#DDA0DD&#39;</span><span class="p">],</span>
+               <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.2</span><span class="p">)</span>
+
+<span class="c1"># Tambahkan nilai di atas setiap batang</span>
+<span class="k">for</span> <span class="n">bar</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">bars</span><span class="p">,</span> <span class="n">means</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">bar</span><span class="o">.</span><span class="n">get_x</span><span class="p">()</span> <span class="o">+</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span> <span class="o">+</span> <span class="mf">0.05</span><span class="p">,</span> 
+             <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">value</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Rata-rata Setiap Kolom dalam Dataset Iris&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Kolom&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Nilai Rata-rata&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">numeric_columns</span><span class="p">)),</span> <span class="n">numeric_columns</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/385fbaa96e50ac4c5c41cb577cdab295dafc941d192b133d212937f65f8c05a8.png" src="_images/385fbaa96e50ac4c5c41cb577cdab295dafc941d192b133d212937f65f8c05a8.png" />
+</div>
+</div>
+</section>
+<section id="heatmap-rata-rata-per-kelas">
+<h2>6. Heatmap Rata-rata per Kelas<a class="headerlink" href="#heatmap-rata-rata-per-kelas" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Buat heatmap untuk rata-rata setiap fitur per kelas</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">class_means</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;.2f&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;YlOrRd&#39;</span><span class="p">,</span> 
+            <span class="n">cbar_kws</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="s1">&#39;Nilai Rata-rata&#39;</span><span class="p">},</span>
+            <span class="n">linewidths</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Heatmap Rata-rata Setiap Fitur per Kelas Iris&#39;</span><span class="p">,</span> 
+          <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Kelas Iris&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Fitur&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/a669c7c7c8d47e2207ff68e11379867d3df75eed2b28e331c85ebe6decae4d2f.png" src="_images/a669c7c7c8d47e2207ff68e11379867d3df75eed2b28e331c85ebe6decae4d2f.png" />
+</div>
+</div>
+</section>
+<section id="ringkasan-hasil-eksplorasi">
+<h2>7. Ringkasan Hasil Eksplorasi<a class="headerlink" href="#ringkasan-hasil-eksplorasi" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;RINGKASAN HASIL EKSPLORASI DATA IRIS&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">40</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total sampel: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Jumlah fitur numerik: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">numeric_columns</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Jumlah kelas: </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Class&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Kelas: </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Class&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Distribusi kelas:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">class_name</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">class_counts</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">percentage</span> <span class="o">=</span> <span class="p">(</span><span class="n">count</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">))</span> <span class="o">*</span> <span class="mi">100</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">class_name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2"> sampel (</span><span class="si">{</span><span class="n">percentage</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%)&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Rentang nilai setiap fitur:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">numeric_columns</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">min_val</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+        <span class="n">max_val</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+        <span class="n">range_val</span> <span class="o">=</span> <span class="n">max_val</span> <span class="o">-</span> <span class="n">min_val</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">min_val</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">max_val</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> (rentang: </span><span class="si">{</span><span class="n">range_val</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>RINGKASAN HASIL EKSPLORASI DATA IRIS
+========================================
+Total sampel: 150
+Jumlah fitur numerik: 4
+Jumlah kelas: 3
+Kelas: Iris-setosa, Iris-versicolor, Iris-virginica
+
+Distribusi kelas:
+  Iris-setosa: 50 sampel (33.3%)
+  Iris-versicolor: 50 sampel (33.3%)
+  Iris-virginica: 50 sampel (33.3%)
+
+Rentang nilai setiap fitur:
+  sepal length: 4.30 - 7.90 (rentang: 3.60)
+  sepal width: 2.00 - 4.40 (rentang: 2.40)
+  petal length: 1.00 - 6.90 (rentang: 5.90)
+  petal width: 0.10 - 2.50 (rentang: 2.40)
+</pre></div>
+</div>
 </div>
 </div>
 </section>
@@ -1081,7 +1165,13 @@ dtype: int64
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-dataset-dari-kagglehub">1. Import Dataset dari KaggleHub</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nilai-minimum-dan-maksimum-dari-setiap-kolom">1. Nilai Minimum dan Maksimum dari Setiap Kolom</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rata-rata-dari-setiap-kolom">2. Rata-rata dari Setiap Kolom</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rata-rata-per-kelas">3. Rata-rata per Kelas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jumlah-setiap-kelas-grafik-batang">4. Jumlah Setiap Kelas (Grafik Batang)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-tambahan-perbandingan-rata-rata-per-kolom">5. Visualisasi Tambahan: Perbandingan Rata-rata per Kolom</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#heatmap-rata-rata-per-kelas">6. Heatmap Rata-rata per Kelas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ringkasan-hasil-eksplorasi">7. Ringkasan Hasil Eksplorasi</a></li>
 </ul>
   </nav></div>
 

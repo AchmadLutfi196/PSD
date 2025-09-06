@@ -1,23 +1,35 @@
-# Business Problem
+# Business Problem Analysis – Dataset Iris
 
-## Latar Belakang
-Pendidikan merupakan salah satu faktor penting dalam pembangunan suatu bangsa.  
-Namun, performa akademik siswa sering dipengaruhi oleh berbagai faktor seperti waktu belajar, jumlah ketidakhadiran, kesehatan, serta kondisi sosial ekonomi.  
+## 1. Latar Belakang
+Dalam industri seperti **florikultura, pertanian, dan riset biologi**, klasifikasi bunga menjadi hal penting.  
+Perusahaan penjual bibit bunga ingin mengidentifikasi jenis iris (Setosa, Versicolor, Virginica) berdasarkan ukuran daun kelopak (**sepal**) dan mahkota (**petal**).  
 
-Kegagalan dalam memahami faktor-faktor ini dapat menyebabkan siswa memiliki performa rendah, bahkan berisiko putus sekolah.  
-Oleh karena itu, analisis data diperlukan untuk mengetahui faktor apa saja yang paling berpengaruh terhadap hasil akhir belajar siswa.
+Masalah yang muncul adalah data ukuran bunga sering beragam dan sulit diklasifikasikan manual, sehingga dibutuhkan analisis data untuk:
+- Mengukur pola perbedaan antar spesies.  
+- Mengklasifikasikan spesies berdasarkan parameter numerik.  
+- Menyediakan dasar pengambilan keputusan (contoh: rekomendasi produk bibit sesuai permintaan).  
 
-## Permasalahan
-1. Bagaimana memahami faktor-faktor yang memengaruhi performa siswa?  
-2. Faktor mana yang paling berpengaruh terhadap nilai akhir (G3)?  
-3. Bagaimana hasil eksplorasi data dapat membantu guru dan sekolah dalam mengambil keputusan yang tepat?
+---
 
-## Tujuan
-- Melakukan eksplorasi data untuk mengetahui karakteristik siswa.  
-- Mengidentifikasi faktor-faktor utama yang berpengaruh terhadap nilai siswa.  
-- Memberikan dasar analisis yang dapat digunakan sekolah untuk meningkatkan kualitas pembelajaran.
+## 2. Business Problem
+Bagaimana **menggunakan data morfologi bunga (sepal & petal)** untuk:
+- Menganalisis karakteristik tiap jenis bunga.  
+- Mengklasifikasikan bunga baru ke dalam salah satu dari tiga kelas iris.  
+- Menyajikan insight berupa **statistik & visualisasi** untuk mendukung pengambilan keputusan bisnis.  
 
-## Manfaat
-- **Bagi sekolah** → sebagai dasar evaluasi program pembelajaran.  
-- **Bagi guru** → memahami siswa dengan risiko rendah nilai agar dapat diberikan perhatian khusus.  
-- **Bagi siswa** → meningkatkan kesadaran tentang faktor-faktor yang memengaruhi hasil belajar.  
+---
+
+## 3. Tujuan Analisis
+1. Mendeskripsikan data numerik (min, max, mean dari sepal & petal).  
+2. Mengidentifikasi distribusi jumlah masing-masing kelas iris.  
+3. Menyediakan insight visual (grafik batang, boxplot, scatter plot) yang bisa digunakan untuk:  
+   - Menentukan pola perbedaan antar kelas.  
+   - Membantu klasifikasi bunga baru.  
+   - Menjadi dasar sistem rekomendasi (contoh: klasifikasi otomatis bibit yang masuk ke gudang).  
+
+---
+
+## 4. Manfaat Bisnis
+- **Efisiensi operasional** → identifikasi cepat jenis bunga tanpa harus ahli botani.  
+- **Keakuratan klasifikasi** → mengurangi kesalahan dalam pencatatan stok atau riset.  
+- **Pengambilan keputusan berbasis data** → membantu perusahaan menentukan strategi pemasaran, misalnya bunga jenis tertentu lebih populer.  
