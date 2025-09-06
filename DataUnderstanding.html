@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Data Understanding &#8212; My sample book</title>
+    <title>Data Understanding - Dataset Iris &#8212; My sample book</title>
   
   
   
@@ -61,7 +61,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Eksplorasi Data Iris Dataset" href="ExplorasiData.html" />
-    <link rel="prev" title="Business Problem Analysis – Dataset Iris" href="BusinessProblem.html" />
+    <link rel="prev" title="Business Problem" href="BusinessProblem.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -180,8 +180,8 @@
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="BusinessProblem.html">Business Problem Analysis – Dataset Iris</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Data Understanding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="BusinessProblem.html">Business Problem</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Data Understanding - Dataset Iris</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ExplorasiData.html">Eksplorasi Data Iris Dataset</a></li>
 </ul>
 
@@ -284,7 +284,7 @@
       
       
       
-      <li><a href="_sources/DataUnderstanding.md" target="_blank"
+      <li><a href="_sources/DataUnderstanding.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -294,7 +294,7 @@
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.md</span>
+<span class="btn__text-container">.ipynb</span>
 </a>
 </li>
       
@@ -368,7 +368,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Data Understanding</h1>
+    <h1>Data Understanding - Dataset Iris</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -378,8 +378,15 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deskripsi-variabel">Deskripsi Variabel</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kualitas-data">Kualitas Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-library-dan-load-dataset">1. Import Library dan Load Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#informasi-dasar-dataset">2. Informasi Dasar Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mengecek-tipe-data-dan-jenis-variabel">3. Mengecek Tipe Data dan Jenis Variabel</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eksplorasi-data-awal">4. Eksplorasi Data Awal</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-distribusi-data">5. Analisis Distribusi Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-korelasi-antar-fitur">6. Analisis Korelasi Antar Fitur</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-per-spesies">7. Analisis per Spesies</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deteksi-outlier">8. Deteksi Outlier</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan-data-understanding">9. Kesimpulan Data Understanding</a></li>
 </ul>
             </nav>
         </div>
@@ -391,29 +398,1046 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="data-understanding">
-<h1>Data Understanding<a class="headerlink" href="#data-understanding" title="Link to this heading">#</a></h1>
-<p>Pada tahap ini, dilakukan pemahaman terhadap dataset yang digunakan.<br />
-Dataset yang dipakai adalah <strong>Student Performance Factors</strong> dalam format CSV.</p>
-<section id="deskripsi-variabel">
-<h2>Deskripsi Variabel<a class="headerlink" href="#deskripsi-variabel" title="Link to this heading">#</a></h2>
-<ul class="simple">
-<li><p><strong>gender</strong> → jenis kelamin siswa</p></li>
-<li><p><strong>age</strong> → usia siswa</p></li>
-<li><p><strong>studytime</strong> → waktu belajar per minggu</p></li>
-<li><p><strong>failures</strong> → jumlah kegagalan sebelumnya</p></li>
-<li><p><strong>health</strong> → kondisi kesehatan (1 = sangat buruk, 5 = sangat baik)</p></li>
-<li><p><strong>absences</strong> → jumlah ketidakhadiran</p></li>
-<li><p><strong>G1, G2, G3</strong> → nilai siswa (G3 = nilai akhir)</p></li>
-</ul>
+  <section class="tex2jax_ignore mathjax_ignore" id="data-understanding-dataset-iris">
+<h1>Data Understanding - Dataset Iris<a class="headerlink" href="#data-understanding-dataset-iris" title="Link to this heading">#</a></h1>
+<p>Notebook ini berisi analisis pemahaman data untuk dataset Iris klasik yang akan digunakan untuk klasifikasi spesies bunga iris.</p>
+<section id="import-library-dan-load-dataset">
+<h2>1. Import Library dan Load Dataset<a class="headerlink" href="#import-library-dan-load-dataset" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import library yang diperlukan</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_iris</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+
+<span class="c1"># Atur style untuk visualisasi</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;default&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_palette</span><span class="p">(</span><span class="s2">&quot;husl&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Library berhasil diimport&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Library berhasil diimport
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load dataset Iris dari sklearn</span>
+<span class="n">iris_data</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">()</span>
+
+<span class="c1"># Buat DataFrame</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">iris_data</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">iris_data</span><span class="o">.</span><span class="n">feature_names</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">iris_data</span><span class="o">.</span><span class="n">target</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;species_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">({</span><span class="mi">0</span><span class="p">:</span> <span class="s1">&#39;setosa&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="s1">&#39;versicolor&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s1">&#39;virginica&#39;</span><span class="p">})</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Dataset Iris berhasil dimuat&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ukuran dataset: </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> baris, </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> kolom&quot;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dataset Iris berhasil dimuat
+Ukuran dataset: 150 baris, 6 kolom
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sepal length (cm)</th>
+      <th>sepal width (cm)</th>
+      <th>petal length (cm)</th>
+      <th>petal width (cm)</th>
+      <th>species</th>
+      <th>species_name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5.1</td>
+      <td>3.5</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>0</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4.9</td>
+      <td>3.0</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>0</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4.7</td>
+      <td>3.2</td>
+      <td>1.3</td>
+      <td>0.2</td>
+      <td>0</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4.6</td>
+      <td>3.1</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>0</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5.0</td>
+      <td>3.6</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>0</td>
+      <td>setosa</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
 </section>
-<section id="kualitas-data">
-<h2>Kualitas Data<a class="headerlink" href="#kualitas-data" title="Link to this heading">#</a></h2>
-<ul class="simple">
-<li><p>Perlu dicek apakah terdapat nilai kosong (missing value)</p></li>
-<li><p>Nilai absensi perlu diperhatikan, apakah ada outlier</p></li>
-<li><p>Distribusi nilai siswa perlu dilihat apakah normal atau tidak</p></li>
-</ul>
+<section id="informasi-dasar-dataset">
+<h2>2. Informasi Dasar Dataset<a class="headerlink" href="#informasi-dasar-dataset" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Informasi umum dataset</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== INFORMASI DATASET IRIS ===&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Jumlah sampel: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Jumlah fitur: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="o">-</span><span class="mi">2</span><span class="si">}</span><span class="s2"> (tanpa target)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Jumlah kelas: </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Nama kelas: </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;species_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">=== INFO DATAFRAME ===&quot;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== INFORMASI DATASET IRIS ===
+Jumlah sampel: 150
+Jumlah fitur: 4 (tanpa target)
+Jumlah kelas: 3
+Nama kelas: [&#39;setosa&#39;, &#39;versicolor&#39;, &#39;virginica&#39;]
+
+=== INFO DATAFRAME ===
+&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 150 entries, 0 to 149
+Data columns (total 6 columns):
+ #   Column             Non-Null Count  Dtype  
+---  ------             --------------  -----  
+ 0   sepal length (cm)  150 non-null    float64
+ 1   sepal width (cm)   150 non-null    float64
+ 2   petal length (cm)  150 non-null    float64
+ 3   petal width (cm)   150 non-null    float64
+ 4   species            150 non-null    int64  
+ 5   species_name       150 non-null    object 
+dtypes: float64(4), int64(1), object(1)
+memory usage: 7.2+ KB
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Deskripsi variabel</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== DESKRIPSI VARIABEL ===&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> Fitur-fitur dalam dataset:&quot;</span><span class="p">)</span>
+<span class="n">feature_descriptions</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;sepal length (cm)&#39;</span><span class="p">:</span> <span class="s1">&#39;Panjang sepal (kelopak bunga) dalam cm&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;sepal width (cm)&#39;</span><span class="p">:</span> <span class="s1">&#39;Lebar sepal (kelopak bunga) dalam cm&#39;</span><span class="p">,</span> 
+    <span class="s1">&#39;petal length (cm)&#39;</span><span class="p">:</span> <span class="s1">&#39;Panjang petal (mahkota bunga) dalam cm&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;petal width (cm)&#39;</span><span class="p">:</span> <span class="s1">&#39;Lebar petal (mahkota bunga) dalam cm&#39;</span>
+<span class="p">}</span>
+
+<span class="k">for</span> <span class="n">feature</span><span class="p">,</span> <span class="n">description</span> <span class="ow">in</span> <span class="n">feature_descriptions</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;• </span><span class="si">{</span><span class="n">feature</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">description</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> Target variable:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;• species: Spesies bunga iris (setosa, versicolor, virginica)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== DESKRIPSI VARIABEL ===
+
+ Fitur-fitur dalam dataset:
+• sepal length (cm): Panjang sepal (kelopak bunga) dalam cm
+• sepal width (cm): Lebar sepal (kelopak bunga) dalam cm
+• petal length (cm): Panjang petal (mahkota bunga) dalam cm
+• petal width (cm): Lebar petal (mahkota bunga) dalam cm
+
+ Target variable:
+• species: Spesies bunga iris (setosa, versicolor, virginica)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="mengecek-tipe-data-dan-jenis-variabel">
+<h2>3. Mengecek Tipe Data dan Jenis Variabel<a class="headerlink" href="#mengecek-tipe-data-dan-jenis-variabel" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Cek tipe data setiap kolom</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== CEK TIPE DATA SETIAP KOLOM ===&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> Tipe data dalam dataset:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">dtypes</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">50</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== CEK TIPE DATA SETIAP KOLOM ===
+
+ Tipe data dalam dataset:
+sepal length (cm)    float64
+sepal width (cm)     float64
+petal length (cm)    float64
+petal width (cm)     float64
+species                int64
+species_name          object
+dtype: object
+
+==================================================
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Analisis jenis variabel berdasarkan klasifikasi</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== KLASIFIKASI JENIS VARIABEL ===&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> Teori Jenis Variabel:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;• Quantitative (Numerik): Nilai angka, bisa dihitung&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;• Qualitative (Kategorikal/Faktor): Klasifikasi atau kategori&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;• Discrete: Nilai terpisah (tanpa nilai antara)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;• Continuous: Nilai kontinu (bisa pecahan)&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;           🔍 ANALISIS VARIABEL DATASET IRIS&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+
+<span class="c1"># Analisis setiap variabel</span>
+<span class="n">variable_analysis</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;sepal length (cm)&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;tipe_data&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;sepal length (cm)&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="p">),</span>
+        <span class="s1">&#39;jenis_variabel&#39;</span><span class="p">:</span> <span class="s1">&#39;Quantitative (Numerik)&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;sub_kategori&#39;</span><span class="p">:</span> <span class="s1">&#39;Continuous&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;deskripsi&#39;</span><span class="p">:</span> <span class="s1">&#39;Nilai kontinu, bisa berupa pecahan&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;contoh_nilai&#39;</span><span class="p">:</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;sepal length (cm)&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>
+        <span class="s1">&#39;rentang&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;sepal length (cm)&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;sepal length (cm)&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> cm&quot;</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;sepal width (cm)&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;tipe_data&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;sepal width (cm)&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="p">),</span>
+        <span class="s1">&#39;jenis_variabel&#39;</span><span class="p">:</span> <span class="s1">&#39;Quantitative (Numerik)&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;sub_kategori&#39;</span><span class="p">:</span> <span class="s1">&#39;Continuous&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;deskripsi&#39;</span><span class="p">:</span> <span class="s1">&#39;Nilai kontinu, bisa berupa pecahan&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;contoh_nilai&#39;</span><span class="p">:</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;sepal width (cm)&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>
+        <span class="s1">&#39;rentang&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;sepal width (cm)&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;sepal width (cm)&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> cm&quot;</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;petal length (cm)&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;tipe_data&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;petal length (cm)&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="p">),</span>
+        <span class="s1">&#39;jenis_variabel&#39;</span><span class="p">:</span> <span class="s1">&#39;Quantitative (Numerik)&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;sub_kategori&#39;</span><span class="p">:</span> <span class="s1">&#39;Continuous&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;deskripsi&#39;</span><span class="p">:</span> <span class="s1">&#39;Nilai kontinu, bisa berupa pecahan&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;contoh_nilai&#39;</span><span class="p">:</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;petal length (cm)&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>
+        <span class="s1">&#39;rentang&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;petal length (cm)&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;petal length (cm)&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> cm&quot;</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;petal width (cm)&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;tipe_data&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;petal width (cm)&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="p">),</span>
+        <span class="s1">&#39;jenis_variabel&#39;</span><span class="p">:</span> <span class="s1">&#39;Quantitative (Numerik)&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;sub_kategori&#39;</span><span class="p">:</span> <span class="s1">&#39;Continuous&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;deskripsi&#39;</span><span class="p">:</span> <span class="s1">&#39;Nilai kontinu, bisa berupa pecahan&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;contoh_nilai&#39;</span><span class="p">:</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;petal width (cm)&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>
+        <span class="s1">&#39;rentang&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;petal width (cm)&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;petal width (cm)&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> cm&quot;</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;species&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;tipe_data&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="p">),</span>
+        <span class="s1">&#39;jenis_variabel&#39;</span><span class="p">:</span> <span class="s1">&#39;Qualitative (Kategorikal)&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;sub_kategori&#39;</span><span class="p">:</span> <span class="s1">&#39;Discrete (Nominal)&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;deskripsi&#39;</span><span class="p">:</span> <span class="s1">&#39;Kategori terpisah, tidak ada urutan&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;contoh_nilai&#39;</span><span class="p">:</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>
+        <span class="s1">&#39;rentang&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span><span class="si">}</span><span class="s2"> kategori (0, 1, 2)&quot;</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;species_name&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;tipe_data&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;species_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="p">),</span>
+        <span class="s1">&#39;jenis_variabel&#39;</span><span class="p">:</span> <span class="s1">&#39;Qualitative (Kategorikal)&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;sub_kategori&#39;</span><span class="p">:</span> <span class="s1">&#39;Discrete (Nominal)&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;deskripsi&#39;</span><span class="p">:</span> <span class="s1">&#39;Kategori nama spesies, tidak ada urutan&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;contoh_nilai&#39;</span><span class="p">:</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;species_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>
+        <span class="s1">&#39;rentang&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;species_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span><span class="si">}</span><span class="s2"> kategori&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1"># Tampilkan analisis setiap variabel</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">var_name</span><span class="p">,</span> <span class="n">analysis</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">variable_analysis</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">.  VARIABEL: </span><span class="si">{</span><span class="n">var_name</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Tipe Data: </span><span class="si">{</span><span class="n">analysis</span><span class="p">[</span><span class="s1">&#39;tipe_data&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Jenis Variabel: </span><span class="si">{</span><span class="n">analysis</span><span class="p">[</span><span class="s1">&#39;jenis_variabel&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Sub-kategori: </span><span class="si">{</span><span class="n">analysis</span><span class="p">[</span><span class="s1">&#39;sub_kategori&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Deskripsi: </span><span class="si">{</span><span class="n">analysis</span><span class="p">[</span><span class="s1">&#39;deskripsi&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Contoh nilai: </span><span class="si">{</span><span class="n">analysis</span><span class="p">[</span><span class="s1">&#39;contoh_nilai&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Rentang: </span><span class="si">{</span><span class="n">analysis</span><span class="p">[</span><span class="s1">&#39;rentang&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   &quot;</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span><span class="o">*</span><span class="mi">40</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== KLASIFIKASI JENIS VARIABEL ===
+
+ Teori Jenis Variabel:
+• Quantitative (Numerik): Nilai angka, bisa dihitung
+• Qualitative (Kategorikal/Faktor): Klasifikasi atau kategori
+• Discrete: Nilai terpisah (tanpa nilai antara)
+• Continuous: Nilai kontinu (bisa pecahan)
+
+============================================================
+           🔍 ANALISIS VARIABEL DATASET IRIS
+============================================================
+
+1.  VARIABEL: SEPAL LENGTH (CM)
+   • Tipe Data: float64
+   • Jenis Variabel: Quantitative (Numerik)
+   • Sub-kategori: Continuous
+   • Deskripsi: Nilai kontinu, bisa berupa pecahan
+   • Contoh nilai: [5.1, 4.9, 4.7]
+   • Rentang: 4.3 - 7.9 cm
+   ----------------------------------------
+
+2.  VARIABEL: SEPAL WIDTH (CM)
+   • Tipe Data: float64
+   • Jenis Variabel: Quantitative (Numerik)
+   • Sub-kategori: Continuous
+   • Deskripsi: Nilai kontinu, bisa berupa pecahan
+   • Contoh nilai: [3.5, 3.0, 3.2]
+   • Rentang: 2.0 - 4.4 cm
+   ----------------------------------------
+
+3.  VARIABEL: PETAL LENGTH (CM)
+   • Tipe Data: float64
+   • Jenis Variabel: Quantitative (Numerik)
+   • Sub-kategori: Continuous
+   • Deskripsi: Nilai kontinu, bisa berupa pecahan
+   • Contoh nilai: [1.4, 1.4, 1.3]
+   • Rentang: 1.0 - 6.9 cm
+   ----------------------------------------
+
+4.  VARIABEL: PETAL WIDTH (CM)
+   • Tipe Data: float64
+   • Jenis Variabel: Quantitative (Numerik)
+   • Sub-kategori: Continuous
+   • Deskripsi: Nilai kontinu, bisa berupa pecahan
+   • Contoh nilai: [0.2, 0.2, 0.2]
+   • Rentang: 0.1 - 2.5 cm
+   ----------------------------------------
+
+5.  VARIABEL: SPECIES
+   • Tipe Data: int64
+   • Jenis Variabel: Qualitative (Kategorikal)
+   • Sub-kategori: Discrete (Nominal)
+   • Deskripsi: Kategori terpisah, tidak ada urutan
+   • Contoh nilai: [0, 1, 2]
+   • Rentang: 3 kategori (0, 1, 2)
+   ----------------------------------------
+
+6.  VARIABEL: SPECIES_NAME
+   • Tipe Data: object
+   • Jenis Variabel: Qualitative (Kategorikal)
+   • Sub-kategori: Discrete (Nominal)
+   • Deskripsi: Kategori nama spesies, tidak ada urutan
+   • Contoh nilai: [&#39;setosa&#39;, &#39;versicolor&#39;, &#39;virginica&#39;]
+   • Rentang: 3 kategori
+   ----------------------------------------
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Buat tabel ringkasan jenis variabel</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">=== TABEL RINGKASAN JENIS VARIABEL ===&quot;</span><span class="p">)</span>
+
+<span class="c1"># Buat DataFrame untuk ringkasan</span>
+<span class="n">summary_data</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">var_name</span><span class="p">,</span> <span class="n">analysis</span> <span class="ow">in</span> <span class="n">variable_analysis</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">summary_data</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+        <span class="s1">&#39;Nama Variabel&#39;</span><span class="p">:</span> <span class="n">var_name</span><span class="p">,</span>
+        <span class="s1">&#39;Tipe Data&#39;</span><span class="p">:</span> <span class="n">analysis</span><span class="p">[</span><span class="s1">&#39;tipe_data&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;Jenis Variabel&#39;</span><span class="p">:</span> <span class="n">analysis</span><span class="p">[</span><span class="s1">&#39;jenis_variabel&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;Sub-kategori&#39;</span><span class="p">:</span> <span class="n">analysis</span><span class="p">[</span><span class="s1">&#39;sub_kategori&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;Rentang/Kategori&#39;</span><span class="p">:</span> <span class="n">analysis</span><span class="p">[</span><span class="s1">&#39;rentang&#39;</span><span class="p">]</span>
+    <span class="p">})</span>
+
+<span class="n">summary_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">summary_data</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> Tabel Ringkasan:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">summary_df</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== TABEL RINGKASAN JENIS VARIABEL ===
+
+ Tabel Ringkasan:
+    Nama Variabel Tipe Data            Jenis Variabel       Sub-kategori     Rentang/Kategori
+sepal length (cm)   float64    Quantitative (Numerik)         Continuous         4.3 - 7.9 cm
+ sepal width (cm)   float64    Quantitative (Numerik)         Continuous         2.0 - 4.4 cm
+petal length (cm)   float64    Quantitative (Numerik)         Continuous         1.0 - 6.9 cm
+ petal width (cm)   float64    Quantitative (Numerik)         Continuous         0.1 - 2.5 cm
+          species     int64 Qualitative (Kategorikal) Discrete (Nominal) 3 kategori (0, 1, 2)
+     species_name    object Qualitative (Kategorikal) Discrete (Nominal)           3 kategori
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Visualisasi distribusi tipe variabel</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="c1"># Hitung jumlah setiap jenis variabel</span>
+<span class="n">quantitative_count</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">analysis</span> <span class="ow">in</span> <span class="n">variable_analysis</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> 
+                        <span class="k">if</span> <span class="s1">&#39;Quantitative&#39;</span> <span class="ow">in</span> <span class="n">analysis</span><span class="p">[</span><span class="s1">&#39;jenis_variabel&#39;</span><span class="p">])</span>
+<span class="n">qualitative_count</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">analysis</span> <span class="ow">in</span> <span class="n">variable_analysis</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> 
+                       <span class="k">if</span> <span class="s1">&#39;Qualitative&#39;</span> <span class="ow">in</span> <span class="n">analysis</span><span class="p">[</span><span class="s1">&#39;jenis_variabel&#39;</span><span class="p">])</span>
+
+<span class="n">continuous_count</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">analysis</span> <span class="ow">in</span> <span class="n">variable_analysis</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> 
+                      <span class="k">if</span> <span class="s1">&#39;Continuous&#39;</span> <span class="ow">in</span> <span class="n">analysis</span><span class="p">[</span><span class="s1">&#39;sub_kategori&#39;</span><span class="p">])</span>
+<span class="n">discrete_count</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">analysis</span> <span class="ow">in</span> <span class="n">variable_analysis</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> 
+                    <span class="k">if</span> <span class="s1">&#39;Discrete&#39;</span> <span class="ow">in</span> <span class="n">analysis</span><span class="p">[</span><span class="s1">&#39;sub_kategori&#39;</span><span class="p">])</span>
+
+<span class="c1"># Plot 1: Jenis Variabel Utama</span>
+<span class="n">categories</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Quantitative</span><span class="se">\n</span><span class="s1">(Numerik)&#39;</span><span class="p">,</span> <span class="s1">&#39;Qualitative</span><span class="se">\n</span><span class="s1">(Kategorikal)&#39;</span><span class="p">]</span>
+<span class="n">counts</span> <span class="o">=</span> <span class="p">[</span><span class="n">quantitative_count</span><span class="p">,</span> <span class="n">qualitative_count</span><span class="p">]</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;#3498db&#39;</span><span class="p">,</span> <span class="s1">&#39;#e74c3c&#39;</span><span class="p">]</span>
+
+<span class="n">bars1</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">categories</span><span class="p">,</span> <span class="n">counts</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Distribusi Jenis Variabel Utama&#39;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Jumlah Variabel&#39;</span><span class="p">)</span>
+
+<span class="c1"># Tambahkan nilai di atas bar</span>
+<span class="k">for</span> <span class="n">bar</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">bars1</span><span class="p">,</span> <span class="n">counts</span><span class="p">):</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">bar</span><span class="o">.</span><span class="n">get_x</span><span class="p">()</span> <span class="o">+</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span> <span class="o">+</span> <span class="mf">0.05</span><span class="p">,</span> 
+                <span class="nb">str</span><span class="p">(</span><span class="n">count</span><span class="p">),</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+
+<span class="c1"># Plot 2: Sub-kategori</span>
+<span class="n">subcategories</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Continuous&#39;</span><span class="p">,</span> <span class="s1">&#39;Discrete&#39;</span><span class="p">]</span>
+<span class="n">subcounts</span> <span class="o">=</span> <span class="p">[</span><span class="n">continuous_count</span><span class="p">,</span> <span class="n">discrete_count</span><span class="p">]</span>
+<span class="n">subcolors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;#2ecc71&#39;</span><span class="p">,</span> <span class="s1">&#39;#f39c12&#39;</span><span class="p">]</span>
+
+<span class="n">bars2</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">subcategories</span><span class="p">,</span> <span class="n">subcounts</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">subcolors</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Distribusi Sub-kategori Variabel&#39;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Jumlah Variabel&#39;</span><span class="p">)</span>
+
+<span class="c1"># Tambahkan nilai di atas bar</span>
+<span class="k">for</span> <span class="n">bar</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">bars2</span><span class="p">,</span> <span class="n">subcounts</span><span class="p">):</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">bar</span><span class="o">.</span><span class="n">get_x</span><span class="p">()</span> <span class="o">+</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span> <span class="o">+</span> <span class="mf">0.05</span><span class="p">,</span> 
+                <span class="nb">str</span><span class="p">(</span><span class="n">count</span><span class="p">),</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/3e59018e4bf44535b229c1a524a289fee8061cc4140bea1468e46b993366cc71.png" src="_images/3e59018e4bf44535b229c1a524a289fee8061cc4140bea1468e46b993366cc71.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Insight dan kesimpulan tipe data</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;                🔍 INSIGHT JENIS VARIABEL&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> RINGKASAN STATISTIK TIPE VARIABEL:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Total variabel: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">variable_analysis</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Quantitative (Numerik): </span><span class="si">{</span><span class="n">quantitative_count</span><span class="si">}</span><span class="s2"> variabel&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Qualitative (Kategorikal): </span><span class="si">{</span><span class="n">qualitative_count</span><span class="si">}</span><span class="s2"> variabel&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Continuous: </span><span class="si">{</span><span class="n">continuous_count</span><span class="si">}</span><span class="s2"> variabel&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Discrete: </span><span class="si">{</span><span class="n">discrete_count</span><span class="si">}</span><span class="s2"> variabel&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> KARAKTERISTIK DATASET:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Dataset didominasi oleh variabel numerik continuous (fitur pengukuran)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Semua fitur prediktif adalah quantitative continuous&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Target variable bersifat qualitative discrete (kategori)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Cocok untuk algoritma machine learning supervised&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> IMPLIKASI UNTUK ANALISIS:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Dapat menggunakan statistik deskriptif (mean, std, dll)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Perlu normalisasi/standardisasi untuk beberapa algoritma&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Target encoding sudah tersedia (numerik dan nama)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Siap untuk analisis korelasi dan visualisasi scatter plot&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>======================================================================
+                🔍 INSIGHT JENIS VARIABEL
+======================================================================
+
+ RINGKASAN STATISTIK TIPE VARIABEL:
+   • Total variabel: 6
+   • Quantitative (Numerik): 4 variabel
+   • Qualitative (Kategorikal): 2 variabel
+   • Continuous: 4 variabel
+   • Discrete: 2 variabel
+
+ KARAKTERISTIK DATASET:
+   • Dataset didominasi oleh variabel numerik continuous (fitur pengukuran)
+   • Semua fitur prediktif adalah quantitative continuous
+   • Target variable bersifat qualitative discrete (kategori)
+   • Cocok untuk algoritma machine learning supervised
+
+ IMPLIKASI UNTUK ANALISIS:
+   • Dapat menggunakan statistik deskriptif (mean, std, dll)
+   • Perlu normalisasi/standardisasi untuk beberapa algoritma
+   • Target encoding sudah tersedia (numerik dan nama)
+   • Siap untuk analisis korelasi dan visualisasi scatter plot
+
+======================================================================
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="eksplorasi-data-awal">
+<h2>4. Eksplorasi Data Awal<a class="headerlink" href="#eksplorasi-data-awal" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Statistik deskriptif</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== STATISTIK DESKRIPTIF ===&quot;</span><span class="p">)</span>
+<span class="n">stats</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">stats</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== STATISTIK DESKRIPTIF ===
+       sepal length (cm)  sepal width (cm)  petal length (cm)  \
+count             150.00            150.00             150.00   
+mean                5.84              3.06               3.76   
+std                 0.83              0.44               1.77   
+min                 4.30              2.00               1.00   
+25%                 5.10              2.80               1.60   
+50%                 5.80              3.00               4.35   
+75%                 6.40              3.30               5.10   
+max                 7.90              4.40               6.90   
+
+       petal width (cm)  species  
+count            150.00   150.00  
+mean               1.20     1.00  
+std                0.76     0.82  
+min                0.10     0.00  
+25%                0.30     0.00  
+50%                1.30     1.00  
+75%                1.80     2.00  
+max                2.50     2.00  
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Distribusi kelas</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== DISTRIBUSI KELAS ===&quot;</span><span class="p">)</span>
+<span class="n">class_counts</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;species_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">class_counts</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> Persentase:&quot;</span><span class="p">)</span>
+<span class="n">class_percentage</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;species_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
+<span class="k">for</span> <span class="n">species</span><span class="p">,</span> <span class="n">percentage</span> <span class="ow">in</span> <span class="n">class_percentage</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;• </span><span class="si">{</span><span class="n">species</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">percentage</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== DISTRIBUSI KELAS ===
+species_name
+setosa        50
+versicolor    50
+virginica     50
+Name: count, dtype: int64
+
+ Persentase:
+• setosa: 33.3%
+• versicolor: 33.3%
+• virginica: 33.3%
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Cek missing values</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== CEK MISSING VALUES ===&quot;</span><span class="p">)</span>
+<span class="n">missing_values</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">missing_values</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">missing_values</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> Dataset tidak memiliki missing values&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> Total missing values: </span><span class="si">{</span><span class="n">missing_values</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== CEK MISSING VALUES ===
+sepal length (cm)    0
+sepal width (cm)     0
+petal length (cm)    0
+petal width (cm)     0
+species              0
+species_name         0
+dtype: int64
+
+ Dataset tidak memiliki missing values
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Cek duplikasi data</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== CEK DUPLIKASI DATA ===&quot;</span><span class="p">)</span>
+<span class="n">duplicates</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">duplicated</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Jumlah baris duplikat: </span><span class="si">{</span><span class="n">duplicates</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">duplicates</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; Tidak ada data duplikat&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; Terdapat </span><span class="si">{</span><span class="n">duplicates</span><span class="si">}</span><span class="s2"> baris duplikat&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== CEK DUPLIKASI DATA ===
+Jumlah baris duplikat: 1
+ Terdapat 1 baris duplikat
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="analisis-distribusi-data">
+<h2>5. Analisis Distribusi Data<a class="headerlink" href="#analisis-distribusi-data" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Visualisasi distribusi fitur</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Distribusi Fitur Dataset Iris&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+
+<span class="n">features</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sepal length (cm)&#39;</span><span class="p">,</span> <span class="s1">&#39;sepal width (cm)&#39;</span><span class="p">,</span> <span class="s1">&#39;petal length (cm)&#39;</span><span class="p">,</span> <span class="s1">&#39;petal width (cm)&#39;</span><span class="p">]</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;skyblue&#39;</span><span class="p">,</span> <span class="s1">&#39;lightgreen&#39;</span><span class="p">,</span> <span class="s1">&#39;salmon&#39;</span><span class="p">,</span> <span class="s1">&#39;plum&#39;</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">feature</span><span class="p">,</span> <span class="n">color</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">colors</span><span class="p">)):</span>
+    <span class="n">row</span> <span class="o">=</span> <span class="n">i</span> <span class="o">//</span> <span class="mi">2</span>
+    <span class="n">col</span> <span class="o">=</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span>
+    
+    <span class="n">axes</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">feature</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Distribusi </span><span class="si">{</span><span class="n">feature</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;(&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">title</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Frekuensi&#39;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/ffc101a2d0df75bcb8c2dbda6e94e78563297e0c6433780247eedbd5b3e621a7.png" src="_images/ffc101a2d0df75bcb8c2dbda6e94e78563297e0c6433780247eedbd5b3e621a7.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Distribusi kelas</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="c1"># Pie chart</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">class_counts</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;pie&#39;</span><span class="p">,</span> <span class="n">autopct</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%1.1f%%</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">startangle</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> 
+                 <span class="n">colors</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;#FF9999&#39;</span><span class="p">,</span> <span class="s1">&#39;#66B2FF&#39;</span><span class="p">,</span> <span class="s1">&#39;#99FF99&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Distribusi Spesies Iris (Pie Chart)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+<span class="c1"># Bar chart</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">bars</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">class_counts</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">class_counts</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> 
+               <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;#FF9999&#39;</span><span class="p">,</span> <span class="s1">&#39;#66B2FF&#39;</span><span class="p">,</span> <span class="s1">&#39;#99FF99&#39;</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Distribusi Spesies Iris (Bar Chart)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Spesies&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Jumlah Sampel&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+
+<span class="c1"># Tambahkan nilai di atas bar</span>
+<span class="k">for</span> <span class="n">bar</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">bars</span><span class="p">,</span> <span class="n">class_counts</span><span class="o">.</span><span class="n">values</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">bar</span><span class="o">.</span><span class="n">get_x</span><span class="p">()</span> <span class="o">+</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">,</span> 
+             <span class="nb">str</span><span class="p">(</span><span class="n">count</span><span class="p">),</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/693c0523ed299a7e13617f6a2d2f9351e2bbdec55f2b1f85c6a7667e28f0c69d.png" src="_images/693c0523ed299a7e13617f6a2d2f9351e2bbdec55f2b1f85c6a7667e28f0c69d.png" />
+</div>
+</div>
+</section>
+<section id="analisis-korelasi-antar-fitur">
+<h2>6. Analisis Korelasi Antar Fitur<a class="headerlink" href="#analisis-korelasi-antar-fitur" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Matriks korelasi</span>
+<span class="n">correlation_matrix</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">features</span><span class="p">]</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== MATRIKS KORELASI ===&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">correlation_matrix</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== MATRIKS KORELASI ===
+                   sepal length (cm)  sepal width (cm)  petal length (cm)  \
+sepal length (cm)              1.000            -0.118              0.872   
+sepal width (cm)              -0.118             1.000             -0.428   
+petal length (cm)              0.872            -0.428              1.000   
+petal width (cm)               0.818            -0.366              0.963   
+
+                   petal width (cm)  
+sepal length (cm)             0.818  
+sepal width (cm)             -0.366  
+petal length (cm)             0.963  
+petal width (cm)              1.000  
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Heatmap korelasi</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">triu</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">correlation_matrix</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">correlation_matrix</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;RdYlBu_r&#39;</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">square</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;.3f&#39;</span><span class="p">,</span> <span class="n">cbar_kws</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;shrink&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">},</span>
+            <span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Heatmap Korelasi Antar Fitur&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/f45096940c7da93a345633819537a0903d2f606d4808df3b12f8be7dcb03c875.png" src="_images/f45096940c7da93a345633819537a0903d2f606d4808df3b12f8be7dcb03c875.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Analisis korelasi tertinggi</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== ANALISIS KORELASI TERTINGGI ===&quot;</span><span class="p">)</span>
+<span class="n">correlation_pairs</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">features</span><span class="p">)):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">features</span><span class="p">)):</span>
+        <span class="n">corr_value</span> <span class="o">=</span> <span class="n">correlation_matrix</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span>
+        <span class="n">correlation_pairs</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">features</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">features</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">corr_value</span><span class="p">))</span>
+
+<span class="c1"># Sort berdasarkan nilai absolut korelasi</span>
+<span class="n">correlation_pairs</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">🔍 Pasangan fitur dengan korelasi tertinggi:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">feat1</span><span class="p">,</span> <span class="n">feat2</span><span class="p">,</span> <span class="n">corr</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">correlation_pairs</span><span class="p">[:</span><span class="mi">3</span><span class="p">]):</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;Korelasi Positif Kuat&quot;</span> <span class="k">if</span> <span class="n">corr</span> <span class="o">&gt;</span> <span class="mf">0.7</span> <span class="k">else</span> <span class="s2">&quot;Korelasi Positif Sedang&quot;</span> <span class="k">if</span> <span class="n">corr</span> <span class="o">&gt;</span> <span class="mf">0.3</span> <span class="k">else</span> <span class="s2">&quot;Korelasi Lemah&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">. </span><span class="si">{</span><span class="n">feat1</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;(&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="si">}</span><span class="s2"> vs </span><span class="si">{</span><span class="n">feat2</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;(&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">corr</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">status</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== ANALISIS KORELASI TERTINGGI ===
+
+🔍 Pasangan fitur dengan korelasi tertinggi:
+1. petal length vs petal width: 0.963 (Korelasi Positif Kuat)
+2. sepal length vs petal length: 0.872 (Korelasi Positif Kuat)
+3. sepal length vs petal width: 0.818 (Korelasi Positif Kuat)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="analisis-per-spesies">
+<h2>7. Analisis per Spesies<a class="headerlink" href="#analisis-per-spesies" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Statistik per spesies</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== STATISTIK DESKRIPTIF PER SPESIES ===&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">species</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;species_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📊 Spesies: </span><span class="si">{</span><span class="n">species</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">species_data</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;species_name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">species</span><span class="p">][</span><span class="n">features</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">species_data</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== STATISTIK DESKRIPTIF PER SPESIES ===
+
+📊 Spesies: SETOSA
+       sepal length (cm)  sepal width (cm)  petal length (cm)  \
+count              50.00             50.00              50.00   
+mean                5.01              3.43               1.46   
+std                 0.35              0.38               0.17   
+min                 4.30              2.30               1.00   
+25%                 4.80              3.20               1.40   
+50%                 5.00              3.40               1.50   
+75%                 5.20              3.68               1.58   
+max                 5.80              4.40               1.90   
+
+       petal width (cm)  
+count             50.00  
+mean               0.25  
+std                0.11  
+min                0.10  
+25%                0.20  
+50%                0.20  
+75%                0.30  
+max                0.60  
+
+📊 Spesies: VERSICOLOR
+       sepal length (cm)  sepal width (cm)  petal length (cm)  \
+count              50.00             50.00              50.00   
+mean                5.94              2.77               4.26   
+std                 0.52              0.31               0.47   
+min                 4.90              2.00               3.00   
+25%                 5.60              2.52               4.00   
+50%                 5.90              2.80               4.35   
+75%                 6.30              3.00               4.60   
+max                 7.00              3.40               5.10   
+
+       petal width (cm)  
+count             50.00  
+mean               1.33  
+std                0.20  
+min                1.00  
+25%                1.20  
+50%                1.30  
+75%                1.50  
+max                1.80  
+
+📊 Spesies: VIRGINICA
+       sepal length (cm)  sepal width (cm)  petal length (cm)  \
+count              50.00             50.00              50.00   
+mean                6.59              2.97               5.55   
+std                 0.64              0.32               0.55   
+min                 4.90              2.20               4.50   
+25%                 6.22              2.80               5.10   
+50%                 6.50              3.00               5.55   
+75%                 6.90              3.18               5.88   
+max                 7.90              3.80               6.90   
+
+       petal width (cm)  
+count             50.00  
+mean               2.03  
+std                0.27  
+min                1.40  
+25%                1.80  
+50%                2.00  
+75%                2.30  
+max                2.50  
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Box plot per spesies</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Box Plot Fitur Berdasarkan Spesies&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">feature</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">features</span><span class="p">):</span>
+    <span class="n">row</span> <span class="o">=</span> <span class="n">i</span> <span class="o">//</span> <span class="mi">2</span>
+    <span class="n">col</span> <span class="o">=</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span>
+    
+    <span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;species_name&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">feature</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">])</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">feature</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;(&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">title</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Spesies&#39;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/761a7d08a28487fb09a91b81b6aaf4119e3e7b189045c1533e54a68669ed70f3.png" src="_images/761a7d08a28487fb09a91b81b6aaf4119e3e7b189045c1533e54a68669ed70f3.png" />
+</div>
+</div>
+</section>
+<section id="deteksi-outlier">
+<h2>8. Deteksi Outlier<a class="headerlink" href="#deteksi-outlier" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Deteksi outlier menggunakan IQR method</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== DETEKSI OUTLIER (IQR METHOD) ===&quot;</span><span class="p">)</span>
+
+<span class="n">outlier_summary</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">features</span><span class="p">:</span>
+    <span class="n">Q1</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.25</span><span class="p">)</span>
+    <span class="n">Q3</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.75</span><span class="p">)</span>
+    <span class="n">IQR</span> <span class="o">=</span> <span class="n">Q3</span> <span class="o">-</span> <span class="n">Q1</span>
+    <span class="n">lower_bound</span> <span class="o">=</span> <span class="n">Q1</span> <span class="o">-</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">IQR</span>
+    <span class="n">upper_bound</span> <span class="o">=</span> <span class="n">Q3</span> <span class="o">+</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">IQR</span>
+    
+    <span class="n">outliers</span> <span class="o">=</span> <span class="n">df</span><span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">lower_bound</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">upper_bound</span><span class="p">)]</span>
+    <span class="n">outlier_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">outliers</span><span class="p">)</span>
+    <span class="n">outlier_summary</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span> <span class="o">=</span> <span class="n">outlier_count</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">🔍 </span><span class="si">{</span><span class="n">feature</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;(&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">title</span><span class="p">()</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Range normal: </span><span class="si">{</span><span class="n">lower_bound</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">upper_bound</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Jumlah outlier: </span><span class="si">{</span><span class="n">outlier_count</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">outlier_count</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Nilai outlier: </span><span class="si">{</span><span class="n">outliers</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">total_outliers</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">outlier_summary</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📊 Total outlier di semua fitur: </span><span class="si">{</span><span class="n">total_outliers</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== DETEKSI OUTLIER (IQR METHOD) ===
+
+🔍 Sepal Length:
+   Range normal: 3.15 - 8.35
+   Jumlah outlier: 0
+
+🔍 Sepal Width:
+   Range normal: 2.05 - 4.05
+   Jumlah outlier: 4
+   Nilai outlier: [4.4 4.1 4.2 2. ]
+
+🔍 Petal Length:
+   Range normal: -3.65 - 10.35
+   Jumlah outlier: 0
+
+🔍 Petal Width:
+   Range normal: -1.95 - 4.05
+   Jumlah outlier: 0
+
+📊 Total outlier di semua fitur: 4
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="kesimpulan-data-understanding">
+<h2>9. Kesimpulan Data Understanding<a class="headerlink" href="#kesimpulan-data-understanding" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;           📋 KESIMPULAN DATA UNDERSTANDING&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> KUALITAS DATA:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Dataset lengkap: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="si">}</span><span class="s2"> sampel, </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">features</span><span class="p">)</span><span class="si">}</span><span class="s2"> fitur&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Tidak ada missing values&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Tidak ada data duplikat&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Distribusi kelas seimbang (50 sampel per spesies)&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> KARAKTERISTIK TIPE DATA:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • </span><span class="si">{</span><span class="n">quantitative_count</span><span class="si">}</span><span class="s2"> variabel Quantitative (Numerik)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • </span><span class="si">{</span><span class="n">qualitative_count</span><span class="si">}</span><span class="s2"> variabel Qualitative (Kategorikal)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • </span><span class="si">{</span><span class="n">continuous_count</span><span class="si">}</span><span class="s2"> variabel Continuous&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • </span><span class="si">{</span><span class="n">discrete_count</span><span class="si">}</span><span class="s2"> variabel Discrete&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Semua fitur prediktif bertipe float64 (continuous)&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> KARAKTERISTIK DISTRIBUSI:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Target memiliki 3 kelas: setosa, versicolor, virginica&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Korelasi tertinggi: petal length vs petal width (</span><span class="si">{</span><span class="n">correlation_matrix</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;petal length (cm)&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;petal width (cm)&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Semua fitur memiliki distribusi yang wajar&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> INSIGHT PENTING:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   • Petal length dan petal width sangat berkorelasi&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   • Sepal width memiliki korelasi terendah dengan fitur lain&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Total outlier terdeteksi: </span><span class="si">{</span><span class="n">total_outliers</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   • Dataset ideal untuk pembelajaran machine learning&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> REKOMENDASI NEXT STEPS:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   • Dataset siap untuk exploratory data analysis (EDA)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   • Pertimbangkan feature scaling untuk algoritma berbasis jarak&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   • Cocok untuk klasifikasi multiclass supervised learning&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   • Dapat langsung digunakan untuk modeling tanpa preprocessing&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>============================================================
+           📋 KESIMPULAN DATA UNDERSTANDING
+============================================================
+
+ KUALITAS DATA:
+   • Dataset lengkap: 150 sampel, 4 fitur
+   • Tidak ada missing values
+   • Tidak ada data duplikat
+   • Distribusi kelas seimbang (50 sampel per spesies)
+
+ KARAKTERISTIK TIPE DATA:
+   • 4 variabel Quantitative (Numerik)
+   • 2 variabel Qualitative (Kategorikal)
+   • 4 variabel Continuous
+   • 2 variabel Discrete
+   • Semua fitur prediktif bertipe float64 (continuous)
+
+ KARAKTERISTIK DISTRIBUSI:
+   • Target memiliki 3 kelas: setosa, versicolor, virginica
+   • Korelasi tertinggi: petal length vs petal width (0.963)
+   • Semua fitur memiliki distribusi yang wajar
+
+ INSIGHT PENTING:
+   • Petal length dan petal width sangat berkorelasi
+   • Sepal width memiliki korelasi terendah dengan fitur lain
+   • Total outlier terdeteksi: 4
+   • Dataset ideal untuk pembelajaran machine learning
+
+ REKOMENDASI NEXT STEPS:
+   • Dataset siap untuk exploratory data analysis (EDA)
+   • Pertimbangkan feature scaling untuk algoritma berbasis jarak
+   • Cocok untuk klasifikasi multiclass supervised learning
+   • Dapat langsung digunakan untuk modeling tanpa preprocessing
+
+============================================================
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 </section>
 
@@ -453,7 +1477,7 @@ Dataset yang dipakai adalah <strong>Student Performance Factors</strong> dalam f
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Business Problem Analysis – Dataset Iris</p>
+        <p class="prev-next-title">Business Problem</p>
       </div>
     </a>
     <a class="right-next"
@@ -481,8 +1505,15 @@ Dataset yang dipakai adalah <strong>Student Performance Factors</strong> dalam f
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deskripsi-variabel">Deskripsi Variabel</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kualitas-data">Kualitas Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-library-dan-load-dataset">1. Import Library dan Load Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#informasi-dasar-dataset">2. Informasi Dasar Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mengecek-tipe-data-dan-jenis-variabel">3. Mengecek Tipe Data dan Jenis Variabel</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eksplorasi-data-awal">4. Eksplorasi Data Awal</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-distribusi-data">5. Analisis Distribusi Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-korelasi-antar-fitur">6. Analisis Korelasi Antar Fitur</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-per-spesies">7. Analisis per Spesies</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deteksi-outlier">8. Deteksi Outlier</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan-data-understanding">9. Kesimpulan Data Understanding</a></li>
 </ul>
   </nav></div>
 
