@@ -2,5 +2,11 @@ format: jb-book
 root: intro
 
 chapters:
+<<<<<<< HEAD
   - file: markdown-notebooks
   - file: notebooks
+=======
+- file: BusinessProblem
+- file: DataUnderstanding
+- file: ExplorasiData
+>>>>>>> c4d0bb04f522753c19ec22c9e03012e7c23f713a
