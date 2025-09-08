@@ -4,5 +4,6 @@ root: intro
 chapters:
 - file: BusinessProblem
 - file: DataUnderstanding
-- file: ExplorasiData
+  sections:
+  - file: ExplorasiData
 - file: PowerBI

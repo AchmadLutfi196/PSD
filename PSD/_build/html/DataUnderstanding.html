@@ -181,8 +181,10 @@
         </ul>
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="BusinessProblem.html">Business Problem</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Data Understanding</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ExplorasiData.html">Eksplorasi Data</a></li>
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Data Understanding</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="ExplorasiData.html">Eksplorasi Data</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="PowerBI.html">POwer BI Eksplorasi Data Iris</a></li>
 </ul>
 
@@ -411,7 +413,6 @@ document.write(`
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_iris</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
 
@@ -431,23 +432,38 @@ document.write(`
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load dataset Iris dari sklearn</span>
-<span class="n">iris_data</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load dataset Iris dari file CSV</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data_iris.csv&#39;</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;;&#39;</span><span class="p">)</span>
 
-<span class="c1"># Buat DataFrame</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">iris_data</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">iris_data</span><span class="o">.</span><span class="n">feature_names</span><span class="p">)</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">iris_data</span><span class="o">.</span><span class="n">target</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">&#39;species_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">({</span><span class="mi">0</span><span class="p">:</span> <span class="s1">&#39;setosa&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="s1">&#39;versicolor&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s1">&#39;virginica&#39;</span><span class="p">})</span>
+<span class="c1"># Konversi kolom numerik yang menggunakan koma sebagai decimal separator</span>
+<span class="n">numeric_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sepal length&#39;</span><span class="p">,</span> <span class="s1">&#39;sepal width&#39;</span><span class="p">,</span> <span class="s1">&#39;petal length&#39;</span><span class="p">,</span> <span class="s1">&#39;petal width&#39;</span><span class="p">]</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Dataset Iris berhasil dimuat&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">numeric_columns</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="c1"># Konversi koma ke titik untuk decimal</span>
+        <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+
+<span class="c1"># Buat kolom species numerik dan species name</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Class&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">({</span><span class="s1">&#39;Iris-setosa&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Iris-versicolor&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Iris-virginica&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">})</span>
+<span class="c1"># df[&#39;species_name&#39;] = df[&#39;Class&#39;].map({&#39;Iris-setosa&#39;: &#39;setosa&#39;, &#39;Iris-versicolor&#39;: &#39;versicolor&#39;, &#39;Iris-virginica&#39;: &#39;virginica&#39;})</span>
+
+<span class="c1"># Rename kolom untuk konsistensi dengan format sklearn</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span>
+    <span class="s1">&#39;sepal length&#39;</span><span class="p">:</span> <span class="s1">&#39;sepal length (cm)&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;sepal width&#39;</span><span class="p">:</span> <span class="s1">&#39;sepal width (cm)&#39;</span><span class="p">,</span> 
+    <span class="s1">&#39;petal length&#39;</span><span class="p">:</span> <span class="s1">&#39;petal length (cm)&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;petal width&#39;</span><span class="p">:</span> <span class="s1">&#39;petal width (cm)&#39;</span>
+<span class="p">})</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Dataset Iris berhasil dimuat dari data_iris.csv&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ukuran dataset: </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> baris, </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> kolom&quot;</span><span class="p">)</span>
 <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dataset Iris berhasil dimuat
-Ukuran dataset: 150 baris, 6 kolom
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dataset Iris berhasil dimuat dari data_iris.csv
+Ukuran dataset: 150 baris, 7 kolom
 </pre></div>
 </div>
 <div class="output text_html"><div>
@@ -468,59 +484,65 @@ Ukuran dataset: 150 baris, 6 kolom
   <thead>
     <tr style="text-align: right;">
       <th></th>
+      <th>id</th>
+      <th>Class</th>
       <th>sepal length (cm)</th>
       <th>sepal width (cm)</th>
       <th>petal length (cm)</th>
       <th>petal width (cm)</th>
       <th>species</th>
-      <th>species_name</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
+      <td>1</td>
+      <td>Iris-setosa</td>
       <td>5.1</td>
       <td>3.5</td>
       <td>1.4</td>
       <td>0.2</td>
       <td>0</td>
-      <td>setosa</td>
     </tr>
     <tr>
       <th>1</th>
+      <td>2</td>
+      <td>Iris-setosa</td>
       <td>4.9</td>
       <td>3.0</td>
       <td>1.4</td>
       <td>0.2</td>
       <td>0</td>
-      <td>setosa</td>
     </tr>
     <tr>
       <th>2</th>
+      <td>3</td>
+      <td>Iris-setosa</td>
       <td>4.7</td>
       <td>3.2</td>
       <td>1.3</td>
       <td>0.2</td>
       <td>0</td>
-      <td>setosa</td>
     </tr>
     <tr>
       <th>3</th>
+      <td>4</td>
+      <td>Iris-setosa</td>
       <td>4.6</td>
       <td>3.1</td>
       <td>1.5</td>
       <td>0.2</td>
       <td>0</td>
-      <td>setosa</td>
     </tr>
     <tr>
       <th>4</th>
+      <td>5</td>
+      <td>Iris-setosa</td>
       <td>5.0</td>
       <td>3.6</td>
       <td>1.4</td>
       <td>0.2</td>
       <td>0</td>
-      <td>setosa</td>
     </tr>
   </tbody>
 </table>
@@ -536,7 +558,6 @@ Ukuran dataset: 150 baris, 6 kolom
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Jumlah sampel: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Jumlah fitur: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="o">-</span><span class="mi">2</span><span class="si">}</span><span class="s2"> (tanpa target)&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Jumlah kelas: </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Nama kelas: </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;species_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">=== INFO DATAFRAME ===&quot;</span><span class="p">)</span>
 <span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
 </pre></div>
@@ -545,24 +566,24 @@ Ukuran dataset: 150 baris, 6 kolom
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== INFORMASI DATASET IRIS ===
 Jumlah sampel: 150
-Jumlah fitur: 4 (tanpa target)
+Jumlah fitur: 5 (tanpa target)
 Jumlah kelas: 3
-Nama kelas: [&#39;setosa&#39;, &#39;versicolor&#39;, &#39;virginica&#39;]
 
 === INFO DATAFRAME ===
 &lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
 RangeIndex: 150 entries, 0 to 149
-Data columns (total 6 columns):
+Data columns (total 7 columns):
  #   Column             Non-Null Count  Dtype  
 ---  ------             --------------  -----  
- 0   sepal length (cm)  150 non-null    float64
- 1   sepal width (cm)   150 non-null    float64
- 2   petal length (cm)  150 non-null    float64
- 3   petal width (cm)   150 non-null    float64
- 4   species            150 non-null    int64  
- 5   species_name       150 non-null    object 
-dtypes: float64(4), int64(1), object(1)
-memory usage: 7.2+ KB
+ 0   id                 150 non-null    int64  
+ 1   Class              150 non-null    object 
+ 2   sepal length (cm)  150 non-null    float64
+ 3   sepal width (cm)   150 non-null    float64
+ 4   petal length (cm)  150 non-null    float64
+ 5   petal width (cm)   150 non-null    float64
+ 6   species            150 non-null    int64  
+dtypes: float64(4), int64(2), object(1)
+memory usage: 8.3+ KB
 </pre></div>
 </div>
 </div>
@@ -661,14 +682,6 @@ memory usage: 7.2+ KB
         <span class="s1">&#39;contoh_nilai&#39;</span><span class="p">:</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>
         <span class="s1">&#39;rentang&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span><span class="si">}</span><span class="s2"> kategori (0, 1, 2)&quot;</span>
     <span class="p">},</span>
-    <span class="s1">&#39;species_name&#39;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s1">&#39;tipe_data&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;species_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="p">),</span>
-        <span class="s1">&#39;jenis_variabel&#39;</span><span class="p">:</span> <span class="s1">&#39;Qualitative (Kategorikal)&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;sub_kategori&#39;</span><span class="p">:</span> <span class="s1">&#39;Discrete (Nominal)&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;deskripsi&#39;</span><span class="p">:</span> <span class="s1">&#39;Kategori nama spesies, tidak ada urutan&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;contoh_nilai&#39;</span><span class="p">:</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;species_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>
-        <span class="s1">&#39;rentang&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;species_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span><span class="si">}</span><span class="s2"> kategori&quot;</span>
-    <span class="p">}</span>
 <span class="p">}</span>
 
 <span class="c1"># Tampilkan analisis setiap variabel</span>
@@ -741,15 +754,6 @@ memory usage: 7.2+ KB
    • Contoh nilai: [0, 1, 2]
    • Rentang: 3 kategori (0, 1, 2)
    ----------------------------------------
-
-6.  VARIABEL: SPECIES_NAME
-   • Tipe Data: object
-   • Jenis Variabel: Qualitative (Kategorikal)
-   • Sub-kategori: Discrete (Nominal)
-   • Deskripsi: Kategori nama spesies, tidak ada urutan
-   • Contoh nilai: [&#39;setosa&#39;, &#39;versicolor&#39;, &#39;virginica&#39;]
-   • Rentang: 3 kategori
-   ----------------------------------------
 </pre></div>
 </div>
 </div>
@@ -786,7 +790,6 @@ sepal length (cm)   float64    Quantitative (Numerik)         Continuous        
 petal length (cm)   float64    Quantitative (Numerik)         Continuous         1.0 - 6.9 cm
  petal width (cm)   float64    Quantitative (Numerik)         Continuous         0.1 - 2.5 cm
           species     int64 Qualitative (Kategorikal) Discrete (Nominal) 3 kategori (0, 1, 2)
-     species_name    object Qualitative (Kategorikal) Discrete (Nominal)           3 kategori
 </pre></div>
 </div>
 </div>
@@ -841,7 +844,7 @@ petal length (cm)   float64    Quantitative (Numerik)         Continuous        
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/3e59018e4bf44535b229c1a524a289fee8061cc4140bea1468e46b993366cc71.png" src="_images/3e59018e4bf44535b229c1a524a289fee8061cc4140bea1468e46b993366cc71.png" />
+<img alt="_images/d6098fe8e1669eb9c450544b9bb35cc0d617664de9e5c254463260afc7cd6565.png" src="_images/d6098fe8e1669eb9c450544b9bb35cc0d617664de9e5c254463260afc7cd6565.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -880,11 +883,11 @@ petal length (cm)   float64    Quantitative (Numerik)         Continuous        
 ======================================================================
 
  RINGKASAN STATISTIK TIPE VARIABEL:
-   • Total variabel: 6
+   • Total variabel: 5
    • Quantitative (Numerik): 4 variabel
-   • Qualitative (Kategorikal): 2 variabel
+   • Qualitative (Kategorikal): 1 variabel
    • Continuous: 4 variabel
-   • Discrete: 2 variabel
+   • Discrete: 1 variabel
 
  KARAKTERISTIK DATASET:
    • Dataset didominasi oleh variabel numerik continuous (fitur pengukuran)
@@ -917,15 +920,15 @@ petal length (cm)   float64    Quantitative (Numerik)         Continuous        
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== STATISTIK DESKRIPTIF ===
-       sepal length (cm)  sepal width (cm)  petal length (cm)  \
-count             150.00            150.00             150.00   
-mean                5.84              3.06               3.76   
-std                 0.83              0.44               1.77   
-min                 4.30              2.00               1.00   
-25%                 5.10              2.80               1.60   
-50%                 5.80              3.00               4.35   
-75%                 6.40              3.30               5.10   
-max                 7.90              4.40               6.90   
+           id  sepal length (cm)  sepal width (cm)  petal length (cm)  \
+count  150.00             150.00            150.00             150.00   
+mean    75.50               5.84              3.05               3.76   
+std     43.45               0.83              0.43               1.76   
+min      1.00               4.30              2.00               1.00   
+25%     38.25               5.10              2.80               1.60   
+50%     75.50               5.80              3.00               4.35   
+75%    112.75               6.40              3.30               5.10   
+max    150.00               7.90              4.40               6.90   
 
        petal width (cm)  species  
 count            150.00   150.00  
@@ -944,10 +947,10 @@ max                2.50     2.00
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Distribusi kelas</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== DISTRIBUSI KELAS ===&quot;</span><span class="p">)</span>
-<span class="n">class_counts</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;species_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<span class="n">class_counts</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">class_counts</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> Persentase:&quot;</span><span class="p">)</span>
-<span class="n">class_percentage</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;species_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
+<span class="n">class_percentage</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
 <span class="k">for</span> <span class="n">species</span><span class="p">,</span> <span class="n">percentage</span> <span class="ow">in</span> <span class="n">class_percentage</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;• </span><span class="si">{</span><span class="n">species</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">percentage</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
 </pre></div>
@@ -955,16 +958,16 @@ max                2.50     2.00
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== DISTRIBUSI KELAS ===
-species_name
-setosa        50
-versicolor    50
-virginica     50
+species
+0    50
+1    50
+2    50
 Name: count, dtype: int64
 
  Persentase:
-• setosa: 33.3%
-• versicolor: 33.3%
-• virginica: 33.3%
+• 0: 33.3%
+• 1: 33.3%
+• 2: 33.3%
 </pre></div>
 </div>
 </div>
@@ -985,12 +988,13 @@ Name: count, dtype: int64
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== CEK MISSING VALUES ===
+id                   0
+Class                0
 sepal length (cm)    0
 sepal width (cm)     0
 petal length (cm)    0
 petal width (cm)     0
 species              0
-species_name         0
 dtype: int64
 
  Dataset tidak memiliki missing values
@@ -1014,8 +1018,8 @@ dtype: int64
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== CEK DUPLIKASI DATA ===
-Jumlah baris duplikat: 1
- Terdapat 1 baris duplikat
+Jumlah baris duplikat: 0
+ Tidak ada data duplikat
 </pre></div>
 </div>
 </div>
@@ -1048,7 +1052,7 @@ Jumlah baris duplikat: 1
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/ffc101a2d0df75bcb8c2dbda6e94e78563297e0c6433780247eedbd5b3e621a7.png" src="_images/ffc101a2d0df75bcb8c2dbda6e94e78563297e0c6433780247eedbd5b3e621a7.png" />
+<img alt="_images/daec15da0ff4d0d23dccae9412200bc4eec76ded81b6155699b283217a173c5f.png" src="_images/daec15da0ff4d0d23dccae9412200bc4eec76ded81b6155699b283217a173c5f.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1083,7 +1087,7 @@ Jumlah baris duplikat: 1
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/693c0523ed299a7e13617f6a2d2f9351e2bbdec55f2b1f85c6a7667e28f0c69d.png" src="_images/693c0523ed299a7e13617f6a2d2f9351e2bbdec55f2b1f85c6a7667e28f0c69d.png" />
+<img alt="_images/f1f1d4c1476b0e2c89acda4db55d42dec140295a01980919bafb50d81c5a591b.png" src="_images/f1f1d4c1476b0e2c89acda4db55d42dec140295a01980919bafb50d81c5a591b.png" />
 </div>
 </div>
 </section>
@@ -1101,14 +1105,14 @@ Jumlah baris duplikat: 1
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== MATRIKS KORELASI ===
                    sepal length (cm)  sepal width (cm)  petal length (cm)  \
-sepal length (cm)              1.000            -0.118              0.872   
-sepal width (cm)              -0.118             1.000             -0.428   
-petal length (cm)              0.872            -0.428              1.000   
-petal width (cm)               0.818            -0.366              0.963   
+sepal length (cm)              1.000            -0.109              0.872   
+sepal width (cm)              -0.109             1.000             -0.421   
+petal length (cm)              0.872            -0.421              1.000   
+petal width (cm)               0.818            -0.357              0.963   
 
                    petal width (cm)  
 sepal length (cm)             0.818  
-sepal width (cm)             -0.366  
+sepal width (cm)             -0.357  
 petal length (cm)             0.963  
 petal width (cm)              1.000  
 </pre></div>
@@ -1130,7 +1134,7 @@ petal width (cm)              1.000
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/f45096940c7da93a345633819537a0903d2f606d4808df3b12f8be7dcb03c875.png" src="_images/f45096940c7da93a345633819537a0903d2f606d4808df3b12f8be7dcb03c875.png" />
+<img alt="_images/457cc762faee00fa9402f2c8eaa199c91d048cf9162b335510d1c6447fc12925.png" src="_images/457cc762faee00fa9402f2c8eaa199c91d048cf9162b335510d1c6447fc12925.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1171,78 +1175,27 @@ petal width (cm)              1.000
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Statistik per spesies</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== STATISTIK DESKRIPTIF PER SPESIES ===&quot;</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">species</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;species_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">():</span>
+<span class="k">for</span> <span class="n">species</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">():</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📊 Spesies: </span><span class="si">{</span><span class="n">species</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="n">species_data</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;species_name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">species</span><span class="p">][</span><span class="n">features</span><span class="p">]</span>
+    <span class="n">species_data</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">species</span><span class="p">][</span><span class="n">features</span><span class="p">]</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">species_data</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== STATISTIK DESKRIPTIF PER SPESIES ===
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">18</span><span class="p">],</span> <span class="n">line</span> <span class="mi">4</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== STATISTIK DESKRIPTIF PER SPESIES ===&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="k">for</span> <span class="n">species</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">():</span>
+<span class="ne">----&gt; </span><span class="mi">4</span>     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📊 Spesies: </span><span class="si">{</span><span class="n">species</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span>     <span class="n">species_data</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">species</span><span class="p">][</span><span class="n">features</span><span class="p">]</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span>     <span class="nb">print</span><span class="p">(</span><span class="n">species_data</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
 
-📊 Spesies: SETOSA
-       sepal length (cm)  sepal width (cm)  petal length (cm)  \
-count              50.00             50.00              50.00   
-mean                5.01              3.43               1.46   
-std                 0.35              0.38               0.17   
-min                 4.30              2.30               1.00   
-25%                 4.80              3.20               1.40   
-50%                 5.00              3.40               1.50   
-75%                 5.20              3.68               1.58   
-max                 5.80              4.40               1.90   
-
-       petal width (cm)  
-count             50.00  
-mean               0.25  
-std                0.11  
-min                0.10  
-25%                0.20  
-50%                0.20  
-75%                0.30  
-max                0.60  
-
-📊 Spesies: VERSICOLOR
-       sepal length (cm)  sepal width (cm)  petal length (cm)  \
-count              50.00             50.00              50.00   
-mean                5.94              2.77               4.26   
-std                 0.52              0.31               0.47   
-min                 4.90              2.00               3.00   
-25%                 5.60              2.52               4.00   
-50%                 5.90              2.80               4.35   
-75%                 6.30              3.00               4.60   
-max                 7.00              3.40               5.10   
-
-       petal width (cm)  
-count             50.00  
-mean               1.33  
-std                0.20  
-min                1.00  
-25%                1.20  
-50%                1.30  
-75%                1.50  
-max                1.80  
-
-📊 Spesies: VIRGINICA
-       sepal length (cm)  sepal width (cm)  petal length (cm)  \
-count              50.00             50.00              50.00   
-mean                6.59              2.97               5.55   
-std                 0.64              0.32               0.55   
-min                 4.90              2.20               4.50   
-25%                 6.22              2.80               5.10   
-50%                 6.50              3.00               5.55   
-75%                 6.90              3.18               5.88   
-max                 7.90              3.80               6.90   
-
-       petal width (cm)  
-count             50.00  
-mean               2.03  
-std                0.27  
-min                1.40  
-25%                1.80  
-50%                2.00  
-75%                2.30  
-max                2.50  
+<span class="ne">AttributeError</span>: &#39;numpy.int64&#39; object has no attribute &#39;upper&#39;
 </pre></div>
 </div>
 </div>
@@ -1269,7 +1222,7 @@ max                2.50
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/761a7d08a28487fb09a91b81b6aaf4119e3e7b189045c1533e54a68669ed70f3.png" src="_images/761a7d08a28487fb09a91b81b6aaf4119e3e7b189045c1533e54a68669ed70f3.png" />
+<img alt="_images/2c9a156af0c9159fa78016ce2bf19a1472231f655dafc0be7ae12b93b722dd30.png" src="_images/2c9a156af0c9159fa78016ce2bf19a1472231f655dafc0be7ae12b93b722dd30.png" />
 </div>
 </div>
 </section>
@@ -1413,6 +1366,8 @@ max                2.50
 </div>
 </div>
 </section>
+<div class="toctree-wrapper compound">
+</div>
 </section>
 
     <script type="text/x-thebe-config">
