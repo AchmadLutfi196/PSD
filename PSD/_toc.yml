@@ -6,4 +6,5 @@ chapters:
 - file: DataUnderstanding
   sections:
   - file: ExplorasiData
+-file: PrepocessingData
 - file: PowerBI
