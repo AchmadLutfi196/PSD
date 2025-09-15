@@ -22,404 +22,173 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-# Outlier Removal dan Imputation Process
-print("=== OUTLIER REMOVAL DAN IMPUTATION PROCESS ===")
+# Train-Test Split dan Persiapan Dataset untuk Modeling dengan PyCaret
+print("=== TRAIN-TEST SPLIT DAN PERSIAPAN FINAL DENGAN PYCARET ===")
 
-if df is not None and 'consensus_score' in df.columns:
+if df_final is not None:
     
-    # Identifikasi outliers berdasarkan strong consensus (≥2 models agree)
-    outlier_mask = df['strong_consensus'] == 1
-    outlier_indices = df[outlier_mask].index.tolist()
-    outlier_count = len(outlier_indices)
-    
-    print(f"\nOutliers teridentifikasi (Strong Consensus):")
-    print(f"   • Jumlah: {outlier_count} dari {len(df)} data ({outlier_count/len(df)*100:.1f}%)")
-    print(f"   • Indices: {outlier_indices}")
-    
-    # STEP 1: Visualisasi Koordinat Data Original
-    print(f"\nSTEP 1: Visualisasi Koordinat Data Original")
-    
-    # Tampilkan koordinat outliers dan normal data
-    print(f"\nKoordinat Outliers (Strong Consensus):")
-    print(f"{'Index':<6} {'Sepal_L':<8} {'Sepal_W':<8} {'Petal_L':<8} {'Petal_W':<8} {'Species':<8}")
-    print("-" * 55)
-    
-    outlier_coords = df[outlier_mask]
-    for idx in outlier_indices:
-        row = df.loc[idx]
-        species_name = ['setosa', 'versicolor', 'virginica'][int(row['species'])]
-        print(f"{idx:<6} {row[features[0]]:<8.2f} {row[features[1]]:<8.2f} {row[features[2]]:<8.2f} {row[features[3]]:<8.2f} {species_name:<8}")
-    
-    # Visualisasi scatter plot koordinat 2D
-    fig, axes = plt.subplots(1, 2, figsize=(15, 6))
-    fig.suptitle('Koordinat Data Original - Normal vs Outliers', fontsize=16, fontweight='bold')
-    
-    # Plot 1: Sepal Length vs Sepal Width
-    normal_data = df[~outlier_mask]
-    outlier_data = df[outlier_mask]
-    
-    # Normal data
-    axes[0].scatter(normal_data[features[0]], normal_data[features[1]], 
-                   c=normal_data['species'], cmap='viridis', alpha=0.7, s=50, label='Normal')
-    
-    # Outlier data
-    if len(outlier_data) > 0:
-        axes[0].scatter(outlier_data[features[0]], outlier_data[features[1]], 
-                       color='red', s=100, marker='x', label=f'Outliers ({len(outlier_data)})')
-    
-    axes[0].set_xlabel('Sepal Length (cm)')
-    axes[0].set_ylabel('Sepal Width (cm)')
-    axes[0].set_title('Sepal Coordinates')
-    axes[0].legend()
-    axes[0].grid(True, alpha=0.3)
-    
-    # Plot 2: Petal Length vs Petal Width
-    axes[1].scatter(normal_data[features[2]], normal_data[features[3]], 
-                   c=normal_data['species'], cmap='viridis', alpha=0.7, s=50, label='Normal')
-    
-    if len(outlier_data) > 0:
-        axes[1].scatter(outlier_data[features[2]], outlier_data[features[3]], 
-                       color='red', s=100, marker='x', label=f'Outliers ({len(outlier_data)})')
-    
-    axes[1].set_xlabel('Petal Length (cm)')
-    axes[1].set_ylabel('Petal Width (cm)')
-    axes[1].set_title('Petal Coordinates')
-    axes[1].legend()
-    axes[1].grid(True, alpha=0.3)
-    
-    plt.tight_layout()
-    plt.show()
-    
-    # STEP 2: Remove Outliers (Set as NaN)
-    print(f"\nSTEP 2: Menghapus Outliers (Set sebagai NaN)")
-    
-    # Buat copy dataset dan set outliers sebagai NaN
-    df_with_nan = df.copy()
-    
-    for feature in features:
-        df_with_nan.loc[outlier_mask, feature] = np.nan
-    
-    # Cek jumlah missing values
-    missing_count = df_with_nan[features].isnull().sum()
-    print(f"\nMissing values setelah outlier removal:")
-    for feature in features:
-        missing = missing_count[feature]
-        pct = (missing / len(df_with_nan)) * 100
-        print(f"   • {feature}: {missing} missing ({pct:.1f}%)")
-    
-    # STEP 3: Koordinat Data dengan Missing Values
-    print(f"\nSTEP 3: Koordinat Data dengan Missing Values")
-    
-    print(f"\nKoordinat Data Setelah Outlier Removal (NaN untuk outliers):")
-    print(f"{'Index':<6} {'Sepal_L':<8} {'Sepal_W':<8} {'Petal_L':<8} {'Petal_W':<8} {'Status':<8}")
-    print("-" * 55)
-    
-    # Show sample missing data coordinates
-    missing_indices = df_with_nan[df_with_nan[features].isnull().any(axis=1)].index.tolist()
-    for idx in missing_indices[:5]:  # Show first 5 missing
-        row = df_with_nan.loc[idx]
-        print(f"{idx:<6} {'NaN':<8} {'NaN':<8} {'NaN':<8} {'NaN':<8} {'Missing':<8}")
-    
-    # Visualisasi koordinat data yang tersisa
-    fig, axes = plt.subplots(1, 2, figsize=(15, 6))
-    fig.suptitle('Koordinat Data Setelah Outlier Removal', fontsize=16, fontweight='bold')
-    
-    # Data yang masih tersedia (non-NaN)
-    available_mask = ~df_with_nan[features].isnull().any(axis=1)
-    available_data = df_with_nan[available_mask]
-    
-    # Plot 1: Sepal coordinates
-    axes[0].scatter(available_data[features[0]], available_data[features[1]], 
-                   c=available_data['species'], cmap='viridis', alpha=0.7, s=50)
-    axes[0].set_xlabel('Sepal Length (cm)')
-    axes[0].set_ylabel('Sepal Width (cm)')
-    axes[0].set_title(f'Sepal Coordinates\n({len(available_data)} available points)')
-    axes[0].grid(True, alpha=0.3)
-    
-    # Plot 2: Petal coordinates
-    axes[1].scatter(available_data[features[2]], available_data[features[3]], 
-                   c=available_data['species'], cmap='viridis', alpha=0.7, s=50)
-    axes[1].set_xlabel('Petal Length (cm)')
-    axes[1].set_ylabel('Petal Width (cm)')
-    axes[1].set_title(f'Petal Coordinates\n({len(available_data)} available points)')
-    axes[1].grid(True, alpha=0.3)
-    
-    plt.tight_layout()
-    plt.show()
-    
-    # STEP 4: Imputation Methods
-    print(f"\nSTEP 4: Metode Imputation untuk Mengisi Missing Values")
-    
-    # Siapkan berbagai metode imputation
-    imputation_methods = {}
-    
-    # Method 1: Mean Imputation
-    df_mean_imputed = df_with_nan.copy()
-    for feature in features:
-        mean_value = df_mean_imputed[feature].mean()
-        df_mean_imputed[feature].fillna(mean_value, inplace=True)
-    imputation_methods['mean'] = df_mean_imputed
-    
-    # Method 2: Median Imputation
-    df_median_imputed = df_with_nan.copy()
-    for feature in features:
-        median_value = df_median_imputed[feature].median()
-        df_median_imputed[feature].fillna(median_value, inplace=True)
-    imputation_methods['median'] = df_median_imputed
-    
-    # Method 3: Mode/Most Frequent per Species
-    df_species_imputed = df_with_nan.copy()
-    for feature in features:
-        for species in [0, 1, 2]:
-            species_mask = df_species_imputed['species'] == species
-            species_data = df_species_imputed.loc[species_mask, feature]
-            species_median = species_data.median()
-            
-            missing_mask = df_species_imputed[feature].isnull() & species_mask
-            df_species_imputed.loc[missing_mask, feature] = species_median
-    imputation_methods['species_median'] = df_species_imputed
-    
-    # Method 4: KNN Imputation (Simple version)
-    from sklearn.impute import KNNImputer
-    df_knn_imputed = df_with_nan.copy()
-    
-    # Hanya impute untuk features numerik
-    knn_imputer = KNNImputer(n_neighbors=5)
-    imputed_values = knn_imputer.fit_transform(df_knn_imputed[features])
-    
-    for i, feature in enumerate(features):
-        df_knn_imputed[feature] = imputed_values[:, i]
-    imputation_methods['knn'] = df_knn_imputed
-    
-    print(f"\nMetode Imputation yang digunakan:")
-    print(f"   1. Mean Imputation: Menggunakan rata-rata kolom")
-    print(f"   2. Median Imputation: Menggunakan median kolom")
-    print(f"   3. Species Median: Menggunakan median per spesies")
-    print(f"   4. KNN Imputation: Menggunakan 5 nearest neighbors")
-    
-    # STEP 5: Koordinat Perbandingan Metode Imputation
-    print(f"\nSTEP 5: Koordinat Perbandingan Metode Imputation")
-    
-    # Show imputed coordinates untuk outlier indices
-    print(f"\nKoordinat Imputed untuk Outlier Indices:")
-    print(f"{'Method':<15} {'Index':<6} {'Sepal_L':<8} {'Sepal_W':<8} {'Petal_L':<8} {'Petal_W':<8}")
-    print("-" * 70)
-    
-    # Show coordinates for first few outlier indices across methods
-    sample_outlier_idx = outlier_indices[0] if outlier_indices else 0
-    
-    for method_name, df_imputed in list(imputation_methods.items())[:4]:
-        method_display = {
-            'mean': 'Mean',
-            'median': 'Median', 
-            'species_median': 'Species Med',
-            'knn': 'KNN'
-        }.get(method_name, method_name)
+    # Check apakah sudah ada split dari PyCaret atau perlu manual split
+    if df_test_final is not None:
+        # PyCaret sudah melakukan split
+        print(f"Menggunakan PyCaret train-test split:")
+        print(f"   • PyCaret telah melakukan stratified split otomatis")
+        print(f"   • Train set: {df_final.shape[0]} samples")
+        print(f"   • Test set: {df_test_final.shape[0]} samples")
         
-        row = df_imputed.loc[sample_outlier_idx]
-        print(f"{method_display:<15} {sample_outlier_idx:<6} {row[features[0]]:<8.2f} {row[features[1]]:<8.2f} {row[features[2]]:<8.2f} {row[features[3]]:<8.2f}")
-    
-    # Visualisasi perbandingan koordinat
-    fig, axes = plt.subplots(2, 2, figsize=(15, 12))
-    fig.suptitle('Koordinat Perbandingan Metode Imputation', fontsize=16, fontweight='bold')
-    
-    colors = ['skyblue', 'lightcoral', 'lightpink', 'lightyellow']
-    method_names = ['Mean', 'Median', 'Species Median', 'KNN']
-    
-    for i, (method, df_imputed) in enumerate(list(imputation_methods.items())[:4]):
-        row = i // 2
-        col = i % 2
+        # Extract features dan target dari PyCaret results
+        target_col = 'species'
+        feature_cols = [col for col in df_final.columns if col != target_col]
         
-        # Normal data (tidak berubah)
-        normal_mask = ~df[features].index.isin(outlier_indices)
-        normal_data = df_imputed[normal_mask]
+        X_train = df_final[feature_cols].copy()
+        y_train = df_final[target_col].copy()
+        X_test = df_test_final[feature_cols].copy()
+        y_test = df_test_final[target_col].copy()
         
-        # Imputed data (yang tadinya outliers)
-        imputed_data = df_imputed[df_imputed.index.isin(outlier_indices)]
+        all_features = feature_cols
         
-        # Plot normal data
-        axes[row, col].scatter(normal_data[features[0]], normal_data[features[1]], 
-                             c=normal_data['species'], cmap='viridis', alpha=0.6, s=30, label='Normal')
+        print(f"   • Features dari PyCaret: {len(all_features)}")
         
-        # Plot imputed outliers
-        if len(imputed_data) > 0:
-            axes[row, col].scatter(imputed_data[features[0]], imputed_data[features[1]], 
-                                 color='red', s=80, marker='s', alpha=0.8, 
-                                 label=f'Imputed ({len(imputed_data)})')
+    else:
+        # Manual split untuk non-PyCaret case
+        print(f"Melakukan manual train-test split:")
         
-        axes[row, col].set_xlabel('Sepal Length (cm)')
-        axes[row, col].set_ylabel('Sepal Width (cm)')
-        axes[row, col].set_title(f'{method_names[i]} Imputation')
-        axes[row, col].legend()
-        axes[row, col].grid(True, alpha=0.3)
-    
-    plt.tight_layout()
-    plt.show()
-    
-    # STEP 6: Evaluasi dan Pemilihan Metode Terbaik
-    print(f"\nSTEP 6: Evaluasi Metode Imputation")
-    
-    # Bandingkan statistik deskriptif
-    print(f"\nPerbandingan Statistik Deskriptif ({focus_feature}):")
-    print(f"{'Method':<15} {'Mean':<8} {'Std':<8} {'Min':<8} {'Max':<8}")
-    print("-" * 55)
-    
-    # Original data
-    orig_stats = df[focus_feature].describe()
-    print(f"{'Original':<15} {orig_stats['mean']:<7.2f} {orig_stats['std']:<7.2f} {orig_stats['min']:<7.2f} {orig_stats['max']:<7.2f}")
-    
-    # Imputed data
-    for method, df_imputed in imputation_methods.items():
-        stats = df_imputed[focus_feature].describe()
-        method_name = {
-            'mean': 'Mean',
-            'median': 'Median',
-            'species_median': 'Species Med',
-            'knn': 'KNN'
-        }.get(method, method)
+        # Persiapan features dan target
+        X = df_final[all_features].copy()
+        y = df_final['species'].copy()
         
-        print(f"{method_name:<15} {stats['mean']:<7.2f} {stats['std']:<7.2f} {stats['min']:<7.2f} {stats['max']:<7.2f}")
+        print(f"Dataset Preparation:")
+        print(f"   • Total samples: {len(df_final)}")
+        print(f"   • Features: {len(all_features)}")
+        print(f"   • Target classes: {y.nunique()} (setosa=0, versicolor=1, virginica=2)")
+        
+        # Train-test split dengan stratified sampling
+        X_train, X_test, y_train, y_test = train_test_split(
+            X, y, 
+            test_size=0.2, 
+            random_state=42, 
+            stratify=y
+        )
+        
+        print(f"   • Train set: {len(X_train)} samples")
+        print(f"   • Test set: {len(X_test)} samples")
     
-    # Pilih metode terbaik (species median untuk Iris dataset)
-    recommended_method = 'species_median'
-    df_processed = imputation_methods[recommended_method].copy()
+    # Cek distribusi kelas
+    print(f"\nDistribusi Kelas:")
+    species_names = {0: 'setosa', 1: 'versicolor', 2: 'virginica'}
     
-    print(f"\nMETODE YANG DIPILIH: {recommended_method.upper()}")
-    print(f"Alasan: Mempertahankan karakteristik biologis per spesies")
+    # Train distribution
+    train_dist = y_train.value_counts().sort_index()
+    test_dist = y_test.value_counts().sort_index()
     
-    # STEP 7: Koordinat Final Before vs After Preprocessing
-    print(f"\nSTEP 7: Koordinat Final Before vs After Preprocessing")
-    
-    # Tampilkan koordinat final comparison
-    print(f"\nPerbandingan Koordinat Before vs After:")
-    print(f"{'Status':<12} {'Index':<6} {'Sepal_L':<8} {'Sepal_W':<8} {'Petal_L':<8} {'Petal_W':<8}")
+    print(f"{'Class':<12} {'Train Count':<12} {'Train %':<10} {'Test Count':<11} {'Test %':<8}")
     print("-" * 65)
     
-    # Show original outliers coordinates
-    for idx in outlier_indices[:3]:  # Show first 3
-        row_before = df.loc[idx]
-        row_after = df_processed.loc[idx]
+    for class_idx in [0, 1, 2]:
+        train_count = train_dist.get(class_idx, 0)
+        test_count = test_dist.get(class_idx, 0)
+        train_pct = (train_count / len(y_train)) * 100 if len(y_train) > 0 else 0
+        test_pct = (test_count / len(y_test)) * 100 if len(y_test) > 0 else 0
         
-        print(f"{'BEFORE':<12} {idx:<6} {row_before[features[0]]:<8.2f} {row_before[features[1]]:<8.2f} {row_before[features[2]]:<8.2f} {row_before[features[3]]:<8.2f}")
-        print(f"{'AFTER':<12} {idx:<6} {row_after[features[0]]:<8.2f} {row_after[features[1]]:<8.2f} {row_after[features[2]]:<8.2f} {row_after[features[3]]:<8.2f}")
-        print()
+        print(f"{species_names[class_idx]:<12} {train_count:<12} {train_pct:<9.1f}% {test_count:<11} {test_pct:<7.1f}%")
     
-    # Visualisasi koordinat before vs after
-    fig, axes = plt.subplots(1, 2, figsize=(15, 6))
-    fig.suptitle('Koordinat Before vs After Outlier Removal & Imputation', fontsize=16, fontweight='bold')
+    # Informasi preprocessing untuk reproduksi
+    preprocessing_method = 'pycaret' if df_test_final is not None else 'manual'
     
-    # Plot 1: Before (original dengan outliers)
-    normal_original = df[~outlier_mask]
-    outliers_original = df[outlier_mask]
+    preprocessing_info = {
+        'outlier_treatment': 'consensus_based_removal',
+        'scaling_method': preprocessing_method,
+        'original_features': features,
+        'processed_features': all_features,
+        'total_features': len(all_features),
+        'scaler': final_scaler,
+        'train_size': len(X_train),
+        'test_size': len(X_test),
+        'random_state': 42,
+        'preprocessing_pipeline': preprocessing_method
+    }
     
-    axes[0].scatter(normal_original[features[0]], normal_original[features[1]], 
-                   c=normal_original['species'], cmap='viridis', alpha=0.7, s=50, label='Normal')
-    if len(outliers_original) > 0:
-        axes[0].scatter(outliers_original[features[0]], outliers_original[features[1]], 
-                       color='red', s=100, marker='x', alpha=0.8, label=f'Outliers ({len(outliers_original)})')
+    print(f"\nPreprocessing Information:")
+    print(f"   • Outlier treatment: {preprocessing_info['outlier_treatment']}")
+    print(f"   • Scaling method: {preprocessing_info['scaling_method']}")
+    print(f"   • Total features: {preprocessing_info['total_features']}")
+    print(f"   • Random state: {preprocessing_info['random_state']}")
     
-    axes[0].set_xlabel('Sepal Length (cm)')
-    axes[0].set_ylabel('Sepal Width (cm)')
-    axes[0].set_title('BEFORE: Original Data with Outliers')
-    axes[0].legend()
-    axes[0].grid(True, alpha=0.3)
+    # Tampilkan sample dari dataset final
+    print(f"\nSample Data Final (Train Set - First 5 rows):")
+    if preprocessing_method == 'pycaret':
+        # Show beberapa features penting dari PyCaret
+        sample_features = list(X_train.columns)[:4]  # First 4 features dari PyCaret
+    else:
+        # Show original + engineered features
+        sample_features = ['sepal length (cm)', 'petal length (cm)', 'petal_area', 'total_area']
     
-    # Plot 2: After (imputed)
-    normal_processed = df_processed[~df_processed.index.isin(outlier_indices)]
-    imputed_processed = df_processed[df_processed.index.isin(outlier_indices)]
+    print(X_train[sample_features].head())
     
-    axes[1].scatter(normal_processed[features[0]], normal_processed[features[1]], 
-                   c=normal_processed['species'], cmap='viridis', alpha=0.7, s=50, label='Normal')
-    if len(imputed_processed) > 0:
-        axes[1].scatter(imputed_processed[features[0]], imputed_processed[features[1]], 
-                       color='green', s=100, marker='s', alpha=0.8, label=f'Imputed ({len(imputed_processed)})')
+    print(f"\nTarget Labels (Train Set - First 10):")
+    print(y_train.head(10).tolist())
     
-    axes[1].set_xlabel('Sepal Length (cm)')
-    axes[1].set_ylabel('Sepal Width (cm)')
-    axes[1].set_title('AFTER: Data with Imputed Values')
-    axes[1].legend()
-    axes[1].grid(True, alpha=0.3)
+    # PyCaret Data Preparation untuk modeling
+    print(f"\nPERSIAPAN UNTUK PYCARET MODELING:")
     
-    plt.tight_layout()
-    plt.show()
+    if preprocessing_method == 'pycaret':
+        # Data sudah diproses oleh PyCaret
+        df_pycaret = df_final.copy()
+        df_pycaret_test = df_test_final.copy()
+        
+        print(f"   • Data telah diproses oleh PyCaret preprocessing pipeline")
+        print(f"   • df_pycaret: {df_pycaret.shape} (training data)")
+        print(f"   • df_pycaret_test: {df_pycaret_test.shape} (test data)")
+        print(f"   • Target column: 'species'")
+        print(f"   • Siap langsung untuk modeling")
+        
+    else:
+        # Gabungkan X dan y untuk PyCaret
+        df_pycaret = X_train.copy()
+        df_pycaret['species'] = y_train
+        
+        # Siapkan test set terpisah untuk evaluasi final
+        df_pycaret_test = X_test.copy()
+        df_pycaret_test['species'] = y_test
+        
+        print(f"   • df_pycaret: {df_pycaret.shape} (untuk training & validation)")
+        print(f"   • df_pycaret_test: {df_pycaret_test.shape} (untuk final evaluation)")
+        print(f"   • Target column: 'species'")
+        print(f"   • Feature columns: {len(all_features)} features")
     
-    # Show coordinate changes summary
-    print(f"\nSummary Koordinat Changes:")
-    print(f"   • Original outliers: {len(outlier_indices)} points")
-    print(f"   • Converted to missing values, then imputed")
-    print(f"   • Imputation method: {recommended_method}")
-    print(f"   • All 150 coordinate points preserved")
+    # Summary informasi untuk modeling
+    print(f"\nSUMMARY PREPROCESSING:")
+    print(f"   • Objective: Multi-class classification (3 classes)")
+    print(f"   • Data quality: High (outliers handled dengan PyCaret)")
+    print(f"   • Preprocessing: {preprocessing_method.upper()} pipeline")
+    print(f"   • Features: {len(all_features)} total features")
+    print(f"   • Class balance: Good (stratified split maintained)")
+    print(f"   • Ready for: PyCaret automated ML pipeline")
     
-    print(f"\nPREPROCESSING OUTLIER SELESAI!")
-    print(f"   • Outliers removed: {outlier_count} data points")
-    print(f"   • Imputation method: Species-based median")
-    print(f"   • Dataset integrity: Maintained (150 samples)")
-    print(f"   • Ready for next preprocessing steps")
+    print(f"\nPREPROCESSING DENGAN PYCARET COMPLETED!")
+    print(f"Dataset siap untuk modeling dengan PyCaret")
     
 else:
-    print("Tidak dapat melakukan outlier removal karena data atau hasil outlier tidak tersedia")
-    df_processed = df.copy() if df is not None else None
+    print("Tidak dapat melakukan train-test split karena dataset final tidak tersedia")
+    X_train = X_test = y_train = y_test = None
+    df_pycaret = df_pycaret_test = None
+    preprocessing_info = None
 ------------------
 
 ----- stdout -----
-=== OUTLIER REMOVAL DAN IMPUTATION PROCESS ===
-
-Outliers teridentifikasi (Strong Consensus):
-   • Jumlah: 0 dari 150 data (0.0%)
-   • Indices: []
-
-STEP 1: Visualisasi Koordinat Data Original
-
-Koordinat Outliers (Strong Consensus):
-Index  Sepal_L  Sepal_W  Petal_L  Petal_W  Species 
--------------------------------------------------------
------ stdout -----
-
-STEP 2: Menghapus Outliers (Set sebagai NaN)
-
-Missing values setelah outlier removal:
-   • sepal length (cm): 0 missing (0.0%)
-   • sepal width (cm): 0 missing (0.0%)
-   • petal length (cm): 0 missing (0.0%)
-   • petal width (cm): 0 missing (0.0%)
-
-STEP 3: Koordinat Data dengan Missing Values
-
-Koordinat Data Setelah Outlier Removal (NaN untuk outliers):
-Index  Sepal_L  Sepal_W  Petal_L  Petal_W  Status  
--------------------------------------------------------
------ stdout -----
-
-STEP 4: Metode Imputation untuk Mengisi Missing Values
-
-Metode Imputation yang digunakan:
-   1. Mean Imputation: Menggunakan rata-rata kolom
-   2. Median Imputation: Menggunakan median kolom
-   3. Species Median: Menggunakan median per spesies
-   4. KNN Imputation: Menggunakan 5 nearest neighbors
-
-STEP 5: Koordinat Perbandingan Metode Imputation
-
-Koordinat Imputed untuk Outlier Indices:
-Method          Index  Sepal_L  Sepal_W  Petal_L  Petal_W 
-----------------------------------------------------------------------
-Mean            0      5.10     3.50     1.40     0.20    
-Median          0      5.10     3.50     1.40     0.20    
-Species Med     0      5.10     3.50     1.40     0.20    
-KNN             0      5.10     3.50     1.40     0.20
------ stdout -----
-
-STEP 6: Evaluasi Metode Imputation
+=== TRAIN-TEST SPLIT DAN PERSIAPAN FINAL DENGAN PYCARET ===
 ------------------
 
 [1;31m---------------------------------------------------------------------------[0m
 [1;31mNameError[0m                                 Traceback (most recent call last)
-Cell [1;32mIn[5], line 239[0m
-[0;32m    236[0m [38;5;28mprint[39m([38;5;124mf[39m[38;5;124m"[39m[38;5;130;01m\n[39;00m[38;5;124mSTEP 6: Evaluasi Metode Imputation[39m[38;5;124m"[39m)
-[0;32m    238[0m [38;5;66;03m# Bandingkan statistik deskriptif[39;00m
-[1;32m--> 239[0m [38;5;28mprint[39m([38;5;124mf[39m[38;5;124m"[39m[38;5;130;01m\n[39;00m[38;5;124mPerbandingan Statistik Deskriptif ([39m[38;5;132;01m{[39;00m[43mfocus_feature[49m[38;5;132;01m}[39;00m[38;5;124m):[39m[38;5;124m"[39m)
-[0;32m    240[0m [38;5;28mprint[39m([38;5;124mf[39m[38;5;124m"[39m[38;5;132;01m{[39;00m[38;5;124m'[39m[38;5;124mMethod[39m[38;5;124m'[39m[38;5;132;01m:[39;00m[38;5;124m<15[39m[38;5;132;01m}[39;00m[38;5;124m [39m[38;5;132;01m{[39;00m[38;5;124m'[39m[38;5;124mMean[39m[38;5;124m'[39m[38;5;132;01m:[39;00m[38;5;124m<8[39m[38;5;132;01m}[39;00m[38;5;124m [39m[38;5;132;01m{[39;00m[38;5;124m'[39m[38;5;124mStd[39m[38;5;124m'[39m[38;5;132;01m:[39;00m[38;5;124m<8[39m[38;5;132;01m}[39;00m[38;5;124m [39m[38;5;132;01m{[39;00m[38;5;124m'[39m[38;5;124mMin[39m[38;5;124m'[39m[38;5;132;01m:[39;00m[38;5;124m<8[39m[38;5;132;01m}[39;00m[38;5;124m [39m[38;5;132;01m{[39;00m[38;5;124m'[39m[38;5;124mMax[39m[38;5;124m'[39m[38;5;132;01m:[39;00m[38;5;124m<8[39m[38;5;132;01m}[39;00m[38;5;124m"[39m)
-[0;32m    241[0m [38;5;28mprint[39m([38;5;124m"[39m[38;5;124m-[39m[38;5;124m"[39m [38;5;241m*[39m [38;5;241m55[39m)
+Cell [1;32mIn[7], line 7[0m
+[0;32m      2[0m [38;5;28mprint[39m([38;5;124m"[39m[38;5;124m=== TRAIN-TEST SPLIT DAN PERSIAPAN FINAL DENGAN PYCARET ===[39m[38;5;124m"[39m)
+[0;32m      4[0m [38;5;28;01mif[39;00m df_final [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m:
+[0;32m      5[0m     
+[0;32m      6[0m     [38;5;66;03m# Check apakah sudah ada split dari PyCaret atau perlu manual split[39;00m
+[1;32m----> 7[0m     [38;5;28;01mif[39;00m [43mdf_test_final[49m [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m:
+[0;32m      8[0m         [38;5;66;03m# PyCaret sudah melakukan split[39;00m
+[0;32m      9[0m         [38;5;28mprint[39m([38;5;124mf[39m[38;5;124m"[39m[38;5;124mMenggunakan PyCaret train-test split:[39m[38;5;124m"[39m)
+[0;32m     10[0m         [38;5;28mprint[39m([38;5;124mf[39m[38;5;124m"[39m[38;5;124m   • PyCaret telah melakukan stratified split otomatis[39m[38;5;124m"[39m)
 
-[1;31mNameError[0m: name 'focus_feature' is not defined
+[1;31mNameError[0m: name 'df_test_final' is not defined
 
