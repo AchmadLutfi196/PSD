@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>PrepocessingData &#8212; My sample book</title>
+    <title>Prepocessing Data &#8212; My sample book</title>
   
   
   
@@ -185,7 +185,7 @@
 <li class="toctree-l2"><a class="reference internal" href="ExplorasiData.html">Eksplorasi Data</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">PrepocessingData</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Prepocessing Data</a></li>
 
 
 
@@ -378,7 +378,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>PrepocessingData</h1>
+    <h1>Prepocessing Data</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -388,13 +388,13 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">PrepocessingData</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Prepocessing Data</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#import-libraries-dan-setup-environment">1. Import Libraries dan Setup Environment</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#load-data-dan-hasil-outlier-detection">2. Load Data dan Hasil Outlier Detection</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#outlier-removal-dan-imputation-dengan-visualisasi">3. Outlier Removal dan Imputation dengan Visualisasi</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-scaling-dan-engineering">4. Feature Scaling dan Engineering</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#train-test-split-dan-persiapan-final">5. Train-Test Split dan Persiapan Final</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-dan-next-steps">6. Summary dan Next Steps</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">6. Summary</a></li>
 </ul>
 
             </nav>
@@ -407,8 +407,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="prepocessingdata">
-<h1>PrepocessingData<a class="headerlink" href="#prepocessingdata" title="Link to this heading">#</a></h1>
+  <section id="prepocessing-data">
+<h1>Prepocessing Data<a class="headerlink" href="#prepocessing-data" title="Link to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Data Preprocessing</span>
@@ -1442,8 +1442,8 @@ Manual Dataset Ready:
 </div>
 </div>
 </section>
-<section id="summary-dan-next-steps">
-<h1>6. Summary dan Next Steps<a class="headerlink" href="#summary-dan-next-steps" title="Link to this heading">#</a></h1>
+<section id="summary">
+<h1>6. Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># SUMMARY PREPROCESSING SEDERHANA</span>
@@ -1468,18 +1468,6 @@ Manual Dataset Ready:
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Data test: </span><span class="si">{</span><span class="n">test_size</span><span class="si">}</span><span class="s2"> samples&quot;</span><span class="p">)</span> 
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Total fitur: </span><span class="si">{</span><span class="n">features_count</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Kelas: 3 (setosa, versicolor, virginica)&quot;</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">LANGKAH SELANJUTNYA:&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   1. Modeling dengan PyCaret&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   2. Evaluasi performa model&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   3. Pilih model terbaik&quot;</span><span class="p">)</span>
-
-<span class="k">if</span> <span class="s1">&#39;df_pycaret&#39;</span> <span class="ow">in</span> <span class="nb">locals</span><span class="p">()</span> <span class="ow">and</span> <span class="n">df_pycaret</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">✓ Data siap untuk modeling!&quot;</span><span class="p">)</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">⚠ Jalankan semua cell preprocessing dulu&quot;</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1672,13 +1660,13 @@ REKOMENDATION UNTUK NEXT NOTEBOOK:
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">PrepocessingData</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Prepocessing Data</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#import-libraries-dan-setup-environment">1. Import Libraries dan Setup Environment</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#load-data-dan-hasil-outlier-detection">2. Load Data dan Hasil Outlier Detection</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#outlier-removal-dan-imputation-dengan-visualisasi">3. Outlier Removal dan Imputation dengan Visualisasi</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-scaling-dan-engineering">4. Feature Scaling dan Engineering</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#train-test-split-dan-persiapan-final">5. Train-Test Split dan Persiapan Final</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-dan-next-steps">6. Summary dan Next Steps</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">6. Summary</a></li>
 </ul>
 
   </nav></div>
