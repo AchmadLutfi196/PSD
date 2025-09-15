@@ -1,0 +1,1515 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>1. Import Libraries dan Setup Environment &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'PreposesingData';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="My sample book - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="My sample book - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Tentang Saya
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="BusinessProblem.html">Business Problem</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="DataUnderstanding.html">Data Understanding</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="ExplorasiData.html">Eksplorasi Data</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="PowerBI.html">POwer BI Eksplorasi Data Iris</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FPreposesingData.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/PreposesingData.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>1. Import Libraries dan Setup Environment</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">1. Import Libraries dan Setup Environment</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#load-data-dan-hasil-outlier-detection">2. Load Data dan Hasil Outlier Detection</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#outlier-treatment-strategies">3. Outlier Treatment Strategies</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-scaling-dan-engineering">4. Feature Scaling dan Engineering</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#train-test-split-dan-persiapan-final">5. Train-Test Split dan Persiapan Final</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-dan-next-steps">6. Summary dan Next Steps</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Data Preprocessing</span>
+<span class="c1"># Notebook ini berisi tahap preprocessing data untuk dataset Iris berdasarkan hasil analisis dari DataUnderstanding notebook, termasuk penanganan outliers yang terdeteksi oleh multi-model PyCaret (ABOD, KNN, COF).</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;DATA PREPROCESSING NOTEBOOK&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tahap preprocessing data untuk dataset Iris&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Berdasarkan hasil analisis dari DataUnderstanding notebook&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Penanganan outliers dari multi-model PyCaret (ABOD, KNN, COF)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>DATA PREPROCESSING NOTEBOOK
+==================================================
+Tahap preprocessing data untuk dataset Iris
+Berdasarkan hasil analisis dari DataUnderstanding notebook
+Penanganan outliers dari multi-model PyCaret (ABOD, KNN, COF)
+</pre></div>
+</div>
+</div>
+</div>
+<section id="import-libraries-dan-setup-environment">
+<h1>1. Import Libraries dan Setup Environment<a class="headerlink" href="#import-libraries-dan-setup-environment" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import libraries yang diperlukan untuk preprocessing</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">StandardScaler</span><span class="p">,</span> <span class="n">MinMaxScaler</span><span class="p">,</span> <span class="n">RobustScaler</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">LabelEncoder</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+
+<span class="c1"># Import PyCaret untuk preprocessing dan modeling</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">pycaret.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_data</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">pycaret.classification</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">pycaret.anomaly</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;PyCaret berhasil diimport&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;PyCaret tidak tersedia. Install dengan: pip install pycaret&quot;</span><span class="p">)</span>
+
+<span class="c1"># Atur style untuk visualisasi</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;default&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_palette</span><span class="p">(</span><span class="s2">&quot;husl&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Libraries berhasil diimport untuk preprocessing&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Libraries yang tersedia:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   • Pandas &amp; NumPy: Data manipulation&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   • Matplotlib &amp; Seaborn: Visualisasi&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   • Scikit-learn: Preprocessing tools&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   • PyCaret: Advanced ML preprocessing&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>PyCaret berhasil diimport
+Libraries berhasil diimport untuk preprocessing
+Libraries yang tersedia:
+   • Pandas &amp; NumPy: Data manipulation
+   • Matplotlib &amp; Seaborn: Visualisasi
+   • Scikit-learn: Preprocessing tools
+   • PyCaret: Advanced ML preprocessing
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="load-data-dan-hasil-outlier-detection">
+<h1>2. Load Data dan Hasil Outlier Detection<a class="headerlink" href="#load-data-dan-hasil-outlier-detection" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load dataset Iris dengan hasil outlier detection dari DataUnderstanding</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== LOADING DATA DAN HASIL OUTLIER DETECTION ===&quot;</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="c1"># Load data dari file CSV atau PyCaret</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Coba load dari file lokal</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data_iris.csv&#39;</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;;&#39;</span><span class="p">)</span>
+        
+        <span class="c1"># Konversi kolom numerik yang menggunakan koma sebagai decimal separator</span>
+        <span class="n">numeric_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sepal length&#39;</span><span class="p">,</span> <span class="s1">&#39;sepal width&#39;</span><span class="p">,</span> <span class="s1">&#39;petal length&#39;</span><span class="p">,</span> <span class="s1">&#39;petal width&#39;</span><span class="p">]</span>
+        
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">numeric_columns</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+                <span class="c1"># Konversi koma ke titik untuk decimal</span>
+                <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+        
+        <span class="c1"># Buat kolom species numerik dan species name</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Class&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">({</span><span class="s1">&#39;Iris-setosa&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Iris-versicolor&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Iris-virginica&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">})</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;species_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Class&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">({</span><span class="s1">&#39;Iris-setosa&#39;</span><span class="p">:</span> <span class="s1">&#39;setosa&#39;</span><span class="p">,</span> <span class="s1">&#39;Iris-versicolor&#39;</span><span class="p">:</span> <span class="s1">&#39;versicolor&#39;</span><span class="p">,</span> <span class="s1">&#39;Iris-virginica&#39;</span><span class="p">:</span> <span class="s1">&#39;virginica&#39;</span><span class="p">})</span>
+        
+        <span class="c1"># Rename kolom untuk konsistensi dengan format sklearn</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span>
+            <span class="s1">&#39;sepal length&#39;</span><span class="p">:</span> <span class="s1">&#39;sepal length (cm)&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;sepal width&#39;</span><span class="p">:</span> <span class="s1">&#39;sepal width (cm)&#39;</span><span class="p">,</span> 
+            <span class="s1">&#39;petal length&#39;</span><span class="p">:</span> <span class="s1">&#39;petal length (cm)&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;petal width&#39;</span><span class="p">:</span> <span class="s1">&#39;petal width (cm)&#39;</span>
+        <span class="p">})</span>
+        
+        <span class="c1"># Drop kolom yang tidak diperlukan</span>
+        <span class="k">if</span> <span class="s1">&#39;id&#39;</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">&#39;Class&#39;</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;Class&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Dataset Iris berhasil dimuat dari data_iris.csv&quot;</span><span class="p">)</span>
+        
+    <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+        <span class="c1"># Jika file tidak ditemukan, gunakan dataset Iris dari PyCaret</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;File lokal tidak ditemukan. Menggunakan dataset Iris dari PyCaret...&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;iris&#39;</span><span class="p">)</span>
+            <span class="n">df</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">({</span><span class="s1">&#39;setosa&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;versicolor&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;virginica&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">})</span>
+            <span class="n">df</span><span class="p">[</span><span class="s1">&#39;species_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">({</span><span class="mi">0</span><span class="p">:</span> <span class="s1">&#39;setosa&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="s1">&#39;versicolor&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s1">&#39;virginica&#39;</span><span class="p">})</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Dataset Iris berhasil dimuat dari PyCaret&quot;</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: Tidak dapat memuat dataset dari PyCaret&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Define feature columns</span>
+    <span class="n">features</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sepal length (cm)&#39;</span><span class="p">,</span> <span class="s1">&#39;sepal width (cm)&#39;</span><span class="p">,</span> <span class="s1">&#39;petal length (cm)&#39;</span><span class="p">,</span> <span class="s1">&#39;petal width (cm)&#39;</span><span class="p">]</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Info Dataset:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Ukuran: </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> baris, </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> kolom&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Features: </span><span class="si">{</span><span class="n">features</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Target: species (0=setosa, 1=versicolor, 2=virginica)&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Tampilkan sample data</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Sample Data:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+    
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error loading data: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="kc">None</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== LOADING DATA DAN HASIL OUTLIER DETECTION ===
+Dataset Iris berhasil dimuat dari data_iris.csv
+
+Info Dataset:
+   • Ukuran: 150 baris, 6 kolom
+   • Features: [&#39;sepal length (cm)&#39;, &#39;sepal width (cm)&#39;, &#39;petal length (cm)&#39;, &#39;petal width (cm)&#39;]
+   • Target: species (0=setosa, 1=versicolor, 2=virginica)
+
+Sample Data:
+   sepal length (cm)  sepal width (cm)  petal length (cm)  petal width (cm)  \
+0                5.1               3.5                1.4               0.2   
+1                4.9               3.0                1.4               0.2   
+2                4.7               3.2                1.3               0.2   
+3                4.6               3.1                1.5               0.2   
+4                5.0               3.6                1.4               0.2   
+
+   species species_name  
+0        0       setosa  
+1        0       setosa  
+2        0       setosa  
+3        0       setosa  
+4        0       setosa  
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Simulasi hasil outlier detection dari DataUnderstanding</span>
+<span class="c1"># Berdasarkan hasil multi-model PyCaret (ABOD, KNN, COF)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== SIMULASI HASIL OUTLIER DETECTION DARI DATAUNDERSTANDING ===&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">df</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="c1"># Hasil outlier detection berdasarkan analisis DataUnderstanding</span>
+    <span class="c1"># ABOD: [41, 62, 100, 106, 108, 117, 131, 134]</span>
+    <span class="c1"># KNN:  [41, 57, 98, 106, 109, 117, 118, 131]  </span>
+    <span class="c1"># COF:  [14, 15, 22, 33, 41, 44, 106, 117]</span>
+    
+    <span class="n">outlier_results</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;abod&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">41</span><span class="p">,</span> <span class="mi">62</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">106</span><span class="p">,</span> <span class="mi">108</span><span class="p">,</span> <span class="mi">117</span><span class="p">,</span> <span class="mi">131</span><span class="p">,</span> <span class="mi">134</span><span class="p">],</span>
+        <span class="s1">&#39;knn&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">41</span><span class="p">,</span> <span class="mi">57</span><span class="p">,</span> <span class="mi">98</span><span class="p">,</span> <span class="mi">106</span><span class="p">,</span> <span class="mi">109</span><span class="p">,</span> <span class="mi">117</span><span class="p">,</span> <span class="mi">118</span><span class="p">,</span> <span class="mi">131</span><span class="p">],</span>
+        <span class="s1">&#39;cof&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">14</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">106</span><span class="p">,</span> <span class="mi">117</span><span class="p">]</span>
+    <span class="p">}</span>
+    
+    <span class="c1"># Create outlier columns</span>
+    <span class="k">for</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">outlier_indices</span> <span class="ow">in</span> <span class="n">outlier_results</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">df</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s1">_outlier&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">outlier_indices</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s1">_outlier&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    
+    <span class="c1"># Calculate consensus scores</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;consensus_score&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;abod_outlier&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;knn_outlier&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;cof_outlier&#39;</span><span class="p">]</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;strong_consensus&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;consensus_score&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;perfect_consensus&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;consensus_score&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    
+    <span class="c1"># Analisis hasil outlier detection</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Hasil Outlier Detection dari DataUnderstanding:&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">outlier_indices</span> <span class="ow">in</span> <span class="n">outlier_results</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">outlier_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">outlier_indices</span><span class="p">)</span>
+        <span class="n">outlier_pct</span> <span class="o">=</span> <span class="p">(</span><span class="n">outlier_count</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">))</span> <span class="o">*</span> <span class="mi">100</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • </span><span class="si">{</span><span class="n">model_name</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">outlier_count</span><span class="si">}</span><span class="s2"> outliers (</span><span class="si">{</span><span class="n">outlier_pct</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%)&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;     Indices: </span><span class="si">{</span><span class="n">outlier_indices</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Consensus analysis</span>
+    <span class="n">consensus_stats</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;consensus_score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Consensus Analysis:&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">score</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">consensus_stats</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">pct</span> <span class="o">=</span> <span class="p">(</span><span class="n">count</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">))</span> <span class="o">*</span> <span class="mi">100</span>
+        <span class="k">if</span> <span class="n">score</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Normal (0 models): </span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2"> data (</span><span class="si">{</span><span class="n">pct</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%)&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • </span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">score</span><span class="p">)</span><span class="si">}</span><span class="s2"> model(s) agree: </span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2"> data (</span><span class="si">{</span><span class="n">pct</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%)&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Strong consensus outliers</span>
+    <span class="n">strong_consensus_count</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;strong_consensus&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">strong_consensus_indices</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;strong_consensus&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Strong Consensus Outliers (≥2 models agree):&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Count: </span><span class="si">{</span><span class="n">strong_consensus_count</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">strong_consensus_count</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%)&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Indices: </span><span class="si">{</span><span class="n">strong_consensus_indices</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Perfect consensus outliers</span>
+    <span class="n">perfect_consensus_count</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;perfect_consensus&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">perfect_consensus_indices</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;perfect_consensus&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Perfect Consensus Outliers (all models agree):&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Count: </span><span class="si">{</span><span class="n">perfect_consensus_count</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">perfect_consensus_count</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%)&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Indices: </span><span class="si">{</span><span class="n">perfect_consensus_indices</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tidak dapat melakukan analisis outlier karena data tidak berhasil dimuat&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== SIMULASI HASIL OUTLIER DETECTION DARI DATAUNDERSTANDING ===
+
+Hasil Outlier Detection dari DataUnderstanding:
+   • ABOD: 8 outliers (5.3%)
+     Indices: [41, 62, 100, 106, 108, 117, 131, 134]
+   • KNN: 8 outliers (5.3%)
+     Indices: [41, 57, 98, 106, 109, 117, 118, 131]
+   • COF: 8 outliers (5.3%)
+     Indices: [14, 15, 22, 33, 41, 44, 106, 117]
+
+Consensus Analysis:
+   • Normal (0 models): 133 data (88.7%)
+   • 1 model(s) agree: 13 data (8.7%)
+   • 2 model(s) agree: 1 data (0.7%)
+   • 3 model(s) agree: 3 data (2.0%)
+
+Strong Consensus Outliers (≥2 models agree):
+   • Count: 4 (2.7%)
+   • Indices: [41, 106, 117, 131]
+
+Perfect Consensus Outliers (all models agree):
+   • Count: 3 (2.0%)
+   • Indices: [41, 106, 117]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="outlier-treatment-strategies">
+<h1>3. Outlier Treatment Strategies<a class="headerlink" href="#outlier-treatment-strategies" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Strategi Penanganan Outliers berdasarkan Consensus Analysis</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== STRATEGI PENANGANAN OUTLIERS ===&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">df</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="s1">&#39;consensus_score&#39;</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+    
+    <span class="c1"># Buat beberapa versi dataset dengan treatment berbeda</span>
+    <span class="n">datasets</span> <span class="o">=</span> <span class="p">{}</span>
+    
+    <span class="c1"># Dataset 1: Original (tidak ada treatment)</span>
+    <span class="n">datasets</span><span class="p">[</span><span class="s1">&#39;original&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    
+    <span class="c1"># Dataset 2: Remove Strong Consensus Outliers (≥2 models agree)</span>
+    <span class="n">datasets</span><span class="p">[</span><span class="s1">&#39;remove_strong&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;strong_consensus&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    
+    <span class="c1"># Dataset 3: Remove Perfect Consensus Outliers (all 3 models agree)</span>
+    <span class="n">datasets</span><span class="p">[</span><span class="s1">&#39;remove_perfect&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;perfect_consensus&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    
+    <span class="c1"># Dataset 4: Cap outliers menggunakan IQR method pada strong consensus</span>
+    <span class="n">datasets</span><span class="p">[</span><span class="s1">&#39;cap_outliers&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    
+    <span class="c1"># Untuk dataset cap_outliers, ganti nilai outliers dengan batas IQR</span>
+    <span class="n">strong_outlier_mask</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;strong_consensus&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">features</span><span class="p">:</span>
+        <span class="n">Q1</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.25</span><span class="p">)</span>
+        <span class="n">Q3</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.75</span><span class="p">)</span>
+        <span class="n">IQR</span> <span class="o">=</span> <span class="n">Q3</span> <span class="o">-</span> <span class="n">Q1</span>
+        <span class="n">lower_bound</span> <span class="o">=</span> <span class="n">Q1</span> <span class="o">-</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">IQR</span>
+        <span class="n">upper_bound</span> <span class="o">=</span> <span class="n">Q3</span> <span class="o">+</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">IQR</span>
+        
+        <span class="c1"># Cap outliers</span>
+        <span class="n">datasets</span><span class="p">[</span><span class="s1">&#39;cap_outliers&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">strong_outlier_mask</span><span class="p">,</span> <span class="n">feature</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span>
+            <span class="n">datasets</span><span class="p">[</span><span class="s1">&#39;cap_outliers&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">strong_outlier_mask</span><span class="p">,</span> <span class="n">feature</span><span class="p">],</span>
+            <span class="n">lower_bound</span><span class="p">,</span> <span class="n">upper_bound</span>
+        <span class="p">)</span>
+    
+    <span class="c1"># Dataset 5: Winsorization (cap pada percentile 5-95)</span>
+    <span class="n">datasets</span><span class="p">[</span><span class="s1">&#39;winsorize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">features</span><span class="p">:</span>
+        <span class="n">p5</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)</span>
+        <span class="n">p95</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.95</span><span class="p">)</span>
+        <span class="n">datasets</span><span class="p">[</span><span class="s1">&#39;winsorize&#39;</span><span class="p">][</span><span class="n">feature</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">datasets</span><span class="p">[</span><span class="s1">&#39;winsorize&#39;</span><span class="p">][</span><span class="n">feature</span><span class="p">],</span> <span class="n">p5</span><span class="p">,</span> <span class="n">p95</span><span class="p">)</span>
+    
+    <span class="c1"># Analisis dampak setiap treatment</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Analisis Dampak Treatment Outliers:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;Strategy&#39;</span><span class="si">:</span><span class="s2">&lt;20</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;Samples&#39;</span><span class="si">:</span><span class="s2">&lt;10</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;Outliers Removed&#39;</span><span class="si">:</span><span class="s2">&lt;18</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;% Removed&#39;</span><span class="si">:</span><span class="s2">&lt;12</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">65</span><span class="p">)</span>
+    
+    <span class="n">original_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">datasets</span><span class="p">[</span><span class="s1">&#39;original&#39;</span><span class="p">])</span>
+    
+    <span class="k">for</span> <span class="n">strategy</span><span class="p">,</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="n">datasets</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">current_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+        <span class="n">removed_count</span> <span class="o">=</span> <span class="n">original_count</span> <span class="o">-</span> <span class="n">current_count</span>
+        <span class="n">removed_pct</span> <span class="o">=</span> <span class="p">(</span><span class="n">removed_count</span> <span class="o">/</span> <span class="n">original_count</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
+        
+        <span class="n">strategy_name</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;original&#39;</span><span class="p">:</span> <span class="s1">&#39;Original&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;remove_strong&#39;</span><span class="p">:</span> <span class="s1">&#39;Remove Strong&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;remove_perfect&#39;</span><span class="p">:</span> <span class="s1">&#39;Remove Perfect&#39;</span><span class="p">,</span> 
+            <span class="s1">&#39;cap_outliers&#39;</span><span class="p">:</span> <span class="s1">&#39;Cap IQR&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;winsorize&#39;</span><span class="p">:</span> <span class="s1">&#39;Winsorization&#39;</span>
+        <span class="p">}</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">strategy</span><span class="p">,</span> <span class="n">strategy</span><span class="p">)</span>
+        
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">strategy_name</span><span class="si">:</span><span class="s2">&lt;20</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">current_count</span><span class="si">:</span><span class="s2">&lt;10</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">removed_count</span><span class="si">:</span><span class="s2">&lt;18</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">removed_pct</span><span class="si">:</span><span class="s2">&lt;11.1f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Tampilkan statistik deskriptif untuk perbandingan</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Perbandingan Statistik Deskriptif (Sepal Length):&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;Strategy&#39;</span><span class="si">:</span><span class="s2">&lt;20</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;Mean&#39;</span><span class="si">:</span><span class="s2">&lt;8</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;Std&#39;</span><span class="si">:</span><span class="s2">&lt;8</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;Min&#39;</span><span class="si">:</span><span class="s2">&lt;8</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;Max&#39;</span><span class="si">:</span><span class="s2">&lt;8</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">55</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">strategy</span><span class="p">,</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="n">datasets</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">feature</span> <span class="o">=</span> <span class="s1">&#39;sepal length (cm)&#39;</span>
+            <span class="n">stats</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+            <span class="n">strategy_name</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;original&#39;</span><span class="p">:</span> <span class="s1">&#39;Original&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;remove_strong&#39;</span><span class="p">:</span> <span class="s1">&#39;Remove Strong&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;remove_perfect&#39;</span><span class="p">:</span> <span class="s1">&#39;Remove Perfect&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;cap_outliers&#39;</span><span class="p">:</span> <span class="s1">&#39;Cap IQR&#39;</span><span class="p">,</span> 
+                <span class="s1">&#39;winsorize&#39;</span><span class="p">:</span> <span class="s1">&#39;Winsorization&#39;</span>
+            <span class="p">}</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">strategy</span><span class="p">,</span> <span class="n">strategy</span><span class="p">)</span>
+            
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">strategy_name</span><span class="si">:</span><span class="s2">&lt;20</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">&lt;7.2f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;std&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">&lt;7.2f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;min&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">&lt;7.2f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;max&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">&lt;7.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Rekomendasi strategy</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">REKOMENDASI TREATMENT STRATEGY:&quot;</span><span class="p">)</span>
+    
+    <span class="n">strong_consensus_count</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;strong_consensus&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">perfect_consensus_count</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;perfect_consensus&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">strong_pct</span> <span class="o">=</span> <span class="p">(</span><span class="n">strong_consensus_count</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">))</span> <span class="o">*</span> <span class="mi">100</span>
+    <span class="n">perfect_pct</span> <span class="o">=</span> <span class="p">(</span><span class="n">perfect_consensus_count</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">))</span> <span class="o">*</span> <span class="mi">100</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">   Berdasarkan analisis outlier detection:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Strong consensus outliers: </span><span class="si">{</span><span class="n">strong_consensus_count</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">strong_pct</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%)&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Perfect consensus outliers: </span><span class="si">{</span><span class="n">perfect_consensus_count</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">perfect_pct</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%)&quot;</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">perfect_pct</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">recommended_strategy</span> <span class="o">=</span> <span class="s1">&#39;original&#39;</span>
+        <span class="n">reason</span> <span class="o">=</span> <span class="s2">&quot;Outlier percentage sangat rendah, dataset berkualitas baik&quot;</span>
+    <span class="k">elif</span> <span class="n">strong_pct</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
+        <span class="n">recommended_strategy</span> <span class="o">=</span> <span class="s1">&#39;cap_outliers&#39;</span>
+        <span class="n">reason</span> <span class="o">=</span> <span class="s2">&quot;Outlier moderate, capping lebih baik dari removal&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">recommended_strategy</span> <span class="o">=</span> <span class="s1">&#39;remove_strong&#39;</span>
+        <span class="n">reason</span> <span class="o">=</span> <span class="s2">&quot;Outlier tinggi, perlu removal untuk model stability&quot;</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">   STRATEGI YANG DIREKOMENDASIKAN: </span><span class="si">{</span><span class="n">recommended_strategy</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Alasan: </span><span class="si">{</span><span class="n">reason</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Untuk Iris dataset yang natural, kita pilih strategi yang mempertahankan data</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">   KHUSUS UNTUK IRIS DATASET:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Outliers mungkin merupakan variasi natural bunga iris&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Untuk klasifikasi, outliers dapat membantu model robustness&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Direkomendasikan: ORIGINAL atau CAP_OUTLIERS&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Simpan dataset yang direkomendasikan</span>
+    <span class="k">if</span> <span class="n">recommended_strategy</span> <span class="ow">in</span> <span class="n">datasets</span><span class="p">:</span>
+        <span class="n">df_processed</span> <span class="o">=</span> <span class="n">datasets</span><span class="p">[</span><span class="n">recommended_strategy</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Dataset processed dengan strategi &#39;</span><span class="si">{</span><span class="n">recommended_strategy</span><span class="si">}</span><span class="s2">&#39; siap digunakan&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">df_processed</span> <span class="o">=</span> <span class="n">datasets</span><span class="p">[</span><span class="s1">&#39;original&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Menggunakan dataset original sebagai fallback&quot;</span><span class="p">)</span>
+        
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tidak dapat melakukan treatment outliers karena data atau hasil outlier tidak tersedia&quot;</span><span class="p">)</span>
+    <span class="n">df_processed</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="k">if</span> <span class="n">df</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== STRATEGI PENANGANAN OUTLIERS ===
+
+Analisis Dampak Treatment Outliers:
+Strategy             Samples    Outliers Removed   % Removed   
+-----------------------------------------------------------------
+Original             150        0                  0.0        %
+Remove Strong        146        4                  2.7        %
+Remove Perfect       147        3                  2.0        %
+Cap IQR              150        0                  0.0        %
+Winsorization        150        0                  0.0        %
+
+Perbandingan Statistik Deskriptif (Sepal Length):
+Strategy             Mean     Std      Min      Max     
+-------------------------------------------------------
+Original             5.84    0.83    4.30    7.90   
+Remove Strong        5.83    0.80    4.30    7.70   
+Remove Perfect       5.85    0.81    4.30    7.90   
+Cap IQR              5.84    0.83    4.30    7.90   
+Winsorization        5.83    0.78    4.60    7.25   
+
+REKOMENDASI TREATMENT STRATEGY:
+
+   Berdasarkan analisis outlier detection:
+   • Strong consensus outliers: 4 (2.7%)
+   • Perfect consensus outliers: 3 (2.0%)
+
+   STRATEGI YANG DIREKOMENDASIKAN: CAP_OUTLIERS
+   Alasan: Outlier moderate, capping lebih baik dari removal
+
+   KHUSUS UNTUK IRIS DATASET:
+   • Outliers mungkin merupakan variasi natural bunga iris
+   • Untuk klasifikasi, outliers dapat membantu model robustness
+   • Direkomendasikan: ORIGINAL atau CAP_OUTLIERS
+
+Dataset processed dengan strategi &#39;cap_outliers&#39; siap digunakan
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="feature-scaling-dan-engineering">
+<h1>4. Feature Scaling dan Engineering<a class="headerlink" href="#feature-scaling-dan-engineering" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Feature Scaling dan Engineering berdasarkan insights dari DataUnderstanding</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== FEATURE SCALING DAN ENGINEERING ===&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">df_processed</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    
+    <span class="c1"># Analisis distribusi fitur untuk menentukan scaling method</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Analisis Distribusi Fitur untuk Scaling:&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">features</span><span class="p">:</span>
+        <span class="n">stats</span> <span class="o">=</span> <span class="n">df_processed</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+        <span class="n">skewness</span> <span class="o">=</span> <span class="n">df_processed</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span><span class="o">.</span><span class="n">skew</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • </span><span class="si">{</span><span class="n">feature</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;(&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="si">}</span><span class="s2">: Mean=</span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, Std=</span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;std&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, Skew=</span><span class="si">{</span><span class="n">skewness</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Buat beberapa versi scaling</span>
+    <span class="n">scaling_methods</span> <span class="o">=</span> <span class="p">{}</span>
+    
+    <span class="c1"># 1. StandardScaler (Z-score normalization)</span>
+    <span class="n">scaler_standard</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+    <span class="n">df_standard</span> <span class="o">=</span> <span class="n">df_processed</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">df_standard</span><span class="p">[</span><span class="n">features</span><span class="p">]</span> <span class="o">=</span> <span class="n">scaler_standard</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df_processed</span><span class="p">[</span><span class="n">features</span><span class="p">])</span>
+    <span class="n">scaling_methods</span><span class="p">[</span><span class="s1">&#39;standard&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="n">df_standard</span><span class="p">,</span>
+        <span class="s1">&#39;scaler&#39;</span><span class="p">:</span> <span class="n">scaler_standard</span><span class="p">,</span>
+        <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;StandardScaler (Mean=0, Std=1)&#39;</span>
+    <span class="p">}</span>
+    
+    <span class="c1"># 2. MinMaxScaler (0-1 normalization)</span>
+    <span class="n">scaler_minmax</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">()</span>
+    <span class="n">df_minmax</span> <span class="o">=</span> <span class="n">df_processed</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">df_minmax</span><span class="p">[</span><span class="n">features</span><span class="p">]</span> <span class="o">=</span> <span class="n">scaler_minmax</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df_processed</span><span class="p">[</span><span class="n">features</span><span class="p">])</span>
+    <span class="n">scaling_methods</span><span class="p">[</span><span class="s1">&#39;minmax&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="n">df_minmax</span><span class="p">,</span>
+        <span class="s1">&#39;scaler&#39;</span><span class="p">:</span> <span class="n">scaler_minmax</span><span class="p">,</span>
+        <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;MinMaxScaler (Range 0-1)&#39;</span>
+    <span class="p">}</span>
+    
+    <span class="c1"># 3. RobustScaler (robust to outliers)</span>
+    <span class="n">scaler_robust</span> <span class="o">=</span> <span class="n">RobustScaler</span><span class="p">()</span>
+    <span class="n">df_robust</span> <span class="o">=</span> <span class="n">df_processed</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">df_robust</span><span class="p">[</span><span class="n">features</span><span class="p">]</span> <span class="o">=</span> <span class="n">scaler_robust</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df_processed</span><span class="p">[</span><span class="n">features</span><span class="p">])</span>
+    <span class="n">scaling_methods</span><span class="p">[</span><span class="s1">&#39;robust&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="n">df_robust</span><span class="p">,</span>
+        <span class="s1">&#39;scaler&#39;</span><span class="p">:</span> <span class="n">scaler_robust</span><span class="p">,</span>
+        <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;RobustScaler (Median &amp; IQR based)&#39;</span>
+    <span class="p">}</span>
+    
+    <span class="c1"># 4. No scaling (original)</span>
+    <span class="n">scaling_methods</span><span class="p">[</span><span class="s1">&#39;none&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="n">df_processed</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span>
+        <span class="s1">&#39;scaler&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;No Scaling (Original values)&#39;</span>
+    <span class="p">}</span>
+    
+    <span class="c1"># Analisis hasil scaling</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Perbandingan Hasil Scaling (Sepal Length):&quot;</span><span class="p">)</span>
+    <span class="n">feature_sample</span> <span class="o">=</span> <span class="s1">&#39;sepal length (cm)&#39;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;Method&#39;</span><span class="si">:</span><span class="s2">&lt;15</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;Mean&#39;</span><span class="si">:</span><span class="s2">&lt;8</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;Std&#39;</span><span class="si">:</span><span class="s2">&lt;8</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;Min&#39;</span><span class="si">:</span><span class="s2">&lt;8</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;Max&#39;</span><span class="si">:</span><span class="s2">&lt;8</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;Range&#39;</span><span class="si">:</span><span class="s2">&lt;8</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">65</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">method_name</span><span class="p">,</span> <span class="n">method_info</span> <span class="ow">in</span> <span class="n">scaling_methods</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">feature_sample</span> <span class="ow">in</span> <span class="n">method_info</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="n">stats</span> <span class="o">=</span> <span class="n">method_info</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="n">feature_sample</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+            <span class="n">range_val</span> <span class="o">=</span> <span class="n">stats</span><span class="p">[</span><span class="s1">&#39;max&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">stats</span><span class="p">[</span><span class="s1">&#39;min&#39;</span><span class="p">]</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">method_name</span><span class="o">.</span><span class="n">title</span><span class="p">()</span><span class="si">:</span><span class="s2">&lt;15</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">&lt;7.3f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;std&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">&lt;7.3f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;min&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">&lt;7.3f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;max&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">&lt;7.3f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">range_val</span><span class="si">:</span><span class="s2">&lt;7.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Feature Engineering berdasarkan insights dari DataUnderstanding</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">FEATURE ENGINEERING:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Berdasarkan analisis korelasi dari DataUnderstanding:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Petal length &amp; petal width memiliki korelasi tinggi&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Sepal width memiliki korelasi rendah dengan fitur lain&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Tambahkan engineered features untuk semua scaling methods</span>
+    <span class="k">for</span> <span class="n">method_name</span><span class="p">,</span> <span class="n">method_info</span> <span class="ow">in</span> <span class="n">scaling_methods</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">df_current</span> <span class="o">=</span> <span class="n">method_info</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span>
+        
+        <span class="c1"># Feature engineering</span>
+        <span class="c1"># 1. Petal area (length × width)</span>
+        <span class="n">df_current</span><span class="p">[</span><span class="s1">&#39;petal_area&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_current</span><span class="p">[</span><span class="s1">&#39;petal length (cm)&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df_current</span><span class="p">[</span><span class="s1">&#39;petal width (cm)&#39;</span><span class="p">]</span>
+        
+        <span class="c1"># 2. Sepal area (length × width)  </span>
+        <span class="n">df_current</span><span class="p">[</span><span class="s1">&#39;sepal_area&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_current</span><span class="p">[</span><span class="s1">&#39;sepal length (cm)&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df_current</span><span class="p">[</span><span class="s1">&#39;sepal width (cm)&#39;</span><span class="p">]</span>
+        
+        <span class="c1"># 3. Petal to sepal ratio</span>
+        <span class="n">df_current</span><span class="p">[</span><span class="s1">&#39;petal_sepal_length_ratio&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_current</span><span class="p">[</span><span class="s1">&#39;petal length (cm)&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df_current</span><span class="p">[</span><span class="s1">&#39;sepal length (cm)&#39;</span><span class="p">]</span>
+        <span class="n">df_current</span><span class="p">[</span><span class="s1">&#39;petal_sepal_width_ratio&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_current</span><span class="p">[</span><span class="s1">&#39;petal width (cm)&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df_current</span><span class="p">[</span><span class="s1">&#39;sepal width (cm)&#39;</span><span class="p">]</span>
+        
+        <span class="c1"># 4. Total area</span>
+        <span class="n">df_current</span><span class="p">[</span><span class="s1">&#39;total_area&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_current</span><span class="p">[</span><span class="s1">&#39;petal_area&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">df_current</span><span class="p">[</span><span class="s1">&#39;sepal_area&#39;</span><span class="p">]</span>
+        
+        <span class="c1"># 5. Aspect ratios</span>
+        <span class="n">df_current</span><span class="p">[</span><span class="s1">&#39;petal_aspect_ratio&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_current</span><span class="p">[</span><span class="s1">&#39;petal length (cm)&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="n">df_current</span><span class="p">[</span><span class="s1">&#39;petal width (cm)&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mf">1e-8</span><span class="p">)</span>
+        <span class="n">df_current</span><span class="p">[</span><span class="s1">&#39;sepal_aspect_ratio&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_current</span><span class="p">[</span><span class="s1">&#39;sepal length (cm)&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="n">df_current</span><span class="p">[</span><span class="s1">&#39;sepal width (cm)&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mf">1e-8</span><span class="p">)</span>
+        
+        <span class="c1"># Update method info</span>
+        <span class="n">scaling_methods</span><span class="p">[</span><span class="n">method_name</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_current</span>
+    
+    <span class="c1"># Update features list</span>
+    <span class="n">engineered_features</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;petal_area&#39;</span><span class="p">,</span> <span class="s1">&#39;sepal_area&#39;</span><span class="p">,</span> <span class="s1">&#39;petal_sepal_length_ratio&#39;</span><span class="p">,</span> 
+        <span class="s1">&#39;petal_sepal_width_ratio&#39;</span><span class="p">,</span> <span class="s1">&#39;total_area&#39;</span><span class="p">,</span> <span class="s1">&#39;petal_aspect_ratio&#39;</span><span class="p">,</span> <span class="s1">&#39;sepal_aspect_ratio&#39;</span>
+    <span class="p">]</span>
+    
+    <span class="n">all_features</span> <span class="o">=</span> <span class="n">features</span> <span class="o">+</span> <span class="n">engineered_features</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Feature Engineering Completed:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Original features: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">features</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Engineered features: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">engineered_features</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Total features: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">all_features</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Engineered Features:&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">feat</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">engineered_features</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">. </span><span class="si">{</span><span class="n">feat</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Rekomendasi scaling method</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">REKOMENDASI SCALING METHOD:&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Untuk Iris dataset dengan outliers yang sudah ditangani</span>
+    <span class="k">if</span> <span class="s1">&#39;strong_consensus&#39;</span> <span class="ow">in</span> <span class="n">df_processed</span><span class="o">.</span><span class="n">columns</span> <span class="ow">and</span> <span class="n">df_processed</span><span class="p">[</span><span class="s1">&#39;strong_consensus&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">recommended_scaling</span> <span class="o">=</span> <span class="s1">&#39;robust&#39;</span>
+        <span class="n">reason</span> <span class="o">=</span> <span class="s2">&quot;RobustScaler direkomendasikan karena masih ada outliers&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">recommended_scaling</span> <span class="o">=</span> <span class="s1">&#39;standard&#39;</span>
+        <span class="n">reason</span> <span class="o">=</span> <span class="s2">&quot;StandardScaler optimal untuk data yang sudah bersih&quot;</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   METODE YANG DIREKOMENDASIKAN: </span><span class="si">{</span><span class="n">recommended_scaling</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Alasan: </span><span class="si">{</span><span class="n">reason</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Deskripsi: </span><span class="si">{</span><span class="n">scaling_methods</span><span class="p">[</span><span class="n">recommended_scaling</span><span class="p">][</span><span class="s1">&#39;description&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Pilih dataset final</span>
+    <span class="n">df_final</span> <span class="o">=</span> <span class="n">scaling_methods</span><span class="p">[</span><span class="n">recommended_scaling</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">final_scaler</span> <span class="o">=</span> <span class="n">scaling_methods</span><span class="p">[</span><span class="n">recommended_scaling</span><span class="p">][</span><span class="s1">&#39;scaler&#39;</span><span class="p">]</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Dataset final dengan </span><span class="si">{</span><span class="n">recommended_scaling</span><span class="si">}</span><span class="s2"> scaling siap untuk modeling&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shape: </span><span class="si">{</span><span class="n">df_final</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Features: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">all_features</span><span class="p">)</span><span class="si">}</span><span class="s2"> total features&quot;</span><span class="p">)</span>
+    
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tidak dapat melakukan feature scaling karena data processed tidak tersedia&quot;</span><span class="p">)</span>
+    <span class="n">df_final</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">final_scaler</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">all_features</span> <span class="o">=</span> <span class="n">features</span> <span class="k">if</span> <span class="s1">&#39;features&#39;</span> <span class="ow">in</span> <span class="nb">locals</span><span class="p">()</span> <span class="k">else</span> <span class="p">[]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== FEATURE SCALING DAN ENGINEERING ===
+
+Analisis Distribusi Fitur untuk Scaling:
+   • sepal length: Mean=5.84, Std=0.83, Skew=0.31
+   • sepal width: Mean=3.05, Std=0.43, Skew=0.33
+   • petal length: Mean=3.76, Std=1.76, Skew=-0.27
+   • petal width: Mean=1.20, Std=0.76, Skew=-0.10
+
+Perbandingan Hasil Scaling (Sepal Length):
+Method          Mean     Std      Min      Max      Range   
+-----------------------------------------------------------------
+Standard        -0.000  1.003   -1.870  2.492   4.362  
+Minmax          0.429   0.230   0.000   1.000   1.000  
+Robust          0.033   0.637   -1.154  1.615   2.769  
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>None            5.843   0.828   4.300   7.900   3.600  
+
+FEATURE ENGINEERING:
+   Berdasarkan analisis korelasi dari DataUnderstanding:
+   • Petal length &amp; petal width memiliki korelasi tinggi
+   • Sepal width memiliki korelasi rendah dengan fitur lain
+
+Feature Engineering Completed:
+   • Original features: 4
+   • Engineered features: 7
+   • Total features: 11
+
+Engineered Features:
+   1. petal_area
+   2. sepal_area
+   3. petal_sepal_length_ratio
+   4. petal_sepal_width_ratio
+   5. total_area
+   6. petal_aspect_ratio
+   7. sepal_aspect_ratio
+
+REKOMENDASI SCALING METHOD:
+   METODE YANG DIREKOMENDASIKAN: ROBUST
+   Alasan: RobustScaler direkomendasikan karena masih ada outliers
+   Deskripsi: RobustScaler (Median &amp; IQR based)
+
+Dataset final dengan robust scaling siap untuk modeling
+Shape: (150, 19)
+Features: 11 total features
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="train-test-split-dan-persiapan-final">
+<h1>5. Train-Test Split dan Persiapan Final<a class="headerlink" href="#train-test-split-dan-persiapan-final" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Train-Test Split dan Persiapan Dataset untuk Modeling</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== TRAIN-TEST SPLIT DAN PERSIAPAN FINAL ===&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">df_final</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    
+    <span class="c1"># Persiapan features dan target</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">df_final</span><span class="p">[</span><span class="n">all_features</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">df_final</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dataset Preparation:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Total samples: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df_final</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Features: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">all_features</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Target classes: </span><span class="si">{</span><span class="n">y</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span><span class="si">}</span><span class="s2"> (setosa=0, versicolor=1, virginica=2)&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Cek distribusi kelas</span>
+    <span class="n">class_distribution</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Class Distribution:&quot;</span><span class="p">)</span>
+    <span class="n">species_names</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="s1">&#39;setosa&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="s1">&#39;versicolor&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s1">&#39;virginica&#39;</span><span class="p">}</span>
+    <span class="k">for</span> <span class="n">class_idx</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">class_distribution</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">pct</span> <span class="o">=</span> <span class="p">(</span><span class="n">count</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">))</span> <span class="o">*</span> <span class="mi">100</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • </span><span class="si">{</span><span class="n">species_names</span><span class="p">[</span><span class="n">class_idx</span><span class="p">]</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2"> samples (</span><span class="si">{</span><span class="n">pct</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%)&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Train-test split dengan stratified sampling</span>
+    <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+        <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> 
+        <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> 
+        <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> 
+        <span class="n">stratify</span><span class="o">=</span><span class="n">y</span>
+    <span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Train-Test Split (80-20 dengan stratified sampling):&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Train set: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span><span class="si">}</span><span class="s2"> samples&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Test set: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span><span class="si">}</span><span class="s2"> samples&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Verifikasi distribusi kelas di train dan test</span>
+    <span class="n">train_dist</span> <span class="o">=</span> <span class="n">y_train</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+    <span class="n">test_dist</span> <span class="o">=</span> <span class="n">y_test</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Distribusi Kelas setelah Split:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;Class&#39;</span><span class="si">:</span><span class="s2">&lt;12</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;Train Count&#39;</span><span class="si">:</span><span class="s2">&lt;12</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;Train %&#39;</span><span class="si">:</span><span class="s2">&lt;10</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;Test Count&#39;</span><span class="si">:</span><span class="s2">&lt;11</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;Test %&#39;</span><span class="si">:</span><span class="s2">&lt;8</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">65</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">class_idx</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]:</span>
+        <span class="n">train_count</span> <span class="o">=</span> <span class="n">train_dist</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">class_idx</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">test_count</span> <span class="o">=</span> <span class="n">test_dist</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">class_idx</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">train_pct</span> <span class="o">=</span> <span class="p">(</span><span class="n">train_count</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_train</span><span class="p">))</span> <span class="o">*</span> <span class="mi">100</span>
+        <span class="n">test_pct</span> <span class="o">=</span> <span class="p">(</span><span class="n">test_count</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_test</span><span class="p">))</span> <span class="o">*</span> <span class="mi">100</span>
+        
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">species_names</span><span class="p">[</span><span class="n">class_idx</span><span class="p">]</span><span class="si">:</span><span class="s2">&lt;12</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">train_count</span><span class="si">:</span><span class="s2">&lt;12</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">train_pct</span><span class="si">:</span><span class="s2">&lt;9.1f</span><span class="si">}</span><span class="s2">% </span><span class="si">{</span><span class="n">test_count</span><span class="si">:</span><span class="s2">&lt;11</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">test_pct</span><span class="si">:</span><span class="s2">&lt;7.1f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Simpan informasi preprocessing untuk reproduksi</span>
+    <span class="n">preprocessing_info</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;outlier_treatment&#39;</span><span class="p">:</span> <span class="s1">&#39;cap_outliers&#39;</span><span class="p">,</span>  <span class="c1"># atau strategy yang dipilih</span>
+        <span class="s1">&#39;scaling_method&#39;</span><span class="p">:</span> <span class="s1">&#39;robust&#39;</span><span class="p">,</span>  <span class="c1"># atau method yang dipilih</span>
+        <span class="s1">&#39;original_features&#39;</span><span class="p">:</span> <span class="n">features</span><span class="p">,</span>
+        <span class="s1">&#39;engineered_features&#39;</span><span class="p">:</span> <span class="n">engineered_features</span><span class="p">,</span>
+        <span class="s1">&#39;all_features&#39;</span><span class="p">:</span> <span class="n">all_features</span><span class="p">,</span>
+        <span class="s1">&#39;scaler&#39;</span><span class="p">:</span> <span class="n">final_scaler</span><span class="p">,</span>
+        <span class="s1">&#39;train_size&#39;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_train</span><span class="p">),</span>
+        <span class="s1">&#39;test_size&#39;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_test</span><span class="p">),</span>
+        <span class="s1">&#39;random_state&#39;</span><span class="p">:</span> <span class="mi">42</span>
+    <span class="p">}</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Preprocessing Information Tersimpan:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Outlier treatment: </span><span class="si">{</span><span class="n">preprocessing_info</span><span class="p">[</span><span class="s1">&#39;outlier_treatment&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Scaling method: </span><span class="si">{</span><span class="n">preprocessing_info</span><span class="p">[</span><span class="s1">&#39;scaling_method&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Total features: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">preprocessing_info</span><span class="p">[</span><span class="s1">&#39;all_features&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Random state: </span><span class="si">{</span><span class="n">preprocessing_info</span><span class="p">[</span><span class="s1">&#39;random_state&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Tampilkan sample dari dataset final</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Sample Data Final (Train Set - First 5 rows):&quot;</span><span class="p">)</span>
+    <span class="n">sample_features</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sepal length (cm)&#39;</span><span class="p">,</span> <span class="s1">&#39;petal length (cm)&#39;</span><span class="p">,</span> <span class="s1">&#39;petal_area&#39;</span><span class="p">,</span> <span class="s1">&#39;total_area&#39;</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">X_train</span><span class="p">[</span><span class="n">sample_features</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Target Labels (Train Set - First 10):&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">y_train</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+    
+    <span class="c1"># PyCaret Data Preparation</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">PERSIAPAN UNTUK PYCARET MODELING:&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Gabungkan X dan y untuk PyCaret</span>
+    <span class="n">df_pycaret</span> <span class="o">=</span> <span class="n">X_train</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">df_pycaret</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_train</span>
+    
+    <span class="c1"># Siapkan test set terpisah untuk evaluasi final</span>
+    <span class="n">df_test_final</span> <span class="o">=</span> <span class="n">X_test</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">df_test_final</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_test</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   df_pycaret: </span><span class="si">{</span><span class="n">df_pycaret</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2"> (untuk training &amp; validation)&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   df_test_final: </span><span class="si">{</span><span class="n">df_test_final</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2"> (untuk final evaluation)&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Target column: &#39;species&#39;&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Feature columns: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">all_features</span><span class="p">)</span><span class="si">}</span><span class="s2"> features&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Summary informasi untuk modeling</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">SUMMARY PREPROCESSING:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Objective: Multi-class classification (3 classes)&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Data quality: High (outliers handled, scaled, engineered)&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Features: Original (4) + Engineered (7) = </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">all_features</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Class balance: Good (stratified split maintained)&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Ready for: PyCaret automated ML pipeline&quot;</span><span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">PREPROCESSING COMPLETED SUCCESSFULLY!&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dataset siap untuk modeling dengan PyCaret&quot;</span><span class="p">)</span>
+    
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tidak dapat melakukan train-test split karena dataset final tidak tersedia&quot;</span><span class="p">)</span>
+    <span class="n">X_train</span> <span class="o">=</span> <span class="n">X_test</span> <span class="o">=</span> <span class="n">y_train</span> <span class="o">=</span> <span class="n">y_test</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">df_pycaret</span> <span class="o">=</span> <span class="n">df_test_final</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">preprocessing_info</span> <span class="o">=</span> <span class="kc">None</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== TRAIN-TEST SPLIT DAN PERSIAPAN FINAL ===
+Dataset Preparation:
+   • Total samples: 150
+   • Features: 11
+   • Target classes: 3 (setosa=0, versicolor=1, virginica=2)
+
+Class Distribution:
+   • setosa: 50 samples (33.3%)
+   • versicolor: 50 samples (33.3%)
+   • virginica: 50 samples (33.3%)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Train-Test Split (80-20 dengan stratified sampling):
+   • Train set: 120 samples
+   • Test set: 30 samples
+
+Distribusi Kelas setelah Split:
+Class        Train Count  Train %    Test Count  Test %  
+-----------------------------------------------------------------
+setosa       40           33.3     % 10          33.3   %
+versicolor   40           33.3     % 10          33.3   %
+virginica    40           33.3     % 10          33.3   %
+
+Preprocessing Information Tersimpan:
+   • Outlier treatment: cap_outliers
+   • Scaling method: robust
+   • Total features: 11
+   • Random state: 42
+
+Sample Data Final (Train Set - First 5 rows):
+     sepal length (cm)  petal length (cm)  petal_area  total_area
+8            -1.076923          -0.842857    0.618095    0.833480
+106          -0.692308           0.042857    0.011429    0.703736
+76            0.769231           0.128571    0.008571   -0.299121
+9            -0.692308          -0.814286    0.651429    0.512967
+89           -0.230769          -0.100000   -0.000000    0.230769
+
+Target Labels (Train Set - First 10):
+[0, 2, 1, 0, 1, 2, 1, 2, 2, 2]
+
+PERSIAPAN UNTUK PYCARET MODELING:
+   df_pycaret: (120, 12) (untuk training &amp; validation)
+   df_test_final: (30, 12) (untuk final evaluation)
+   Target column: &#39;species&#39;
+   Feature columns: 11 features
+
+SUMMARY PREPROCESSING:
+   Objective: Multi-class classification (3 classes)
+   Data quality: High (outliers handled, scaled, engineered)
+   Features: Original (4) + Engineered (7) = 11
+   Class balance: Good (stratified split maintained)
+   Ready for: PyCaret automated ML pipeline
+
+PREPROCESSING COMPLETED SUCCESSFULLY!
+Dataset siap untuk modeling dengan PyCaret
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="summary-dan-next-steps">
+<h1>6. Summary dan Next Steps<a class="headerlink" href="#summary-dan-next-steps" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># SUMMARY PREPROCESSING DAN NEXT STEPS</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;                      SUMMARY DATA PREPROCESSING&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">DATA UNDERSTANDING INTEGRATION:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   Berhasil mengintegrasikan hasil outlier detection dari DataUnderstanding&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   Multi-model outlier detection (ABOD, KNN, COF) dianalisis dan diterapkan&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   Consensus analysis digunakan untuk menentukan treatment strategy&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">PREPROCESSING PIPELINE YANG DILAKUKAN:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   1. Data Loading &amp; Quality Check&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;      • Dataset Iris: 150 samples, 4 original features&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;      • No missing values, no duplicates&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;      • Balanced classes (50 samples each)&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">   2. Outlier Analysis &amp; Treatment&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;      • ABOD detected: 8 outliers (5.3%)&quot;</span><span class="p">)</span>  
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;      • KNN detected: 8 outliers (5.3%)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;      • COF detected: 8 outliers (5.3%)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;      • Consensus approach untuk robust treatment&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">   3. Feature Scaling &amp; Engineering&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;      • Scaling: RobustScaler (optimal untuk outliers)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;      • Original features: 4&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;      • Engineered features: 7 (areas, ratios, aspects)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;      • Total features: 11&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">   4. Train-Test Split&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;      • Stratified split: 80% train, 20% test&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;      • Class distribution maintained&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;      • Random state: 42 (reproducible)&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="s1">&#39;preprocessing_info&#39;</span> <span class="ow">in</span> <span class="nb">locals</span><span class="p">()</span> <span class="ow">and</span> <span class="n">preprocessing_info</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">FINAL DATASET CHARACTERISTICS:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Train samples: </span><span class="si">{</span><span class="n">preprocessing_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;train_size&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;N/A&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Test samples: </span><span class="si">{</span><span class="n">preprocessing_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;test_size&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;N/A&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Features: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">preprocessing_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;all_features&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">[]))</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Classes: 3 (setosa, versicolor, virginica)&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Data quality: High (processed &amp; validated)&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">TECHNICAL SPECIFICATIONS:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Outlier treatment: Based on multi-model consensus&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Scaling method: RobustScaler (median-based, outlier-resistant)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Feature engineering: Domain-specific (botanical measurements)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Cross-validation ready: Stratified sampling applied&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">NEXT STEPS - MODELING PHASE:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   1. Exploratory Data Analysis pada processed data&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   2. PyCaret Setup &amp; Model Comparison&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;      • Setup classification environment&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;      • Compare multiple algorithms automatically&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;      • Hyperparameter tuning &amp; optimization&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">   3. Model Training &amp; Evaluation&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;      • Train best performing models&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;      • Cross-validation (k-fold)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;      • Feature importance analysis&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">   4. Model Validation &amp; Testing&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;      • Final evaluation on test set&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;      • Performance metrics (accuracy, precision, recall, F1)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;      • Confusion matrix analysis&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">   5. Model Deployment Preparation&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;      • Model finalization &amp; saving&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;      • Preprocessing pipeline serialization&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;      • Documentation &amp; deployment notes&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">REKOMENDASI UNTUK MODELING:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Gunakan PyCaret untuk automated ML workflow&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Focus pada ensemble methods (Random Forest, XGBoost)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Monitor overfitting dengan validation curves&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Analyze feature importance untuk interpretability&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">AVAILABLE DATASETS FOR MODELING:&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="s1">&#39;df_pycaret&#39;</span> <span class="ow">in</span> <span class="nb">locals</span><span class="p">()</span> <span class="ow">and</span> <span class="n">df_pycaret</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   df_pycaret: Training data untuk PyCaret setup&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   df_test_final: Hold-out test set untuk final evaluation&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   preprocessing_info: Pipeline metadata untuk reproduksi&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Datasets belum tersedia - run preprocessing cells terlebih dahulu&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">DOCUMENTATION &amp; REPRODUCIBILITY:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • All preprocessing steps documented dengan kode&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Random states fixed untuk reproducibility&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Scaler objects tersimpan untuk inference&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Feature engineering pipeline dapat direplikasi&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;                      PREPROCESSING COMPLETED&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;                    READY FOR MODELING PHASE&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>================================================================================
+                      SUMMARY DATA PREPROCESSING
+================================================================================
+
+DATA UNDERSTANDING INTEGRATION:
+   Berhasil mengintegrasikan hasil outlier detection dari DataUnderstanding
+   Multi-model outlier detection (ABOD, KNN, COF) dianalisis dan diterapkan
+   Consensus analysis digunakan untuk menentukan treatment strategy
+
+PREPROCESSING PIPELINE YANG DILAKUKAN:
+   1. Data Loading &amp; Quality Check
+      • Dataset Iris: 150 samples, 4 original features
+      • No missing values, no duplicates
+      • Balanced classes (50 samples each)
+
+   2. Outlier Analysis &amp; Treatment
+      • ABOD detected: 8 outliers (5.3%)
+      • KNN detected: 8 outliers (5.3%)
+      • COF detected: 8 outliers (5.3%)
+      • Consensus approach untuk robust treatment
+
+   3. Feature Scaling &amp; Engineering
+      • Scaling: RobustScaler (optimal untuk outliers)
+      • Original features: 4
+      • Engineered features: 7 (areas, ratios, aspects)
+      • Total features: 11
+
+   4. Train-Test Split
+      • Stratified split: 80% train, 20% test
+      • Class distribution maintained
+      • Random state: 42 (reproducible)
+
+FINAL DATASET CHARACTERISTICS:
+   • Train samples: 120
+   • Test samples: 30
+   • Features: 11
+   • Classes: 3 (setosa, versicolor, virginica)
+   • Data quality: High (processed &amp; validated)
+
+TECHNICAL SPECIFICATIONS:
+   • Outlier treatment: Based on multi-model consensus
+   • Scaling method: RobustScaler (median-based, outlier-resistant)
+   • Feature engineering: Domain-specific (botanical measurements)
+   • Cross-validation ready: Stratified sampling applied
+
+NEXT STEPS - MODELING PHASE:
+   1. Exploratory Data Analysis pada processed data
+   2. PyCaret Setup &amp; Model Comparison
+      • Setup classification environment
+      • Compare multiple algorithms automatically
+      • Hyperparameter tuning &amp; optimization
+
+   3. Model Training &amp; Evaluation
+      • Train best performing models
+      • Cross-validation (k-fold)
+      • Feature importance analysis
+
+   4. Model Validation &amp; Testing
+      • Final evaluation on test set
+      • Performance metrics (accuracy, precision, recall, F1)
+      • Confusion matrix analysis
+
+   5. Model Deployment Preparation
+      • Model finalization &amp; saving
+      • Preprocessing pipeline serialization
+      • Documentation &amp; deployment notes
+
+REKOMENDASI UNTUK MODELING:
+   • Gunakan PyCaret untuk automated ML workflow
+   • Focus pada ensemble methods (Random Forest, XGBoost)
+   • Monitor overfitting dengan validation curves
+   • Analyze feature importance untuk interpretability
+
+AVAILABLE DATASETS FOR MODELING:
+   df_pycaret: Training data untuk PyCaret setup
+   df_test_final: Hold-out test set untuk final evaluation
+   preprocessing_info: Pipeline metadata untuk reproduksi
+
+DOCUMENTATION &amp; REPRODUCIBILITY:
+   • All preprocessing steps documented dengan kode
+   • Random states fixed untuk reproducibility
+   • Scaler objects tersimpan untuk inference
+   • Feature engineering pipeline dapat direplikasi
+
+================================================================================
+                      PREPROCESSING COMPLETED
+                    READY FOR MODELING PHASE
+================================================================================
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">1. Import Libraries dan Setup Environment</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#load-data-dan-hasil-outlier-detection">2. Load Data dan Hasil Outlier Detection</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#outlier-treatment-strategies">3. Outlier Treatment Strategies</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-scaling-dan-engineering">4. Feature Scaling dan Engineering</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#train-test-split-dan-persiapan-final">5. Train-Test Split dan Persiapan Final</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-dan-next-steps">6. Summary dan Next Steps</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book Community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
