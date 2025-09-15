@@ -1199,6 +1199,7 @@ Contoh perubahan koordinat outliers:
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Total features: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">all_features</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         
         <span class="n">recommended_method</span> <span class="o">=</span> <span class="s1">&#39;robust&#39;</span> <span class="k">if</span> <span class="n">df_processed</span><span class="p">[</span><span class="s1">&#39;strong_consensus&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s1">&#39;standard&#39;</span>
+    
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">METODE YANG DIPILIH: </span><span class="si">{</span><span class="n">recommended_method</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     
     <span class="c1"># Set final dataset</span>
@@ -1213,8 +1214,9 @@ Contoh perubahan koordinat outliers:
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Features: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">all_features</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         
     <span class="k">else</span><span class="p">:</span>
-        <span class="c1"># Manual case</span>
+        <span class="c1"># Manual case - set df_test_final sebagai None</span>
         <span class="n">df_final</span> <span class="o">=</span> <span class="n">scaling_methods</span><span class="p">[</span><span class="n">recommended_method</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">df_test_final</span> <span class="o">=</span> <span class="kc">None</span>
         
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Manual Dataset Ready:&quot;</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Total data: </span><span class="si">{</span><span class="n">df_final</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -1228,7 +1230,6 @@ Contoh perubahan koordinat outliers:
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tidak dapat melakukan feature scaling karena data processed tidak tersedia&quot;</span><span class="p">)</span>
     <span class="n">df_final</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">df_test_final</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">final_scaler</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">all_features</span> <span class="o">=</span> <span class="n">features</span> <span class="k">if</span> <span class="s1">&#39;features&#39;</span> <span class="ow">in</span> <span class="nb">locals</span><span class="p">()</span> <span class="k">else</span> <span class="p">[]</span>
 </pre></div>
 </div>
@@ -1273,7 +1274,7 @@ Manual Dataset Ready:
 <span class="k">if</span> <span class="n">df_final</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
     
     <span class="c1"># Check apakah sudah ada split dari PyCaret atau perlu manual split</span>
-    <span class="k">if</span> <span class="n">df_test_final</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="s1">&#39;df_test_final&#39;</span> <span class="ow">in</span> <span class="nb">locals</span><span class="p">()</span> <span class="ow">and</span> <span class="n">df_test_final</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="c1"># PyCaret sudah melakukan split</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Menggunakan PyCaret train-test split:&quot;</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • PyCaret telah melakukan stratified split otomatis&quot;</span><span class="p">)</span>
@@ -1337,7 +1338,7 @@ Manual Dataset Ready:
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">species_names</span><span class="p">[</span><span class="n">class_idx</span><span class="p">]</span><span class="si">:</span><span class="s2">&lt;12</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">train_count</span><span class="si">:</span><span class="s2">&lt;12</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">train_pct</span><span class="si">:</span><span class="s2">&lt;9.1f</span><span class="si">}</span><span class="s2">% </span><span class="si">{</span><span class="n">test_count</span><span class="si">:</span><span class="s2">&lt;11</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">test_pct</span><span class="si">:</span><span class="s2">&lt;7.1f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
     
     <span class="c1"># Informasi preprocessing untuk reproduksi</span>
-    <span class="n">preprocessing_method</span> <span class="o">=</span> <span class="s1">&#39;pycaret&#39;</span> <span class="k">if</span> <span class="n">df_test_final</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s1">&#39;manual&#39;</span>
+    <span class="n">preprocessing_method</span> <span class="o">=</span> <span class="s1">&#39;pycaret&#39;</span> <span class="k">if</span> <span class="s1">&#39;df_test_final&#39;</span> <span class="ow">in</span> <span class="nb">locals</span><span class="p">()</span> <span class="ow">and</span> <span class="n">df_test_final</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s1">&#39;manual&#39;</span>
     
     <span class="n">preprocessing_info</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s1">&#39;outlier_treatment&#39;</span><span class="p">:</span> <span class="s1">&#39;consensus_based_removal&#39;</span><span class="p">,</span>
@@ -1345,7 +1346,6 @@ Manual Dataset Ready:
         <span class="s1">&#39;original_features&#39;</span><span class="p">:</span> <span class="n">features</span><span class="p">,</span>
         <span class="s1">&#39;processed_features&#39;</span><span class="p">:</span> <span class="n">all_features</span><span class="p">,</span>
         <span class="s1">&#39;total_features&#39;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">all_features</span><span class="p">),</span>
-        <span class="s1">&#39;scaler&#39;</span><span class="p">:</span> <span class="n">final_scaler</span><span class="p">,</span>
         <span class="s1">&#39;train_size&#39;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_train</span><span class="p">),</span>
         <span class="s1">&#39;test_size&#39;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_test</span><span class="p">),</span>
         <span class="s1">&#39;random_state&#39;</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span>
@@ -1365,7 +1365,7 @@ Manual Dataset Ready:
         <span class="n">sample_features</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">X_train</span><span class="o">.</span><span class="n">columns</span><span class="p">)[:</span><span class="mi">4</span><span class="p">]</span>  <span class="c1"># First 4 features dari PyCaret</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="c1"># Show original + engineered features</span>
-        <span class="n">sample_features</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sepal length (cm)&#39;</span><span class="p">,</span> <span class="s1">&#39;petal length (cm)&#39;</span><span class="p">,</span> <span class="s1">&#39;petal_area&#39;</span><span class="p">,</span> <span class="s1">&#39;total_area&#39;</span><span class="p">]</span>
+        <span class="n">sample_features</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sepal length (cm)&#39;</span><span class="p">,</span> <span class="s1">&#39;petal length (cm)&#39;</span><span class="p">,</span> <span class="s1">&#39;petal_area&#39;</span><span class="p">,</span> <span class="s1">&#39;petal_sepal_ratio&#39;</span><span class="p">]</span>
     
     <span class="nb">print</span><span class="p">(</span><span class="n">X_train</span><span class="p">[</span><span class="n">sample_features</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
     
@@ -1422,21 +1422,54 @@ Manual Dataset Ready:
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== TRAIN-TEST SPLIT DAN PERSIAPAN FINAL DENGAN PYCARET ===
-</pre></div>
-</div>
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">7</span><span class="p">],</span> <span class="n">line</span> <span class="mi">7</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== TRAIN-TEST SPLIT DAN PERSIAPAN FINAL DENGAN PYCARET ===&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="k">if</span> <span class="n">df_final</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span>     
-<span class="g g-Whitespace">      </span><span class="mi">6</span>     <span class="c1"># Check apakah sudah ada split dari PyCaret atau perlu manual split</span>
-<span class="ne">----&gt; </span><span class="mi">7</span>     <span class="k">if</span> <span class="n">df_test_final</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span>         <span class="c1"># PyCaret sudah melakukan split</span>
-<span class="g g-Whitespace">      </span><span class="mi">9</span>         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Menggunakan PyCaret train-test split:&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">10</span>         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • PyCaret telah melakukan stratified split otomatis&quot;</span><span class="p">)</span>
+Melakukan manual train-test split:
+Dataset Preparation:
+   • Total samples: 150
+   • Features: 7
+   • Target classes: 3 (setosa=0, versicolor=1, virginica=2)
+   • Train set: 120 samples
+   • Test set: 30 samples
 
-<span class="ne">NameError</span>: name &#39;df_test_final&#39; is not defined
+Distribusi Kelas:
+Class        Train Count  Train %    Test Count  Test %  
+-----------------------------------------------------------------
+setosa       40           33.3     % 10          33.3   %
+versicolor   40           33.3     % 10          33.3   %
+virginica    40           33.3     % 10          33.3   %
+
+Preprocessing Information:
+   • Outlier treatment: consensus_based_removal
+   • Scaling method: manual
+   • Total features: 7
+   • Random state: 42
+
+Sample Data Final (Train Set - First 5 rows):
+     sepal length (cm)  petal length (cm)  petal_area  petal_sepal_ratio
+8            -1.748856          -1.341272    1.761059           0.766943
+106          -1.143017           0.421564    0.277861          -0.368817
+76            1.159173           0.592162    0.156745           0.510848
+9            -1.143017          -1.284407    1.855261           1.123699
+89           -0.416010           0.137236    0.018283          -0.329886
+
+Target Labels (Train Set - First 10):
+[0, 2, 1, 0, 1, 2, 1, 2, 2, 2]
+
+PERSIAPAN UNTUK PYCARET MODELING:
+   • df_pycaret: (120, 8) (untuk training &amp; validation)
+   • df_pycaret_test: (30, 8) (untuk final evaluation)
+   • Target column: &#39;species&#39;
+   • Feature columns: 7 features
+
+SUMMARY PREPROCESSING:
+   • Objective: Multi-class classification (3 classes)
+   • Data quality: High (outliers handled dengan PyCaret)
+   • Preprocessing: MANUAL pipeline
+   • Features: 7 total features
+   • Class balance: Good (stratified split maintained)
+   • Ready for: PyCaret automated ML pipeline
+
+PREPROCESSING DENGAN PYCARET COMPLETED!
+Dataset siap untuk modeling dengan PyCaret
 </pre></div>
 </div>
 </div>
@@ -1472,124 +1505,22 @@ Manual Dataset Ready:
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>================================================================================
-           SUMMARY DATA PREPROCESSING DENGAN PYCARET
-================================================================================
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>==================================================
+        SUMMARY DATA PREPROCESSING
+==================================================
 
-INTEGRASI PYCARET UNTUK REAL DATA PROCESSING:
-   ✓ Outlier detection menggunakan PyCaret anomaly detection models
-   ✓ ABOD, KNN, COF models untuk robust outlier identification
-   ✓ Consensus approach untuk treatment strategy
-   ✓ PyCaret preprocessing pipeline untuk scaling &amp; feature engineering
+YANG SUDAH DILAKUKAN:
+   ✓ Load dataset Iris (150 data)
+   ✓ Deteksi outlier dengan 3 model (ABOD, KNN, COF)
+   ✓ Hapus outlier dan isi dengan imputation
+   ✓ Scaling dan feature engineering
+   ✓ Split data train-test
 
-PYCARET PREPROCESSING PIPELINE YANG DILAKUKAN:
-   1. Data Loading &amp; Quality Check
-      • Dataset Iris: 150 samples, 4 original features
-      • No missing values, no duplicates
-      • Balanced classes (50 samples each)
-
-   2. PyCaret Anomaly Detection
-      • ABOD (Angle-based Outlier Detection)
-      • KNN (K-Nearest Neighbors anomaly detection)
-      • COF (Connectivity-based Outlier Factor)
-      • Real-time consensus analysis untuk robust treatment
-
-   3. Outlier Removal &amp; Imputation
-      • Multi-model consensus untuk outlier identification
-      • Species-based median imputation
-      • Visualization-rich preprocessing pipeline
-      • Data integrity maintained
-
-   4. PyCaret Feature Processing
-      • Z-score normalization (StandardScaler)
-      • Automated feature interaction creation
-      • Automated feature ratio engineering
-      • Multicollinearity removal
-      • Stratified train-test split
-
-FINAL DATASET CHARACTERISTICS:
-   • Preprocessing method: MANUAL
-   • Train samples: 120
-   • Test samples: 30
-   • Features: 11
-   • Classes: 3 (setosa, versicolor, virginica)
-   • Data quality: High (PyCaret processed &amp; validated)
-
-TECHNICAL SPECIFICATIONS:
-   • Outlier detection: PyCaret multi-model ensemble
-   • Preprocessing: PyCaret automated pipeline
-   • Feature engineering: PyCaret automated + manual domain-specific
-   • Cross-validation ready: Built-in stratified sampling
-   • Production ready: Complete preprocessing pipeline
-
-NEXT STEPS - PYCARET MODELING PHASE:
-   1. PyCaret Classification Setup
-      • Environment sudah ter-setup dari preprocessing
-      • Data sudah siap untuk compare_models()
-      • Built-in cross-validation &amp; metrics
-
-   2. Automated Model Comparison
-      • compare_models() untuk model selection
-      • Automated hyperparameter tuning
-      • Performance ranking &amp; evaluation
-      • Feature importance analysis
-
-   3. Model Optimization &amp; Tuning
-      • tune_model() untuk best performers
-      • ensemble_model() untuk model combining
-      • calibrate_model() untuk probability calibration
-      • Advanced optimization techniques
-
-   4. Model Evaluation &amp; Validation
-      • evaluate_model() untuk comprehensive analysis
-      • Built-in validation plots &amp; metrics
-      • predict_model() pada test set
-      • Performance visualization &amp; interpretation
-
-   5. Model Deployment Preparation
-      • finalize_model() untuk production model
-      • deploy_model() options tersedia
-      • Complete pipeline serialization
-      • API deployment ready
-
-PYCARET ADVANTAGES YANG DIGUNAKAN:
-   • Automated preprocessing pipeline
-   • Built-in outlier detection algorithms
-   • Automated feature engineering
-   • Comprehensive model comparison
-   • Production-ready deployment pipeline
-
-AVAILABLE DATASETS FOR MODELING:
-   ✓ df_pycaret: PyCaret-ready training data
-   ✓ df_pycaret_test: Hold-out test set untuk final evaluation
-   ✓ preprocessing_info: Complete pipeline metadata
-   ✓ PyCaret environment: Ready for immediate modeling
-
-COMPLETE PYCARET WORKFLOW READY:
-   • Data Understanding: ✓ Completed
-   • Data Preprocessing: ✓ Completed dengan PyCaret
-   • Outlier Detection: ✓ Multi-model PyCaret approach
-   • Feature Engineering: ✓ Automated + Manual
-   • Ready for Modeling: ✓ PyCaret environment setup
-
-REKOMENDATION UNTUK NEXT NOTEBOOK:
-   1. Modeling dengan PyCaret:
-      • compare_models() untuk quick model comparison
-      • Focus pada top 3-5 performing models
-      • Automated tuning &amp; ensemble methods
-   2. Model Evaluation:
-      • Comprehensive evaluation plots
-      • Feature importance analysis
-      • Model interpretation &amp; explainability
-   3. Production Deployment:
-      • finalize_model() best performer
-      • API deployment preparation
-      • Complete documentation
-
-================================================================================
-            PYCARET PREPROCESSING COMPLETED
-               READY FOR MODELING PHASE
-================================================================================
+HASIL AKHIR:
+   • Data train: 120 samples
+   • Data test: 30 samples
+   • Total fitur: 7
+   • Kelas: 3 (setosa, versicolor, virginica)
 </pre></div>
 </div>
 </div>
