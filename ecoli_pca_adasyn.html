@@ -60,7 +60,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'ecoli_pca_adasyn';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="POwer BI Eksplorasi Data Iris" href="PowerBI.html" />
+    <link rel="prev" title="Power BI Eksplorasi Data Iris" href="PowerBI.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -191,7 +191,7 @@
 
 
 
-<li class="toctree-l1"><a class="reference internal" href="PowerBI.html">POwer BI Eksplorasi Data Iris</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PowerBI.html">Power BI Eksplorasi Data Iris</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">E. coli Protein PCA &amp; ADASYN Implementation</a></li>
 </ul>
 
@@ -790,7 +790,9 @@ Class mapping: {&#39;cp&#39;: 0, &#39;im&#39;: 1, &#39;imL&#39;: 2, &#39;imS&#39
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1. TAMPILKAN DATA DALAM SCATTER PLOT MENGGUNAKAN PCA
 ============================================================
-Hasil PCA:
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Hasil PCA:
   PC1 variance: 0.315 (31.5%)
   PC2 variance: 0.209 (20.9%)
   Total variance: 0.524 (52.4%)
@@ -801,9 +803,11 @@ Hasil PCA:
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 2. ADASYN Data Balancing (Fixed)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 2. ADASYN Data Balancing (Iterative Approach)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;2. PENYEIMBANGAN DATA MENGGUNAKAN ADASYN&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">Counter</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Distribusi original:&quot;</span><span class="p">)</span>
 <span class="n">original_dist</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">y_encoded</span><span class="p">)</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
@@ -811,56 +815,60 @@ Hasil PCA:
     <span class="n">cls_name</span> <span class="o">=</span> <span class="n">le</span><span class="o">.</span><span class="n">classes_</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">cls_name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2"> samples&quot;</span><span class="p">)</span>
 
-<span class="c1"># Check class sizes and adjust ADASYN parameters</span>
 <span class="n">min_samples</span> <span class="o">=</span> <span class="n">original_dist</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Minimum class size: </span><span class="si">{</span><span class="n">min_samples</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-<span class="c1"># Try multiple sampling strategies</span>
+<span class="c1"># ITERATIVE ADASYN APPROACH</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Distribusi kelas sebelum ADASYN:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">sorted</span><span class="p">(</span><span class="n">Counter</span><span class="p">(</span><span class="n">y_encoded</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">nt</span> <span class="o">=</span> <span class="n">X_scaled</span>
+<span class="n">ns</span> <span class="o">=</span> <span class="n">y_encoded</span>
+
+<span class="c1"># Fix: Convert to list properly</span>
+<span class="n">class_counts</span> <span class="o">=</span> <span class="n">original_dist</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>  <span class="c1"># Use .values instead of .values()</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">class_counts</span><span class="p">)</span>  
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sorted counts untuk iterasi: </span><span class="si">{</span><span class="n">temp</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">method_used</span> <span class="o">=</span> <span class="s2">&quot;ADASYN Iterative&quot;</span>
 <span class="n">success</span> <span class="o">=</span> <span class="kc">False</span>
-<span class="n">method_used</span> <span class="o">=</span> <span class="s2">&quot;None&quot;</span>
 
-<span class="c1"># Strategy 1: ADASYN with reduced neighbors</span>
-<span class="k">if</span> <span class="n">min_samples</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">7</span><span class="p">):</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">temp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>  
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Iterasi </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">: menggunakan k_neighbors=</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">n_neighbors</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">min_samples</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">n_neighbors</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Trying ADASYN with </span><span class="si">{</span><span class="n">n_neighbors</span><span class="si">}</span><span class="s2"> neighbors...&quot;</span><span class="p">)</span>
-            <span class="n">adasyn</span> <span class="o">=</span> <span class="n">ADASYN</span><span class="p">(</span><span class="n">sampling_strategy</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="n">n_neighbors</span><span class="p">)</span>
-            <span class="n">X_balanced</span><span class="p">,</span> <span class="n">y_balanced</span> <span class="o">=</span> <span class="n">adasyn</span><span class="o">.</span><span class="n">fit_resample</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">,</span> <span class="n">y_encoded</span><span class="p">)</span>
-            <span class="n">success</span> <span class="o">=</span> <span class="kc">True</span>
-            <span class="n">method_used</span> <span class="o">=</span> <span class="s2">&quot;ADASYN&quot;</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ADASYN berhasil!&quot;</span><span class="p">)</span>
+        <span class="n">nt</span><span class="p">,</span> <span class="n">ns</span> <span class="o">=</span> <span class="n">ADASYN</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">sampling_strategy</span><span class="o">=</span><span class="s1">&#39;minority&#39;</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span><span class="o">.</span><span class="n">fit_resample</span><span class="p">(</span><span class="n">nt</span><span class="p">,</span> <span class="n">ns</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Hasil iterasi </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="nb">sorted</span><span class="p">(</span><span class="n">Counter</span><span class="p">(</span><span class="n">ns</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">success</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ADASYN gagal: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error pada iterasi </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">break</span>
 
-<span class="c1"># Strategy 2: SMOTE as fallback</span>
-<span class="k">if</span> <span class="ow">not</span> <span class="n">success</span> <span class="ow">and</span> <span class="n">min_samples</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+<span class="k">if</span> <span class="n">success</span><span class="p">:</span>
+    <span class="n">X_balanced</span> <span class="o">=</span> <span class="n">nt</span>
+    <span class="n">y_balanced</span> <span class="o">=</span> <span class="n">ns</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">✅ ADASYN berhasil dengan pendekatan iteratif!&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">❌ ADASYN gagal. Menggunakan fallback SMOTE...&quot;</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="kn">from</span><span class="w"> </span><span class="nn">imblearn.over_sampling</span><span class="w"> </span><span class="kn">import</span> <span class="n">SMOTE</span>
-        <span class="n">k_neighbors</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">min_samples</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">k_neighbors</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Trying SMOTE with </span><span class="si">{</span><span class="n">k_neighbors</span><span class="si">}</span><span class="s2"> neighbors...&quot;</span><span class="p">)</span>
-            <span class="n">smote</span> <span class="o">=</span> <span class="n">SMOTE</span><span class="p">(</span><span class="n">sampling_strategy</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">k_neighbors</span><span class="o">=</span><span class="n">k_neighbors</span><span class="p">)</span>
-            <span class="n">X_balanced</span><span class="p">,</span> <span class="n">y_balanced</span> <span class="o">=</span> <span class="n">smote</span><span class="o">.</span><span class="n">fit_resample</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">,</span> <span class="n">y_encoded</span><span class="p">)</span>
-            <span class="n">success</span> <span class="o">=</span> <span class="kc">True</span>
-            <span class="n">method_used</span> <span class="o">=</span> <span class="s2">&quot;SMOTE&quot;</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;SMOTE berhasil!&quot;</span><span class="p">)</span>
+        <span class="n">smote</span> <span class="o">=</span> <span class="n">SMOTE</span><span class="p">(</span><span class="n">k_neighbors</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+        <span class="n">X_balanced</span><span class="p">,</span> <span class="n">y_balanced</span> <span class="o">=</span> <span class="n">smote</span><span class="o">.</span><span class="n">fit_resample</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">,</span> <span class="n">y_encoded</span><span class="p">)</span>
+        <span class="n">method_used</span> <span class="o">=</span> <span class="s2">&quot;SMOTE Fallback&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;SMOTE berhasil!&quot;</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SMOTE gagal: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-<span class="c1"># Strategy 3: Random Over Sampling as last resort</span>
-<span class="k">if</span> <span class="ow">not</span> <span class="n">success</span><span class="p">:</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Using Random Over Sampling...&quot;</span><span class="p">)</span>
-        <span class="n">ros</span> <span class="o">=</span> <span class="n">RandomOverSampler</span><span class="p">(</span><span class="n">sampling_strategy</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
-        <span class="n">X_balanced</span><span class="p">,</span> <span class="n">y_balanced</span> <span class="o">=</span> <span class="n">ros</span><span class="o">.</span><span class="n">fit_resample</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">,</span> <span class="n">y_encoded</span><span class="p">)</span>
-        <span class="n">success</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="n">method_used</span> <span class="o">=</span> <span class="s2">&quot;RandomOverSampler&quot;</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Random Over Sampling berhasil!&quot;</span><span class="p">)</span>
-    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Random Over Sampling gagal: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SMOTE juga gagal: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="n">X_balanced</span><span class="p">,</span> <span class="n">y_balanced</span> <span class="o">=</span> <span class="n">X_scaled</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">y_encoded</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="n">method_used</span> <span class="o">=</span> <span class="s2">&quot;No balancing (original data)&quot;</span>
+        <span class="n">method_used</span> <span class="o">=</span> <span class="s2">&quot;No balancing&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Distribusi kelas setelah balancing:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">sorted</span><span class="p">(</span><span class="n">Counter</span><span class="p">(</span><span class="n">y_balanced</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Total samples sebelum: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">y_encoded</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total samples setelah: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">y_balanced</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Data yang ditambahkan: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">y_balanced</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">y_encoded</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Method used: </span><span class="si">{</span><span class="n">method_used</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Original samples: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -893,23 +901,53 @@ Distribusi original:
   pp: 52 samples
 
 Minimum class size: 2
-Trying ADASYN with 1 neighbors...
-ADASYN gagal: Not any neigbours belong to the majority class. This case will induce a NaN case with a division by zero. ADASYN is not suited for this specific dataset. Use SMOTE instead.
-Trying SMOTE with 1 neighbors...
-SMOTE berhasil!
 
-Method used: SMOTE
+Distribusi kelas sebelum ADASYN:
+[(0, 143), (1, 77), (2, 2), (3, 2), (4, 35), (5, 20), (6, 5), (7, 52)]
+Sorted counts untuk iterasi: [2, 2, 5, 20, 35, 52, 77, 143]
+
+Iterasi 1: menggunakan k_neighbors=1
+Hasil iterasi 1: [(0, 143), (1, 77), (2, 142), (3, 2), (4, 35), (5, 20), (6, 5), (7, 52)]
+
+Iterasi 2: menggunakan k_neighbors=1
+Hasil iterasi 2: [(0, 143), (1, 77), (2, 142), (3, 142), (4, 35), (5, 20), (6, 5), (7, 52)]
+
+Iterasi 3: menggunakan k_neighbors=4
+Hasil iterasi 3: [(0, 143), (1, 77), (2, 142), (3, 142), (4, 35), (5, 20), (6, 143), (7, 52)]
+
+Iterasi 4: menggunakan k_neighbors=19
+Hasil iterasi 4: [(0, 143), (1, 77), (2, 142), (3, 142), (4, 35), (5, 144), (6, 143), (7, 52)]
+
+Iterasi 5: menggunakan k_neighbors=34
+Hasil iterasi 5: [(0, 143), (1, 77), (2, 142), (3, 142), (4, 146), (5, 144), (6, 143), (7, 52)]
+
+Iterasi 6: menggunakan k_neighbors=51
+Hasil iterasi 6: [(0, 143), (1, 77), (2, 142), (3, 142), (4, 146), (5, 144), (6, 143), (7, 143)]
+
+Iterasi 7: menggunakan k_neighbors=76
+Hasil iterasi 7: [(0, 143), (1, 154), (2, 142), (3, 142), (4, 146), (5, 144), (6, 143), (7, 143)]
+
+✅ ADASYN berhasil dengan pendekatan iteratif!
+
+Distribusi kelas setelah balancing:
+[(0, 143), (1, 154), (2, 142), (3, 142), (4, 146), (5, 144), (6, 143), (7, 143)]
+
+Total samples sebelum: 336
+Total samples setelah: 1157
+Data yang ditambahkan: 821
+
+Method used: ADASYN Iterative
 Original samples: 336
-Balanced samples: 1144
-Generated samples: 808
+Balanced samples: 1157
+Generated samples: 821
 
 Distribusi setelah balancing:
   cp: 143 samples (original: 143, generated: 0)
-  im: 143 samples (original: 77, generated: 66)
-  imL: 143 samples (original: 2, generated: 141)
-  imS: 143 samples (original: 2, generated: 141)
-  imU: 143 samples (original: 35, generated: 108)
-  om: 143 samples (original: 20, generated: 123)
+  im: 154 samples (original: 77, generated: 77)
+  imL: 142 samples (original: 2, generated: 140)
+  imS: 142 samples (original: 2, generated: 140)
+  imU: 146 samples (original: 35, generated: 111)
+  om: 144 samples (original: 20, generated: 124)
   omL: 143 samples (original: 5, generated: 138)
   pp: 143 samples (original: 52, generated: 91)
 </pre></div>
@@ -946,6 +984,9 @@ Distribusi setelah balancing:
 <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
 
 <span class="c1"># Plot 1: All balanced data by class</span>
+<span class="n">unique_classes</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">Set3</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">unique_classes</span><span class="p">)))</span>
+
 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="bp">cls</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">unique_classes</span><span class="p">):</span>
     <span class="n">mask</span> <span class="o">=</span> <span class="n">balanced_df</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="bp">cls</span>
     <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">balanced_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span> <span class="s1">&#39;PC1&#39;</span><span class="p">],</span> <span class="n">balanced_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span> <span class="s1">&#39;PC2&#39;</span><span class="p">],</span>
@@ -992,12 +1033,12 @@ Distribusi setelah balancing:
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3. PLOT DATA BALANCED DENGAN MARKING DATA GENERATED
 ============================================================
 Data balanced:
-  Total: 1144
+  Total: 1157
   Original: 336
-  Generated: 808
+  Generated: 821
 </pre></div>
 </div>
-<img alt="_images/a294eb34c9941e3137fbbbfb9e041ca0202add53ae384bf83de0070ed458dd68.png" src="_images/a294eb34c9941e3137fbbbfb9e041ca0202add53ae384bf83de0070ed458dd68.png" />
+<img alt="_images/4dc91a010d3eb5cabf445261eed7f4a3b2c38544947e94c6a03e72c365e41315.png" src="_images/4dc91a010d3eb5cabf445261eed7f4a3b2c38544947e94c6a03e72c365e41315.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1005,6 +1046,10 @@ Data balanced:
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Perbandingan sebelum dan sesudah balancing</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;PERBANDINGAN SEBELUM DAN SESUDAH BALANCING&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+
+<span class="c1"># Recalculate distributions with current variables</span>
+<span class="n">original_dist</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">y_encoded</span><span class="p">)</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+<span class="n">balanced_dist</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">y_balanced</span><span class="p">)</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
 
 <span class="c1"># Create comparison dataframe</span>
 <span class="n">comparison</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
@@ -1027,6 +1072,7 @@ Data balanced:
 <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
 
 <span class="c1"># 1. Bar comparison</span>
+<span class="n">unique_classes</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
 <span class="n">x_pos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">unique_classes</span><span class="p">))</span>
 <span class="n">width</span> <span class="o">=</span> <span class="mf">0.35</span>
 <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x_pos</span> <span class="o">-</span> <span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">comparison</span><span class="p">[</span><span class="s1">&#39;Original&#39;</span><span class="p">],</span> <span class="n">width</span><span class="p">,</span> 
@@ -1050,6 +1096,9 @@ Data balanced:
     <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Sampel Generated&#39;</span><span class="p">)</span>
     <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Sampel Generated </span><span class="si">{</span><span class="n">method_used</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
     <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">generated_data</span><span class="p">[</span><span class="s1">&#39;Generated&#39;</span><span class="p">]):</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="o">+</span> <span class="nb">max</span><span class="p">(</span><span class="n">generated_data</span><span class="p">[</span><span class="s1">&#39;Generated&#39;</span><span class="p">])</span><span class="o">*</span><span class="mf">0.01</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> 
+                      <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
     <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s1">&#39;No samples generated&#39;</span><span class="p">,</span> 
                   <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">transAxes</span><span class="p">)</span>
@@ -1087,7 +1136,7 @@ Data balanced:
 <span class="s2">• Balanced ratio: </span><span class="si">{</span><span class="n">balanced_imb</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">:1</span>
 <span class="s2">• Improvement: </span><span class="si">{</span><span class="n">improvement</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%</span>
 
-<span class="s2">Status: </span><span class="si">{</span><span class="s1">&#39;Success&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">success</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;Failed&#39;</span><span class="si">}</span>
+<span class="s2">Status: </span><span class="si">{</span><span class="s1">&#39;Success ✅&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">X_balanced</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">)</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;No Change ⚠️&#39;</span><span class="si">}</span>
 <span class="s2">&quot;&quot;&quot;</span>
 
 <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="n">summary_text</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span> 
@@ -1100,12 +1149,14 @@ Data balanced:
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Hasil analisis:&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Task 1: PCA scatter plot (2D) - SELESAI&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Task 2: Data balancing - SELESAI (</span><span class="si">{</span><span class="n">method_used</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Task 3: Plot dengan marking generated data - SELESAI&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Task 1: PCA scatter plot (2D) - SELESAI ✅&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Task 2: Data balancing - SELESAI ✅ (</span><span class="si">{</span><span class="n">method_used</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Task 3: Plot dengan marking generated data - SELESAI ✅&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">PCA variance explained: </span><span class="si">{</span><span class="n">pca</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Balancing improvement: </span><span class="si">{</span><span class="n">improvement</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Method used: </span><span class="si">{</span><span class="n">method_used</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total iterations completed: Adaptive approach&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Final success: </span><span class="si">{</span><span class="s1">&#39;Yes&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">X_balanced</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">)</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;No balancing applied&#39;</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1154,41 +1205,41 @@ Tabel perbandingan:
       <th>1</th>
       <td>im</td>
       <td>77</td>
-      <td>143</td>
-      <td>66</td>
-      <td>85.7</td>
+      <td>154</td>
+      <td>77</td>
+      <td>100.0</td>
     </tr>
     <tr>
       <th>2</th>
       <td>imL</td>
       <td>2</td>
-      <td>143</td>
-      <td>141</td>
-      <td>7050.0</td>
+      <td>142</td>
+      <td>140</td>
+      <td>7000.0</td>
     </tr>
     <tr>
       <th>3</th>
       <td>imS</td>
       <td>2</td>
-      <td>143</td>
-      <td>141</td>
-      <td>7050.0</td>
+      <td>142</td>
+      <td>140</td>
+      <td>7000.0</td>
     </tr>
     <tr>
       <th>4</th>
       <td>imU</td>
       <td>35</td>
-      <td>143</td>
-      <td>108</td>
-      <td>308.6</td>
+      <td>146</td>
+      <td>111</td>
+      <td>317.1</td>
     </tr>
     <tr>
       <th>5</th>
       <td>om</td>
       <td>20</td>
-      <td>143</td>
-      <td>123</td>
-      <td>615.0</td>
+      <td>144</td>
+      <td>124</td>
+      <td>620.0</td>
     </tr>
     <tr>
       <th>6</th>
@@ -1208,15 +1259,17 @@ Tabel perbandingan:
     </tr>
   </tbody>
 </table>
-</div></div><img alt="_images/7a3c9a37a1b4c7cc96400f0bd8c0f0f82eb6cc6bc816cb89822b3ea06ec90d34.png" src="_images/7a3c9a37a1b4c7cc96400f0bd8c0f0f82eb6cc6bc816cb89822b3ea06ec90d34.png" />
+</div></div><img alt="_images/74daead0c70dcffb1d14fc78f92fe947084a609efed8396660eea15bb43ba626.png" src="_images/74daead0c70dcffb1d14fc78f92fe947084a609efed8396660eea15bb43ba626.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Hasil analisis:
-  Task 1: PCA scatter plot (2D) - SELESAI
-  Task 2: Data balancing - SELESAI (SMOTE)
-  Task 3: Plot dengan marking generated data - SELESAI
+  Task 1: PCA scatter plot (2D) - SELESAI ✅
+  Task 2: Data balancing - SELESAI ✅ (ADASYN Iterative)
+  Task 3: Plot dengan marking generated data - SELESAI ✅
 
 PCA variance explained: 52.4%
-Balancing improvement: 98.6%
-Method used: SMOTE
+Balancing improvement: 98.5%
+Method used: ADASYN Iterative
+Total iterations completed: Adaptive approach
+Final success: Yes
 </pre></div>
 </div>
 </div>
@@ -1259,7 +1312,7 @@ Method used: SMOTE
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">POwer BI Eksplorasi Data Iris</p>
+        <p class="prev-next-title">Power BI Eksplorasi Data Iris</p>
       </div>
     </a>
 </div>

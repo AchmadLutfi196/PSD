@@ -1,4 +1,4 @@
-# POwer BI Eksplorasi Data Iris
+# Power BI Eksplorasi Data Iris
 
 ![Visualisasi Data Iris](images/iris_exploration.png)
 
