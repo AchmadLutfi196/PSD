@@ -8,3 +8,4 @@ chapters:
   - file: ExplorasiData
 - file: PrepocessingData
 - file: PowerBI
+- file: ecoli_pca_adasyn
