@@ -790,9 +790,7 @@ Class mapping: {&#39;cp&#39;: 0, &#39;im&#39;: 1, &#39;imL&#39;: 2, &#39;imS&#39
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1. TAMPILKAN DATA DALAM SCATTER PLOT MENGGUNAKAN PCA
 ============================================================
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Hasil PCA:
+Hasil PCA:
   PC1 variance: 0.315 (31.5%)
   PC2 variance: 0.209 (20.9%)
   Total variance: 0.524 (52.4%)
@@ -849,9 +847,9 @@ Class mapping: {&#39;cp&#39;: 0, &#39;im&#39;: 1, &#39;imL&#39;: 2, &#39;imS&#39
 <span class="k">if</span> <span class="n">success</span><span class="p">:</span>
     <span class="n">X_balanced</span> <span class="o">=</span> <span class="n">nt</span>
     <span class="n">y_balanced</span> <span class="o">=</span> <span class="n">ns</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">✅ ADASYN berhasil dengan pendekatan iteratif!&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> ADASYN berhasil dengan pendekatan iteratif!&quot;</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">❌ ADASYN gagal. Menggunakan fallback SMOTE...&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> ADASYN gagal. Menggunakan fallback SMOTE...&quot;</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="kn">from</span><span class="w"> </span><span class="nn">imblearn.over_sampling</span><span class="w"> </span><span class="kn">import</span> <span class="n">SMOTE</span>
         <span class="n">smote</span> <span class="o">=</span> <span class="n">SMOTE</span><span class="p">(</span><span class="n">k_neighbors</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -927,7 +925,7 @@ Hasil iterasi 6: [(0, 143), (1, 77), (2, 142), (3, 142), (4, 146), (5, 144), (6,
 Iterasi 7: menggunakan k_neighbors=76
 Hasil iterasi 7: [(0, 143), (1, 154), (2, 142), (3, 142), (4, 146), (5, 144), (6, 143), (7, 143)]
 
-✅ ADASYN berhasil dengan pendekatan iteratif!
+ ADASYN berhasil dengan pendekatan iteratif!
 
 Distribusi kelas setelah balancing:
 [(0, 143), (1, 154), (2, 142), (3, 142), (4, 146), (5, 144), (6, 143), (7, 143)]
@@ -1136,7 +1134,7 @@ Data balanced:
 <span class="s2">• Balanced ratio: </span><span class="si">{</span><span class="n">balanced_imb</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">:1</span>
 <span class="s2">• Improvement: </span><span class="si">{</span><span class="n">improvement</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%</span>
 
-<span class="s2">Status: </span><span class="si">{</span><span class="s1">&#39;Success ✅&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">X_balanced</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">)</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;No Change ⚠️&#39;</span><span class="si">}</span>
+<span class="s2">Status: </span><span class="si">{</span><span class="s1">&#39;Success &#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">X_balanced</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">)</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;No Change ⚠️&#39;</span><span class="si">}</span>
 <span class="s2">&quot;&quot;&quot;</span>
 
 <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="n">summary_text</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span> 
@@ -1149,9 +1147,9 @@ Data balanced:
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Hasil analisis:&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Task 1: PCA scatter plot (2D) - SELESAI ✅&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Task 2: Data balancing - SELESAI ✅ (</span><span class="si">{</span><span class="n">method_used</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Task 3: Plot dengan marking generated data - SELESAI ✅&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Task 1: PCA scatter plot (2D) - SELESAI&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Task 2: Data balancing - SELESAI  (</span><span class="si">{</span><span class="n">method_used</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Task 3: Plot dengan marking generated data - SELESAI&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">PCA variance explained: </span><span class="si">{</span><span class="n">pca</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Balancing improvement: </span><span class="si">{</span><span class="n">improvement</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Method used: </span><span class="si">{</span><span class="n">method_used</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -1259,11 +1257,11 @@ Tabel perbandingan:
     </tr>
   </tbody>
 </table>
-</div></div><img alt="_images/74daead0c70dcffb1d14fc78f92fe947084a609efed8396660eea15bb43ba626.png" src="_images/74daead0c70dcffb1d14fc78f92fe947084a609efed8396660eea15bb43ba626.png" />
+</div></div><img alt="_images/5e47c3dc9f829a7863e2f1ba7661a2e2d6eb73a16a90b0afca817402dbeb16ee.png" src="_images/5e47c3dc9f829a7863e2f1ba7661a2e2d6eb73a16a90b0afca817402dbeb16ee.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Hasil analisis:
-  Task 1: PCA scatter plot (2D) - SELESAI ✅
-  Task 2: Data balancing - SELESAI ✅ (ADASYN Iterative)
-  Task 3: Plot dengan marking generated data - SELESAI ✅
+  Task 1: PCA scatter plot (2D) - SELESAI
+  Task 2: Data balancing - SELESAI  (ADASYN Iterative)
+  Task 3: Plot dengan marking generated data - SELESAI
 
 PCA variance explained: 52.4%
 Balancing improvement: 98.5%
