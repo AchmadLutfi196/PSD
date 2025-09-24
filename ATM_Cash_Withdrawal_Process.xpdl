@@ -1,0 +1,710 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xpdl:Package xmlns:xpdl="http://www.wfmc.org/2008/XPDL2.2" 
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://www.wfmc.org/2008/XPDL2.2 http://www.wfmc.org/standards/docs/bpmnxpdl_31.xsd"
+              Id="ATM_CASH_WITHDRAWAL_PACKAGE" 
+              Name="ATM Cash Withdrawal Process Package">
+  
+  <xpdl:PackageHeader>
+    <xpdl:XPDLVersion>2.2</xpdl:XPDLVersion>
+    <xpdl:Vendor>AchmadLutfi196</xpdl:Vendor>
+    <xpdl:Created>2025-01-10</xpdl:Created>
+    <xpdl:Documentation>XPDL 2.2 compliant ATM Cash Withdrawal Process with proper error handling and security measures</xpdl:Documentation>
+  </xpdl:PackageHeader>
+
+  <xpdl:Participants>
+    <xpdl:Participant Id="CUSTOMER" Name="Nasabah">
+      <xpdl:ParticipantType Type="HUMAN"/>
+      <xpdl:Description>Bank customer using ATM</xpdl:Description>
+    </xpdl:Participant>
+    <xpdl:Participant Id="ATM_SYSTEM" Name="ATM System">
+      <xpdl:ParticipantType Type="SYSTEM"/>
+      <xpdl:Description>ATM hardware and software system</xpdl:Description>
+    </xpdl:Participant>
+    <xpdl:Participant Id="BANK_SYSTEM" Name="Bank System">
+      <xpdl:ParticipantType Type="SYSTEM"/>
+      <xpdl:Description>Bank's core banking system</xpdl:Description>
+    </xpdl:Participant>
+    <xpdl:Participant Id="SECURITY_SYSTEM" Name="Security System">
+      <xpdl:ParticipantType Type="SYSTEM"/>
+      <xpdl:Description>Security monitoring and logging system</xpdl:Description>
+    </xpdl:Participant>
+  </xpdl:Participants>
+
+  <xpdl:WorkflowProcesses>
+    <xpdl:WorkflowProcess Id="ATM_CASH_WITHDRAWAL" Name="ATM Cash Withdrawal Process">
+      
+      <xpdl:ProcessHeader>
+        <xpdl:Created>2025-01-10</xpdl:Created>
+        <xpdl:Description>Complete ATM cash withdrawal process with error handling</xpdl:Description>
+      </xpdl:ProcessHeader>
+
+      <!-- Data Fields -->
+      <xpdl:DataFields>
+        <xpdl:DataField Id="CARD_NUMBER" Name="Card Number">
+          <xpdl:DataType>
+            <xpdl:BasicType Type="STRING"/>
+          </xpdl:DataType>
+        </xpdl:DataField>
+        <xpdl:DataField Id="PIN" Name="PIN">
+          <xpdl:DataType>
+            <xpdl:BasicType Type="STRING"/>
+          </xpdl:DataType>
+        </xpdl:DataField>
+        <xpdl:DataField Id="AMOUNT" Name="Withdrawal Amount">
+          <xpdl:DataType>
+            <xpdl:BasicType Type="INTEGER"/>
+          </xpdl:DataType>
+        </xpdl:DataField>
+        <xpdl:DataField Id="BALANCE" Name="Account Balance">
+          <xpdl:DataType>
+            <xpdl:BasicType Type="INTEGER"/>
+          </xpdl:DataType>
+        </xpdl:DataField>
+        <xpdl:DataField Id="TRANSACTION_ID" Name="Transaction ID">
+          <xpdl:DataType>
+            <xpdl:BasicType Type="STRING"/>
+          </xpdl:DataType>
+        </xpdl:DataField>
+        <xpdl:DataField Id="CARD_VALID" Name="Card Valid">
+          <xpdl:DataType>
+            <xpdl:BasicType Type="BOOLEAN"/>
+          </xpdl:DataType>
+        </xpdl:DataField>
+        <xpdl:DataField Id="PIN_VALID" Name="PIN Valid">
+          <xpdl:DataType>
+            <xpdl:BasicType Type="BOOLEAN"/>
+          </xpdl:DataType>
+        </xpdl:DataField>
+        <xpdl:DataField Id="SUFFICIENT_BALANCE" Name="Sufficient Balance">
+          <xpdl:DataType>
+            <xpdl:BasicType Type="BOOLEAN"/>
+          </xpdl:DataType>
+        </xpdl:DataField>
+        <xpdl:DataField Id="PIN_ATTEMPTS" Name="PIN Attempts">
+          <xpdl:DataType>
+            <xpdl:BasicType Type="INTEGER"/>
+          </xpdl:DataType>
+        </xpdl:DataField>
+      </xpdl:DataFields>
+
+      <!-- Activities -->
+      <xpdl:Activities>
+        
+        <!-- Start Event -->
+        <xpdl:Activity Id="START_PROCESS" Name="Customer Approaches ATM">
+          <xpdl:Event>
+            <xpdl:StartEvent Trigger="None"/>
+          </xpdl:Event>
+          <xpdl:Performers>
+            <xpdl:Performer>CUSTOMER</xpdl:Performer>
+          </xpdl:Performers>
+          <xpdl:NodeGraphicsInfos>
+            <xpdl:NodeGraphicsInfo LaneId="CUSTOMER_LANE" Height="30" Width="30">
+              <xpdl:Coordinates XCoordinate="50" YCoordinate="100"/>
+            </xpdl:NodeGraphicsInfo>
+          </xpdl:NodeGraphicsInfos>
+        </xpdl:Activity>
+
+        <!-- Card Insertion -->
+        <xpdl:Activity Id="INSERT_CARD" Name="Insert Card">
+          <xpdl:Implementation>
+            <xpdl:Task>
+              <xpdl:TaskUser/>
+            </xpdl:Task>
+          </xpdl:Implementation>
+          <xpdl:Performers>
+            <xpdl:Performer>CUSTOMER</xpdl:Performer>
+          </xpdl:Performers>
+          <xpdl:NodeGraphicsInfos>
+            <xpdl:NodeGraphicsInfo LaneId="CUSTOMER_LANE" Height="60" Width="100">
+              <xpdl:Coordinates XCoordinate="150" YCoordinate="85"/>
+            </xpdl:NodeGraphicsInfo>
+          </xpdl:NodeGraphicsInfos>
+        </xpdl:Activity>
+
+        <!-- Card Reading -->
+        <xpdl:Activity Id="READ_CARD" Name="Read Card">
+          <xpdl:Implementation>
+            <xpdl:Task>
+              <xpdl:TaskApplication>
+                <xpdl:Description>ATM reads card magnetic stripe</xpdl:Description>
+              </xpdl:TaskApplication>
+            </xpdl:Task>
+          </xpdl:Implementation>
+          <xpdl:Performers>
+            <xpdl:Performer>ATM_SYSTEM</xpdl:Performer>
+          </xpdl:Performers>
+          <xpdl:NodeGraphicsInfos>
+            <xpdl:NodeGraphicsInfo LaneId="ATM_LANE" Height="60" Width="100">
+              <xpdl:Coordinates XCoordinate="300" YCoordinate="185"/>
+            </xpdl:NodeGraphicsInfo>
+          </xpdl:NodeGraphicsInfos>
+        </xpdl:Activity>
+
+        <!-- Security Logging Start -->
+        <xpdl:Activity Id="LOG_SESSION_START" Name="Log Session Start">
+          <xpdl:Implementation>
+            <xpdl:Task>
+              <xpdl:TaskApplication>
+                <xpdl:Description>Log transaction session initiation</xpdl:Description>
+              </xpdl:TaskApplication>
+            </xpdl:Task>
+          </xpdl:Implementation>
+          <xpdl:Performers>
+            <xpdl:Performer>SECURITY_SYSTEM</xpdl:Performer>
+          </xpdl:Performers>
+          <xpdl:NodeGraphicsInfos>
+            <xpdl:NodeGraphicsInfo LaneId="SECURITY_LANE" Height="60" Width="100">
+              <xpdl:Coordinates XCoordinate="300" YCoordinate="385"/>
+            </xpdl:NodeGraphicsInfo>
+          </xpdl:NodeGraphicsInfos>
+        </xpdl:Activity>
+
+        <!-- Card Validation -->
+        <xpdl:Activity Id="VALIDATE_CARD" Name="Validate Card">
+          <xpdl:Implementation>
+            <xpdl:Task>
+              <xpdl:TaskApplication>
+                <xpdl:Description>Validate card with bank system</xpdl:Description>
+              </xpdl:TaskApplication>
+            </xpdl:Task>
+          </xpdl:Implementation>
+          <xpdl:Performers>
+            <xpdl:Performer>BANK_SYSTEM</xpdl:Performer>
+          </xpdl:Performers>
+          <xpdl:NodeGraphicsInfos>
+            <xpdl:NodeGraphicsInfo LaneId="BANK_LANE" Height="60" Width="100">
+              <xpdl:Coordinates XCoordinate="450" YCoordinate="285"/>
+            </xpdl:NodeGraphicsInfo>
+          </xpdl:NodeGraphicsInfos>
+        </xpdl:Activity>
+
+        <!-- Card Validation Gateway -->
+        <xpdl:Activity Id="CARD_VALID_GATEWAY" Name="Card Valid?">
+          <xpdl:Route GatewayType="Exclusive"/>
+          <xpdl:NodeGraphicsInfos>
+            <xpdl:NodeGraphicsInfo LaneId="ATM_LANE" Height="40" Width="40">
+              <xpdl:Coordinates XCoordinate="580" YCoordinate="195"/>
+            </xpdl:NodeGraphicsInfo>
+          </xpdl:NodeGraphicsInfos>
+        </xpdl:Activity>
+
+        <!-- Card Error Handling -->
+        <xpdl:Activity Id="DISPLAY_CARD_ERROR" Name="Display Card Error">
+          <xpdl:Implementation>
+            <xpdl:Task>
+              <xpdl:TaskUser/>
+            </xpdl:Task>
+          </xpdl:Implementation>
+          <xpdl:Performers>
+            <xpdl:Performer>ATM_SYSTEM</xpdl:Performer>
+          </xpdl:Performers>
+          <xpdl:NodeGraphicsInfos>
+            <xpdl:NodeGraphicsInfo LaneId="ATM_LANE" Height="60" Width="100">
+              <xpdl:Coordinates XCoordinate="580" YCoordinate="300"/>
+            </xpdl:NodeGraphicsInfo>
+          </xpdl:NodeGraphicsInfos>
+        </xpdl:Activity>
+
+        <!-- Return Card (Error) -->
+        <xpdl:Activity Id="RETURN_CARD_ERROR" Name="Return Card">
+          <xpdl:Implementation>
+            <xpdl:Task>
+              <xpdl:TaskApplication>
+                <xpdl:Description>Return invalid card to customer</xpdl:Description>
+              </xpdl:TaskApplication>
+            </xpdl:Task>
+          </xpdl:Implementation>
+          <xpdl:Performers>
+            <xpdl:Performer>ATM_SYSTEM</xpdl:Performer>
+          </xpdl:Performers>
+          <xpdl:NodeGraphicsInfos>
+            <xpdl:NodeGraphicsInfo LaneId="ATM_LANE" Height="60" Width="100">
+              <xpdl:Coordinates XCoordinate="750" YCoordinate="300"/>
+            </xpdl:NodeGraphicsInfo>
+          </xpdl:NodeGraphicsInfos>
+        </xpdl:Activity>
+
+        <!-- PIN Entry -->
+        <xpdl:Activity Id="ENTER_PIN" Name="Enter PIN">
+          <xpdl:Implementation>
+            <xpdl:Task>
+              <xpdl:TaskUser/>
+            </xpdl:Task>
+          </xpdl:Implementation>
+          <xpdl:Performers>
+            <xpdl:Performer>CUSTOMER</xpdl:Performer>
+          </xpdl:Performers>
+          <xpdl:NodeGraphicsInfos>
+            <xpdl:NodeGraphicsInfo LaneId="CUSTOMER_LANE" Height="60" Width="100">
+              <xpdl:Coordinates XCoordinate="700" YCoordinate="85"/>
+            </xpdl:NodeGraphicsInfo>
+          </xpdl:NodeGraphicsInfos>
+        </xpdl:Activity>
+
+        <!-- PIN Validation -->
+        <xpdl:Activity Id="VALIDATE_PIN" Name="Validate PIN">
+          <xpdl:Implementation>
+            <xpdl:Task>
+              <xpdl:TaskApplication>
+                <xpdl:Description>Validate PIN with bank system</xpdl:Description>
+              </xpdl:TaskApplication>
+            </xpdl:Task>
+          </xpdl:Implementation>
+          <xpdl:Performers>
+            <xpdl:Performer>BANK_SYSTEM</xpdl:Performer>
+          </xpdl:Performers>
+          <xpdl:NodeGraphicsInfos>
+            <xpdl:NodeGraphicsInfo LaneId="BANK_LANE" Height="60" Width="100">
+              <xpdl:Coordinates XCoordinate="850" YCoordinate="285"/>
+            </xpdl:NodeGraphicsInfo>
+          </xpdl:NodeGraphicsInfos>
+        </xpdl:Activity>
+
+        <!-- PIN Validation Gateway -->
+        <xpdl:Activity Id="PIN_VALID_GATEWAY" Name="PIN Valid?">
+          <xpdl:Route GatewayType="Exclusive"/>
+          <xpdl:NodeGraphicsInfos>
+            <xpdl:NodeGraphicsInfo LaneId="ATM_LANE" Height="40" Width="40">
+              <xpdl:Coordinates XCoordinate="980" YCoordinate="195"/>
+            </xpdl:NodeGraphicsInfo>
+          </xpdl:NodeGraphicsInfos>
+        </xpdl:Activity>
+
+        <!-- PIN Error Handling -->
+        <xpdl:Activity Id="INCREMENT_PIN_ATTEMPTS" Name="Increment PIN Attempts">
+          <xpdl:Implementation>
+            <xpdl:Task>
+              <xpdl:TaskApplication>
+                <xpdl:Description>Increment PIN attempt counter</xpdl:Description>
+              </xpdl:TaskApplication>
+            </xpdl:Task>
+          </xpdl:Implementation>
+          <xpdl:Performers>
+            <xpdl:Performer>ATM_SYSTEM</xpdl:Performer>
+          </xpdl:Performers>
+          <xpdl:NodeGraphicsInfos>
+            <xpdl:NodeGraphicsInfo LaneId="ATM_LANE" Height="60" Width="100">
+              <xpdl:Coordinates XCoordinate="980" YCoordinate="300"/>
+            </xpdl:NodeGraphicsInfo>
+          </xpdl:NodeGraphicsInfos>
+        </xpdl:Activity>
+
+        <!-- PIN Attempts Gateway -->
+        <xpdl:Activity Id="PIN_ATTEMPTS_GATEWAY" Name="Max Attempts?">
+          <xpdl:Route GatewayType="Exclusive"/>
+          <xpdl:NodeGraphicsInfos>
+            <xpdl:NodeGraphicsInfo LaneId="ATM_LANE" Height="40" Width="40">
+              <xpdl:Coordinates XCoordinate="1130" YCoordinate="310"/>
+            </xpdl:NodeGraphicsInfo>
+          </xpdl:NodeGraphicsInfos>
+        </xpdl:Activity>
+
+        <!-- Block Card -->
+        <xpdl:Activity Id="BLOCK_CARD" Name="Block Card">
+          <xpdl:Implementation>
+            <xpdl:Task>
+              <xpdl:TaskApplication>
+                <xpdl:Description>Block card due to multiple wrong PIN attempts</xpdl:Description>
+              </xpdl:TaskApplication>
+            </xpdl:Task>
+          </xpdl:Implementation>
+          <xpdl:Performers>
+            <xpdl:Performer>BANK_SYSTEM</xpdl:Performer>
+          </xpdl:Performers>
+          <xpdl:NodeGraphicsInfos>
+            <xpdl:NodeGraphicsInfo LaneId="BANK_LANE" Height="60" Width="100">
+              <xpdl:Coordinates XCoordinate="1280" YCoordinate="285"/>
+            </xpdl:NodeGraphicsInfo>
+          </xpdl:NodeGraphicsInfos>
+        </xpdl:Activity>
+
+        <!-- Display Menu -->
+        <xpdl:Activity Id="DISPLAY_MENU" Name="Display Menu">
+          <xpdl:Implementation>
+            <xpdl:Task>
+              <xpdl:TaskUser/>
+            </xpdl:Task>
+          </xpdl:Implementation>
+          <xpdl:Performers>
+            <xpdl:Performer>ATM_SYSTEM</xpdl:Performer>
+          </xpdl:Performers>
+          <xpdl:NodeGraphicsInfos>
+            <xpdl:NodeGraphicsInfo LaneId="ATM_LANE" Height="60" Width="100">
+              <xpdl:Coordinates XCoordinate="1100" YCoordinate="185"/>
+            </xpdl:NodeGraphicsInfo>
+          </xpdl:NodeGraphicsInfos>
+        </xpdl:Activity>
+
+        <!-- Select Amount -->
+        <xpdl:Activity Id="SELECT_AMOUNT" Name="Select Amount">
+          <xpdl:Implementation>
+            <xpdl:Task>
+              <xpdl:TaskUser/>
+            </xpdl:Task>
+          </xpdl:Implementation>
+          <xpdl:Performers>
+            <xpdl:Performer>CUSTOMER</xpdl:Performer>
+          </xpdl:Performers>
+          <xpdl:NodeGraphicsInfos>
+            <xpdl:NodeGraphicsInfo LaneId="CUSTOMER_LANE" Height="60" Width="100">
+              <xpdl:Coordinates XCoordinate="1250" YCoordinate="85"/>
+            </xpdl:NodeGraphicsInfo>
+          </xpdl:NodeGraphicsInfos>
+        </xpdl:Activity>
+
+        <!-- Check Balance -->
+        <xpdl:Activity Id="CHECK_BALANCE" Name="Check Balance">
+          <xpdl:Implementation>
+            <xpdl:Task>
+              <xpdl:TaskApplication>
+                <xpdl:Description>Check account balance</xpdl:Description>
+              </xpdl:TaskApplication>
+            </xpdl:Task>
+          </xpdl:Implementation>
+          <xpdl:Performers>
+            <xpdl:Performer>BANK_SYSTEM</xpdl:Performer>
+          </xpdl:Performers>
+          <xpdl:NodeGraphicsInfos>
+            <xpdl:NodeGraphicsInfo LaneId="BANK_LANE" Height="60" Width="100">
+              <xpdl:Coordinates XCoordinate="1400" YCoordinate="285"/>
+            </xpdl:NodeGraphicsInfo>
+          </xpdl:NodeGraphicsInfos>
+        </xpdl:Activity>
+
+        <!-- Balance Validation Gateway -->
+        <xpdl:Activity Id="BALANCE_VALID_GATEWAY" Name="Sufficient Balance?">
+          <xpdl:Route GatewayType="Exclusive"/>
+          <xpdl:NodeGraphicsInfos>
+            <xpdl:NodeGraphicsInfo LaneId="ATM_LANE" Height="40" Width="40">
+              <xpdl:Coordinates XCoordinate="1530" YCoordinate="195"/>
+            </xpdl:NodeGraphicsInfo>
+          </xpdl:NodeGraphicsInfos>
+        </xpdl:Activity>
+
+        <!-- Insufficient Balance Error -->
+        <xpdl:Activity Id="DISPLAY_BALANCE_ERROR" Name="Display Insufficient Balance">
+          <xpdl:Implementation>
+            <xpdl:Task>
+              <xpdl:TaskUser/>
+            </xpdl:Task>
+          </xpdl:Implementation>
+          <xpdl:Performers>
+            <xpdl:Performer>ATM_SYSTEM</xpdl:Performer>
+          </xpdl:Performers>
+          <xpdl:NodeGraphicsInfos>
+            <xpdl:NodeGraphicsInfo LaneId="ATM_LANE" Height="60" Width="100">
+              <xpdl:Coordinates XCoordinate="1530" YCoordinate="300"/>
+            </xpdl:NodeGraphicsInfo>
+          </xpdl:NodeGraphicsInfos>
+        </xpdl:Activity>
+
+        <!-- Process Transaction -->
+        <xpdl:Activity Id="PROCESS_TRANSACTION" Name="Process Transaction">
+          <xpdl:Implementation>
+            <xpdl:Task>
+              <xpdl:TaskApplication>
+                <xpdl:Description>Process withdrawal transaction</xpdl:Description>
+              </xpdl:TaskApplication>
+            </xpdl:Task>
+          </xpdl:Implementation>
+          <xpdl:Performers>
+            <xpdl:Performer>BANK_SYSTEM</xpdl:Performer>
+          </xpdl:Performers>
+          <xpdl:NodeGraphicsInfos>
+            <xpdl:NodeGraphicsInfo LaneId="BANK_LANE" Height="60" Width="100">
+              <xpdl:Coordinates XCoordinate="1680" YCoordinate="285"/>
+            </xpdl:NodeGraphicsInfo>
+          </xpdl:NodeGraphicsInfos>
+        </xpdl:Activity>
+
+        <!-- Debit Account -->
+        <xpdl:Activity Id="DEBIT_ACCOUNT" Name="Debit Account">
+          <xpdl:Implementation>
+            <xpdl:Task>
+              <xpdl:TaskApplication>
+                <xpdl:Description>Debit amount from customer account</xpdl:Description>
+              </xpdl:TaskApplication>
+            </xpdl:Task>
+          </xpdl:Implementation>
+          <xpdl:Performers>
+            <xpdl:Performer>BANK_SYSTEM</xpdl:Performer>
+          </xpdl:Performers>
+          <xpdl:NodeGraphicsInfos>
+            <xpdl:NodeGraphicsInfo LaneId="BANK_LANE" Height="60" Width="100">
+              <xpdl:Coordinates XCoordinate="1830" YCoordinate="285"/>
+            </xpdl:NodeGraphicsInfo>
+          </xpdl:NodeGraphicsInfos>
+        </xpdl:Activity>
+
+        <!-- Dispense Cash -->
+        <xpdl:Activity Id="DISPENSE_CASH" Name="Dispense Cash">
+          <xpdl:Implementation>
+            <xpdl:Task>
+              <xpdl:TaskApplication>
+                <xpdl:Description>Dispense cash from ATM</xpdl:Description>
+              </xpdl:TaskApplication>
+            </xpdl:Task>
+          </xpdl:Implementation>
+          <xpdl:Performers>
+            <xpdl:Performer>ATM_SYSTEM</xpdl:Performer>
+          </xpdl:Performers>
+          <xpdl:NodeGraphicsInfos>
+            <xpdl:NodeGraphicsInfo LaneId="ATM_LANE" Height="60" Width="100">
+              <xpdl:Coordinates XCoordinate="1830" YCoordinate="185"/>
+            </xpdl:NodeGraphicsInfo>
+          </xpdl:NodeGraphicsInfos>
+        </xpdl:Activity>
+
+        <!-- Log Transaction -->
+        <xpdl:Activity Id="LOG_TRANSACTION" Name="Log Transaction">
+          <xpdl:Implementation>
+            <xpdl:Task>
+              <xpdl:TaskApplication>
+                <xpdl:Description>Log successful transaction</xpdl:Description>
+              </xpdl:TaskApplication>
+            </xpdl:Task>
+          </xpdl:Implementation>
+          <xpdl:Performers>
+            <xpdl:Performer>SECURITY_SYSTEM</xpdl:Performer>
+          </xpdl:Performers>
+          <xpdl:NodeGraphicsInfos>
+            <xpdl:NodeGraphicsInfo LaneId="SECURITY_LANE" Height="60" Width="100">
+              <xpdl:Coordinates XCoordinate="1830" YCoordinate="385"/>
+            </xpdl:NodeGraphicsInfo>
+          </xpdl:NodeGraphicsInfos>
+        </xpdl:Activity>
+
+        <!-- Print Receipt -->
+        <xpdl:Activity Id="PRINT_RECEIPT" Name="Print Receipt">
+          <xpdl:Implementation>
+            <xpdl:Task>
+              <xpdl:TaskApplication>
+                <xpdl:Description>Print transaction receipt</xpdl:Description>
+              </xpdl:TaskApplication>
+            </xpdl:Task>
+          </xpdl:Implementation>
+          <xpdl:Performers>
+            <xpdl:Performer>ATM_SYSTEM</xpdl:Performer>
+          </xpdl:Performers>
+          <xpdl:NodeGraphicsInfos>
+            <xpdl:NodeGraphicsInfo LaneId="ATM_LANE" Height="60" Width="100">
+              <xpdl:Coordinates XCoordinate="1980" YCoordinate="185"/>
+            </xpdl:NodeGraphicsInfo>
+          </xpdl:NodeGraphicsInfos>
+        </xpdl:Activity>
+
+        <!-- Return Card (Success) -->
+        <xpdl:Activity Id="RETURN_CARD_SUCCESS" Name="Return Card">
+          <xpdl:Implementation>
+            <xpdl:Task>
+              <xpdl:TaskApplication>
+                <xpdl:Description>Return card to customer</xpdl:Description>
+              </xpdl:TaskApplication>
+            </xpdl:Task>
+          </xpdl:Implementation>
+          <xpdl:Performers>
+            <xpdl:Performer>ATM_SYSTEM</xpdl:Performer>
+          </xpdl:Performers>
+          <xpdl:NodeGraphicsInfos>
+            <xpdl:NodeGraphicsInfo LaneId="ATM_LANE" Height="60" Width="100">
+              <xpdl:Coordinates XCoordinate="2130" YCoordinate="185"/>
+            </xpdl:NodeGraphicsInfo>
+          </xpdl:NodeGraphicsInfos>
+        </xpdl:Activity>
+
+        <!-- Take Cash and Card -->
+        <xpdl:Activity Id="TAKE_CASH_CARD" Name="Take Cash and Card">
+          <xpdl:Implementation>
+            <xpdl:Task>
+              <xpdl:TaskUser/>
+            </xpdl:Task>
+          </xpdl:Implementation>
+          <xpdl:Performers>
+            <xpdl:Performer>CUSTOMER</xpdl:Performer>
+          </xpdl:Performers>
+          <xpdl:NodeGraphicsInfos>
+            <xpdl:NodeGraphicsInfo LaneId="CUSTOMER_LANE" Height="60" Width="100">
+              <xpdl:Coordinates XCoordinate="2280" YCoordinate="85"/>
+            </xpdl:NodeGraphicsInfo>
+          </xpdl:NodeGraphicsInfos>
+        </xpdl:Activity>
+
+        <!-- End Events -->
+        <xpdl:Activity Id="END_SUCCESS" Name="Transaction Complete">
+          <xpdl:Event>
+            <xpdl:EndEvent Result="None"/>
+          </xpdl:Event>
+          <xpdl:NodeGraphicsInfos>
+            <xpdl:NodeGraphicsInfo LaneId="CUSTOMER_LANE" Height="30" Width="30">
+              <xpdl:Coordinates XCoordinate="2430" YCoordinate="100"/>
+            </xpdl:NodeGraphicsInfo>
+          </xpdl:NodeGraphicsInfos>
+        </xpdl:Activity>
+
+        <xpdl:Activity Id="END_ERROR" Name="Transaction Failed">
+          <xpdl:Event>
+            <xpdl:EndEvent Result="None"/>
+          </xpdl:Event>
+          <xpdl:NodeGraphicsInfos>
+            <xpdl:NodeGraphicsInfo LaneId="ATM_LANE" Height="30" Width="30">
+              <xpdl:Coordinates XCoordinate="1680" YCoordinate="315"/>
+            </xpdl:NodeGraphicsInfo>
+          </xpdl:NodeGraphicsInfos>
+        </xpdl:Activity>
+
+        <xpdl:Activity Id="END_CARD_BLOCKED" Name="Card Blocked">
+          <xpdl:Event>
+            <xpdl:EndEvent Result="None"/>
+          </xpdl:Event>
+          <xpdl:NodeGraphicsInfos>
+            <xpdl:NodeGraphicsInfo LaneId="BANK_LANE" Height="30" Width="30">
+              <xpdl:Coordinates XCoordinate="1430" YCoordinate="300"/>
+            </xpdl:NodeGraphicsInfo>
+          </xpdl:NodeGraphicsInfos>
+        </xpdl:Activity>
+
+      </xpdl:Activities>
+
+      <!-- Transitions -->
+      <xpdl:Transitions>
+        
+        <!-- Main Flow Transitions -->
+        <xpdl:Transition Id="START_TO_INSERT" From="START_PROCESS" To="INSERT_CARD"/>
+        
+        <xpdl:Transition Id="INSERT_TO_READ" From="INSERT_CARD" To="READ_CARD"/>
+        
+        <xpdl:Transition Id="READ_TO_LOG" From="READ_CARD" To="LOG_SESSION_START"/>
+        
+        <xpdl:Transition Id="READ_TO_VALIDATE" From="READ_CARD" To="VALIDATE_CARD"/>
+        
+        <xpdl:Transition Id="VALIDATE_TO_GATEWAY" From="VALIDATE_CARD" To="CARD_VALID_GATEWAY"/>
+        
+        <!-- Card Valid Path -->
+        <xpdl:Transition Id="CARD_VALID_YES" From="CARD_VALID_GATEWAY" To="ENTER_PIN">
+          <xpdl:Condition Type="CONDITION">CARD_VALID == true</xpdl:Condition>
+        </xpdl:Transition>
+        
+        <!-- Card Invalid Path -->
+        <xpdl:Transition Id="CARD_VALID_NO" From="CARD_VALID_GATEWAY" To="DISPLAY_CARD_ERROR">
+          <xpdl:Condition Type="CONDITION">CARD_VALID == false</xpdl:Condition>
+        </xpdl:Transition>
+        
+        <xpdl:Transition Id="CARD_ERROR_TO_RETURN" From="DISPLAY_CARD_ERROR" To="RETURN_CARD_ERROR"/>
+        
+        <xpdl:Transition Id="RETURN_ERROR_TO_END" From="RETURN_CARD_ERROR" To="END_ERROR"/>
+        
+        <!-- PIN Flow -->
+        <xpdl:Transition Id="PIN_TO_VALIDATE" From="ENTER_PIN" To="VALIDATE_PIN"/>
+        
+        <xpdl:Transition Id="PIN_VALIDATE_TO_GATEWAY" From="VALIDATE_PIN" To="PIN_VALID_GATEWAY"/>
+        
+        <!-- PIN Valid Path -->
+        <xpdl:Transition Id="PIN_VALID_YES" From="PIN_VALID_GATEWAY" To="DISPLAY_MENU">
+          <xpdl:Condition Type="CONDITION">PIN_VALID == true</xpdl:Condition>
+        </xpdl:Transition>
+        
+        <!-- PIN Invalid Path -->
+        <xpdl:Transition Id="PIN_VALID_NO" From="PIN_VALID_GATEWAY" To="INCREMENT_PIN_ATTEMPTS">
+          <xpdl:Condition Type="CONDITION">PIN_VALID == false</xpdl:Condition>
+        </xpdl:Transition>
+        
+        <xpdl:Transition Id="INCREMENT_TO_ATTEMPTS_GATEWAY" From="INCREMENT_PIN_ATTEMPTS" To="PIN_ATTEMPTS_GATEWAY"/>
+        
+        <!-- PIN Attempts Check -->
+        <xpdl:Transition Id="ATTEMPTS_MAX" From="PIN_ATTEMPTS_GATEWAY" To="BLOCK_CARD">
+          <xpdl:Condition Type="CONDITION">PIN_ATTEMPTS >= 3</xpdl:Condition>
+        </xpdl:Transition>
+        
+        <xpdl:Transition Id="ATTEMPTS_RETRY" From="PIN_ATTEMPTS_GATEWAY" To="ENTER_PIN">
+          <xpdl:Condition Type="CONDITION">PIN_ATTEMPTS &lt; 3</xpdl:Condition>
+        </xpdl:Transition>
+        
+        <xpdl:Transition Id="BLOCK_TO_END" From="BLOCK_CARD" To="END_CARD_BLOCKED"/>
+        
+        <!-- Menu and Amount Selection -->
+        <xpdl:Transition Id="MENU_TO_AMOUNT" From="DISPLAY_MENU" To="SELECT_AMOUNT"/>
+        
+        <xpdl:Transition Id="AMOUNT_TO_BALANCE" From="SELECT_AMOUNT" To="CHECK_BALANCE"/>
+        
+        <xpdl:Transition Id="BALANCE_TO_GATEWAY" From="CHECK_BALANCE" To="BALANCE_VALID_GATEWAY"/>
+        
+        <!-- Balance Check -->
+        <xpdl:Transition Id="BALANCE_SUFFICIENT" From="BALANCE_VALID_GATEWAY" To="PROCESS_TRANSACTION">
+          <xpdl:Condition Type="CONDITION">SUFFICIENT_BALANCE == true</xpdl:Condition>
+        </xpdl:Transition>
+        
+        <xpdl:Transition Id="BALANCE_INSUFFICIENT" From="BALANCE_VALID_GATEWAY" To="DISPLAY_BALANCE_ERROR">
+          <xpdl:Condition Type="CONDITION">SUFFICIENT_BALANCE == false</xpdl:Condition>
+        </xpdl:Transition>
+        
+        <xpdl:Transition Id="BALANCE_ERROR_TO_END" From="DISPLAY_BALANCE_ERROR" To="END_ERROR"/>
+        
+        <!-- Transaction Processing -->
+        <xpdl:Transition Id="PROCESS_TO_DEBIT" From="PROCESS_TRANSACTION" To="DEBIT_ACCOUNT"/>
+        
+        <xpdl:Transition Id="DEBIT_TO_DISPENSE" From="DEBIT_ACCOUNT" To="DISPENSE_CASH"/>
+        
+        <xpdl:Transition Id="DEBIT_TO_LOG" From="DEBIT_ACCOUNT" To="LOG_TRANSACTION"/>
+        
+        <xpdl:Transition Id="DISPENSE_TO_PRINT" From="DISPENSE_CASH" To="PRINT_RECEIPT"/>
+        
+        <xpdl:Transition Id="PRINT_TO_RETURN" From="PRINT_RECEIPT" To="RETURN_CARD_SUCCESS"/>
+        
+        <xpdl:Transition Id="RETURN_TO_TAKE" From="RETURN_CARD_SUCCESS" To="TAKE_CASH_CARD"/>
+        
+        <xpdl:Transition Id="TAKE_TO_END" From="TAKE_CASH_CARD" To="END_SUCCESS"/>
+
+      </xpdl:Transitions>
+
+      <!-- Lanes -->
+      <xpdl:Lanes>
+        <xpdl:Lane Id="CUSTOMER_LANE" Name="Customer Lane">
+          <xpdl:Performers>
+            <xpdl:Performer>CUSTOMER</xpdl:Performer>
+          </xpdl:Performers>
+          <xpdl:NodeGraphicsInfos>
+            <xpdl:NodeGraphicsInfo Height="100" Width="2500">
+              <xpdl:Coordinates XCoordinate="0" YCoordinate="50"/>
+            </xpdl:NodeGraphicsInfo>
+          </xpdl:NodeGraphicsInfos>
+        </xpdl:Lane>
+        
+        <xpdl:Lane Id="ATM_LANE" Name="ATM System Lane">
+          <xpdl:Performers>
+            <xpdl:Performer>ATM_SYSTEM</xpdl:Performer>
+          </xpdl:Performers>
+          <xpdl:NodeGraphicsInfos>
+            <xpdl:NodeGraphicsInfo Height="100" Width="2500">
+              <xpdl:Coordinates XCoordinate="0" YCoordinate="150"/>
+            </xpdl:NodeGraphicsInfo>
+          </xpdl:NodeGraphicsInfos>
+        </xpdl:Lane>
+        
+        <xpdl:Lane Id="BANK_LANE" Name="Bank System Lane">
+          <xpdl:Performers>
+            <xpdl:Performer>BANK_SYSTEM</xpdl:Performer>
+          </xpdl:Performers>
+          <xpdl:NodeGraphicsInfos>
+            <xpdl:NodeGraphicsInfo Height="100" Width="2500">
+              <xpdl:Coordinates XCoordinate="0" YCoordinate="250"/>
+            </xpdl:NodeGraphicsInfo>
+          </xpdl:NodeGraphicsInfos>
+        </xpdl:Lane>
+        
+        <xpdl:Lane Id="SECURITY_LANE" Name="Security System Lane">
+          <xpdl:Performers>
+            <xpdl:Performer>SECURITY_SYSTEM</xpdl:Performer>
+          </xpdl:Performers>
+          <xpdl:NodeGraphicsInfos>
+            <xpdl:NodeGraphicsInfo Height="100" Width="2500">
+              <xpdl:Coordinates XCoordinate="0" YCoordinate="350"/>
+            </xpdl:NodeGraphicsInfo>
+          </xpdl:NodeGraphicsInfos>
+        </xpdl:Lane>
+      </xpdl:Lanes>
+
+    </xpdl:WorkflowProcess>
+  </xpdl:WorkflowProcesses>
+</xpdl:Package>
