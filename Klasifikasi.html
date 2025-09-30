@@ -392,6 +392,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#klasifikasi-ecoli-menggunakan-naive-bayes"><strong>1. Klasifikasi Ecoli Menggunakan Naive Bayes</strong></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pengambilan-data"><strong>1.1 Pengambilan Data</strong></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#klasifikasi-naive-bayes-pada-data-original"><strong>1.2 Klasifikasi Naive Bayes pada Data Original</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#klasifikasi-naive-bayes-pada-data-smote"><strong>1.3 Klasifikasi Naive Bayes pada Data SMOTE</strong></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#klasifikasi-naive-bayes-pada-data-adasyn"><strong>1.4 Klasifikasi Naive Bayes pada Data ADASYN</strong></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perbandingan-accuracy-naive-bayes"><strong>1.5 Perbandingan Accuracy Naive Bayes</strong></a></li>
 </ul>
@@ -638,6 +639,79 @@ weighted avg       0.73      0.78      0.74       101
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Visualisasi Confusion Matrix untuk Naive Bayes - Data Original</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;CONFUSION MATRIX - NAIVE BAYES ORIGINAL&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">confusion_matrix</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+
+<span class="c1"># Hitung confusion matrix</span>
+<span class="n">cm_nb_orig</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test_orig</span><span class="p">,</span> <span class="n">y_pred_nb_orig</span><span class="p">)</span>
+
+<span class="c1"># Plot confusion matrix</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">cm_nb_orig</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">,</span> 
+            <span class="n">xticklabels</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;Class </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">y_all</span><span class="p">)))],</span>
+            <span class="n">yticklabels</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;Class </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">y_all</span><span class="p">)))])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Confusion Matrix - Naive Bayes (Data Original)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Predicted Label&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;True Label&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Analisis per kelas</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Analisis Detail per Kelas:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">40</span><span class="p">)</span>
+<span class="n">class_names</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;Class </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">y_all</span><span class="p">)))]</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">class_name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">class_names</span><span class="p">):</span>
+    <span class="n">tp</span> <span class="o">=</span> <span class="n">cm_nb_orig</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span>  <span class="c1"># True Positive</span>
+    <span class="n">fp</span> <span class="o">=</span> <span class="n">cm_nb_orig</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">-</span> <span class="n">tp</span>  <span class="c1"># False Positive  </span>
+    <span class="n">fn</span> <span class="o">=</span> <span class="n">cm_nb_orig</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">-</span> <span class="n">tp</span>  <span class="c1"># False Negative</span>
+    <span class="n">tn</span> <span class="o">=</span> <span class="n">cm_nb_orig</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">-</span> <span class="n">tp</span> <span class="o">-</span> <span class="n">fp</span> <span class="o">-</span> <span class="n">fn</span>  <span class="c1"># True Negative</span>
+    
+    <span class="k">if</span> <span class="n">tp</span> <span class="o">+</span> <span class="n">fp</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">precision</span> <span class="o">=</span> <span class="n">tp</span> <span class="o">/</span> <span class="p">(</span><span class="n">tp</span> <span class="o">+</span> <span class="n">fp</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">precision</span> <span class="o">=</span> <span class="mf">0.0</span>
+        
+    <span class="k">if</span> <span class="n">tp</span> <span class="o">+</span> <span class="n">fn</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">recall</span> <span class="o">=</span> <span class="n">tp</span> <span class="o">/</span> <span class="p">(</span><span class="n">tp</span> <span class="o">+</span> <span class="n">fn</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">recall</span> <span class="o">=</span> <span class="mf">0.0</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">class_name</span><span class="si">}</span><span class="s2">: TP=</span><span class="si">{</span><span class="n">tp</span><span class="si">}</span><span class="s2">, FP=</span><span class="si">{</span><span class="n">fp</span><span class="si">}</span><span class="s2">, FN=</span><span class="si">{</span><span class="n">fn</span><span class="si">}</span><span class="s2">, Precision=</span><span class="si">{</span><span class="n">precision</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, Recall=</span><span class="si">{</span><span class="n">recall</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>============================================================
+CONFUSION MATRIX - NAIVE BAYES ORIGINAL
+============================================================
+</pre></div>
+</div>
+<img alt="_images/f229dd32ea616123538a5b9746683c58c70ba9dd291c0bbac11415327a0a8adf.png" src="_images/f229dd32ea616123538a5b9746683c58c70ba9dd291c0bbac11415327a0a8adf.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Analisis Detail per Kelas:
+----------------------------------------
+Class 0: TP=43, FP=4, FN=0, Precision=0.915, Recall=1.000
+Class 1: TP=14, FP=4, FN=9, Precision=0.778, Recall=0.609
+Class 2: TP=0, FP=0, FN=1, Precision=0.000, Recall=0.000
+Class 3: TP=0, FP=0, FN=1, Precision=0.000, Recall=0.000
+Class 4: TP=5, FP=3, FN=5, Precision=0.625, Recall=0.500
+Class 5: TP=0, FP=0, FN=6, Precision=0.000, Recall=0.000
+Class 6: TP=1, FP=1, FN=0, Precision=0.500, Recall=1.000
+Class 7: TP=16, FP=10, FN=0, Precision=0.615, Recall=1.000
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="klasifikasi-naive-bayes-pada-data-smote">
+<h3><strong>1.3 Klasifikasi Naive Bayes pada Data SMOTE</strong><a class="headerlink" href="#klasifikasi-naive-bayes-pada-data-smote" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;KLASIFIKASI NAIVE BAYES - DATA SMOTE &quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
@@ -754,6 +828,66 @@ Classification Report - RandomOverSampler:
     accuracy                           0.77       101
    macro avg       0.43      0.53      0.45       101
 weighted avg       0.75      0.77      0.73       101
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Visualisasi Confusion Matrix untuk Naive Bayes - Data Balanced</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;CONFUSION MATRIX - NAIVE BAYES BALANCED&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+
+<span class="c1"># Hitung confusion matrix</span>
+<span class="n">cm_nb_smote</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test_orig</span><span class="p">,</span> <span class="n">y_pred_nb_smote</span><span class="p">)</span>
+
+<span class="c1"># Plot confusion matrix</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">cm_nb_smote</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Greens&#39;</span><span class="p">,</span> 
+            <span class="n">xticklabels</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;Class </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">y_all</span><span class="p">)))],</span>
+            <span class="n">yticklabels</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;Class </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">y_all</span><span class="p">)))])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Confusion Matrix - Naive Bayes (Data Balanced)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Predicted Label&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;True Label&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Perbandingan dengan Original</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Perbandingan dengan Data Original:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">40</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">class_name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="sa">f</span><span class="s1">&#39;Class </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">y_all</span><span class="p">)))]):</span>
+    <span class="n">tp_orig</span> <span class="o">=</span> <span class="n">cm_nb_orig</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span>
+    <span class="n">tp_smote</span> <span class="o">=</span> <span class="n">cm_nb_smote</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span>
+    <span class="n">support</span> <span class="o">=</span> <span class="n">test_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">support</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">acc_orig</span> <span class="o">=</span> <span class="n">tp_orig</span> <span class="o">/</span> <span class="n">support</span>
+        <span class="n">acc_smote</span> <span class="o">=</span> <span class="n">tp_smote</span> <span class="o">/</span> <span class="n">support</span>
+        <span class="n">improvement</span> <span class="o">=</span> <span class="n">acc_smote</span> <span class="o">-</span> <span class="n">acc_orig</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">class_name</span><span class="si">}</span><span class="s2">: Original=</span><span class="si">{</span><span class="n">acc_orig</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, Balanced=</span><span class="si">{</span><span class="n">acc_smote</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, Improvement=</span><span class="si">{</span><span class="n">improvement</span><span class="si">:</span><span class="s2">+.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">class_name</span><span class="si">}</span><span class="s2">: No test samples&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>============================================================
+CONFUSION MATRIX - NAIVE BAYES BALANCED
+============================================================
+</pre></div>
+</div>
+<img alt="_images/49fa2ae40aef313446102ededc0e87f200ba9d891c9af25f479070869d4e1e68.png" src="_images/49fa2ae40aef313446102ededc0e87f200ba9d891c9af25f479070869d4e1e68.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Perbandingan dengan Data Original:
+----------------------------------------
+Class 0: Original=1.000, Balanced=1.000, Improvement=+0.000
+Class 1: Original=0.609, Balanced=0.435, Improvement=-0.174
+Class 2: Original=0.000, Balanced=0.000, Improvement=+0.000
+Class 3: Original=0.000, Balanced=0.000, Improvement=+0.000
+Class 4: Original=0.500, Balanced=0.800, Improvement=+0.300
+Class 5: Original=0.000, Balanced=0.000, Improvement=+0.000
+Class 6: Original=1.000, Balanced=1.000, Improvement=+0.000
+Class 7: Original=1.000, Balanced=1.000, Improvement=+0.000
 </pre></div>
 </div>
 </div>
@@ -939,6 +1073,67 @@ weighted avg       0.79      0.80      0.79       101
 </div>
 </div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Visualisasi Confusion Matrix untuk Random Forest - Data Original</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;CONFUSION MATRIX - RANDOM FOREST ORIGINAL&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+
+<span class="c1"># Hitung confusion matrix</span>
+<span class="n">cm_rf_orig</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test_orig</span><span class="p">,</span> <span class="n">y_pred_rf_orig</span><span class="p">)</span>
+
+<span class="c1"># Plot confusion matrix</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">cm_rf_orig</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Oranges&#39;</span><span class="p">,</span> 
+            <span class="n">xticklabels</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;Class </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">y_all</span><span class="p">)))],</span>
+            <span class="n">yticklabels</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;Class </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">y_all</span><span class="p">)))])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Confusion Matrix - Random Forest (Data Original)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Predicted Label&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;True Label&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Perbandingan dengan Naive Bayes</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Perbandingan dengan Naive Bayes:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">40</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">class_name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="sa">f</span><span class="s1">&#39;Class </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">y_all</span><span class="p">)))]):</span>
+    <span class="n">tp_nb</span> <span class="o">=</span> <span class="n">cm_nb_orig</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span>
+    <span class="n">tp_rf</span> <span class="o">=</span> <span class="n">cm_rf_orig</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span>
+    <span class="n">support</span> <span class="o">=</span> <span class="n">test_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">support</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">acc_nb</span> <span class="o">=</span> <span class="n">tp_nb</span> <span class="o">/</span> <span class="n">support</span>
+        <span class="n">acc_rf</span> <span class="o">=</span> <span class="n">tp_rf</span> <span class="o">/</span> <span class="n">support</span>
+        <span class="n">improvement</span> <span class="o">=</span> <span class="n">acc_rf</span> <span class="o">-</span> <span class="n">acc_nb</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;↑ Better&quot;</span> <span class="k">if</span> <span class="n">improvement</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;↓ Worse&quot;</span> <span class="k">if</span> <span class="n">improvement</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;= Same&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">class_name</span><span class="si">}</span><span class="s2">: NB=</span><span class="si">{</span><span class="n">acc_nb</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, RF=</span><span class="si">{</span><span class="n">acc_rf</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, Diff=</span><span class="si">{</span><span class="n">improvement</span><span class="si">:</span><span class="s2">+.3f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">status</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">class_name</span><span class="si">}</span><span class="s2">: No test samples&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>============================================================
+CONFUSION MATRIX - RANDOM FOREST ORIGINAL
+============================================================
+</pre></div>
+</div>
+<img alt="_images/6ab26b1e8516c51579d4758d6eef12047c342b619c365c5fa490fad81435401c.png" src="_images/6ab26b1e8516c51579d4758d6eef12047c342b619c365c5fa490fad81435401c.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Perbandingan dengan Naive Bayes:
+----------------------------------------
+Class 0: NB=1.000, RF=1.000, Diff=+0.000 = Same
+Class 1: NB=0.609, RF=0.696, Diff=+0.087 ↑ Better
+Class 2: NB=0.000, RF=0.000, Diff=+0.000 = Same
+Class 3: NB=0.000, RF=0.000, Diff=+0.000 = Same
+Class 4: NB=0.500, RF=0.600, Diff=+0.100 ↑ Better
+Class 5: NB=0.000, RF=0.833, Diff=+0.833 ↑ Better
+Class 6: NB=1.000, RF=0.000, Diff=-1.000 ↓ Worse
+Class 7: NB=1.000, RF=0.688, Diff=-0.312 ↓ Worse
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 <section id="klasifikasi-random-forest-pada-data-smote">
 <h3><strong>2.2 Klasifikasi Random Forest pada Data SMOTE</strong><a class="headerlink" href="#klasifikasi-random-forest-pada-data-smote" title="Link to this heading">#</a></h3>
@@ -975,9 +1170,7 @@ weighted avg       0.79      0.80      0.79       101
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>============================================================
 KLASIFIKASI RANDOM FOREST - DATA BALANCED (CORRECTED)
 ============================================================
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy data BALANCED: 0.8416
+Accuracy data BALANCED: 0.8416
 Misclassified samples: 16/101
 
 Catatan: Training dengan Balanced data, Testing dengan data ORIGINAL
@@ -996,6 +1189,67 @@ Classification Report - BALANCED:
     accuracy                           0.84       101
    macro avg       0.59      0.65      0.60       101
 weighted avg       0.85      0.84      0.84       101
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Visualisasi Confusion Matrix untuk Random Forest - Data Balanced</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;CONFUSION MATRIX - RANDOM FOREST BALANCED&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+
+<span class="c1"># Hitung confusion matrix</span>
+<span class="n">cm_rf_smote</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test_orig</span><span class="p">,</span> <span class="n">y_pred_rf_smote</span><span class="p">)</span>
+
+<span class="c1"># Plot confusion matrix</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">cm_rf_smote</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Reds&#39;</span><span class="p">,</span> 
+            <span class="n">xticklabels</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;Class </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">y_all</span><span class="p">)))],</span>
+            <span class="n">yticklabels</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;Class </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">y_all</span><span class="p">)))])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Confusion Matrix - Random Forest (Data Balanced)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Predicted Label&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;True Label&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Analisis improvement dari balancing</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Efek Balancing pada Random Forest:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">40</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">class_name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="sa">f</span><span class="s1">&#39;Class </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">y_all</span><span class="p">)))]):</span>
+    <span class="n">tp_orig</span> <span class="o">=</span> <span class="n">cm_rf_orig</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span>
+    <span class="n">tp_balanced</span> <span class="o">=</span> <span class="n">cm_rf_smote</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span>
+    <span class="n">support</span> <span class="o">=</span> <span class="n">test_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">support</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">acc_orig</span> <span class="o">=</span> <span class="n">tp_orig</span> <span class="o">/</span> <span class="n">support</span>
+        <span class="n">acc_balanced</span> <span class="o">=</span> <span class="n">tp_balanced</span> <span class="o">/</span> <span class="n">support</span>
+        <span class="n">improvement</span> <span class="o">=</span> <span class="n">acc_balanced</span> <span class="o">-</span> <span class="n">acc_orig</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;🟢 Improved&quot;</span> <span class="k">if</span> <span class="n">improvement</span> <span class="o">&gt;</span> <span class="mf">0.1</span> <span class="k">else</span> <span class="s2">&quot;🟡 Slight&quot;</span> <span class="k">if</span> <span class="n">improvement</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;🔴 Declined&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">class_name</span><span class="si">}</span><span class="s2">: Orig=</span><span class="si">{</span><span class="n">acc_orig</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, Balanced=</span><span class="si">{</span><span class="n">acc_balanced</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, Change=</span><span class="si">{</span><span class="n">improvement</span><span class="si">:</span><span class="s2">+.3f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">status</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">class_name</span><span class="si">}</span><span class="s2">: No test samples&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>============================================================
+CONFUSION MATRIX - RANDOM FOREST BALANCED
+============================================================
+</pre></div>
+</div>
+<img alt="_images/b27b5b3e422c4b3ec81c4651cff6bcb83c4f65f6e1676d957dcb631ef7fc625f.png" src="_images/b27b5b3e422c4b3ec81c4651cff6bcb83c4f65f6e1676d957dcb631ef7fc625f.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Efek Balancing pada Random Forest:
+----------------------------------------
+Class 0: Orig=1.000, Balanced=1.000, Change=+0.000 🔴 Declined
+Class 1: Orig=0.696, Balanced=0.696, Change=+0.000 🔴 Declined
+Class 2: Orig=0.000, Balanced=0.000, Change=+0.000 🔴 Declined
+Class 3: Orig=0.000, Balanced=0.000, Change=+0.000 🔴 Declined
+Class 4: Orig=0.600, Balanced=0.800, Change=+0.200 🟢 Improved
+Class 5: Orig=0.833, Balanced=1.000, Change=+0.167 🟢 Improved
+Class 6: Orig=0.000, Balanced=1.000, Change=+1.000 🟢 Improved
+Class 7: Orig=0.688, Balanced=0.688, Change=+0.000 🔴 Declined
 </pre></div>
 </div>
 </div>
@@ -1104,9 +1358,7 @@ weighted avg       0.80      0.82      0.81       101
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>============================================================
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>PERBANDINGAN ACCURACY RANDOM FOREST
+PERBANDINGAN ACCURACY RANDOM FOREST
 ============================================================
 Akurasi Original  : 0.8020
 Akurasi SMOTE     : 0.8416
@@ -1153,7 +1405,9 @@ Akurasi ADASYN    : 0.8218
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>============================================================
 BAGGING CLASSIFIER - DATA ORIGINAL
 ============================================================
-Accuracy: 0.8020
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy: 0.8020
 Misclassified samples: 20/101
 
 Classification Report:
@@ -1171,6 +1425,67 @@ Classification Report:
     accuracy                           0.80       101
    macro avg       0.55      0.59      0.56       101
 weighted avg       0.80      0.80      0.80       101
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Visualisasi Confusion Matrix untuk Bagging Classifier - Data Original</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;CONFUSION MATRIX - BAGGING CLASSIFIER ORIGINAL&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+
+<span class="c1"># Hitung confusion matrix</span>
+<span class="n">cm_bag_orig</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test_orig</span><span class="p">,</span> <span class="n">y_pred_bag_orig</span><span class="p">)</span>
+
+<span class="c1"># Plot confusion matrix</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">cm_bag_orig</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Purples&#39;</span><span class="p">,</span> 
+            <span class="n">xticklabels</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;Class </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">y_all</span><span class="p">)))],</span>
+            <span class="n">yticklabels</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;Class </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">y_all</span><span class="p">)))])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Confusion Matrix - Bagging Classifier (Data Original)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Predicted Label&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;True Label&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Perbandingan dengan Random Forest</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Perbandingan Bagging vs Random Forest:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">40</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">class_name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="sa">f</span><span class="s1">&#39;Class </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">y_all</span><span class="p">)))]):</span>
+    <span class="n">tp_rf</span> <span class="o">=</span> <span class="n">cm_rf_orig</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span>
+    <span class="n">tp_bag</span> <span class="o">=</span> <span class="n">cm_bag_orig</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span>
+    <span class="n">support</span> <span class="o">=</span> <span class="n">test_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">support</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">acc_rf</span> <span class="o">=</span> <span class="n">tp_rf</span> <span class="o">/</span> <span class="n">support</span>
+        <span class="n">acc_bag</span> <span class="o">=</span> <span class="n">tp_bag</span> <span class="o">/</span> <span class="n">support</span>
+        <span class="n">diff</span> <span class="o">=</span> <span class="n">acc_bag</span> <span class="o">-</span> <span class="n">acc_rf</span>
+        <span class="n">winner</span> <span class="o">=</span> <span class="s2">&quot;Bagging&quot;</span> <span class="k">if</span> <span class="n">diff</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;RF&quot;</span> <span class="k">if</span> <span class="n">diff</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;Tie&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">class_name</span><span class="si">}</span><span class="s2">: RF=</span><span class="si">{</span><span class="n">acc_rf</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, Bagging=</span><span class="si">{</span><span class="n">acc_bag</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, Winner=</span><span class="si">{</span><span class="n">winner</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">class_name</span><span class="si">}</span><span class="s2">: No test samples&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>============================================================
+CONFUSION MATRIX - BAGGING CLASSIFIER ORIGINAL
+============================================================
+</pre></div>
+</div>
+<img alt="_images/6c8d468d5ae776846e9a8063f57bb91adc83885e3fe5977484fe781d25d21dab.png" src="_images/6c8d468d5ae776846e9a8063f57bb91adc83885e3fe5977484fe781d25d21dab.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Perbandingan Bagging vs Random Forest:
+----------------------------------------
+Class 0: RF=1.000, Bagging=1.000, Winner=Tie
+Class 1: RF=0.696, Bagging=0.696, Winner=Tie
+Class 2: RF=0.000, Bagging=0.000, Winner=Tie
+Class 3: RF=0.000, Bagging=0.000, Winner=Tie
+Class 4: RF=0.600, Bagging=0.500, Winner=RF
+Class 5: RF=0.833, Bagging=0.833, Winner=Tie
+Class 6: RF=0.000, Bagging=1.000, Winner=Bagging
+Class 7: RF=0.688, Bagging=0.688, Winner=Tie
 </pre></div>
 </div>
 </div>
@@ -1229,6 +1544,67 @@ Classification Report:
     accuracy                           0.82       101
    macro avg       0.55      0.61      0.57       101
 weighted avg       0.81      0.82      0.81       101
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Visualisasi Confusion Matrix untuk Bagging Classifier - Data Balanced</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;CONFUSION MATRIX - BAGGING CLASSIFIER BALANCED&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+
+<span class="c1"># Hitung confusion matrix</span>
+<span class="n">cm_bag_smote</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test_orig</span><span class="p">,</span> <span class="n">y_pred_bag_smote</span><span class="p">)</span>
+
+<span class="c1"># Plot confusion matrix</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">cm_bag_smote</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;YlOrRd&#39;</span><span class="p">,</span> 
+            <span class="n">xticklabels</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;Class </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">y_all</span><span class="p">)))],</span>
+            <span class="n">yticklabels</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;Class </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">y_all</span><span class="p">)))])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Confusion Matrix - Bagging Classifier (Data Balanced)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Predicted Label&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;True Label&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Analisis efek balancing pada Bagging</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Efek Balancing pada Bagging Classifier:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">45</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">class_name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="sa">f</span><span class="s1">&#39;Class </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">y_all</span><span class="p">)))]):</span>
+    <span class="n">tp_orig</span> <span class="o">=</span> <span class="n">cm_bag_orig</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span>
+    <span class="n">tp_balanced</span> <span class="o">=</span> <span class="n">cm_bag_smote</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span>
+    <span class="n">support</span> <span class="o">=</span> <span class="n">test_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">support</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">acc_orig</span> <span class="o">=</span> <span class="n">tp_orig</span> <span class="o">/</span> <span class="n">support</span>
+        <span class="n">acc_balanced</span> <span class="o">=</span> <span class="n">tp_balanced</span> <span class="o">/</span> <span class="n">support</span>
+        <span class="n">improvement</span> <span class="o">=</span> <span class="n">acc_balanced</span> <span class="o">-</span> <span class="n">acc_orig</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;📈 Much Better&quot;</span> <span class="k">if</span> <span class="n">improvement</span> <span class="o">&gt;</span> <span class="mf">0.2</span> <span class="k">else</span> <span class="s2">&quot;📊 Better&quot;</span> <span class="k">if</span> <span class="n">improvement</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;📉 Worse&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">class_name</span><span class="si">}</span><span class="s2">: Orig=</span><span class="si">{</span><span class="n">acc_orig</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, Balanced=</span><span class="si">{</span><span class="n">acc_balanced</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, Change=</span><span class="si">{</span><span class="n">improvement</span><span class="si">:</span><span class="s2">+.3f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">status</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">class_name</span><span class="si">}</span><span class="s2">: No test samples&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>============================================================
+CONFUSION MATRIX - BAGGING CLASSIFIER BALANCED
+============================================================
+</pre></div>
+</div>
+<img alt="_images/e474b911d3b427a471cf356ca716e7f2ed40bffa5fc7a7e6884f4a1ff83b2722.png" src="_images/e474b911d3b427a471cf356ca716e7f2ed40bffa5fc7a7e6884f4a1ff83b2722.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Efek Balancing pada Bagging Classifier:
+---------------------------------------------
+Class 0: Orig=1.000, Balanced=0.953, Change=-0.047 📉 Worse
+Class 1: Orig=0.696, Balanced=0.826, Change=+0.130 📊 Better
+Class 2: Orig=0.000, Balanced=0.000, Change=+0.000 📉 Worse
+Class 3: Orig=0.000, Balanced=0.000, Change=+0.000 📉 Worse
+Class 4: Orig=0.500, Balanced=0.600, Change=+0.100 📊 Better
+Class 5: Orig=0.833, Balanced=0.833, Change=+0.000 📉 Worse
+Class 6: Orig=1.000, Balanced=1.000, Change=+0.000 📉 Worse
+Class 7: Orig=0.688, Balanced=0.688, Change=+0.000 📉 Worse
 </pre></div>
 </div>
 </div>
@@ -1409,6 +1785,127 @@ HASIL TERBAIK: Balanced + Random Forest = 0.8416
 </div>
 </div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Perbandingan Semua Confusion Matrix</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">80</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;PERBANDINGAN SEMUA CONFUSION MATRIX&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">80</span><span class="p">)</span>
+
+<span class="c1"># Plot semua confusion matrix dalam satu figure</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Perbandingan Confusion Matrix Semua Model&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+
+<span class="c1"># List model dan confusion matrix</span>
+<span class="n">models</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s1">&#39;Naive Bayes</span><span class="se">\n</span><span class="s1">(Original)&#39;</span><span class="p">,</span> <span class="n">cm_nb_orig</span><span class="p">,</span> <span class="s1">&#39;Blues&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;Naive Bayes</span><span class="se">\n</span><span class="s1">(Balanced)&#39;</span><span class="p">,</span> <span class="n">cm_nb_smote</span><span class="p">,</span> <span class="s1">&#39;Greens&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;Random Forest</span><span class="se">\n</span><span class="s1">(Original)&#39;</span><span class="p">,</span> <span class="n">cm_rf_orig</span><span class="p">,</span> <span class="s1">&#39;Oranges&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;Random Forest</span><span class="se">\n</span><span class="s1">(Balanced)&#39;</span><span class="p">,</span> <span class="n">cm_rf_smote</span><span class="p">,</span> <span class="s1">&#39;Reds&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;Bagging</span><span class="se">\n</span><span class="s1">(Original)&#39;</span><span class="p">,</span> <span class="n">cm_bag_orig</span><span class="p">,</span> <span class="s1">&#39;Purples&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;Bagging</span><span class="se">\n</span><span class="s1">(Balanced)&#39;</span><span class="p">,</span> <span class="n">cm_bag_smote</span><span class="p">,</span> <span class="s1">&#39;YlOrRd&#39;</span><span class="p">)</span>
+<span class="p">]</span>
+
+<span class="n">class_labels</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;C</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">y_all</span><span class="p">)))]</span>
+
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">cm</span><span class="p">,</span> <span class="n">cmap</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">models</span><span class="p">):</span>
+    <span class="n">row</span> <span class="o">=</span> <span class="n">idx</span> <span class="o">//</span> <span class="mi">3</span>
+    <span class="n">col</span> <span class="o">=</span> <span class="n">idx</span> <span class="o">%</span> <span class="mi">3</span>
+    
+    <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">],</span>
+                <span class="n">xticklabels</span><span class="o">=</span><span class="n">class_labels</span><span class="p">,</span> <span class="n">yticklabels</span><span class="o">=</span><span class="n">class_labels</span><span class="p">,</span>
+                <span class="n">cbar</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Predicted&#39;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;True&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Ringkasan performa per kelas</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">RINGKASAN PERFORMA PER KELAS:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">50</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;Class&#39;</span><span class="si">:</span><span class="s2">&lt;8</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;NB-Orig&#39;</span><span class="si">:</span><span class="s2">&lt;8</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;NB-Bal&#39;</span><span class="si">:</span><span class="s2">&lt;8</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;RF-Orig&#39;</span><span class="si">:</span><span class="s2">&lt;8</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;RF-Bal&#39;</span><span class="si">:</span><span class="s2">&lt;8</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;Bag-Orig&#39;</span><span class="si">:</span><span class="s2">&lt;9</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;Bag-Bal&#39;</span><span class="si">:</span><span class="s2">&lt;8</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">65</span><span class="p">)</span>
+
+<span class="n">all_cms</span> <span class="o">=</span> <span class="p">[</span><span class="n">cm_nb_orig</span><span class="p">,</span> <span class="n">cm_nb_smote</span><span class="p">,</span> <span class="n">cm_rf_orig</span><span class="p">,</span> <span class="n">cm_rf_smote</span><span class="p">,</span> <span class="n">cm_bag_orig</span><span class="p">,</span> <span class="n">cm_bag_smote</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">y_all</span><span class="p">))):</span>
+    <span class="n">support</span> <span class="o">=</span> <span class="n">test_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">support</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">accuracies</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">cm</span> <span class="ow">in</span> <span class="n">all_cms</span><span class="p">:</span>
+            <span class="n">acc</span> <span class="o">=</span> <span class="n">cm</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="n">support</span>
+            <span class="n">accuracies</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">acc</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Class </span><span class="si">{</span><span class="n">i</span><span class="si">:</span><span class="s2">&lt;3</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">acc</span><span class="si">:</span><span class="s1">&lt;8</span><span class="si">}</span><span class="s1">&#39;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">acc</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">accuracies</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Class </span><span class="si">{</span><span class="n">i</span><span class="si">:</span><span class="s2">&lt;3</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;No test samples&#39;</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">65</span><span class="p">)</span>
+<span class="n">overall_accs</span> <span class="o">=</span> <span class="p">[</span><span class="n">acc_nb_orig</span><span class="p">,</span> <span class="n">acc_nb_smote</span><span class="p">,</span> <span class="n">acc_rf_orig</span><span class="p">,</span> <span class="n">acc_rf_smote</span><span class="p">,</span> <span class="n">acc_bag_orig</span><span class="p">,</span> <span class="n">acc_bag_smote</span><span class="p">]</span>
+<span class="n">overall_str</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">acc</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">acc</span> <span class="ow">in</span> <span class="n">overall_accs</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;Overall&#39;</span><span class="si">:</span><span class="s2">&lt;8</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">overall_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Identifikasi best performer per kelas</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">BEST PERFORMER PER KELAS:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">30</span><span class="p">)</span>
+<span class="n">model_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;NB-Orig&#39;</span><span class="p">,</span> <span class="s1">&#39;NB-Bal&#39;</span><span class="p">,</span> <span class="s1">&#39;RF-Orig&#39;</span><span class="p">,</span> <span class="s1">&#39;RF-Bal&#39;</span><span class="p">,</span> <span class="s1">&#39;Bag-Orig&#39;</span><span class="p">,</span> <span class="s1">&#39;Bag-Bal&#39;</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">y_all</span><span class="p">))):</span>
+    <span class="n">support</span> <span class="o">=</span> <span class="n">test_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">support</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">class_accs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">cm</span> <span class="ow">in</span> <span class="n">all_cms</span><span class="p">:</span>
+            <span class="n">class_accs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cm</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="n">support</span><span class="p">)</span>
+        
+        <span class="n">best_idx</span> <span class="o">=</span> <span class="n">class_accs</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">class_accs</span><span class="p">))</span>
+        <span class="n">best_model</span> <span class="o">=</span> <span class="n">model_names</span><span class="p">[</span><span class="n">best_idx</span><span class="p">]</span>
+        <span class="n">best_acc</span> <span class="o">=</span> <span class="n">class_accs</span><span class="p">[</span><span class="n">best_idx</span><span class="p">]</span>
+        
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Class </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">best_model</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">best_acc</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Class </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: No test samples&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>================================================================================
+PERBANDINGAN SEMUA CONFUSION MATRIX
+================================================================================
+</pre></div>
+</div>
+<img alt="_images/0a1c5205b6ae716e1f9e9436eac75f6d346d6693a76994d73bb6b528e2bc1401.png" src="_images/0a1c5205b6ae716e1f9e9436eac75f6d346d6693a76994d73bb6b528e2bc1401.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>RINGKASAN PERFORMA PER KELAS:
+==================================================
+Class    NB-Orig  NB-Bal   RF-Orig  RF-Bal   Bag-Orig  Bag-Bal 
+-----------------------------------------------------------------
+Class 0   1.000    1.000    1.000    1.000    1.000    0.953   
+Class 1   0.609    0.435    0.696    0.696    0.696    0.826   
+Class 2   0.000    0.000    0.000    0.000    0.000    0.000   
+Class 3   0.000    0.000    0.000    0.000    0.000    0.000   
+Class 4   0.500    0.800    0.600    0.800    0.500    0.600   
+Class 5   0.000    0.000    0.833    1.000    0.833    0.833   
+Class 6   1.000    1.000    0.000    1.000    1.000    1.000   
+Class 7   1.000    1.000    0.688    0.688    0.688    0.688   
+-----------------------------------------------------------------
+Overall  0.782 0.772 0.802 0.842 0.802 0.822
+
+BEST PERFORMER PER KELAS:
+------------------------------
+Class 0: NB-Orig (1.000)
+Class 1: Bag-Bal (0.826)
+Class 2: NB-Orig (0.000)
+Class 3: NB-Orig (0.000)
+Class 4: NB-Bal (0.800)
+Class 5: RF-Bal (1.000)
+Class 6: NB-Orig (1.000)
+Class 7: NB-Orig (1.000)
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 </section>
 
@@ -1470,6 +1967,7 @@ HASIL TERBAIK: Balanced + Random Forest = 0.8416
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#klasifikasi-ecoli-menggunakan-naive-bayes"><strong>1. Klasifikasi Ecoli Menggunakan Naive Bayes</strong></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pengambilan-data"><strong>1.1 Pengambilan Data</strong></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#klasifikasi-naive-bayes-pada-data-original"><strong>1.2 Klasifikasi Naive Bayes pada Data Original</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#klasifikasi-naive-bayes-pada-data-smote"><strong>1.3 Klasifikasi Naive Bayes pada Data SMOTE</strong></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#klasifikasi-naive-bayes-pada-data-adasyn"><strong>1.4 Klasifikasi Naive Bayes pada Data ADASYN</strong></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perbandingan-accuracy-naive-bayes"><strong>1.5 Perbandingan Accuracy Naive Bayes</strong></a></li>
 </ul>
