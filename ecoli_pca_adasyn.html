@@ -60,6 +60,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'ecoli_pca_adasyn';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Klasifikasi Dan BaggingClassifier Pada Dataset Ecoli" href="Klasifikasi.html" />
     <link rel="prev" title="Power BI Eksplorasi Data Iris" href="PowerBI.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -193,6 +194,7 @@
 
 <li class="toctree-l1"><a class="reference internal" href="PowerBI.html">Power BI Eksplorasi Data Iris</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">E. coli Protein PCA &amp; ADASYN Implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Klasifikasi.html"><strong>Klasifikasi Dan BaggingClassifier Pada Dataset Ecoli</strong></a></li>
 </ul>
 
     </div>
@@ -849,6 +851,58 @@ Hasil PCA:
     <span class="n">original</span> <span class="o">=</span> <span class="n">original_dist</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
     <span class="n">generated</span> <span class="o">=</span> <span class="n">count</span> <span class="o">-</span> <span class="n">original</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">cls_name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2"> samples (original: </span><span class="si">{</span><span class="n">original</span><span class="si">}</span><span class="s2">, generated: </span><span class="si">{</span><span class="n">generated</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+
+<span class="c1"># Visualisasi perbandingan distribusi</span>
+<span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># Grafik batang 1: Perbandingan Original vs Balanced</span>
+<span class="n">x_labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">le</span><span class="o">.</span><span class="n">classes_</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">le</span><span class="o">.</span><span class="n">classes_</span><span class="p">))]</span>
+<span class="n">original_counts</span> <span class="o">=</span> <span class="p">[</span><span class="n">original_dist</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">le</span><span class="o">.</span><span class="n">classes_</span><span class="p">))]</span>
+<span class="n">balanced_counts</span> <span class="o">=</span> <span class="p">[</span><span class="n">balanced_dist</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">le</span><span class="o">.</span><span class="n">classes_</span><span class="p">))]</span>
+
+<span class="n">x_pos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x_labels</span><span class="p">))</span>
+<span class="n">width</span> <span class="o">=</span> <span class="mf">0.35</span>
+
+<span class="n">bars1</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x_pos</span> <span class="o">-</span> <span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">original_counts</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Original&#39;</span><span class="p">,</span> 
+                <span class="n">color</span><span class="o">=</span><span class="s1">&#39;lightcoral&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">bars2</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x_pos</span> <span class="o">+</span> <span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">balanced_counts</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Balanced&#39;</span><span class="p">,</span> 
+                <span class="n">color</span><span class="o">=</span><span class="s1">&#39;lightgreen&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Kelas Protein&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Jumlah Sampel&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Perbandingan Distribusi: Original vs Balanced</span><span class="se">\n</span><span class="s1">(Method: </span><span class="si">{</span><span class="n">method_used</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">,</span> 
+              <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">x_pos</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">x_labels</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="c1"># Tambahkan nilai di atas batang</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">orig</span><span class="p">,</span> <span class="n">bal</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">original_counts</span><span class="p">,</span> <span class="n">balanced_counts</span><span class="p">)):</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">orig</span> <span class="o">+</span> <span class="nb">max</span><span class="p">(</span><span class="n">balanced_counts</span><span class="p">)</span><span class="o">*</span><span class="mf">0.01</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">orig</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> 
+             <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">bal</span> <span class="o">+</span> <span class="nb">max</span><span class="p">(</span><span class="n">balanced_counts</span><span class="p">)</span><span class="o">*</span><span class="mf">0.01</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">bal</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> 
+             <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+
+<span class="c1"># Grafik batang 2: Sampel yang di-generate</span>
+<span class="n">generated_counts</span> <span class="o">=</span> <span class="p">[</span><span class="n">balanced_counts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">original_counts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x_labels</span><span class="p">))]</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;orange&#39;</span> <span class="k">if</span> <span class="n">gen</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s1">&#39;gray&#39;</span> <span class="k">for</span> <span class="n">gen</span> <span class="ow">in</span> <span class="n">generated_counts</span><span class="p">]</span>
+
+<span class="n">bars3</span> <span class="o">=</span> <span class="n">ax2</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x_labels</span><span class="p">,</span> <span class="n">generated_counts</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Kelas Protein&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Jumlah Sampel di-Generate&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Sampel Generated per Kelas</span><span class="se">\n</span><span class="s1">(Total: </span><span class="si">{</span><span class="nb">sum</span><span class="p">(</span><span class="n">generated_counts</span><span class="p">)</span><span class="si">}</span><span class="s1"> sampel)&#39;</span><span class="p">,</span> 
+              <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="c1"># Tambahkan nilai di atas batang generated</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">gen</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">generated_counts</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">gen</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">ax2</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">gen</span> <span class="o">+</span> <span class="nb">max</span><span class="p">(</span><span class="n">generated_counts</span><span class="p">)</span><span class="o">*</span><span class="mf">0.01</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">gen</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> 
+                 <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -885,7 +939,9 @@ Iterasi 4: menggunakan k_neighbors=19
 Hasil iterasi 4: [(0, 143), (1, 77), (2, 142), (3, 142), (4, 35), (5, 144), (6, 143), (7, 52)]
 
 Iterasi 5: menggunakan k_neighbors=34
-Hasil iterasi 5: [(0, 143), (1, 77), (2, 142), (3, 142), (4, 146), (5, 144), (6, 143), (7, 52)]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Hasil iterasi 5: [(0, 143), (1, 77), (2, 142), (3, 142), (4, 146), (5, 144), (6, 143), (7, 52)]
 
 Iterasi 6: menggunakan k_neighbors=51
 Hasil iterasi 6: [(0, 143), (1, 77), (2, 142), (3, 142), (4, 146), (5, 144), (6, 143), (7, 143)]
@@ -916,6 +972,176 @@ Distribusi setelah balancing:
   om: 144 samples (original: 20, generated: 124)
   omL: 143 samples (original: 5, generated: 138)
   pp: 143 samples (original: 52, generated: 91)
+</pre></div>
+</div>
+<img alt="_images/792bb81e2c8880c996c4dd1d44a6f933af497d71cc7fedd5f48960bb43ebd7ea.png" src="_images/792bb81e2c8880c996c4dd1d44a6f933af497d71cc7fedd5f48960bb43ebd7ea.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 2.2 SMOTE Data Balancing</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;2.2 PENYEIMBANGAN DATA MENGGUNAKAN SMOTE&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">imblearn.over_sampling</span><span class="w"> </span><span class="kn">import</span> <span class="n">SMOTE</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">Counter</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Distribusi original:&quot;</span><span class="p">)</span>
+<span class="n">original_dist_smote</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">y_encoded</span><span class="p">)</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">original_dist_smote</span><span class="p">):</span>
+    <span class="n">cls_name</span> <span class="o">=</span> <span class="n">le</span><span class="o">.</span><span class="n">classes_</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">cls_name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2"> samples&quot;</span><span class="p">)</span>
+
+<span class="n">min_samples_smote</span> <span class="o">=</span> <span class="n">original_dist_smote</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Minimum class size: </span><span class="si">{</span><span class="n">min_samples_smote</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Distribusi kelas sebelum SMOTE:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">sorted</span><span class="p">(</span><span class="n">Counter</span><span class="p">(</span><span class="n">y_encoded</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Apply SMOTE with k_neighbors=1 to handle small classes</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">smote</span> <span class="o">=</span> <span class="n">SMOTE</span><span class="p">(</span><span class="n">k_neighbors</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">X_smote</span><span class="p">,</span> <span class="n">y_smote</span> <span class="o">=</span> <span class="n">smote</span><span class="o">.</span><span class="n">fit_resample</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">,</span> <span class="n">y_encoded</span><span class="p">)</span>
+    <span class="n">method_used_smote</span> <span class="o">=</span> <span class="s2">&quot;SMOTE&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">SMOTE berhasil dengan k_neighbors=1!&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Distribusi kelas setelah SMOTE:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">sorted</span><span class="p">(</span><span class="n">Counter</span><span class="p">(</span><span class="n">y_smote</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SMOTE gagal: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">X_smote</span><span class="p">,</span> <span class="n">y_smote</span> <span class="o">=</span> <span class="n">X_scaled</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">y_encoded</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">method_used_smote</span> <span class="o">=</span> <span class="s2">&quot;No balancing&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Total samples sebelum: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">y_encoded</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total samples setelah: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">y_smote</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Data yang ditambahkan: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">y_smote</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">y_encoded</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Method used: </span><span class="si">{</span><span class="n">method_used_smote</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Original samples: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SMOTE samples: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">X_smote</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Generated samples: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">X_smote</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Show SMOTE balanced distribution</span>
+<span class="n">balanced_dist_smote</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">y_smote</span><span class="p">)</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Distribusi setelah SMOTE balancing:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">balanced_dist_smote</span><span class="p">):</span>
+    <span class="n">cls_name</span> <span class="o">=</span> <span class="n">le</span><span class="o">.</span><span class="n">classes_</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">original</span> <span class="o">=</span> <span class="n">original_dist_smote</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">generated</span> <span class="o">=</span> <span class="n">count</span> <span class="o">-</span> <span class="n">original</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">cls_name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2"> samples (original: </span><span class="si">{</span><span class="n">original</span><span class="si">}</span><span class="s2">, generated: </span><span class="si">{</span><span class="n">generated</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+
+<span class="c1"># Visualisasi perbandingan distribusi SMOTE</span>
+<span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># Grafik batang 1: Perbandingan Original vs SMOTE Balanced</span>
+<span class="n">x_labels_smote</span> <span class="o">=</span> <span class="p">[</span><span class="n">le</span><span class="o">.</span><span class="n">classes_</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">le</span><span class="o">.</span><span class="n">classes_</span><span class="p">))]</span>
+<span class="n">original_counts_smote</span> <span class="o">=</span> <span class="p">[</span><span class="n">original_dist_smote</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">le</span><span class="o">.</span><span class="n">classes_</span><span class="p">))]</span>
+<span class="n">balanced_counts_smote</span> <span class="o">=</span> <span class="p">[</span><span class="n">balanced_dist_smote</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">le</span><span class="o">.</span><span class="n">classes_</span><span class="p">))]</span>
+
+<span class="n">x_pos_smote</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x_labels_smote</span><span class="p">))</span>
+<span class="n">width</span> <span class="o">=</span> <span class="mf">0.35</span>
+
+<span class="n">bars1_smote</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x_pos_smote</span> <span class="o">-</span> <span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">original_counts_smote</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Original&#39;</span><span class="p">,</span> 
+                     <span class="n">color</span><span class="o">=</span><span class="s1">&#39;lightcoral&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">bars2_smote</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x_pos_smote</span> <span class="o">+</span> <span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">balanced_counts_smote</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;SMOTE Balanced&#39;</span><span class="p">,</span> 
+                     <span class="n">color</span><span class="o">=</span><span class="s1">&#39;lightblue&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Kelas Protein&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Jumlah Sampel&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Perbandingan Distribusi: Original vs SMOTE Balanced</span><span class="se">\n</span><span class="s1">(Method: </span><span class="si">{</span><span class="n">method_used_smote</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">,</span> 
+              <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">x_pos_smote</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">x_labels_smote</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="c1"># Tambahkan nilai di atas batang</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">orig</span><span class="p">,</span> <span class="n">bal</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">original_counts_smote</span><span class="p">,</span> <span class="n">balanced_counts_smote</span><span class="p">)):</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">orig</span> <span class="o">+</span> <span class="nb">max</span><span class="p">(</span><span class="n">balanced_counts_smote</span><span class="p">)</span><span class="o">*</span><span class="mf">0.01</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">orig</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> 
+             <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">bal</span> <span class="o">+</span> <span class="nb">max</span><span class="p">(</span><span class="n">balanced_counts_smote</span><span class="p">)</span><span class="o">*</span><span class="mf">0.01</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">bal</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> 
+             <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+
+<span class="c1"># Grafik batang 2: Sampel yang di-generate SMOTE</span>
+<span class="n">generated_counts_smote</span> <span class="o">=</span> <span class="p">[</span><span class="n">balanced_counts_smote</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">original_counts_smote</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x_labels_smote</span><span class="p">))]</span>
+<span class="n">colors_smote</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;cyan&#39;</span> <span class="k">if</span> <span class="n">gen</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s1">&#39;gray&#39;</span> <span class="k">for</span> <span class="n">gen</span> <span class="ow">in</span> <span class="n">generated_counts_smote</span><span class="p">]</span>
+
+<span class="n">bars3_smote</span> <span class="o">=</span> <span class="n">ax2</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x_labels_smote</span><span class="p">,</span> <span class="n">generated_counts_smote</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors_smote</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Kelas Protein&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Jumlah Sampel di-Generate&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Sampel Generated per Kelas (SMOTE)</span><span class="se">\n</span><span class="s1">(Total: </span><span class="si">{</span><span class="nb">sum</span><span class="p">(</span><span class="n">generated_counts_smote</span><span class="p">)</span><span class="si">}</span><span class="s1"> sampel)&#39;</span><span class="p">,</span> 
+              <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="c1"># Tambahkan nilai di atas batang generated</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">gen</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">generated_counts_smote</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">gen</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">ax2</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">gen</span> <span class="o">+</span> <span class="nb">max</span><span class="p">(</span><span class="n">generated_counts_smote</span><span class="p">)</span><span class="o">*</span><span class="mf">0.01</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">gen</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> 
+                 <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Calculate imbalance ratio for comparison</span>
+<span class="n">original_imb_smote</span> <span class="o">=</span> <span class="n">original_dist_smote</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">/</span> <span class="n">original_dist_smote</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+<span class="n">balanced_imb_smote</span> <span class="o">=</span> <span class="n">balanced_dist_smote</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">/</span> <span class="n">balanced_dist_smote</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+<span class="n">improvement_smote</span> <span class="o">=</span> <span class="p">((</span><span class="n">original_imb_smote</span> <span class="o">-</span> <span class="n">balanced_imb_smote</span><span class="p">)</span> <span class="o">/</span> <span class="n">original_imb_smote</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">IMBALANCE RATIO COMPARISON (SMOTE):&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Original imbalance ratio: </span><span class="si">{</span><span class="n">original_imb_smote</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SMOTE balanced imbalance ratio: </span><span class="si">{</span><span class="n">balanced_imb_smote</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Improvement: </span><span class="si">{</span><span class="n">improvement_smote</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.2 PENYEIMBANGAN DATA MENGGUNAKAN SMOTE
+============================================================
+
+Distribusi original:
+  cp: 143 samples
+  im: 77 samples
+  imL: 2 samples
+  imS: 2 samples
+  imU: 35 samples
+  om: 20 samples
+  omL: 5 samples
+  pp: 52 samples
+
+Minimum class size: 2
+
+Distribusi kelas sebelum SMOTE:
+[(0, 143), (1, 77), (2, 2), (3, 2), (4, 35), (5, 20), (6, 5), (7, 52)]
+
+SMOTE berhasil dengan k_neighbors=1!
+Distribusi kelas setelah SMOTE:
+[(0, 143), (1, 143), (2, 143), (3, 143), (4, 143), (5, 143), (6, 143), (7, 143)]
+
+Total samples sebelum: 336
+Total samples setelah: 1144
+Data yang ditambahkan: 808
+
+Method used: SMOTE
+Original samples: 336
+SMOTE samples: 1144
+Generated samples: 808
+
+Distribusi setelah SMOTE balancing:
+  cp: 143 samples (original: 143, generated: 0)
+  im: 143 samples (original: 77, generated: 66)
+  imL: 143 samples (original: 2, generated: 141)
+  imS: 143 samples (original: 2, generated: 141)
+  imU: 143 samples (original: 35, generated: 108)
+  om: 143 samples (original: 20, generated: 123)
+  omL: 143 samples (original: 5, generated: 138)
+  pp: 143 samples (original: 52, generated: 91)
+</pre></div>
+</div>
+<img alt="_images/edfb651a33eada92af8fcc15776227dba73fff31aa8eb033500321ade57dc3a0.png" src="_images/edfb651a33eada92af8fcc15776227dba73fff31aa8eb033500321ade57dc3a0.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>IMBALANCE RATIO COMPARISON (SMOTE):
+Original imbalance ratio: 71.50
+SMOTE balanced imbalance ratio: 1.00
+Improvement: 98.6%
 </pre></div>
 </div>
 </div>
@@ -1240,6 +1466,107 @@ Final success: Yes
 </div>
 </div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># SIMPAN SEMUA DATA KE CSV</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;SIMPAN DATA KE CSV&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">50</span><span class="p">)</span>
+
+<span class="c1"># 1. Simpan data original dengan class names</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;1. Menyimpan data original...&quot;</span><span class="p">)</span>
+<span class="n">df_original</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">feature_cols</span><span class="p">)</span>
+<span class="n">df_original</span><span class="p">[</span><span class="s1">&#39;class_encoded&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_encoded</span>
+<span class="n">df_original</span><span class="p">[</span><span class="s1">&#39;class_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">le</span><span class="o">.</span><span class="n">classes_</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">y_encoded</span><span class="p">]</span>
+<span class="n">df_original</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;data_original.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   ✓ data_original.csv disimpan (</span><span class="si">{</span><span class="n">df_original</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> rows, </span><span class="si">{</span><span class="n">df_original</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> columns)&quot;</span><span class="p">)</span>
+
+<span class="c1"># 2. Simpan data ADASYN balanced</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;2. Menyimpan data ADASYN...&quot;</span><span class="p">)</span>
+<span class="n">df_adasyn</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X_balanced</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">feature_cols</span><span class="p">)</span>
+<span class="n">df_adasyn</span><span class="p">[</span><span class="s1">&#39;class_encoded&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_balanced</span>
+<span class="n">df_adasyn</span><span class="p">[</span><span class="s1">&#39;class_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">le</span><span class="o">.</span><span class="n">classes_</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">y_balanced</span><span class="p">]</span>
+<span class="n">df_adasyn</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;data_adasyn_balanced.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   ✓ data_adasyn_balanced.csv disimpan (</span><span class="si">{</span><span class="n">df_adasyn</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> rows, </span><span class="si">{</span><span class="n">df_adasyn</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> columns)&quot;</span><span class="p">)</span>
+
+<span class="c1"># 3. Simpan data SMOTE balanced (jika tersedia)</span>
+<span class="k">if</span> <span class="s1">&#39;X_smote&#39;</span> <span class="ow">in</span> <span class="nb">locals</span><span class="p">()</span> <span class="ow">and</span> <span class="s1">&#39;y_smote&#39;</span> <span class="ow">in</span> <span class="nb">locals</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;3. Menyimpan data SMOTE...&quot;</span><span class="p">)</span>
+    <span class="n">df_smote</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X_smote</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">feature_cols</span><span class="p">)</span>
+    <span class="n">df_smote</span><span class="p">[</span><span class="s1">&#39;class_encoded&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_smote</span>
+    <span class="n">df_smote</span><span class="p">[</span><span class="s1">&#39;class_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">le</span><span class="o">.</span><span class="n">classes_</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">y_smote</span><span class="p">]</span>
+    <span class="n">df_smote</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;data_smote_balanced.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   ✓ data_smote_balanced.csv disimpan (</span><span class="si">{</span><span class="n">df_smote</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> rows, </span><span class="si">{</span><span class="n">df_smote</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> columns)&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;3. Data SMOTE tidak tersedia untuk disimpan&quot;</span><span class="p">)</span>
+
+<span class="c1"># 4. Simpan data PCA original</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;4. Menyimpan data PCA original...&quot;</span><span class="p">)</span>
+<span class="n">df_pca_original</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X_pca</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;PC1&#39;</span><span class="p">,</span> <span class="s1">&#39;PC2&#39;</span><span class="p">])</span>
+<span class="n">df_pca_original</span><span class="p">[</span><span class="s1">&#39;class_encoded&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_encoded</span>
+<span class="n">df_pca_original</span><span class="p">[</span><span class="s1">&#39;class_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">le</span><span class="o">.</span><span class="n">classes_</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">y_encoded</span><span class="p">]</span>
+<span class="n">df_pca_original</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;data_pca_original.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   ✓ data_pca_original.csv disimpan (</span><span class="si">{</span><span class="n">df_pca_original</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> rows, </span><span class="si">{</span><span class="n">df_pca_original</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> columns)&quot;</span><span class="p">)</span>
+
+<span class="c1"># 5. Simpan data PCA balanced (ADASYN)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;5. Menyimpan data PCA balanced...&quot;</span><span class="p">)</span>
+<span class="n">df_pca_balanced</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X_balanced_pca</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;PC1&#39;</span><span class="p">,</span> <span class="s1">&#39;PC2&#39;</span><span class="p">])</span>
+<span class="n">df_pca_balanced</span><span class="p">[</span><span class="s1">&#39;class_encoded&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_balanced</span>
+<span class="n">df_pca_balanced</span><span class="p">[</span><span class="s1">&#39;class_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">le</span><span class="o">.</span><span class="n">classes_</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">y_balanced</span><span class="p">]</span>
+<span class="c1"># Tambahkan informasi original vs generated</span>
+<span class="n">n_original</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">)</span>
+<span class="n">sample_types</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Original&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">n_original</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;Generated&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X_balanced</span><span class="p">)</span> <span class="o">-</span> <span class="n">n_original</span><span class="p">)</span>
+<span class="n">df_pca_balanced</span><span class="p">[</span><span class="s1">&#39;sample_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sample_types</span>
+<span class="n">df_pca_balanced</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;data_pca_balanced.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   ✓ data_pca_balanced.csv disimpan (</span><span class="si">{</span><span class="n">df_pca_balanced</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> rows, </span><span class="si">{</span><span class="n">df_pca_balanced</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> columns)&quot;</span><span class="p">)</span>
+
+<span class="c1"># 6. Simpan mapping class encoder</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;6. Menyimpan class mapping...&quot;</span><span class="p">)</span>
+<span class="n">class_mapping</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;class_encoded&#39;</span><span class="p">:</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">le</span><span class="o">.</span><span class="n">classes_</span><span class="p">)),</span>
+    <span class="s1">&#39;class_name&#39;</span><span class="p">:</span> <span class="n">le</span><span class="o">.</span><span class="n">classes_</span>
+<span class="p">})</span>
+<span class="n">class_mapping</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;class_mapping.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   ✓ class_mapping.csv disimpan (</span><span class="si">{</span><span class="n">class_mapping</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> rows, </span><span class="si">{</span><span class="n">class_mapping</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> columns)&quot;</span><span class="p">)</span>
+
+<span class="c1"># 7. Simpan summary hasil balancing</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;7. Menyimpan summary balancing...&quot;</span><span class="p">)</span>
+<span class="n">summary_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;Dataset&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Original&#39;</span><span class="p">,</span> <span class="s1">&#39;ADASYN Balanced&#39;</span><span class="p">,</span> <span class="s1">&#39;SMOTE Balanced&#39;</span> <span class="k">if</span> <span class="s1">&#39;X_smote&#39;</span> <span class="ow">in</span> <span class="nb">locals</span><span class="p">()</span> <span class="k">else</span> <span class="s1">&#39;SMOTE (Not Available)&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;Total_Samples&#39;</span><span class="p">:</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_balanced</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_smote</span><span class="p">)</span> <span class="k">if</span> <span class="s1">&#39;X_smote&#39;</span> <span class="ow">in</span> <span class="nb">locals</span><span class="p">()</span> <span class="k">else</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="s1">&#39;Features&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">X_scaled</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">X_balanced</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">X_smote</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="s1">&#39;X_smote&#39;</span> <span class="ow">in</span> <span class="nb">locals</span><span class="p">()</span> <span class="k">else</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="s1">&#39;Classes&#39;</span><span class="p">:</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y_encoded</span><span class="p">)),</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y_balanced</span><span class="p">)),</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y_smote</span><span class="p">))</span> <span class="k">if</span> <span class="s1">&#39;y_smote&#39;</span> <span class="ow">in</span> <span class="nb">locals</span><span class="p">()</span> <span class="k">else</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="s1">&#39;Method&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Original&#39;</span><span class="p">,</span> <span class="n">method_used</span><span class="p">,</span> <span class="s1">&#39;SMOTE&#39;</span> <span class="k">if</span> <span class="s1">&#39;X_smote&#39;</span> <span class="ow">in</span> <span class="nb">locals</span><span class="p">()</span> <span class="k">else</span> <span class="s1">&#39;N/A&#39;</span><span class="p">]</span>
+<span class="p">})</span>
+<span class="n">summary_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;balancing_summary.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   ✓ balancing_summary.csv disimpan (</span><span class="si">{</span><span class="n">summary_df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> rows, </span><span class="si">{</span><span class="n">summary_df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> columns)&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> SEMUA FILE CSV BERHASIL DISIMPAN!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SIMPAN DATA KE CSV
+==================================================
+1. Menyimpan data original...
+   ✓ data_original.csv disimpan (336 rows, 9 columns)
+2. Menyimpan data ADASYN...
+   ✓ data_adasyn_balanced.csv disimpan (1157 rows, 9 columns)
+3. Menyimpan data SMOTE...
+   ✓ data_smote_balanced.csv disimpan (1144 rows, 9 columns)
+4. Menyimpan data PCA original...
+   ✓ data_pca_original.csv disimpan (336 rows, 4 columns)
+5. Menyimpan data PCA balanced...
+   ✓ data_pca_balanced.csv disimpan (1157 rows, 5 columns)
+6. Menyimpan class mapping...
+   ✓ class_mapping.csv disimpan (8 rows, 2 columns)
+7. Menyimpan summary balancing...
+   ✓ balancing_summary.csv disimpan (3 rows, 5 columns)
+
+ SEMUA FILE CSV BERHASIL DISIMPAN!
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1280,6 +1607,15 @@ Final success: Yes
         <p class="prev-next-subtitle">previous</p>
         <p class="prev-next-title">Power BI Eksplorasi Data Iris</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="Klasifikasi.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><strong>Klasifikasi Dan BaggingClassifier Pada Dataset Ecoli</strong></p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
