@@ -195,6 +195,7 @@
 <li class="toctree-l1"><a class="reference internal" href="PowerBI.html">Power BI Eksplorasi Data Iris</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">E. coli Protein PCA &amp; ADASYN Implementation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Klasifikasi.html"><strong>Klasifikasi Dan BaggingClassifier Pada Dataset Ecoli</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Dokumentasi%20Project%20Pra%20Uts.html">Panduan Lengkap Workflow KNIME</a></li>
 </ul>
 
     </div>
@@ -488,104 +489,23 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Data loaded from MySQL: (336, 9)
-Dataset shape: (336, 9)
-Classes: [&#39;cp&#39;, &#39;im&#39;, &#39;imL&#39;, &#39;imS&#39;, &#39;imU&#39;, &#39;om&#39;, &#39;omL&#39;, &#39;pp&#39;]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MySQL failed: (pymysql.err.OperationalError) (2003, &quot;Can&#39;t connect to MySQL server on &#39;localhost&#39; ([WinError 10061] No connection could be made because the target machine actively refused it)&quot;)
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
 </pre></div>
 </div>
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">line</span> <span class="mi">15</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span>             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MySQL failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">14</span> <span class="n">df</span> <span class="o">=</span> <span class="n">load_data</span><span class="p">()</span>
+<span class="ne">---&gt; </span><span class="mi">15</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dataset shape: </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">16</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Classes: </span><span class="si">{</span><span class="nb">sorted</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;localization_class&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">17</span> <span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>protein_name</th>
-      <th>mcg</th>
-      <th>gvh</th>
-      <th>lip</th>
-      <th>chg</th>
-      <th>aac</th>
-      <th>alm1</th>
-      <th>alm2</th>
-      <th>localization_class</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>AAT_ECOLI</td>
-      <td>0.49</td>
-      <td>0.29</td>
-      <td>0.48</td>
-      <td>0.5</td>
-      <td>0.56</td>
-      <td>0.24</td>
-      <td>0.35</td>
-      <td>cp</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>ACEA_ECOLI</td>
-      <td>0.07</td>
-      <td>0.40</td>
-      <td>0.48</td>
-      <td>0.5</td>
-      <td>0.54</td>
-      <td>0.35</td>
-      <td>0.44</td>
-      <td>cp</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>ACEK_ECOLI</td>
-      <td>0.56</td>
-      <td>0.40</td>
-      <td>0.48</td>
-      <td>0.5</td>
-      <td>0.49</td>
-      <td>0.37</td>
-      <td>0.46</td>
-      <td>cp</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>ACKA_ECOLI</td>
-      <td>0.59</td>
-      <td>0.49</td>
-      <td>0.48</td>
-      <td>0.5</td>
-      <td>0.52</td>
-      <td>0.45</td>
-      <td>0.36</td>
-      <td>cp</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>ADI_ECOLI</td>
-      <td>0.23</td>
-      <td>0.32</td>
-      <td>0.48</td>
-      <td>0.5</td>
-      <td>0.55</td>
-      <td>0.25</td>
-      <td>0.35</td>
-      <td>cp</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
+<span class="ne">AttributeError</span>: &#39;NoneType&#39; object has no attribute &#39;shape&#39;
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -939,11 +859,37 @@ Iterasi 4: menggunakan k_neighbors=19
 Hasil iterasi 4: [(0, 143), (1, 77), (2, 142), (3, 142), (4, 35), (5, 144), (6, 143), (7, 52)]
 
 Iterasi 5: menggunakan k_neighbors=34
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Hasil iterasi 5: [(0, 143), (1, 77), (2, 142), (3, 142), (4, 146), (5, 144), (6, 143), (7, 52)]
+Hasil iterasi 5: [(0, 143), (1, 77), (2, 142), (3, 142), (4, 146), (5, 144), (6, 143), (7, 52)]
 
 Iterasi 6: menggunakan k_neighbors=51
+Hasil iterasi 6: [(0, 143), (1, 77), (2, 142), (3, 142), (4, 146), (5, 144), (6, 143), (7, 143)]
+
+Iterasi 7: menggunakan k_neighbors=76
+Hasil iterasi 7: [(0, 143), (1, 154), (2, 142), (3, 142), (4, 146), (5, 144), (6, 143), (7, 143)]
+
+ ADASYN berhasil dengan pendekatan iteratif!
+
+Distribusi kelas setelah balancing:
+[(0, 143), (1, 154), (2, 142), (3, 142), (4, 146), (5, 144), (6, 143), (7, 143)]
+
+Total samples sebelum: 336
+Total samples setelah: 1157
+Data yang ditambahkan: 821
+
+Method used: ADASYN Iterative
+Original samples: 336
+Balanced samples: 1157
+Generated samples: 821
+
+Distribusi setelah balancing:
+  cp: 143 samples (original: 143, generated: 0)
+  im: 154 samples (original: 77, generated: 77)
+  imL: 142 samples (original: 2, generated: 140)
+  imS: 142 samples (original: 2, generated: 140)
+  imU: 146 samples (original: 35, generated: 111)
+  om: 144 samples (original: 20, generated: 124)
+  omL: 143 samples (original: 5, generated: 138)
+  pp: 143 samples (original: 52, generated: 91)
 Hasil iterasi 6: [(0, 143), (1, 77), (2, 142), (3, 142), (4, 146), (5, 144), (6, 143), (7, 143)]
 
 Iterasi 7: menggunakan k_neighbors=76
@@ -1562,7 +1508,32 @@ Final success: Yes
 7. Menyimpan summary balancing...
    ✓ balancing_summary.csv disimpan (3 rows, 5 columns)
 
- SEMUA FILE CSV BERHASIL DISIMPAN!
+✅ SEMUA FILE CSV BERHASIL DISIMPAN!
+📁 File yang tersimpan:
+   1. data_original.csv - Data original yang sudah di-standardisasi
+   2. data_adasyn_balanced.csv - Data hasil balancing ADASYN
+   3. data_smote_balanced.csv - Data hasil balancing SMOTE
+   4. data_pca_original.csv - Data PCA dari original
+   5. data_pca_balanced.csv - Data PCA dari balanced (dengan marking)
+   6. class_mapping.csv - Mapping antara class_encoded dan class_name
+   7. balancing_summary.csv - Summary perbandingan dataset
+
+📋 Cara menggunakan file CSV untuk modeling:
+   # Load data untuk modeling
+   import pandas as pd
+   
+   # Untuk data original
+   df_orig = pd.read_csv(&#39;data_original.csv&#39;)
+   X_orig = df_orig[[&#39;mcg&#39;, &#39;gvh&#39;, &#39;lip&#39;, &#39;chg&#39;, &#39;aac&#39;, &#39;alm1&#39;, &#39;alm2&#39;]]
+   y_orig = df_orig[&#39;class_encoded&#39;]
+   
+   # Untuk data ADASYN balanced
+   df_adasyn = pd.read_csv(&#39;data_adasyn_balanced.csv&#39;)
+   X_adasyn = df_adasyn[[&#39;mcg&#39;, &#39;gvh&#39;, &#39;lip&#39;, &#39;chg&#39;, &#39;aac&#39;, &#39;alm1&#39;, &#39;alm2&#39;]]
+   y_adasyn = df_adasyn[&#39;class_encoded&#39;]
+   
+   # Load class mapping
+   class_map = pd.read_csv(&#39;class_mapping.csv&#39;)
 </pre></div>
 </div>
 </div>
