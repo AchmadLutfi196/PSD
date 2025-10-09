@@ -1,7 +1,7 @@
-# Panduan Lengkap Workflow KNIME
+# Workflow KNIME
 ## Outlier Detection dan Unbalanced Dataset Analysis dengan SMOTE
 
-![projectprauts](image3)
+![projectprauts](images/projectprauts.png)
 
 ---
 
@@ -90,7 +90,7 @@ Column Filter → Value Counter → Bar Chart
            ↓
        GroupBy → Bar Chart (statistik per kelas)
 ```
-![statistikawal](image3)
+![statistikawal](images/statistikawal.png)
 #### Analisis Distribusi:
 - **Value Counter**: Menghitung sampel per kelas lokalisasi
 - **Bar Chart**: Memvisualisasikan ketidakseimbangan kelas
@@ -116,8 +116,8 @@ Column Filter → Numeric Outliers → SMOTE → Missing Value → Statistics �
 ### 1. Node Koneksi Database
 
 #### PostgreSQL Connector
-![nodepostgre](image3)
-![barchartdataawal](image3)
+![nodepostgre](images/nodepostgre.png)
+![barchartdataawal](images/barchartdataawal.png)
 
 #### Column Filter
 ```
@@ -129,7 +129,7 @@ Kolom yang dikecualikan:
 - id (primary key)
 - protein_name (identifier)
 ```
-![columnfilter](image3)
+![columnfilter](images/columnfilter.png)
 
 ### 2. Node Analisis
 
@@ -145,7 +145,7 @@ Kategori: Semua kolom numerik
 Tampilkan outliers: ✓
 Kelompokkan berdasarkan: localization_class (opsional)
 ```
-![boxplotdataawal](image3)
+![boxplotdataawal](images/boxplotdataawal.png)
 
 #### Scatter Plot Matrix
 ```
@@ -154,14 +154,14 @@ Warna berdasarkan: localization_class
 Ukuran: 500x500 piksel
 ```
 
-![plotmatrix](image3)
+![plotmatrix](images/plotmatrix.png)
 
 #### Value Counter
 ```
 Kolom: localization_class
 Urutkan berdasarkan frekuensi: Menurun
 ```
-![barchartawal](image3)
+![barchartawal](images/barchartdataawal.png)
 
 ### 3. Deteksi Outlier
 
@@ -172,7 +172,7 @@ Faktor IQR: 1.5 (standar)
 Kolom: Semua fitur numerik
 Output: Informasi outlier
 ```
-![numericoutlier](image3)
+![numericoutlier](images/numericoutlier.png)
 
 **Outlier yang Diharapkan**:
 - Total outlier: ~10-15% dari data
@@ -193,7 +193,7 @@ Strategi penyeimbangan:
 - Kelas menengah (omL, om): Oversample ke ~50 sampel  
 - Kelas mayoritas (cp): Pertahankan asli atau undersample
 ```
-![smote](image3)
+![smote](images/smote.png)
 
 **Distribusi Pasca-SMOTE yang Diharapkan**:
 - **Dataset seimbang**: ~50-100 sampel per kelas
@@ -208,7 +208,7 @@ Kolom: Semua kolom numerik
 Strategi: Imputasi rata-rata
 Buat indikator missing: Tidak
 ```
-![missingvalue](image3)
+![missingvalue](images/missingvalue.png)
 
 ---
 
@@ -218,7 +218,7 @@ Buat indikator missing: Tidak
 
 #### Temuan yang Diharapkan:
 
-![outliercount](image3)
+![outliercount](images/outliercount.png)
 
 #### Interpretasi Outlier:
 - **Relevansi biologis**: Skor membran tinggi normal untuk protein tertentu
@@ -228,7 +228,7 @@ Buat indikator missing: Tidak
 ### 2. Analisis Distribusi Kelas
 
 #### Hasil Sebelum SMOTE:
-![barchartdataawal](image3)
+![barchartdataawal](images/barchartdataawal.png)
 
 #### Hasil Setelah SMOTE:
 ![barcharthasilsmote](image.png)
