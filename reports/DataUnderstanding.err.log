@@ -16,32 +16,18 @@ Traceback (most recent call last):
     return future.result()
   File "C:\laragon\bin\python\python-3.10\lib\site-packages\nbclient\client.py", line 709, in async_execute
     await self.async_execute_cell(
-  File "C:\laragon\bin\python\python-3.10\lib\site-packages\nbclient\client.py", line 1062, in async_execute_cell
-    await self._check_raise_for_error(cell, cell_index, exec_reply)
-  File "C:\laragon\bin\python\python-3.10\lib\site-packages\nbclient\client.py", line 918, in _check_raise_for_error
-    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
-nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
-------------------
-# Statistik per spesies
-print("=== STATISTIK DESKRIPTIF PER SPESIES ===")
-for species in df['species'].unique():
-    print(f"\n📊 Spesies: {species.upper()}")
-    species_data = df[df['species'] == species][features]
-    print(species_data.describe().round(2))
-------------------
-
------ stdout -----
-=== STATISTIK DESKRIPTIF PER SPESIES ===
-------------------
-
-[1;31m---------------------------------------------------------------------------[0m
-[1;31mAttributeError[0m                            Traceback (most recent call last)
-Cell [1;32mIn[18], line 4[0m
-[0;32m      2[0m [38;5;28mprint[39m([38;5;124m"[39m[38;5;124m=== STATISTIK DESKRIPTIF PER SPESIES ===[39m[38;5;124m"[39m)
-[0;32m      3[0m [38;5;28;01mfor[39;00m species [38;5;129;01min[39;00m df[[38;5;124m'[39m[38;5;124mspecies[39m[38;5;124m'[39m][38;5;241m.[39munique():
-[1;32m----> 4[0m     [38;5;28mprint[39m([38;5;124mf[39m[38;5;124m"[39m[38;5;130;01m\n[39;00m[38;5;124m📊 Spesies: [39m[38;5;132;01m{[39;00m[43mspecies[49m[38;5;241;43m.[39;49m[43mupper[49m()[38;5;132;01m}[39;00m[38;5;124m"[39m)
-[0;32m      5[0m     species_data [38;5;241m=[39m df[df[[38;5;124m'[39m[38;5;124mspecies[39m[38;5;124m'[39m] [38;5;241m==[39m species][features]
-[0;32m      6[0m     [38;5;28mprint[39m(species_data[38;5;241m.[39mdescribe()[38;5;241m.[39mround([38;5;241m2[39m))
-
-[1;31mAttributeError[0m: 'numpy.int64' object has no attribute 'upper'
+  File "C:\laragon\bin\python\python-3.10\lib\site-packages\nbclient\client.py", line 1005, in async_execute_cell
+    exec_reply = await self.task_poll_for_reply
+  File "C:\laragon\bin\python\python-3.10\lib\site-packages\nbclient\client.py", line 806, in _async_poll_for_reply
+    error_on_timeout_execute_reply = await self._async_handle_timeout(timeout, cell)
+  File "C:\laragon\bin\python\python-3.10\lib\site-packages\nbclient\client.py", line 856, in _async_handle_timeout
+    raise CellTimeoutError.error_from_timeout_and_cell(
+nbclient.exceptions.CellTimeoutError: A cell timed out while it was being executed, after 30 seconds.
+The message was: Cell execution timed out.
+Here is a preview of the cell contents:
+-------------------
+['# Install required packages', '%pip install seaborn', '', '# Import library yang diperlukan', 'import pandas as pd']
+...
+['# Atur style untuk visualisasi', "plt.style.use('default')", 'sns.set_palette("husl")', '', 'print("Library berhasil diimport")']
+-------------------
 
