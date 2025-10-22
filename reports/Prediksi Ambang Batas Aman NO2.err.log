@@ -26,7 +26,7 @@ nbclient.exceptions.CellTimeoutError: A cell timed out while it was being execut
 The message was: Cell execution timed out.
 Here is a preview of the cell contents:
 -------------------
-['print("="*70)', 'print("LANGKAH 1: PENGUMPULAN DATA (OpenEO Sentinel-5P)")', 'print("="*70)', '', '# 1. Koneksi ke Copernicus Data Space']
+['print("="*70)', 'print("LANGKAH 1: PENGUMPULAN DATA ")', 'print("="*70)', '', '# 1. Koneksi ke Copernicus Data Space']
 ...
 ['print(f"  - Total records: {len(df)}")', 'print(f"  - Periode: {df[\'date\'].min()} hingga {df[\'date\'].max()}")', 'print(f"  - File: timeseries.csv")', 'print(f"\\nData pertama (5 baris):")', 'print(df.head())']
 -------------------

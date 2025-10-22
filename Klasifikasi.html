@@ -196,7 +196,10 @@
 <li class="toctree-l1"><a class="reference internal" href="ecoli_pca_adasyn.html">E. coli Protein PCA &amp; ADASYN Implementation</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#"><strong>Klasifikasi Dan BaggingClassifier Pada Dataset Ecoli</strong></a></li>
 <li class="toctree-l1"><a class="reference internal" href="Dokumentasi%20Project%20Pra%20Uts.html">Workflow KNIME</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Prediksi%20Ambang%20Batas%20Aman%20NO2.html">NO2 Threshold Prediction - Classification using KNN</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Prediksi%20Ambang%20Batas%20Aman%20NO2.html">Prediksi Nilai NO2 Satu Hari Kedepan dengan KNN Regression</a></li>
+
+
+
 </ul>
 
     </div>
@@ -782,7 +785,9 @@ Class 7: TP=16, FP=10, FN=0, Precision=0.615, Recall=1.000
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>============================================================
 KLASIFIKASI NAIVE BAYES - DATA SMOTE 
 ============================================================
-Membuat SMOTE data dari TRAINING SET saja...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Membuat SMOTE data dari TRAINING SET saja...
 Training set original: 235 samples
 
 Distribusi training set:
@@ -1404,15 +1409,11 @@ Akurasi ADASYN    : 0.8218
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>============================================================
 BAGGING CLASSIFIER - DATA ORIGINAL
 ============================================================
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy: 0.8020
+Accuracy: 0.8020
 Misclassified samples: 20/101
 
 Classification Report:
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>              precision    recall  f1-score   support
+              precision    recall  f1-score   support
 
            0       0.93      1.00      0.97        43
            1       0.67      0.70      0.68        23
