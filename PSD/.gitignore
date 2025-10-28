@@ -1,0 +1,32 @@
+# Jupyter Book build files
+_build/
+.doctrees/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Model files (opsional, uncomment jika model terlalu besar)
+# *.pkl
+
+# Data files (opsional, uncomment jika data terlalu besar)
+# *.csv
+# timeseries.csv
+
+# Environment
+.env
+venv/
+env/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Large output files
+*.log
+logs.log

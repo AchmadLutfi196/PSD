@@ -1,0 +1,14 @@
+format: jb-book
+root: intro
+
+chapters:
+- file: BusinessProblem
+- file: DataUnderstanding
+  sections:
+  - file: ExplorasiData
+- file: PrepocessingData
+- file: PowerBI
+- file: ecoli_pca_adasyn
+- file: Klasifikasi
+- file: Dokumentasi Project Pra Uts
+- file: Prediksi Ambang Batas Aman NO2
