@@ -8651,3 +8651,547 @@ Alternately, you can install this by running `pip install pycaret[models]`
 'cuml' is a soft dependency and not included in the pycaret installation. Please run: `pip install cuml` to install.
 2025-10-29 22:49:18,859:WARNING:
 'cuml' is a soft dependency and not included in the pycaret installation. Please run: `pip install cuml` to install.
+2025-10-29 22:52:11,724:WARNING:
+'cuml' is a soft dependency and not included in the pycaret installation. Please run: `pip install cuml` to install.
+2025-10-29 22:52:11,724:WARNING:
+'cuml' is a soft dependency and not included in the pycaret installation. Please run: `pip install cuml` to install.
+2025-10-29 22:52:11,724:WARNING:
+'cuml' is a soft dependency and not included in the pycaret installation. Please run: `pip install cuml` to install.
+2025-10-29 22:52:11,724:WARNING:
+'cuml' is a soft dependency and not included in the pycaret installation. Please run: `pip install cuml` to install.
+2025-10-29 22:52:13,642:INFO:PyCaret AnomalyExperiment
+2025-10-29 22:52:13,642:INFO:Logging name: anomaly-default-name
+2025-10-29 22:52:13,643:INFO:ML Usecase: MLUsecase.ANOMALY
+2025-10-29 22:52:13,643:INFO:version 3.3.2
+2025-10-29 22:52:13,643:INFO:Initializing setup()
+2025-10-29 22:52:13,643:INFO:self.USI: f4e1
+2025-10-29 22:52:13,643:INFO:self._variable_keys: {'n_jobs_param', 'gpu_n_jobs_param', 'pipeline', 'logging_param', 'seed', 'idx', 'gpu_param', 'exp_name_log', 'exp_id', '_available_plots', 'memory', '_ml_usecase', 'data', 'log_plots_param', 'html_param', 'X', 'USI'}
+2025-10-29 22:52:13,643:INFO:Checking environment
+2025-10-29 22:52:13,643:INFO:python_version: 3.10.6
+2025-10-29 22:52:13,643:INFO:python_build: ('tags/v3.10.6:9c7b4bd', 'Aug  1 2022 21:53:49')
+2025-10-29 22:52:13,643:INFO:machine: AMD64
+2025-10-29 22:52:13,643:INFO:platform: Windows-10-10.0.26100-SP0
+2025-10-29 22:52:13,643:INFO:Memory: svmem(total=16869548032, available=4660367360, percent=72.4, used=12209180672, free=4660367360)
+2025-10-29 22:52:13,643:INFO:Physical Core: 10
+2025-10-29 22:52:13,643:INFO:Logical Core: 12
+2025-10-29 22:52:13,643:INFO:Checking libraries
+2025-10-29 22:52:13,643:INFO:System:
+2025-10-29 22:52:13,643:INFO:    python: 3.10.6 (tags/v3.10.6:9c7b4bd, Aug  1 2022, 21:53:49) [MSC v.1932 64 bit (AMD64)]
+2025-10-29 22:52:13,643:INFO:executable: C:\laragon\bin\python\python-3.10\python.exe
+2025-10-29 22:52:13,643:INFO:   machine: Windows-10-10.0.26100-SP0
+2025-10-29 22:52:13,643:INFO:PyCaret required dependencies:
+2025-10-29 22:52:13,660:INFO:                 pip: 25.2
+2025-10-29 22:52:13,660:INFO:          setuptools: 63.2.0
+2025-10-29 22:52:13,660:INFO:             pycaret: 3.3.2
+2025-10-29 22:52:13,660:INFO:             IPython: 8.37.0
+2025-10-29 22:52:13,660:INFO:          ipywidgets: 8.1.7
+2025-10-29 22:52:13,660:INFO:                tqdm: 4.67.1
+2025-10-29 22:52:13,660:INFO:               numpy: 1.26.4
+2025-10-29 22:52:13,660:INFO:              pandas: 2.3.3
+2025-10-29 22:52:13,660:INFO:              jinja2: 3.1.6
+2025-10-29 22:52:13,660:INFO:               scipy: 1.11.4
+2025-10-29 22:52:13,660:INFO:              joblib: 1.4.2
+2025-10-29 22:52:13,660:INFO:             sklearn: 1.4.2
+2025-10-29 22:52:13,660:INFO:                pyod: 2.0.5
+2025-10-29 22:52:13,660:INFO:            imblearn: 0.14.0
+2025-10-29 22:52:13,660:INFO:   category_encoders: 2.7.0
+2025-10-29 22:52:13,660:INFO:            lightgbm: 4.6.0
+2025-10-29 22:52:13,660:INFO:               numba: 0.61.2
+2025-10-29 22:52:13,660:INFO:            requests: 2.32.3
+2025-10-29 22:52:13,661:INFO:          matplotlib: 3.7.5
+2025-10-29 22:52:13,661:INFO:          scikitplot: 0.3.7
+2025-10-29 22:52:13,661:INFO:         yellowbrick: 1.5
+2025-10-29 22:52:13,661:INFO:              plotly: 6.3.0
+2025-10-29 22:52:13,661:INFO:    plotly-resampler: Not installed
+2025-10-29 22:52:13,661:INFO:             kaleido: 1.1.0
+2025-10-29 22:52:13,661:INFO:           schemdraw: 0.15
+2025-10-29 22:52:13,661:INFO:         statsmodels: 0.14.5
+2025-10-29 22:52:13,661:INFO:              sktime: 0.26.0
+2025-10-29 22:52:13,661:INFO:               tbats: 1.1.3
+2025-10-29 22:52:13,661:INFO:            pmdarima: 2.0.4
+2025-10-29 22:52:13,661:INFO:              psutil: 7.0.0
+2025-10-29 22:52:13,661:INFO:          markupsafe: 3.0.2
+2025-10-29 22:52:13,661:INFO:             pickle5: Not installed
+2025-10-29 22:52:13,661:INFO:         cloudpickle: 3.1.1
+2025-10-29 22:52:13,661:INFO:         deprecation: 2.1.0
+2025-10-29 22:52:13,661:INFO:              xxhash: 3.5.0
+2025-10-29 22:52:13,661:INFO:           wurlitzer: Not installed
+2025-10-29 22:52:13,661:INFO:PyCaret optional dependencies:
+2025-10-29 22:52:13,667:INFO:                shap: Not installed
+2025-10-29 22:52:13,667:INFO:           interpret: Not installed
+2025-10-29 22:52:13,667:INFO:                umap: Not installed
+2025-10-29 22:52:13,667:INFO:     ydata_profiling: Not installed
+2025-10-29 22:52:13,667:INFO:  explainerdashboard: Not installed
+2025-10-29 22:52:13,667:INFO:             autoviz: Not installed
+2025-10-29 22:52:13,669:INFO:           fairlearn: Not installed
+2025-10-29 22:52:13,669:INFO:          deepchecks: Not installed
+2025-10-29 22:52:13,669:INFO:             xgboost: Not installed
+2025-10-29 22:52:13,669:INFO:            catboost: Not installed
+2025-10-29 22:52:13,669:INFO:              kmodes: Not installed
+2025-10-29 22:52:13,669:INFO:             mlxtend: 0.23.4
+2025-10-29 22:52:13,669:INFO:       statsforecast: Not installed
+2025-10-29 22:52:13,669:INFO:        tune_sklearn: Not installed
+2025-10-29 22:52:13,669:INFO:                 ray: Not installed
+2025-10-29 22:52:13,669:INFO:            hyperopt: Not installed
+2025-10-29 22:52:13,669:INFO:              optuna: Not installed
+2025-10-29 22:52:13,669:INFO:               skopt: Not installed
+2025-10-29 22:52:13,669:INFO:              mlflow: Not installed
+2025-10-29 22:52:13,669:INFO:              gradio: Not installed
+2025-10-29 22:52:13,669:INFO:             fastapi: Not installed
+2025-10-29 22:52:13,669:INFO:             uvicorn: Not installed
+2025-10-29 22:52:13,669:INFO:              m2cgen: Not installed
+2025-10-29 22:52:13,669:INFO:           evidently: Not installed
+2025-10-29 22:52:13,669:INFO:               fugue: Not installed
+2025-10-29 22:52:13,669:INFO:           streamlit: Not installed
+2025-10-29 22:52:13,669:INFO:             prophet: Not installed
+2025-10-29 22:52:13,669:INFO:None
+2025-10-29 22:52:13,669:INFO:Set up data.
+2025-10-29 22:52:13,670:INFO:Set up index.
+2025-10-29 22:52:13,670:INFO:Assigning column types.
+2025-10-29 22:52:13,671:INFO:Engine successfully changes for model 'kmeans' to 'sklearn'.
+2025-10-29 22:52:13,882:INFO:Engine successfully changes for model 'dbscan' to 'sklearn'.
+2025-10-29 22:52:13,883:INFO:Preparing preprocessing pipeline...
+2025-10-29 22:52:13,883:INFO:Set up simple imputation.
+2025-10-29 22:52:13,891:INFO:Finished creating preprocessing pipeline.
+2025-10-29 22:52:13,895:INFO:Pipeline: Pipeline(memory=FastMemory(location=C:\Users\achma\AppData\Local\Temp\joblib),
+         steps=[('numerical_imputer',
+                 TransformerWrapper(include=['sepal length (cm)',
+                                             'sepal width (cm)',
+                                             'petal length (cm)',
+                                             'petal width (cm)'],
+                                    transformer=SimpleImputer())),
+                ('categorical_imputer',
+                 TransformerWrapper(include=[],
+                                    transformer=SimpleImputer(strategy='most_frequent')))])
+2025-10-29 22:52:13,895:INFO:Creating final display dataframe.
+2025-10-29 22:52:13,902:INFO:Setup _display_container:                Description                 Value
+0               Session id                   123
+1      Original data shape              (150, 4)
+2   Transformed data shape              (150, 4)
+3         Numeric features                     4
+4               Preprocess                  True
+5          Imputation type                simple
+6       Numeric imputation                  mean
+7   Categorical imputation                  mode
+8                 CPU Jobs                    -1
+9                  Use GPU                 False
+10          Log Experiment                 False
+11         Experiment Name  anomaly-default-name
+12                     USI                  f4e1
+2025-10-29 22:52:13,902:INFO:setup() successfully completed in 0.26s...............
+2025-10-29 22:52:13,902:INFO:Initializing create_model()
+2025-10-29 22:52:13,902:INFO:create_model(self=<pycaret.anomaly.oop.AnomalyExperiment object at 0x0000021F89E4BC10>, estimator=abod, num_clusters=4, fraction=0.05, ground_truth=None, round=4, fit_kwargs=None, experiment_custom_tags=None, verbose=True, system=True, add_to_model_list=True, raise_num_clusters=False, display=None, kwargs={})
+2025-10-29 22:52:13,902:INFO:Checking exceptions
+2025-10-29 22:52:13,923:INFO:Importing untrained model
+2025-10-29 22:52:13,927:INFO:Angle-base Outlier Detection Imported successfully
+2025-10-29 22:52:13,930:INFO:Fitting Model
+2025-10-29 22:52:15,187:INFO:ABOD(contamination=0.05, method='fast', n_neighbors=5)
+2025-10-29 22:52:15,187:INFO:create_models() successfully completed......................................
+2025-10-29 22:52:15,191:INFO:Uploading results into container
+2025-10-29 22:52:15,191:INFO:Uploading model into container now
+2025-10-29 22:52:15,194:INFO:_master_model_container: 1
+2025-10-29 22:52:15,194:INFO:_display_container: 1
+2025-10-29 22:52:15,194:INFO:ABOD(contamination=0.05, method='fast', n_neighbors=5)
+2025-10-29 22:52:15,194:INFO:create_model() successfully completed......................................
+2025-10-29 22:52:15,305:INFO:Initializing assign_model()
+2025-10-29 22:52:15,306:INFO:assign_model(self=<pycaret.anomaly.oop.AnomalyExperiment object at 0x0000021F89E4BC10>, model=ABOD(contamination=0.05, method='fast', n_neighbors=5), transformation=False, score=True, verbose=True)
+2025-10-29 22:52:15,306:INFO:Checking exceptions
+2025-10-29 22:52:15,306:INFO:Determining Trained Model
+2025-10-29 22:52:15,306:INFO:Trained Model : Angle-base Outlier Detection
+2025-10-29 22:52:15,306:INFO:Copying data
+2025-10-29 22:52:15,307:INFO:(150, 6)
+2025-10-29 22:52:15,307:INFO:assign_model() successfully completed......................................
+2025-10-29 22:52:15,309:INFO:Initializing create_model()
+2025-10-29 22:52:15,309:INFO:create_model(self=<pycaret.anomaly.oop.AnomalyExperiment object at 0x0000021F89E4BC10>, estimator=knn, num_clusters=4, fraction=0.05, ground_truth=None, round=4, fit_kwargs=None, experiment_custom_tags=None, verbose=True, system=True, add_to_model_list=True, raise_num_clusters=False, display=None, kwargs={})
+2025-10-29 22:52:15,309:INFO:Checking exceptions
+2025-10-29 22:52:15,342:INFO:Importing untrained model
+2025-10-29 22:52:15,349:INFO:K-Nearest Neighbors Detector Imported successfully
+2025-10-29 22:52:15,353:INFO:Fitting Model
+2025-10-29 22:52:15,380:INFO:KNN(algorithm='auto', contamination=0.05, leaf_size=30, method='largest',
+  metric='minkowski', metric_params=None, n_jobs=-1, n_neighbors=5, p=2,
+  radius=1.0)
+2025-10-29 22:52:15,380:INFO:create_models() successfully completed......................................
+2025-10-29 22:52:15,384:INFO:Uploading results into container
+2025-10-29 22:52:15,385:INFO:Uploading model into container now
+2025-10-29 22:52:15,387:INFO:_master_model_container: 2
+2025-10-29 22:52:15,388:INFO:_display_container: 1
+2025-10-29 22:52:15,388:INFO:KNN(algorithm='auto', contamination=0.05, leaf_size=30, method='largest',
+  metric='minkowski', metric_params=None, n_jobs=-1, n_neighbors=5, p=2,
+  radius=1.0)
+2025-10-29 22:52:15,388:INFO:create_model() successfully completed......................................
+2025-10-29 22:52:15,477:INFO:Initializing assign_model()
+2025-10-29 22:52:15,477:INFO:assign_model(self=<pycaret.anomaly.oop.AnomalyExperiment object at 0x0000021F89E4BC10>, model=KNN(algorithm='auto', contamination=0.05, leaf_size=30, method='largest',
+  metric='minkowski', metric_params=None, n_jobs=-1, n_neighbors=5, p=2,
+  radius=1.0), transformation=False, score=True, verbose=True)
+2025-10-29 22:52:15,477:INFO:Checking exceptions
+2025-10-29 22:52:15,477:INFO:Determining Trained Model
+2025-10-29 22:52:15,477:INFO:Trained Model : K-Nearest Neighbors Detector
+2025-10-29 22:52:15,477:INFO:Copying data
+2025-10-29 22:52:15,478:INFO:(150, 6)
+2025-10-29 22:52:15,478:INFO:assign_model() successfully completed......................................
+2025-10-29 22:52:15,479:INFO:Initializing create_model()
+2025-10-29 22:52:15,479:INFO:create_model(self=<pycaret.anomaly.oop.AnomalyExperiment object at 0x0000021F89E4BC10>, estimator=cof, num_clusters=4, fraction=0.05, ground_truth=None, round=4, fit_kwargs=None, experiment_custom_tags=None, verbose=True, system=True, add_to_model_list=True, raise_num_clusters=False, display=None, kwargs={})
+2025-10-29 22:52:15,479:INFO:Checking exceptions
+2025-10-29 22:52:15,502:INFO:Importing untrained model
+2025-10-29 22:52:15,506:INFO:Connectivity-Based Local Outlier Imported successfully
+2025-10-29 22:52:15,510:INFO:Fitting Model
+2025-10-29 22:52:15,531:INFO:COF(contamination=0.05, method='fast', n_neighbors=20)
+2025-10-29 22:52:15,531:INFO:create_models() successfully completed......................................
+2025-10-29 22:52:15,533:INFO:Uploading results into container
+2025-10-29 22:52:15,533:INFO:Uploading model into container now
+2025-10-29 22:52:15,535:INFO:_master_model_container: 3
+2025-10-29 22:52:15,535:INFO:_display_container: 1
+2025-10-29 22:52:15,535:INFO:COF(contamination=0.05, method='fast', n_neighbors=20)
+2025-10-29 22:52:15,535:INFO:create_model() successfully completed......................................
+2025-10-29 22:52:15,615:INFO:Initializing assign_model()
+2025-10-29 22:52:15,615:INFO:assign_model(self=<pycaret.anomaly.oop.AnomalyExperiment object at 0x0000021F89E4BC10>, model=COF(contamination=0.05, method='fast', n_neighbors=20), transformation=False, score=True, verbose=True)
+2025-10-29 22:52:15,615:INFO:Checking exceptions
+2025-10-29 22:52:15,615:INFO:Determining Trained Model
+2025-10-29 22:52:15,615:INFO:Trained Model : Connectivity-Based Local Outlier
+2025-10-29 22:52:15,615:INFO:Copying data
+2025-10-29 22:52:15,617:INFO:(150, 6)
+2025-10-29 22:52:15,617:INFO:assign_model() successfully completed......................................
+2025-10-29 22:52:22,875:WARNING:
+'cuml' is a soft dependency and not included in the pycaret installation. Please run: `pip install cuml` to install.
+2025-10-29 22:52:22,876:WARNING:
+'cuml' is a soft dependency and not included in the pycaret installation. Please run: `pip install cuml` to install.
+2025-10-29 22:52:22,876:WARNING:
+'cuml' is a soft dependency and not included in the pycaret installation. Please run: `pip install cuml` to install.
+2025-10-29 22:52:22,876:WARNING:
+'cuml' is a soft dependency and not included in the pycaret installation. Please run: `pip install cuml` to install.
+2025-10-29 22:52:23,353:INFO:PyCaret ClassificationExperiment
+2025-10-29 22:52:23,353:INFO:Logging name: clf-default-name
+2025-10-29 22:52:23,353:INFO:ML Usecase: MLUsecase.CLASSIFICATION
+2025-10-29 22:52:23,353:INFO:version 3.3.2
+2025-10-29 22:52:23,353:INFO:Initializing setup()
+2025-10-29 22:52:23,353:INFO:self.USI: 16b5
+2025-10-29 22:52:23,353:INFO:self._variable_keys: {'X', 'gpu_n_jobs_param', 'log_plots_param', 'X_train', 'pipeline', 'USI', 'seed', 'data', 'fold_groups_param', 'fold_shuffle_param', 'is_multiclass', '_ml_usecase', '_available_plots', 'fold_generator', 'n_jobs_param', 'y_train', 'memory', 'gpu_param', 'target_param', 'idx', 'logging_param', 'y_test', 'exp_name_log', 'html_param', 'y', 'X_test', 'fix_imbalance', 'exp_id'}
+2025-10-29 22:52:23,353:INFO:Checking environment
+2025-10-29 22:52:23,353:INFO:python_version: 3.10.6
+2025-10-29 22:52:23,353:INFO:python_build: ('tags/v3.10.6:9c7b4bd', 'Aug  1 2022 21:53:49')
+2025-10-29 22:52:23,353:INFO:machine: AMD64
+2025-10-29 22:52:23,353:INFO:platform: Windows-10-10.0.26100-SP0
+2025-10-29 22:52:23,353:INFO:Memory: svmem(total=16869548032, available=4583276544, percent=72.8, used=12286271488, free=4583276544)
+2025-10-29 22:52:23,353:INFO:Physical Core: 10
+2025-10-29 22:52:23,353:INFO:Logical Core: 12
+2025-10-29 22:52:23,353:INFO:Checking libraries
+2025-10-29 22:52:23,354:INFO:System:
+2025-10-29 22:52:23,354:INFO:    python: 3.10.6 (tags/v3.10.6:9c7b4bd, Aug  1 2022, 21:53:49) [MSC v.1932 64 bit (AMD64)]
+2025-10-29 22:52:23,354:INFO:executable: C:\laragon\bin\python\python-3.10\python.exe
+2025-10-29 22:52:23,354:INFO:   machine: Windows-10-10.0.26100-SP0
+2025-10-29 22:52:23,354:INFO:PyCaret required dependencies:
+2025-10-29 22:52:23,371:INFO:                 pip: 25.2
+2025-10-29 22:52:23,371:INFO:          setuptools: 63.2.0
+2025-10-29 22:52:23,371:INFO:             pycaret: 3.3.2
+2025-10-29 22:52:23,371:INFO:             IPython: 8.37.0
+2025-10-29 22:52:23,371:INFO:          ipywidgets: 8.1.7
+2025-10-29 22:52:23,371:INFO:                tqdm: 4.67.1
+2025-10-29 22:52:23,371:INFO:               numpy: 1.26.4
+2025-10-29 22:52:23,371:INFO:              pandas: 2.3.3
+2025-10-29 22:52:23,371:INFO:              jinja2: 3.1.6
+2025-10-29 22:52:23,371:INFO:               scipy: 1.11.4
+2025-10-29 22:52:23,371:INFO:              joblib: 1.4.2
+2025-10-29 22:52:23,371:INFO:             sklearn: 1.4.2
+2025-10-29 22:52:23,371:INFO:                pyod: 2.0.5
+2025-10-29 22:52:23,371:INFO:            imblearn: 0.14.0
+2025-10-29 22:52:23,371:INFO:   category_encoders: 2.7.0
+2025-10-29 22:52:23,371:INFO:            lightgbm: 4.6.0
+2025-10-29 22:52:23,371:INFO:               numba: 0.61.2
+2025-10-29 22:52:23,371:INFO:            requests: 2.32.3
+2025-10-29 22:52:23,371:INFO:          matplotlib: 3.7.5
+2025-10-29 22:52:23,371:INFO:          scikitplot: 0.3.7
+2025-10-29 22:52:23,371:INFO:         yellowbrick: 1.5
+2025-10-29 22:52:23,371:INFO:              plotly: 6.3.0
+2025-10-29 22:52:23,371:INFO:    plotly-resampler: Not installed
+2025-10-29 22:52:23,371:INFO:             kaleido: 1.1.0
+2025-10-29 22:52:23,371:INFO:           schemdraw: 0.15
+2025-10-29 22:52:23,371:INFO:         statsmodels: 0.14.5
+2025-10-29 22:52:23,371:INFO:              sktime: 0.26.0
+2025-10-29 22:52:23,371:INFO:               tbats: 1.1.3
+2025-10-29 22:52:23,371:INFO:            pmdarima: 2.0.4
+2025-10-29 22:52:23,371:INFO:              psutil: 7.0.0
+2025-10-29 22:52:23,371:INFO:          markupsafe: 3.0.2
+2025-10-29 22:52:23,371:INFO:             pickle5: Not installed
+2025-10-29 22:52:23,371:INFO:         cloudpickle: 3.1.1
+2025-10-29 22:52:23,371:INFO:         deprecation: 2.1.0
+2025-10-29 22:52:23,371:INFO:              xxhash: 3.5.0
+2025-10-29 22:52:23,371:INFO:           wurlitzer: Not installed
+2025-10-29 22:52:23,371:INFO:PyCaret optional dependencies:
+2025-10-29 22:52:23,379:INFO:                shap: Not installed
+2025-10-29 22:52:23,379:INFO:           interpret: Not installed
+2025-10-29 22:52:23,379:INFO:                umap: Not installed
+2025-10-29 22:52:23,379:INFO:     ydata_profiling: Not installed
+2025-10-29 22:52:23,379:INFO:  explainerdashboard: Not installed
+2025-10-29 22:52:23,379:INFO:             autoviz: Not installed
+2025-10-29 22:52:23,379:INFO:           fairlearn: Not installed
+2025-10-29 22:52:23,379:INFO:          deepchecks: Not installed
+2025-10-29 22:52:23,379:INFO:             xgboost: Not installed
+2025-10-29 22:52:23,379:INFO:            catboost: Not installed
+2025-10-29 22:52:23,379:INFO:              kmodes: Not installed
+2025-10-29 22:52:23,379:INFO:             mlxtend: 0.23.4
+2025-10-29 22:52:23,379:INFO:       statsforecast: Not installed
+2025-10-29 22:52:23,379:INFO:        tune_sklearn: Not installed
+2025-10-29 22:52:23,379:INFO:                 ray: Not installed
+2025-10-29 22:52:23,380:INFO:            hyperopt: Not installed
+2025-10-29 22:52:23,380:INFO:              optuna: Not installed
+2025-10-29 22:52:23,380:INFO:               skopt: Not installed
+2025-10-29 22:52:23,380:INFO:              mlflow: Not installed
+2025-10-29 22:52:23,380:INFO:              gradio: Not installed
+2025-10-29 22:52:23,380:INFO:             fastapi: Not installed
+2025-10-29 22:52:23,380:INFO:             uvicorn: Not installed
+2025-10-29 22:52:23,380:INFO:              m2cgen: Not installed
+2025-10-29 22:52:23,380:INFO:           evidently: Not installed
+2025-10-29 22:52:23,380:INFO:               fugue: Not installed
+2025-10-29 22:52:23,380:INFO:           streamlit: Not installed
+2025-10-29 22:52:23,380:INFO:             prophet: Not installed
+2025-10-29 22:52:23,380:INFO:None
+2025-10-29 22:52:23,380:INFO:Set up data.
+2025-10-29 22:52:23,382:INFO:Set up folding strategy.
+2025-10-29 22:52:23,382:INFO:Set up train/test split.
+2025-10-29 22:52:23,385:INFO:Set up index.
+2025-10-29 22:52:23,385:INFO:Assigning column types.
+2025-10-29 22:52:23,386:INFO:Engine successfully changes for model 'lr' to 'sklearn'.
+2025-10-29 22:52:23,412:INFO:Engine for model 'knn' has not been set explicitly, hence returning None.
+2025-10-29 22:52:23,416:INFO:Engine for model 'rbfsvm' has not been set explicitly, hence returning None.
+2025-10-29 22:52:23,437:WARNING:
+'xgboost' is a soft dependency and not included in the pycaret installation. Please run: `pip install xgboost` to install.
+Alternately, you can install this by running `pip install pycaret[models]`
+2025-10-29 22:52:23,437:WARNING:
+'catboost' is a soft dependency and not included in the pycaret installation. Please run: `pip install catboost` to install.
+Alternately, you can install this by running `pip install pycaret[models]`
+2025-10-29 22:52:23,464:INFO:Engine for model 'knn' has not been set explicitly, hence returning None.
+2025-10-29 22:52:23,466:INFO:Engine for model 'rbfsvm' has not been set explicitly, hence returning None.
+2025-10-29 22:52:23,489:WARNING:
+'xgboost' is a soft dependency and not included in the pycaret installation. Please run: `pip install xgboost` to install.
+Alternately, you can install this by running `pip install pycaret[models]`
+2025-10-29 22:52:23,489:WARNING:
+'catboost' is a soft dependency and not included in the pycaret installation. Please run: `pip install catboost` to install.
+Alternately, you can install this by running `pip install pycaret[models]`
+2025-10-29 22:52:23,490:INFO:Engine successfully changes for model 'knn' to 'sklearn'.
+2025-10-29 22:52:23,549:INFO:Engine for model 'rbfsvm' has not been set explicitly, hence returning None.
+2025-10-29 22:52:23,565:WARNING:
+'xgboost' is a soft dependency and not included in the pycaret installation. Please run: `pip install xgboost` to install.
+Alternately, you can install this by running `pip install pycaret[models]`
+2025-10-29 22:52:23,566:WARNING:
+'catboost' is a soft dependency and not included in the pycaret installation. Please run: `pip install catboost` to install.
+Alternately, you can install this by running `pip install pycaret[models]`
+2025-10-29 22:52:23,598:INFO:Engine for model 'rbfsvm' has not been set explicitly, hence returning None.
+2025-10-29 22:52:23,613:WARNING:
+'xgboost' is a soft dependency and not included in the pycaret installation. Please run: `pip install xgboost` to install.
+Alternately, you can install this by running `pip install pycaret[models]`
+2025-10-29 22:52:23,614:WARNING:
+'catboost' is a soft dependency and not included in the pycaret installation. Please run: `pip install catboost` to install.
+Alternately, you can install this by running `pip install pycaret[models]`
+2025-10-29 22:52:23,614:INFO:Engine successfully changes for model 'rbfsvm' to 'sklearn'.
+2025-10-29 22:52:23,658:WARNING:
+'xgboost' is a soft dependency and not included in the pycaret installation. Please run: `pip install xgboost` to install.
+Alternately, you can install this by running `pip install pycaret[models]`
+2025-10-29 22:52:23,658:WARNING:
+'catboost' is a soft dependency and not included in the pycaret installation. Please run: `pip install catboost` to install.
+Alternately, you can install this by running `pip install pycaret[models]`
+2025-10-29 22:52:23,702:WARNING:
+'xgboost' is a soft dependency and not included in the pycaret installation. Please run: `pip install xgboost` to install.
+Alternately, you can install this by running `pip install pycaret[models]`
+2025-10-29 22:52:23,702:WARNING:
+'catboost' is a soft dependency and not included in the pycaret installation. Please run: `pip install catboost` to install.
+Alternately, you can install this by running `pip install pycaret[models]`
+2025-10-29 22:52:23,703:INFO:Preparing preprocessing pipeline...
+2025-10-29 22:52:23,704:INFO:Set up label encoding.
+2025-10-29 22:52:23,704:INFO:Set up simple imputation.
+2025-10-29 22:52:23,715:INFO:Finished creating preprocessing pipeline.
+2025-10-29 22:52:23,719:INFO:Pipeline: Pipeline(memory=FastMemory(location=C:\Users\achma\AppData\Local\Temp\joblib),
+         steps=[('label_encoding',
+                 TransformerWrapperWithInverse(exclude=None, include=None,
+                                               transformer=LabelEncoder())),
+                ('numerical_imputer',
+                 TransformerWrapper(exclude=None,
+                                    include=['sepal_length', 'sepal_width',
+                                             'petal_length', 'petal_width'],
+                                    transformer=SimpleImputer(add_indicator=False,
+                                                              copy=True,
+                                                              fill_value=None,
+                                                              keep_empty_features=False,
+                                                              missing_values=nan,
+                                                              strategy='mean'))),
+                ('categorical_imputer',
+                 TransformerWrapper(exclude=None, include=[],
+                                    transformer=SimpleImputer(add_indicator=False,
+                                                              copy=True,
+                                                              fill_value=None,
+                                                              keep_empty_features=False,
+                                                              missing_values=nan,
+                                                              strategy='most_frequent')))],
+         verbose=False)
+2025-10-29 22:52:23,719:INFO:Creating final display dataframe.
+2025-10-29 22:52:23,757:INFO:Setup _display_container:                     Description                                   Value
+0                    Session id                                     123
+1                        Target                                 species
+2                   Target type                              Multiclass
+3                Target mapping  setosa: 0, versicolor: 1, virginica: 2
+4           Original data shape                                (150, 5)
+5        Transformed data shape                                (150, 5)
+6   Transformed train set shape                                (120, 5)
+7    Transformed test set shape                                 (30, 5)
+8              Numeric features                                       4
+9                    Preprocess                                    True
+10              Imputation type                                  simple
+11           Numeric imputation                                    mean
+12       Categorical imputation                                    mode
+13               Fold Generator                         StratifiedKFold
+14                  Fold Number                                      10
+15                     CPU Jobs                                      -1
+16                      Use GPU                                   False
+17               Log Experiment                                   False
+18              Experiment Name                        clf-default-name
+19                          USI                                    16b5
+2025-10-29 22:52:23,802:WARNING:
+'xgboost' is a soft dependency and not included in the pycaret installation. Please run: `pip install xgboost` to install.
+Alternately, you can install this by running `pip install pycaret[models]`
+2025-10-29 22:52:23,802:WARNING:
+'catboost' is a soft dependency and not included in the pycaret installation. Please run: `pip install catboost` to install.
+Alternately, you can install this by running `pip install pycaret[models]`
+2025-10-29 22:52:23,847:WARNING:
+'xgboost' is a soft dependency and not included in the pycaret installation. Please run: `pip install xgboost` to install.
+Alternately, you can install this by running `pip install pycaret[models]`
+2025-10-29 22:52:23,847:WARNING:
+'catboost' is a soft dependency and not included in the pycaret installation. Please run: `pip install catboost` to install.
+Alternately, you can install this by running `pip install pycaret[models]`
+2025-10-29 22:52:23,848:INFO:setup() successfully completed in 0.5s...............
+2025-10-29 22:52:28,223:INFO:Initializing create_model()
+2025-10-29 22:52:28,223:INFO:create_model(self=<pycaret.classification.oop.ClassificationExperiment object at 0x00000239037504F0>, estimator=rf, fold=None, round=4, cross_validation=True, predict=True, fit_kwargs=None, groups=None, refit=True, probability_threshold=None, experiment_custom_tags=None, verbose=False, system=True, add_to_model_list=True, metrics=None, display=None, model_only=True, return_train_score=False, error_score=0.0, kwargs={})
+2025-10-29 22:52:28,223:INFO:Checking exceptions
+2025-10-29 22:52:28,224:INFO:Importing libraries
+2025-10-29 22:52:28,224:INFO:Copying training dataset
+2025-10-29 22:52:28,227:INFO:Defining folds
+2025-10-29 22:52:28,227:INFO:Declaring metric variables
+2025-10-29 22:52:28,227:INFO:Importing untrained model
+2025-10-29 22:52:28,227:INFO:Random Forest Classifier Imported successfully
+2025-10-29 22:52:28,227:INFO:Starting cross validation
+2025-10-29 22:52:28,228:INFO:Cross validating with StratifiedKFold(n_splits=10, random_state=None, shuffle=False), n_jobs=-1
+2025-10-29 22:52:32,933:WARNING:C:\Users\achma\AppData\Roaming\Python\Python310\site-packages\sklearn\metrics\_classification.py:1561: UserWarning: Note that pos_label (set to 'virginica') is ignored when average != 'binary' (got 'weighted'). You may use labels=[pos_label] to specify a single positive class.
+  warnings.warn(
+
+2025-10-29 22:52:32,936:WARNING:C:\Users\achma\AppData\Roaming\Python\Python310\site-packages\sklearn\metrics\_classification.py:1561: UserWarning: Note that pos_label (set to 'virginica') is ignored when average != 'binary' (got 'weighted'). You may use labels=[pos_label] to specify a single positive class.
+  warnings.warn(
+
+2025-10-29 22:52:32,939:WARNING:C:\Users\achma\AppData\Roaming\Python\Python310\site-packages\sklearn\metrics\_classification.py:1561: UserWarning: Note that pos_label (set to 'virginica') is ignored when average != 'binary' (got 'weighted'). You may use labels=[pos_label] to specify a single positive class.
+  warnings.warn(
+
+2025-10-29 22:52:32,946:WARNING:C:\Users\achma\AppData\Roaming\Python\Python310\site-packages\sklearn\metrics\_classification.py:1561: UserWarning: Note that pos_label (set to 'virginica') is ignored when average != 'binary' (got 'weighted'). You may use labels=[pos_label] to specify a single positive class.
+  warnings.warn(
+
+2025-10-29 22:52:32,948:WARNING:C:\Users\achma\AppData\Roaming\Python\Python310\site-packages\sklearn\metrics\_classification.py:1561: UserWarning: Note that pos_label (set to 'virginica') is ignored when average != 'binary' (got 'weighted'). You may use labels=[pos_label] to specify a single positive class.
+  warnings.warn(
+
+2025-10-29 22:52:32,949:WARNING:C:\Users\achma\AppData\Roaming\Python\Python310\site-packages\sklearn\metrics\_classification.py:1561: UserWarning: Note that pos_label (set to 'virginica') is ignored when average != 'binary' (got 'weighted'). You may use labels=[pos_label] to specify a single positive class.
+  warnings.warn(
+
+2025-10-29 22:52:32,950:WARNING:C:\Users\achma\AppData\Roaming\Python\Python310\site-packages\sklearn\metrics\_classification.py:1561: UserWarning: Note that pos_label (set to 'virginica') is ignored when average != 'binary' (got 'weighted'). You may use labels=[pos_label] to specify a single positive class.
+  warnings.warn(
+
+2025-10-29 22:52:32,951:WARNING:C:\Users\achma\AppData\Roaming\Python\Python310\site-packages\sklearn\metrics\_classification.py:1561: UserWarning: Note that pos_label (set to 'virginica') is ignored when average != 'binary' (got 'weighted'). You may use labels=[pos_label] to specify a single positive class.
+  warnings.warn(
+
+2025-10-29 22:52:32,951:WARNING:C:\Users\achma\AppData\Roaming\Python\Python310\site-packages\sklearn\metrics\_classification.py:1561: UserWarning: Note that pos_label (set to 'virginica') is ignored when average != 'binary' (got 'weighted'). You may use labels=[pos_label] to specify a single positive class.
+  warnings.warn(
+
+2025-10-29 22:52:32,952:WARNING:C:\Users\achma\AppData\Roaming\Python\Python310\site-packages\sklearn\metrics\_classification.py:1561: UserWarning: Note that pos_label (set to 'virginica') is ignored when average != 'binary' (got 'weighted'). You may use labels=[pos_label] to specify a single positive class.
+  warnings.warn(
+
+2025-10-29 22:52:32,953:WARNING:C:\Users\achma\AppData\Roaming\Python\Python310\site-packages\sklearn\metrics\_classification.py:1561: UserWarning: Note that pos_label (set to 'virginica') is ignored when average != 'binary' (got 'weighted'). You may use labels=[pos_label] to specify a single positive class.
+  warnings.warn(
+
+2025-10-29 22:52:32,955:WARNING:C:\Users\achma\AppData\Roaming\Python\Python310\site-packages\sklearn\metrics\_classification.py:1561: UserWarning: Note that pos_label (set to 'virginica') is ignored when average != 'binary' (got 'weighted'). You may use labels=[pos_label] to specify a single positive class.
+  warnings.warn(
+
+2025-10-29 22:52:32,955:WARNING:C:\Users\achma\AppData\Roaming\Python\Python310\site-packages\sklearn\metrics\_classification.py:1561: UserWarning: Note that pos_label (set to 'virginica') is ignored when average != 'binary' (got 'weighted'). You may use labels=[pos_label] to specify a single positive class.
+  warnings.warn(
+
+2025-10-29 22:52:32,957:WARNING:C:\Users\achma\AppData\Roaming\Python\Python310\site-packages\sklearn\metrics\_classification.py:1561: UserWarning: Note that pos_label (set to 'virginica') is ignored when average != 'binary' (got 'weighted'). You may use labels=[pos_label] to specify a single positive class.
+  warnings.warn(
+
+2025-10-29 22:52:32,959:WARNING:C:\Users\achma\AppData\Roaming\Python\Python310\site-packages\sklearn\metrics\_classification.py:1561: UserWarning: Note that pos_label (set to 'virginica') is ignored when average != 'binary' (got 'weighted'). You may use labels=[pos_label] to specify a single positive class.
+  warnings.warn(
+
+2025-10-29 22:52:32,961:WARNING:C:\Users\achma\AppData\Roaming\Python\Python310\site-packages\sklearn\metrics\_classification.py:1561: UserWarning: Note that pos_label (set to 'virginica') is ignored when average != 'binary' (got 'weighted'). You may use labels=[pos_label] to specify a single positive class.
+  warnings.warn(
+
+2025-10-29 22:52:32,962:WARNING:C:\Users\achma\AppData\Roaming\Python\Python310\site-packages\sklearn\metrics\_classification.py:1561: UserWarning: Note that pos_label (set to 'virginica') is ignored when average != 'binary' (got 'weighted'). You may use labels=[pos_label] to specify a single positive class.
+  warnings.warn(
+
+2025-10-29 22:52:32,966:WARNING:C:\Users\achma\AppData\Roaming\Python\Python310\site-packages\sklearn\metrics\_classification.py:1561: UserWarning: Note that pos_label (set to 'virginica') is ignored when average != 'binary' (got 'weighted'). You may use labels=[pos_label] to specify a single positive class.
+  warnings.warn(
+
+2025-10-29 22:52:32,966:WARNING:C:\Users\achma\AppData\Roaming\Python\Python310\site-packages\sklearn\metrics\_classification.py:1561: UserWarning: Note that pos_label (set to 'virginica') is ignored when average != 'binary' (got 'weighted'). You may use labels=[pos_label] to specify a single positive class.
+  warnings.warn(
+
+2025-10-29 22:52:32,967:WARNING:C:\Users\achma\AppData\Roaming\Python\Python310\site-packages\sklearn\metrics\_classification.py:1561: UserWarning: Note that pos_label (set to 'virginica') is ignored when average != 'binary' (got 'weighted'). You may use labels=[pos_label] to specify a single positive class.
+  warnings.warn(
+
+2025-10-29 22:52:32,970:WARNING:C:\Users\achma\AppData\Roaming\Python\Python310\site-packages\sklearn\metrics\_classification.py:1561: UserWarning: Note that pos_label (set to 'virginica') is ignored when average != 'binary' (got 'weighted'). You may use labels=[pos_label] to specify a single positive class.
+  warnings.warn(
+
+2025-10-29 22:52:32,971:WARNING:C:\Users\achma\AppData\Roaming\Python\Python310\site-packages\sklearn\metrics\_classification.py:1561: UserWarning: Note that pos_label (set to 'virginica') is ignored when average != 'binary' (got 'weighted'). You may use labels=[pos_label] to specify a single positive class.
+  warnings.warn(
+
+2025-10-29 22:52:32,972:WARNING:C:\Users\achma\AppData\Roaming\Python\Python310\site-packages\sklearn\metrics\_classification.py:1561: UserWarning: Note that pos_label (set to 'virginica') is ignored when average != 'binary' (got 'weighted'). You may use labels=[pos_label] to specify a single positive class.
+  warnings.warn(
+
+2025-10-29 22:52:32,977:WARNING:C:\Users\achma\AppData\Roaming\Python\Python310\site-packages\sklearn\metrics\_classification.py:1561: UserWarning: Note that pos_label (set to 'virginica') is ignored when average != 'binary' (got 'weighted'). You may use labels=[pos_label] to specify a single positive class.
+  warnings.warn(
+
+2025-10-29 22:52:32,982:WARNING:C:\Users\achma\AppData\Roaming\Python\Python310\site-packages\sklearn\metrics\_classification.py:1561: UserWarning: Note that pos_label (set to 'virginica') is ignored when average != 'binary' (got 'weighted'). You may use labels=[pos_label] to specify a single positive class.
+  warnings.warn(
+
+2025-10-29 22:52:32,985:WARNING:C:\Users\achma\AppData\Roaming\Python\Python310\site-packages\sklearn\metrics\_classification.py:1561: UserWarning: Note that pos_label (set to 'virginica') is ignored when average != 'binary' (got 'weighted'). You may use labels=[pos_label] to specify a single positive class.
+  warnings.warn(
+
+2025-10-29 22:52:32,987:WARNING:C:\Users\achma\AppData\Roaming\Python\Python310\site-packages\sklearn\metrics\_classification.py:1561: UserWarning: Note that pos_label (set to 'virginica') is ignored when average != 'binary' (got 'weighted'). You may use labels=[pos_label] to specify a single positive class.
+  warnings.warn(
+
+2025-10-29 22:52:32,991:WARNING:C:\Users\achma\AppData\Roaming\Python\Python310\site-packages\sklearn\metrics\_classification.py:1561: UserWarning: Note that pos_label (set to 'virginica') is ignored when average != 'binary' (got 'weighted'). You may use labels=[pos_label] to specify a single positive class.
+  warnings.warn(
+
+2025-10-29 22:52:32,997:WARNING:C:\Users\achma\AppData\Roaming\Python\Python310\site-packages\sklearn\metrics\_classification.py:1561: UserWarning: Note that pos_label (set to 'virginica') is ignored when average != 'binary' (got 'weighted'). You may use labels=[pos_label] to specify a single positive class.
+  warnings.warn(
+
+2025-10-29 22:52:33,012:INFO:Calculating mean and std
+2025-10-29 22:52:33,013:INFO:Creating metrics dataframe
+2025-10-29 22:52:33,018:INFO:Finalizing model
+2025-10-29 22:52:33,154:INFO:Uploading results into container
+2025-10-29 22:52:33,155:INFO:Uploading model into container now
+2025-10-29 22:52:33,155:INFO:_master_model_container: 1
+2025-10-29 22:52:33,155:INFO:_display_container: 2
+2025-10-29 22:52:33,155:INFO:RandomForestClassifier(bootstrap=True, ccp_alpha=0.0, class_weight=None,
+                       criterion='gini', max_depth=None, max_features='sqrt',
+                       max_leaf_nodes=None, max_samples=None,
+                       min_impurity_decrease=0.0, min_samples_leaf=1,
+                       min_samples_split=2, min_weight_fraction_leaf=0.0,
+                       monotonic_cst=None, n_estimators=100, n_jobs=-1,
+                       oob_score=False, random_state=123, verbose=0,
+                       warm_start=False)
+2025-10-29 22:52:33,155:INFO:create_model() successfully completed......................................
+2025-10-29 22:52:33,247:INFO:Initializing plot_model()
+2025-10-29 22:52:33,247:INFO:plot_model(plot=feature, fold=None, verbose=True, display=None, display_format=None, estimator=RandomForestClassifier(bootstrap=True, ccp_alpha=0.0, class_weight=None,
+                       criterion='gini', max_depth=None, max_features='sqrt',
+                       max_leaf_nodes=None, max_samples=None,
+                       min_impurity_decrease=0.0, min_samples_leaf=1,
+                       min_samples_split=2, min_weight_fraction_leaf=0.0,
+                       monotonic_cst=None, n_estimators=100, n_jobs=-1,
+                       oob_score=False, random_state=123, verbose=0,
+                       warm_start=False), feature_name=None, fit_kwargs=None, groups=None, label=False, plot_kwargs=None, save=False, scale=1, self=<pycaret.classification.oop.ClassificationExperiment object at 0x00000239037504F0>, system=True)
+2025-10-29 22:52:33,247:INFO:Checking exceptions
+2025-10-29 22:52:33,266:INFO:Preloading libraries
+2025-10-29 22:52:33,270:INFO:Copying training dataset
+2025-10-29 22:52:33,270:INFO:Plot type: feature
+2025-10-29 22:52:33,270:WARNING:No coef_ found. Trying feature_importances_
+2025-10-29 22:52:33,363:INFO:Visual Rendered Successfully
+2025-10-29 22:52:33,443:INFO:plot_model() successfully completed......................................
+2025-10-29 22:52:53,713:WARNING:
+'cuml' is a soft dependency and not included in the pycaret installation. Please run: `pip install cuml` to install.
+2025-10-29 22:52:53,713:WARNING:
+'cuml' is a soft dependency and not included in the pycaret installation. Please run: `pip install cuml` to install.
+2025-10-29 22:52:53,713:WARNING:
+'cuml' is a soft dependency and not included in the pycaret installation. Please run: `pip install cuml` to install.
+2025-10-29 22:52:53,713:WARNING:
+'cuml' is a soft dependency and not included in the pycaret installation. Please run: `pip install cuml` to install.
