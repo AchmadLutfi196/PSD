@@ -1,0 +1,191 @@
+Traceback (most recent call last):
+  File "C:\Users\achma\AppData\Roaming\Python\Python310\site-packages\jupyter_core\utils\__init__.py", line 154, in wrapped
+    asyncio.get_running_loop()
+RuntimeError: no running event loop
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\laragon\bin\python\python-3.10\lib\site-packages\jupyter_cache\executors\utils.py", line 58, in single_nb_execution
+    executenb(
+  File "C:\laragon\bin\python\python-3.10\lib\site-packages\nbclient\client.py", line 1319, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "C:\Users\achma\AppData\Roaming\Python\Python310\site-packages\jupyter_core\utils\__init__.py", line 158, in wrapped
+    return loop.run_until_complete(inner)
+  File "C:\laragon\bin\python\python-3.10\lib\asyncio\base_events.py", line 646, in run_until_complete
+    return future.result()
+  File "C:\laragon\bin\python\python-3.10\lib\site-packages\nbclient\client.py", line 709, in async_execute
+    await self.async_execute_cell(
+  File "C:\laragon\bin\python\python-3.10\lib\site-packages\nbclient\client.py", line 1062, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "C:\laragon\bin\python\python-3.10\lib\site-packages\nbclient\client.py", line 918, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+print("="*70)
+print("LANGKAH 1: PENGUMPULAN DATA ")
+print("="*70)
+
+# Nama file CSV output
+csv_filename = "timeseries.csv"
+
+# CEK APAKAH FILE CSV SUDAH ADA
+if os.path.exists(csv_filename):
+    print(f"\n[INFO] File '{csv_filename}' sudah ada!")
+    print("[INFO] Loading data dari file CSV yang tersimpan...")
+    print("[INFO] Tidak perlu melakukan crawling ulang.\n")
+    
+    # Load data dari CSV yang sudah ada
+    df = pd.read_csv(csv_filename)
+    df["date"] = pd.to_datetime(df["date"])
+    df = df.sort_values("date").reset_index(drop=True)
+    
+    print(f"[SUCCESS] Data berhasil di-load dari file lokal")
+    print(f"  - Total records: {len(df)}")
+    print(f"  - Periode: {df['date'].min()} hingga {df['date'].max()}")
+    print(f"  - File: {csv_filename}")
+    print(f"\nData pertama (5 baris):")
+    print(df.head())
+    
+else:
+    print(f"\n[INFO] File '{csv_filename}' tidak ditemukan.")
+    print("[INFO] Memulai proses crawling data dari Sentinel-5P...")
+    print("[INFO] Proses ini hanya dilakukan sekali.\n")
+    
+    try:
+        # 1. Koneksi ke Copernicus Data Space
+        print("[KONEKSI] Menghubungkan ke Copernicus Data Space...")
+        connection = openeo.connect("openeo.dataspace.copernicus.eu").authenticate_oidc()
+        print("[KONEKSI] Berhasil terhubung dan terautentikasi!\n")
+
+        # 2. Area of Interest (AOI) - Bangkalan, Madura
+        aoi = {
+            "type": "Polygon",
+            "coordinates": [
+                [
+                    [112.65825803976924, -7.208791360325321],
+                    [112.65825803976924, -7.389280686779401],
+                    [112.83163276677396, -7.389280686779401],
+                    [112.83163276677396, -7.208791360325321],
+                    [112.65825803976924, -7.208791360325321],
+                ]
+            ],
+        }
+
+        # 3. Load data Sentinel-5P
+        print("[PROSES] Loading collection Sentinel-5P...")
+        s5p = connection.load_collection(
+            "SENTINEL_5P_L2",
+            spatial_extent={
+                "west": 112.65825803976924,
+                "south": -7.389280686779401,
+                "east": 112.83163276677396,
+                "north": -7.208791360325321,
+            },
+            temporal_extent=["2020-06-01", "2021-06-30"],
+            bands=["NO2"],
+        )
+
+        # 4. Mask nilai negatif
+        def mask_invalid(x):
+            return x < 0
+
+        s5p_masked = s5p.mask(s5p.apply(mask_invalid))
+
+        # 5. Agregasi temporal (harian)
+        print("[PROSES] Agregasi temporal (harian)...")
+        daily_mean = s5p_masked.aggregate_temporal_period(period="day", reducer="mean")
+
+        # 6. Agregasi spasial (mean dalam AOI)
+        print("[PROSES] Agregasi spasial (mean dalam AOI)...")
+        daily_mean_aoi = daily_mean.aggregate_spatial(geometries=aoi, reducer="mean")
+
+        # 7. Jalankan batch job
+        print("[PROSES] Mengirim batch job ke OpenEO...")
+        job = daily_mean_aoi.execute_batch(out_format="CSV")
+        print("\n[CRAWLING] Menunggu job OpenEO selesai...")
+
+        while True:
+            status = job.describe()["status"]
+            print(f"[CRAWLING] Status: {status}")
+            if status == "finished":
+                break
+            elif status == "error":
+                raise RuntimeError("Job gagal")
+            time.sleep(15)
+
+        # 8. Unduh hasil
+        print("\n[DOWNLOAD] Mengunduh hasil...")
+        results = job.get_results()
+        results.download_files("no2_results")
+
+        # 9. Baca file CSV
+        csv_files = [f for f in os.listdir("no2_results") if f.endswith(".csv")]
+        df = pd.read_csv(os.path.join("no2_results", csv_files[0]))
+
+        # 10. Data preprocessing dan SIMPAN ke CSV
+        df["date"] = pd.to_datetime(df["date"])
+        df = df.sort_values("date").reset_index(drop=True)
+        df.to_csv(csv_filename, index=False)
+
+        print(f"\n[SUCCESS] Data berhasil dikumpulkan dan disimpan")
+        print(f"  - Total records: {len(df)}")
+        print(f"  - Periode: {df['date'].min()} hingga {df['date'].max()}")
+        print(f"  - File: {csv_filename}")
+        print(f"\n[INFO] File '{csv_filename}' telah disimpan.")
+        print(f"[INFO] Eksekusi berikutnya akan menggunakan file ini tanpa crawling ulang.")
+        print(f"\nData pertama (5 baris):")
+        print(df.head())
+        
+    except Exception as e:
+        print(f"\n[ERROR] Terjadi kesalahan saat crawling data!")
+        print(f"[ERROR] Jenis error: {type(e).__name__}")
+        print(f"[ERROR] Pesan: {str(e)}\n")
+        
+        print("[SOLUSI] Beberapa opsi untuk mengatasi masalah ini:")
+        print("1. Coba jalankan ulang sel ini (token mungkin expired)")
+        print("2. Restart kernel dan jalankan dari awal")
+        print("3. Gunakan data yang sudah tersimpan (jika pernah berhasil crawling)")
+        print("4. Periksa koneksi internet Anda")
+        print("5. Periksa status layanan OpenEO: https://openeo.dataspace.copernicus.eu/")
+        
+        # Cek apakah ada backup data
+        if os.path.exists("no2_results"):
+            backup_files = [f for f in os.listdir("no2_results") if f.endswith(".csv")]
+            if backup_files:
+                print(f"\n[INFO] Ditemukan backup data di folder 'no2_results'")
+                print(f"[INFO] Mencoba load dari backup...")
+                try:
+                    df = pd.read_csv(os.path.join("no2_results", backup_files[0]))
+                    df["date"] = pd.to_datetime(df["date"])
+                    df = df.sort_values("date").reset_index(drop=True)
+                    df.to_csv(csv_filename, index=False)
+                    print(f"[SUCCESS] Data berhasil di-load dari backup!")
+                    print(f"  - Total records: {len(df)}")
+                    print(f"  - File: {csv_filename}")
+                except Exception as backup_error:
+                    print(f"[ERROR] Gagal load backup: {str(backup_error)}")
+                    raise
+            else:
+                raise
+        else:
+            raise
+------------------
+
+----- stdout -----
+======================================================================
+LANGKAH 1: PENGUMPULAN DATA 
+======================================================================
+------------------
+
+[1;31m---------------------------------------------------------------------------[0m
+[1;31mNameError[0m                                 Traceback (most recent call last)
+Cell [1;32mIn[1], line 9[0m
+[0;32m      6[0m csv_filename [38;5;241m=[39m [38;5;124m"[39m[38;5;124mtimeseries.csv[39m[38;5;124m"[39m
+[0;32m      8[0m [38;5;66;03m# CEK APAKAH FILE CSV SUDAH ADA[39;00m
+[1;32m----> 9[0m [38;5;28;01mif[39;00m [43mos[49m[38;5;241m.[39mpath[38;5;241m.[39mexists(csv_filename):
+[0;32m     10[0m     [38;5;28mprint[39m([38;5;124mf[39m[38;5;124m"[39m[38;5;130;01m\n[39;00m[38;5;124m[INFO] File [39m[38;5;124m'[39m[38;5;132;01m{[39;00mcsv_filename[38;5;132;01m}[39;00m[38;5;124m'[39m[38;5;124m sudah ada![39m[38;5;124m"[39m)
+[0;32m     11[0m     [38;5;28mprint[39m([38;5;124m"[39m[38;5;124m[INFO] Loading data dari file CSV yang tersimpan...[39m[38;5;124m"[39m)
+
+[1;31mNameError[0m: name 'os' is not defined
+

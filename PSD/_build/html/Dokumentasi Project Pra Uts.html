@@ -1,0 +1,1002 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Workflow KNIME &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Dokumentasi Project Pra Uts';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Prediksi Nilai NO2 Satu Hari Kedepan dengan KNN Regression (Lag 2)" href="Prediksi%20Ambang%20Batas%20Aman%20NO2.html" />
+    <link rel="prev" title="Klasifikasi Dan BaggingClassifier Pada Dataset Ecoli" href="Klasifikasi.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="My sample book - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="My sample book - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Tentang Saya
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="BusinessProblem.html">Business Problem</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="DataUnderstanding.html">Data Understanding</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="ExplorasiData.html">Eksplorasi Data</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="PrepocessingData.html">Prepocessing Data</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="PowerBI.html">Power BI Eksplorasi Data Iris</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ecoli_pca_adasyn.html">E. coli Protein PCA &amp; ADASYN Implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Klasifikasi.html"><strong>Klasifikasi Dan BaggingClassifier Pada Dataset Ecoli</strong></a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Workflow KNIME</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Prediksi%20Ambang%20Batas%20Aman%20NO2.html">Prediksi Nilai NO2 Satu Hari Kedepan dengan KNN Regression (Lag 2)</a></li>
+
+
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FDokumentasi Project Pra Uts.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/Dokumentasi Project Pra Uts.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Workflow KNIME</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#outlier-detection-dan-unbalanced-dataset-analysis-dengan-smote">Outlier Detection dan Unbalanced Dataset Analysis dengan SMOTE</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#daftar-isi">Daftar Isi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gambaran-workflow">Gambaran Workflow</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#arsitektur-workflow">Arsitektur Workflow</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tujuan">Tujuan</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset-ecoli-postgresql">Dataset Ecoli PostgreSQL</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#struktur-database">Struktur Database</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#distribusi-kelas-diharapkan">Distribusi Kelas (Diharapkan)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#alur-kerja-lengkap">Alur Kerja Lengkap</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tahap-1-akuisisi-data">Tahap 1: Akuisisi Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fungsi-node">Fungsi Node:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tahap-2-analisis-data-eksploratori">Tahap 2: Analisis Data Eksploratori</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#komponen-analisis">Komponen Analisis:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tahap-3-analisis-distribusi-kelas">Tahap 3: Analisis Distribusi Kelas</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-distribusi">Analisis Distribusi:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tahap-4-deteksi-outlier-pemrosesan">Tahap 4: Deteksi Outlier &amp; Pemrosesan</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-pemrosesan">Langkah Pemrosesan:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#konfigurasi-node">Konfigurasi Node</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#node-koneksi-database">1. Node Koneksi Database</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#postgresql-connector">PostgreSQL Connector</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#column-filter">Column Filter</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#node-analisis">2. Node Analisis</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#statistics">Statistics</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#box-plot">Box Plot</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#scatter-plot-matrix">Scatter Plot Matrix</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#value-counter">Value Counter</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deteksi-outlier">3. Deteksi Outlier</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#numeric-outliers">Numeric Outliers</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#penyeimbangan-data">4. Penyeimbangan Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#konfigurasi-smote">Konfigurasi SMOTE</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kualitas-data">5. Kualitas Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#missing-value">Missing Value</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-hasil">Analisis Hasil</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-outlier">1. Analisis Outlier</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#temuan-yang-diharapkan">Temuan yang Diharapkan:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretasi-outlier">Interpretasi Outlier:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-distribusi-kelas">2. Analisis Distribusi Kelas</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hasil-sebelum-smote">Hasil Sebelum SMOTE:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hasil-setelah-smote">Hasil Setelah SMOTE:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-fitur">3. Analisis Fitur</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#ringkasan-statistik">Ringkasan Statistik:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#wawasan-korelasi">Wawasan Korelasi:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan">Kesimpulan</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pencapaian-workflow">Pencapaian Workflow ✅</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="workflow-knime">
+<h1>Workflow KNIME<a class="headerlink" href="#workflow-knime" title="Link to this heading">#</a></h1>
+<section id="outlier-detection-dan-unbalanced-dataset-analysis-dengan-smote">
+<h2>Outlier Detection dan Unbalanced Dataset Analysis dengan SMOTE<a class="headerlink" href="#outlier-detection-dan-unbalanced-dataset-analysis-dengan-smote" title="Link to this heading">#</a></h2>
+<p><img alt="projectprauts" src="_images/projectprauts.png" /></p>
+</section>
+<hr class="docutils" />
+<section id="daftar-isi">
+<h2>Daftar Isi<a class="headerlink" href="#daftar-isi" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="#gambaran-workflow"><span class="xref myst">Gambaran Workflow</span></a></p></li>
+<li><p><a class="reference internal" href="#dataset-ecoli-postgresql"><span class="xref myst">Dataset Ecoli PostgreSQL</span></a></p></li>
+<li><p><a class="reference internal" href="#alur-kerja-lengkap"><span class="xref myst">Alur Kerja Lengkap</span></a></p></li>
+<li><p><a class="reference internal" href="#konfigurasi-node"><span class="xref myst">Konfigurasi Node</span></a></p></li>
+<li><p><a class="reference internal" href="#analisis-hasil"><span class="xref myst">Analisis Hasil</span></a></p></li>
+<li><p><a class="reference internal" href="#pemecahan-masalah"><span class="xref myst">Pemecahan Masalah</span></a></p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="gambaran-workflow">
+<h2>Gambaran Workflow<a class="headerlink" href="#gambaran-workflow" title="Link to this heading">#</a></h2>
+<section id="arsitektur-workflow">
+<h3>Arsitektur Workflow<a class="headerlink" href="#arsitektur-workflow" title="Link to this heading">#</a></h3>
+<p>Workflow ini terdiri dari <strong>3 jalur utama</strong>:</p>
+<ol class="arabic simple">
+<li><p><strong>Pipeline Data</strong>: PostgreSQL → DB Table Selector → DB Reader → Column Filter</p></li>
+<li><p><strong>Analisis Eksploratori</strong>: Statistics → Visualisasi (Box Plot, Scatter Matrix, Bar Charts)</p></li>
+<li><p><strong>Pemrosesan Data</strong>: Deteksi Outlier → Penyeimbangan SMOTE → Penanganan Missing Value</p></li>
+</ol>
+</section>
+<section id="tujuan">
+<h3>Tujuan<a class="headerlink" href="#tujuan" title="Link to this heading">#</a></h3>
+<p>✅ <strong>Integrasi Database</strong>: Koneksi PostgreSQL untuk dataset Ecoli<br />
+✅ <strong>Deteksi Outlier</strong>: Identifikasi outliers menggunakan Numeric Outliers<br />
+✅ <strong>Analisis Dataset Tidak Seimbang</strong>: Analisis distribusi kelas dengan Value Counter<br />
+✅ <strong>Penyeimbangan Data</strong>: Implementasi SMOTE untuk mengatasi ketidakseimbangan<br />
+✅ <strong>Kualitas Data</strong>: Penanganan missing values dan visualisasi komprehensif</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="dataset-ecoli-postgresql">
+<h2>Dataset Ecoli PostgreSQL<a class="headerlink" href="#dataset-ecoli-postgresql" title="Link to this heading">#</a></h2>
+<section id="struktur-database">
+<h3>Struktur Database<a class="headerlink" href="#struktur-database" title="Link to this heading">#</a></h3>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">-- Tabel: Ecoli (336 baris, 9 kolom)</span>
+<span class="c1">-- Fitur: mcg, gvh, lip, chg, aac, alm1, alm2</span>
+<span class="c1">-- Target: localization_class (8 kelas)</span>
+</pre></div>
+</div>
+</section>
+<section id="distribusi-kelas-diharapkan">
+<h3>Distribusi Kelas (Diharapkan)<a class="headerlink" href="#distribusi-kelas-diharapkan" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>cp</strong>: ~143 sampel (42.6% - Kelas mayoritas)</p></li>
+<li><p><strong>im</strong>: ~77 sampel (22.9%)</p></li>
+<li><p><strong>pp</strong>: ~52 sampel (15.5%)</p></li>
+<li><p><strong>imU</strong>: ~35 sampel (10.4%)</p></li>
+<li><p><strong>om</strong>: ~20 sampel (6.0%)</p></li>
+<li><p><strong>omL</strong>: ~5 sampel (1.5%)</p></li>
+<li><p><strong>imL</strong>: ~2 sampel (0.6% - Kelas minoritas)</p></li>
+<li><p><strong>imS</strong>: ~2 sampel (0.6% - Kelas minoritas)</p></li>
+</ul>
+<p><strong>Rasio Ketidakseimbangan</strong>: 143:2 = <strong>71.5:1</strong> (sangat tidak seimbang)</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="alur-kerja-lengkap">
+<h2>Alur Kerja Lengkap<a class="headerlink" href="#alur-kerja-lengkap" title="Link to this heading">#</a></h2>
+<section id="tahap-1-akuisisi-data">
+<h3>Tahap 1: Akuisisi Data<a class="headerlink" href="#tahap-1-akuisisi-data" title="Link to this heading">#</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>PostgreSQL Connector → DB Table Selector → DB Reader → Column Filter
+</pre></div>
+</div>
+<section id="fungsi-node">
+<h4>Fungsi Node:<a class="headerlink" href="#fungsi-node" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>PostgreSQL Connector</strong>: Membuat koneksi database</p></li>
+<li><p><strong>DB Table Selector</strong>: Memilih tabel Ecoli</p></li>
+<li><p><strong>DB Reader</strong>: Menjalankan query dan memuat data</p></li>
+<li><p><strong>Column Filter</strong>: Memilih kolom yang relevan untuk analisis</p></li>
+</ul>
+</section>
+</section>
+<section id="tahap-2-analisis-data-eksploratori">
+<h3>Tahap 2: Analisis Data Eksploratori<a class="headerlink" href="#tahap-2-analisis-data-eksploratori" title="Link to this heading">#</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Column Filter → Statistics → Table View
+           ↓
+       Box Plot (visualisasi outlier)
+           ↓
+   Scatter Plot Matrix (hubungan fitur)
+</pre></div>
+</div>
+<section id="komponen-analisis">
+<h4>Komponen Analisis:<a class="headerlink" href="#komponen-analisis" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Statistics</strong>: Statistik deskriptif untuk semua fitur numerik</p></li>
+<li><p><strong>Table View</strong>: Inspeksi data mentah</p></li>
+<li><p><strong>Box Plot</strong>: Deteksi outlier visual</p></li>
+<li><p><strong>Scatter Plot Matrix</strong>: Analisis korelasi fitur</p></li>
+</ul>
+</section>
+</section>
+<section id="tahap-3-analisis-distribusi-kelas">
+<h3>Tahap 3: Analisis Distribusi Kelas<a class="headerlink" href="#tahap-3-analisis-distribusi-kelas" title="Link to this heading">#</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Column Filter → Value Counter → Bar Chart
+           ↓
+       GroupBy → Bar Chart (statistik per kelas)
+</pre></div>
+</div>
+<p><img alt="statistikawal" src="_images/statistikawal.png" /></p>
+<section id="analisis-distribusi">
+<h4>Analisis Distribusi:<a class="headerlink" href="#analisis-distribusi" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Value Counter</strong>: Menghitung sampel per kelas lokalisasi</p></li>
+<li><p><strong>Bar Chart</strong>: Memvisualisasikan ketidakseimbangan kelas</p></li>
+<li><p><strong>GroupBy</strong>: Agregat statistik berdasarkan kelas</p></li>
+</ul>
+</section>
+</section>
+<section id="tahap-4-deteksi-outlier-pemrosesan">
+<h3>Tahap 4: Deteksi Outlier &amp; Pemrosesan<a class="headerlink" href="#tahap-4-deteksi-outlier-pemrosesan" title="Link to this heading">#</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Column Filter → Numeric Outliers → SMOTE → Missing Value → Statistics → Table View
+                    ↓
+               Bar Chart (distribusi outlier)
+</pre></div>
+</div>
+<section id="langkah-pemrosesan">
+<h4>Langkah Pemrosesan:<a class="headerlink" href="#langkah-pemrosesan" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Numeric Outliers</strong>: Mendeteksi outlier menggunakan metode statistik</p></li>
+<li><p><strong>SMOTE</strong>: Teknik Oversampling Minoritas Sintetis</p></li>
+<li><p><strong>Missing Value</strong>: Menangani data yang hilang</p></li>
+<li><p><strong>Final Statistics</strong>: Pemeriksaan kualitas data pasca-pemrosesan</p></li>
+</ul>
+</section>
+</section>
+</section>
+<hr class="docutils" />
+<section id="konfigurasi-node">
+<h2>Konfigurasi Node<a class="headerlink" href="#konfigurasi-node" title="Link to this heading">#</a></h2>
+<section id="node-koneksi-database">
+<h3>1. Node Koneksi Database<a class="headerlink" href="#node-koneksi-database" title="Link to this heading">#</a></h3>
+<section id="postgresql-connector">
+<h4>PostgreSQL Connector<a class="headerlink" href="#postgresql-connector" title="Link to this heading">#</a></h4>
+<p><img alt="nodepostgre" src="_images/nodepostgre.png" />
+<img alt="barchartdataawal" src="_images/barchartdataawal.png" /></p>
+</section>
+<section id="column-filter">
+<h4>Column Filter<a class="headerlink" href="#column-filter" title="Link to this heading">#</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Kolom</span> <span class="n">yang</span> <span class="n">disertakan</span><span class="p">:</span>
+<span class="o">-</span> <span class="n">mcg</span><span class="p">,</span> <span class="n">gvh</span><span class="p">,</span> <span class="n">lip</span><span class="p">,</span> <span class="n">chg</span><span class="p">,</span> <span class="n">aac</span><span class="p">,</span> <span class="n">alm1</span><span class="p">,</span> <span class="n">alm2</span> <span class="p">(</span><span class="n">fitur</span> <span class="n">numerik</span><span class="p">)</span>
+<span class="o">-</span> <span class="n">localization_class</span> <span class="p">(</span><span class="n">variabel</span> <span class="n">target</span><span class="p">)</span>
+
+<span class="n">Kolom</span> <span class="n">yang</span> <span class="n">dikecualikan</span><span class="p">:</span>
+<span class="o">-</span> <span class="nb">id</span> <span class="p">(</span><span class="n">primary</span> <span class="n">key</span><span class="p">)</span>
+<span class="o">-</span> <span class="n">protein_name</span> <span class="p">(</span><span class="n">identifier</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><img alt="columnfilter" src="_images/columnfilter.png" /></p>
+</section>
+</section>
+<section id="node-analisis">
+<h3>2. Node Analisis<a class="headerlink" href="#node-analisis" title="Link to this heading">#</a></h3>
+<section id="statistics">
+<h4>Statistics<a class="headerlink" href="#statistics" title="Link to this heading">#</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Kolom</span><span class="p">:</span> <span class="n">Semua</span> <span class="n">kolom</span> <span class="n">numerik</span>
+<span class="n">Perhitungan</span><span class="p">:</span> <span class="n">Mean</span><span class="p">,</span> <span class="n">Std</span><span class="p">,</span> <span class="n">Min</span><span class="p">,</span> <span class="n">Max</span><span class="p">,</span> <span class="n">Kuartil</span>
+</pre></div>
+</div>
+</section>
+<section id="box-plot">
+<h4>Box Plot<a class="headerlink" href="#box-plot" title="Link to this heading">#</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Kategori: Semua kolom numerik
+Tampilkan outliers: ✓
+Kelompokkan berdasarkan: localization_class (opsional)
+</pre></div>
+</div>
+<p><img alt="boxplotdataawal" src="_images/boxplotdataawal.png" /></p>
+</section>
+<section id="scatter-plot-matrix">
+<h4>Scatter Plot Matrix<a class="headerlink" href="#scatter-plot-matrix" title="Link to this heading">#</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Kolom</span><span class="p">:</span> <span class="n">mcg</span><span class="p">,</span> <span class="n">gvh</span><span class="p">,</span> <span class="n">lip</span><span class="p">,</span> <span class="n">chg</span> <span class="p">(</span><span class="n">fitur</span> <span class="n">utama</span><span class="p">)</span>
+<span class="n">Warna</span> <span class="n">berdasarkan</span><span class="p">:</span> <span class="n">localization_class</span>
+<span class="n">Ukuran</span><span class="p">:</span> <span class="mi">500</span><span class="n">x500</span> <span class="n">piksel</span>
+</pre></div>
+</div>
+<p><img alt="plotmatrix" src="_images/plotmatrix.png" /></p>
+</section>
+<section id="value-counter">
+<h4>Value Counter<a class="headerlink" href="#value-counter" title="Link to this heading">#</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Kolom</span><span class="p">:</span> <span class="n">localization_class</span>
+<span class="n">Urutkan</span> <span class="n">berdasarkan</span> <span class="n">frekuensi</span><span class="p">:</span> <span class="n">Menurun</span>
+</pre></div>
+</div>
+<p><img alt="barchartawal" src="_images/barchartdataawal.png" /></p>
+</section>
+</section>
+<section id="deteksi-outlier">
+<h3>3. Deteksi Outlier<a class="headerlink" href="#deteksi-outlier" title="Link to this heading">#</a></h3>
+<section id="numeric-outliers">
+<h4>Numeric Outliers<a class="headerlink" href="#numeric-outliers" title="Link to this heading">#</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Metode</span><span class="p">:</span> <span class="n">Deteksi</span> <span class="n">berbasis</span> <span class="n">IQR</span>
+<span class="n">Faktor</span> <span class="n">IQR</span><span class="p">:</span> <span class="mf">1.5</span> <span class="p">(</span><span class="n">standar</span><span class="p">)</span>
+<span class="n">Kolom</span><span class="p">:</span> <span class="n">Semua</span> <span class="n">fitur</span> <span class="n">numerik</span>
+<span class="n">Output</span><span class="p">:</span> <span class="n">Informasi</span> <span class="n">outlier</span>
+</pre></div>
+</div>
+<p><img alt="numericoutlier" src="_images/numericoutlier.png" /></p>
+<p><strong>Outlier yang Diharapkan</strong>:</p>
+<ul class="simple">
+<li><p>Total outlier: ~10-15% dari data</p></li>
+<li><p>Outlier terbanyak di: kolom alm1, alm2</p></li>
+<li><p>Pola khusus kelas: kelas om, omL</p></li>
+</ul>
+</section>
+</section>
+<section id="penyeimbangan-data">
+<h3>4. Penyeimbangan Data<a class="headerlink" href="#penyeimbangan-data" title="Link to this heading">#</a></h3>
+<section id="konfigurasi-smote">
+<h4>Konfigurasi SMOTE<a class="headerlink" href="#konfigurasi-smote" title="Link to this heading">#</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Kolom</span> <span class="n">target</span><span class="p">:</span> <span class="n">localization_class</span>
+<span class="n">Metode</span> <span class="n">sampling</span><span class="p">:</span> <span class="n">SMOTE</span>
+<span class="n">Jumlah</span> <span class="n">tetangga</span> <span class="n">terdekat</span><span class="p">:</span> <span class="mi">5</span>
+<span class="n">Seed</span> <span class="n">acak</span><span class="p">:</span> <span class="mi">42</span> 
+
+<span class="n">Strategi</span> <span class="n">penyeimbangan</span><span class="p">:</span>
+<span class="o">-</span> <span class="n">Kelas</span> <span class="n">minoritas</span> <span class="p">(</span><span class="n">imL</span><span class="p">,</span> <span class="n">imS</span><span class="p">):</span> <span class="n">Oversample</span> <span class="n">ke</span> <span class="o">~</span><span class="mi">20</span> <span class="n">sampel</span>
+<span class="o">-</span> <span class="n">Kelas</span> <span class="n">menengah</span> <span class="p">(</span><span class="n">omL</span><span class="p">,</span> <span class="n">om</span><span class="p">):</span> <span class="n">Oversample</span> <span class="n">ke</span> <span class="o">~</span><span class="mi">50</span> <span class="n">sampel</span>  
+<span class="o">-</span> <span class="n">Kelas</span> <span class="n">mayoritas</span> <span class="p">(</span><span class="n">cp</span><span class="p">):</span> <span class="n">Pertahankan</span> <span class="n">asli</span> <span class="n">atau</span> <span class="n">undersample</span>
+</pre></div>
+</div>
+<p><img alt="smote" src="_images/smote.png" /></p>
+<p><strong>Distribusi Pasca-SMOTE yang Diharapkan</strong>:</p>
+<ul class="simple">
+<li><p><strong>Dataset seimbang</strong>: ~50-100 sampel per kelas</p></li>
+<li><p><strong>Total sampel</strong>: ~400-800 (tergantung strategi)</p></li>
+<li><p><strong>Sampel sintetis</strong>: ~200-400 sampel tambahan</p></li>
+</ul>
+</section>
+</section>
+<section id="kualitas-data">
+<h3>5. Kualitas Data<a class="headerlink" href="#kualitas-data" title="Link to this heading">#</a></h3>
+<section id="missing-value">
+<h4>Missing Value<a class="headerlink" href="#missing-value" title="Link to this heading">#</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Kolom</span><span class="p">:</span> <span class="n">Semua</span> <span class="n">kolom</span> <span class="n">numerik</span>
+<span class="n">Strategi</span><span class="p">:</span> <span class="n">Imputasi</span> <span class="n">rata</span><span class="o">-</span><span class="n">rata</span>
+<span class="n">Buat</span> <span class="n">indikator</span> <span class="n">missing</span><span class="p">:</span> <span class="n">Tidak</span>
+</pre></div>
+</div>
+<p><img alt="missingvalue" src="_images/missingvalue.png" /></p>
+</section>
+</section>
+</section>
+<hr class="docutils" />
+<section id="analisis-hasil">
+<h2>Analisis Hasil<a class="headerlink" href="#analisis-hasil" title="Link to this heading">#</a></h2>
+<section id="analisis-outlier">
+<h3>1. Analisis Outlier<a class="headerlink" href="#analisis-outlier" title="Link to this heading">#</a></h3>
+<section id="temuan-yang-diharapkan">
+<h4>Temuan yang Diharapkan:<a class="headerlink" href="#temuan-yang-diharapkan" title="Link to this heading">#</a></h4>
+<p><img alt="outliercount" src="_images/outliercount.png" /></p>
+</section>
+<section id="interpretasi-outlier">
+<h4>Interpretasi Outlier:<a class="headerlink" href="#interpretasi-outlier" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Relevansi biologis</strong>: Skor membran tinggi normal untuk protein tertentu</p></li>
+<li><p><strong>Kualitas data</strong>: Tidak ada kesalahan entri data yang jelas</p></li>
+<li><p><strong>Diskriminasi kelas</strong>: Outlier mungkin merupakan fitur khusus kelas</p></li>
+</ul>
+</section>
+</section>
+<section id="analisis-distribusi-kelas">
+<h3>2. Analisis Distribusi Kelas<a class="headerlink" href="#analisis-distribusi-kelas" title="Link to this heading">#</a></h3>
+<section id="hasil-sebelum-smote">
+<h4>Hasil Sebelum SMOTE:<a class="headerlink" href="#hasil-sebelum-smote" title="Link to this heading">#</a></h4>
+<p><img alt="barchartdataawal" src="_images/barchartdataawal.png" /></p>
+</section>
+<section id="hasil-setelah-smote">
+<h4>Hasil Setelah SMOTE:<a class="headerlink" href="#hasil-setelah-smote" title="Link to this heading">#</a></h4>
+<p><img alt="barcharthasilsmote" src="_images/image.png" /></p>
+</section>
+</section>
+<section id="analisis-fitur">
+<h3>3. Analisis Fitur<a class="headerlink" href="#analisis-fitur" title="Link to this heading">#</a></h3>
+<section id="ringkasan-statistik">
+<h4>Ringkasan Statistik:<a class="headerlink" href="#ringkasan-statistik" title="Link to this heading">#</a></h4>
+<p><img alt="summarysmote" src="_images/image-1.png" /></p>
+</section>
+<section id="wawasan-korelasi">
+<h4>Wawasan Korelasi:<a class="headerlink" href="#wawasan-korelasi" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>alm1 ↔ alm2</strong>: Korelasi positif yang kuat (~0.7)</p></li>
+<li><p><strong>mcg ↔ localization_class</strong>: Kekuatan diskriminasi moderat</p></li>
+<li><p><strong>lip, chg</strong>: Nilai hampir konstan (diskriminasi terbatas)</p></li>
+</ul>
+</section>
+</section>
+</section>
+<hr class="docutils" />
+<section id="kesimpulan">
+<h2>Kesimpulan<a class="headerlink" href="#kesimpulan" title="Link to this heading">#</a></h2>
+<section id="pencapaian-workflow">
+<h3>Pencapaian Workflow ✅<a class="headerlink" href="#pencapaian-workflow" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Integrasi Database</strong>: Berhasil koneksi PostgreSQL dan memuat data</p></li>
+<li><p><strong>Deteksi Outlier</strong>: Identifikasi ~10-15% outlier dengan pola biologis</p></li>
+<li><p><strong>Ketidakseimbangan Kelas</strong>: Deteksi ketidakseimbangan ekstrem (rasio 71.5:1)</p></li>
+<li><p><strong>Penyeimbangan SMOTE</strong>: Implementasi berhasil untuk oversampling minoritas</p></li>
+<li><p><strong>Visualisasi Komprehensif</strong>: Berbagai grafik untuk wawasan</p></li>
+<li><p><strong>Kualitas Data</strong>: Penanganan missing value dan pemantauan statistik</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Klasifikasi.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><strong>Klasifikasi Dan BaggingClassifier Pada Dataset Ecoli</strong></p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Prediksi%20Ambang%20Batas%20Aman%20NO2.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Prediksi Nilai NO2 Satu Hari Kedepan dengan KNN Regression (Lag 2)</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#outlier-detection-dan-unbalanced-dataset-analysis-dengan-smote">Outlier Detection dan Unbalanced Dataset Analysis dengan SMOTE</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#daftar-isi">Daftar Isi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gambaran-workflow">Gambaran Workflow</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#arsitektur-workflow">Arsitektur Workflow</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tujuan">Tujuan</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset-ecoli-postgresql">Dataset Ecoli PostgreSQL</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#struktur-database">Struktur Database</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#distribusi-kelas-diharapkan">Distribusi Kelas (Diharapkan)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#alur-kerja-lengkap">Alur Kerja Lengkap</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tahap-1-akuisisi-data">Tahap 1: Akuisisi Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fungsi-node">Fungsi Node:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tahap-2-analisis-data-eksploratori">Tahap 2: Analisis Data Eksploratori</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#komponen-analisis">Komponen Analisis:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tahap-3-analisis-distribusi-kelas">Tahap 3: Analisis Distribusi Kelas</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-distribusi">Analisis Distribusi:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tahap-4-deteksi-outlier-pemrosesan">Tahap 4: Deteksi Outlier &amp; Pemrosesan</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-pemrosesan">Langkah Pemrosesan:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#konfigurasi-node">Konfigurasi Node</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#node-koneksi-database">1. Node Koneksi Database</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#postgresql-connector">PostgreSQL Connector</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#column-filter">Column Filter</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#node-analisis">2. Node Analisis</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#statistics">Statistics</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#box-plot">Box Plot</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#scatter-plot-matrix">Scatter Plot Matrix</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#value-counter">Value Counter</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deteksi-outlier">3. Deteksi Outlier</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#numeric-outliers">Numeric Outliers</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#penyeimbangan-data">4. Penyeimbangan Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#konfigurasi-smote">Konfigurasi SMOTE</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kualitas-data">5. Kualitas Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#missing-value">Missing Value</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-hasil">Analisis Hasil</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-outlier">1. Analisis Outlier</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#temuan-yang-diharapkan">Temuan yang Diharapkan:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretasi-outlier">Interpretasi Outlier:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-distribusi-kelas">2. Analisis Distribusi Kelas</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hasil-sebelum-smote">Hasil Sebelum SMOTE:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hasil-setelah-smote">Hasil Setelah SMOTE:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-fitur">3. Analisis Fitur</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#ringkasan-statistik">Ringkasan Statistik:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#wawasan-korelasi">Wawasan Korelasi:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan">Kesimpulan</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pencapaian-workflow">Pencapaian Workflow ✅</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book Community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
