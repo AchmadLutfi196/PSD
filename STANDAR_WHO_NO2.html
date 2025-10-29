@@ -1,0 +1,936 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Standar WHO untuk NO₂ dan Perbandingan dengan Model &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'STANDAR_WHO_NO2';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="My sample book - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="My sample book - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Tentang Saya
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="BusinessProblem.html">Business Problem</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="DataUnderstanding.html">Data Understanding</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="ExplorasiData.html">Eksplorasi Data</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="PrepocessingData.html">Prepocessing Data</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="PowerBI.html">Power BI Eksplorasi Data Iris</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ecoli_pca_adasyn.html">E. coli Protein PCA &amp; ADASYN Implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Klasifikasi.html"><strong>Klasifikasi Dan BaggingClassifier Pada Dataset Ecoli</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Dokumentasi%20Project%20Pra%20Uts.html">Workflow KNIME</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Prediksi%20Ambang%20Batas%20Aman%20NO2.html">Prediksi Nilai NO2 Satu Hari Kedepan dengan KNN Regression (Lag 2)</a></li>
+
+
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FSTANDAR_WHO_NO2.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/STANDAR_WHO_NO2.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Standar WHO untuk NO₂ dan Perbandingan dengan Model</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pedoman-who-untuk-nitrogen-dioxide-no2">🏥 Pedoman WHO untuk Nitrogen Dioxide (NO₂)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ambang-batas-kesehatan-who">Ambang Batas Kesehatan WHO:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dampak-kesehatan">Dampak Kesehatan:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#perbedaan-model-prediksi-vs-standar-who">📊 Perbedaan: Model Prediksi vs Standar WHO</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#unit-pengukuran">1. Unit Pengukuran</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#metodologi-threshold">2. Metodologi Threshold</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#model-prediksi-proyek-ini">Model Prediksi (Proyek Ini):</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#standar-who">Standar WHO:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mengapa-konversi-tidak-sederhana">⚙️ Mengapa Konversi Tidak Sederhana?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perbedaan-fundamental">Perbedaan Fundamental:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#faktor-yang-mempengaruhi-konversi">Faktor yang Mempengaruhi Konversi:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rumus-konversi-simplified">Rumus Konversi (Simplified):</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#penggunaan-yang-tepat-untuk-setiap-metode">🎯 Penggunaan yang Tepat untuk Setiap Metode</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-prediksi-proyek-ini-cocok-untuk">Model Prediksi (Proyek Ini) Cocok Untuk:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#standar-who-cocok-untuk">Standar WHO Cocok Untuk:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#integrasi-kedua-pendekatan">🔄 Integrasi Kedua Pendekatan</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#workflow-ideal">Workflow Ideal:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#contoh-implementasi">Contoh Implementasi:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan-dan-rekomendasi">📝 Kesimpulan dan Rekomendasi</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#untuk-proyek-ini-model-prediksi">Untuk Proyek Ini (Model Prediksi):</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rekomendasi-pengembangan">Rekomendasi Pengembangan:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#untuk-stakeholder">Untuk Stakeholder:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#referensi">📚 Referensi</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="standar-who-untuk-no2-dan-perbandingan-dengan-model">
+<h1>Standar WHO untuk NO₂ dan Perbandingan dengan Model<a class="headerlink" href="#standar-who-untuk-no2-dan-perbandingan-dengan-model" title="Link to this heading">#</a></h1>
+<section id="pedoman-who-untuk-nitrogen-dioxide-no2">
+<h2>🏥 Pedoman WHO untuk Nitrogen Dioxide (NO₂)<a class="headerlink" href="#pedoman-who-untuk-nitrogen-dioxide-no2" title="Link to this heading">#</a></h2>
+<section id="ambang-batas-kesehatan-who">
+<h3>Ambang Batas Kesehatan WHO:<a class="headerlink" href="#ambang-batas-kesehatan-who" title="Link to this heading">#</a></h3>
+<p>World Health Organization (WHO) menetapkan pedoman kualitas udara untuk NO₂:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Nilai Batas</p></th>
+<th class="head"><p>Penjelasan</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Rata-rata Tahunan</strong></p></td>
+<td><p><strong>≤ 10 µg/m³</strong></p></td>
+<td><p>Nilai rata-rata konsentrasi NO₂ sepanjang tahun</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Rata-rata 24 Jam</strong></p></td>
+<td><p><strong>≤ 25 µg/m³</strong></p></td>
+<td><p>Nilai rata-rata konsentrasi NO₂ dalam satu hari</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="dampak-kesehatan">
+<h3>Dampak Kesehatan:<a class="headerlink" href="#dampak-kesehatan" title="Link to this heading">#</a></h3>
+<p>Jika konsentrasi NO₂ <strong>melebihi</strong> nilai di atas, maka:</p>
+<ul class="simple">
+<li><p>⚠️ Kualitas udara berada pada tingkat yang <strong>menimbulkan risiko kesehatan signifikan</strong></p></li>
+<li><p>🫁 Dapat menyebabkan masalah pernapasan, terutama pada kelompok rentan</p></li>
+<li><p>👶 Anak-anak, lansia, dan penderita asma lebih berisiko</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="perbedaan-model-prediksi-vs-standar-who">
+<h2>📊 Perbedaan: Model Prediksi vs Standar WHO<a class="headerlink" href="#perbedaan-model-prediksi-vs-standar-who" title="Link to this heading">#</a></h2>
+<section id="unit-pengukuran">
+<h3>1. Unit Pengukuran<a class="headerlink" href="#unit-pengukuran" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Aspek</p></th>
+<th class="head"><p>Model Kami</p></th>
+<th class="head"><p>WHO</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Unit</strong></p></td>
+<td><p>mol/m²</p></td>
+<td><p>µg/m³</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Nama</strong></p></td>
+<td><p>Vertical Column Density</p></td>
+<td><p>Konsentrasi Volume</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Mengukur</strong></p></td>
+<td><p>Total NO₂ dalam kolom atmosfer vertikal</p></td>
+<td><p>Konsentrasi NO₂ di permukaan tanah</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Sumber Data</strong></p></td>
+<td><p>Satelit Sentinel-5P</p></td>
+<td><p>Ground monitoring station</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="metodologi-threshold">
+<h3>2. Metodologi Threshold<a class="headerlink" href="#metodologi-threshold" title="Link to this heading">#</a></h3>
+<section id="model-prediksi-proyek-ini">
+<h4>Model Prediksi (Proyek Ini):<a class="headerlink" href="#model-prediksi-proyek-ini" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Basis</strong>: 75th percentile dari data training</p></li>
+<li><p><strong>Sifat</strong>: Relatif terhadap data historis lokal (Bangkalan, Madura)</p></li>
+<li><p><strong>Tujuan</strong>:</p>
+<ul>
+<li><p>Deteksi anomali</p></li>
+<li><p>Prediksi pola time series</p></li>
+<li><p>Early warning berdasarkan trend lokal</p></li>
+</ul>
+</li>
+<li><p><strong>Klasifikasi</strong>:</p>
+<ul>
+<li><p>AMAN: NO₂ ≤ 75th percentile</p></li>
+<li><p>BERBAHAYA: NO₂ &gt; 75th percentile</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="standar-who">
+<h4>Standar WHO:<a class="headerlink" href="#standar-who" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Basis</strong>: Penelitian epidemiologi global</p></li>
+<li><p><strong>Sifat</strong>: Absolut dan universal</p></li>
+<li><p><strong>Tujuan</strong>: Proteksi kesehatan publik</p></li>
+<li><p><strong>Klasifikasi</strong>:</p>
+<ul>
+<li><p>AMAN: ≤ 10 µg/m³ (tahunan) atau ≤ 25 µg/m³ (24 jam)</p></li>
+<li><p>BERBAHAYA: &gt; nilai di atas</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+</section>
+<hr class="docutils" />
+<section id="mengapa-konversi-tidak-sederhana">
+<h2>⚙️ Mengapa Konversi Tidak Sederhana?<a class="headerlink" href="#mengapa-konversi-tidak-sederhana" title="Link to this heading">#</a></h2>
+<section id="perbedaan-fundamental">
+<h3>Perbedaan Fundamental:<a class="headerlink" href="#perbedaan-fundamental" title="Link to this heading">#</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>mol/m² (Satelit)                    µg/m³ (Permukaan)
+      ↓                                     ↓
+┌─────────────────┐               ┌─────────────────┐
+│  Total Kolom    │               │   Konsentrasi   │
+│   Vertikal      │   ≠  ≠  ≠    │   di Titik      │
+│   Atmosfer      │               │   Spesifik      │
+└─────────────────┘               └─────────────────┘
+</pre></div>
+</div>
+</section>
+<section id="faktor-yang-mempengaruhi-konversi">
+<h3>Faktor yang Mempengaruhi Konversi:<a class="headerlink" href="#faktor-yang-mempengaruhi-konversi" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Profil Vertikal NO₂</strong>: Distribusi NO₂ di berbagai ketinggian atmosfer</p></li>
+<li><p><strong>Mixing Layer Height</strong>: Ketinggian lapisan pencampuran atmosfer</p></li>
+<li><p><strong>Kondisi Meteorologi</strong>: Suhu, tekanan, kelembaban, angin</p></li>
+<li><p><strong>Waktu Pengukuran</strong>: Satelit vs ground station punya timing berbeda</p></li>
+<li><p><strong>Resolusi Spasial</strong>: Area coverage satelit vs titik ground station</p></li>
+</ol>
+</section>
+<section id="rumus-konversi-simplified">
+<h3>Rumus Konversi (Simplified):<a class="headerlink" href="#rumus-konversi-simplified" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># SANGAT SIMPLIFIED - Tidak akurat untuk riset!</span>
+<span class="c1"># Hanya untuk ilustrasi konsep</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">simplified_conversion</span><span class="p">(</span><span class="n">column_density_mol_m2</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Konversi KASAR mol/m² ke µg/m³</span>
+<span class="sd">    </span>
+<span class="sd">    Asumsi (TIDAK REALISTIS):</span>
+<span class="sd">    - Mixing layer height = 1000 m</span>
+<span class="sd">    - Semua NO₂ ada di mixing layer</span>
+<span class="sd">    - Distribusi uniform</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="c1"># Konstanta</span>
+    <span class="n">molecular_weight_no2</span> <span class="o">=</span> <span class="mf">46.0055</span>  <span class="c1"># g/mol</span>
+    <span class="n">avogadro</span> <span class="o">=</span> <span class="mf">6.022e23</span>  <span class="c1"># molecules/mol</span>
+    <span class="n">mixing_layer_height</span> <span class="o">=</span> <span class="mi">1000</span>  <span class="c1"># meter (ASUMSI!)</span>
+    
+    <span class="c1"># Konversi</span>
+    <span class="n">molecules_m2</span> <span class="o">=</span> <span class="n">column_density_mol_m2</span> <span class="o">*</span> <span class="n">avogadro</span>
+    <span class="n">molecules_m3</span> <span class="o">=</span> <span class="n">molecules_m2</span> <span class="o">/</span> <span class="n">mixing_layer_height</span>
+    <span class="n">mol_m3</span> <span class="o">=</span> <span class="n">molecules_m3</span> <span class="o">/</span> <span class="n">avogadro</span>
+    <span class="n">g_m3</span> <span class="o">=</span> <span class="n">mol_m3</span> <span class="o">*</span> <span class="n">molecular_weight_no2</span>
+    <span class="n">ug_m3</span> <span class="o">=</span> <span class="n">g_m3</span> <span class="o">*</span> <span class="mf">1e6</span>
+    
+    <span class="k">return</span> <span class="n">ug_m3</span>
+
+<span class="c1"># ⚠️ WARNING: Ini hanya ilustrasi konsep!</span>
+<span class="c1"># Konversi RIIL memerlukan:</span>
+<span class="c1"># 1. Data mixing layer height aktual</span>
+<span class="c1"># 2. Profil vertikal NO₂</span>
+<span class="c1"># 3. Model transfer atmosfer</span>
+<span class="c1"># 4. Validasi dengan ground station</span>
+</pre></div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="penggunaan-yang-tepat-untuk-setiap-metode">
+<h2>🎯 Penggunaan yang Tepat untuk Setiap Metode<a class="headerlink" href="#penggunaan-yang-tepat-untuk-setiap-metode" title="Link to this heading">#</a></h2>
+<section id="model-prediksi-proyek-ini-cocok-untuk">
+<h3>Model Prediksi (Proyek Ini) Cocok Untuk:<a class="headerlink" href="#model-prediksi-proyek-ini-cocok-untuk" title="Link to this heading">#</a></h3>
+<p>✅ <strong>Monitoring Tren Jangka Panjang</strong></p>
+<ul class="simple">
+<li><p>Melihat pola musiman</p></li>
+<li><p>Trend tahunan NO₂ di wilayah Bangkalan</p></li>
+</ul>
+<p>✅ <strong>Deteksi Anomali</strong></p>
+<ul class="simple">
+<li><p>Identifikasi hari-hari dengan NO₂ tidak normal</p></li>
+<li><p>Early warning berdasarkan data historis</p></li>
+</ul>
+<p>✅ <strong>Prediksi Time Series</strong></p>
+<ul class="simple">
+<li><p>Forecasting NO₂ hari berikutnya</p></li>
+<li><p>Perencanaan berbasis prediksi</p></li>
+</ul>
+<p>✅ <strong>Coverage Area Luas</strong></p>
+<ul class="simple">
+<li><p>Data satelit mencakup area yang luas</p></li>
+<li><p>Tidak perlu banyak sensor fisik</p></li>
+</ul>
+</section>
+<section id="standar-who-cocok-untuk">
+<h3>Standar WHO Cocok Untuk:<a class="headerlink" href="#standar-who-cocok-untuk" title="Link to this heading">#</a></h3>
+<p>✅ <strong>Penilaian Risiko Kesehatan</strong></p>
+<ul class="simple">
+<li><p>Evaluasi dampak langsung pada kesehatan</p></li>
+<li><p>Compliance dengan regulasi</p></li>
+</ul>
+<p>✅ <strong>Policy Making</strong></p>
+<ul class="simple">
+<li><p>Dasar kebijakan kualitas udara</p></li>
+<li><p>Target pengurangan emisi</p></li>
+</ul>
+<p>✅ <strong>Pengukuran Paparan Aktual</strong></p>
+<ul class="simple">
+<li><p>Exposure assessment untuk populasi</p></li>
+<li><p>Studi epidemiologi</p></li>
+</ul>
+<p>✅ <strong>Akurasi Tinggi di Lokasi Spesifik</strong></p>
+<ul class="simple">
+<li><p>Monitoring zona sensitif (sekolah, rumah sakit)</p></li>
+<li><p>Hot spot pollution</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="integrasi-kedua-pendekatan">
+<h2>🔄 Integrasi Kedua Pendekatan<a class="headerlink" href="#integrasi-kedua-pendekatan" title="Link to this heading">#</a></h2>
+<section id="workflow-ideal">
+<h3>Workflow Ideal:<a class="headerlink" href="#workflow-ideal" title="Link to this heading">#</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1. Monitoring Satelit (Model Prediksi)
+   ├─ Deteksi area dengan nilai tinggi
+   ├─ Prediksi trend
+   └─ Coverage luas
+           ↓
+2. Ground Station (WHO Standard)
+   ├─ Verifikasi dengan pengukuran permukaan
+   ├─ Konversi ke µg/m³
+   └─ Penilaian risiko kesehatan
+           ↓
+3. Aksi &amp; Policy
+   ├─ Peringatan kesehatan publik
+   ├─ Regulasi sumber emisi
+   └─ Mitigasi polusi
+</pre></div>
+</div>
+</section>
+<section id="contoh-implementasi">
+<h3>Contoh Implementasi:<a class="headerlink" href="#contoh-implementasi" title="Link to this heading">#</a></h3>
+<p><strong>Scenario</strong>: Model prediksi mendeteksi anomali</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>🛰️ SATELIT (Model):
+   → NO₂ hari ini: 0.00005 mol/m²
+   → Threshold: 0.00003555 mol/m²
+   → Status: BERBAHAYA (40% di atas threshold lokal)
+   → ACTION: Trigger alert!
+
+🏭 GROUND STATION:
+   → Ukur konsentrasi permukaan
+   → Hasil: 35 µg/m³ (24-hour average)
+   → WHO Threshold: 25 µg/m³
+   → Status: MELEBIHI STANDAR WHO!
+
+🏥 HEALTH AUTHORITY:
+   → Issue public health warning
+   → Advise vulnerable groups to stay indoors
+   → Investigate pollution sources
+   → Activate emergency response protocol
+</pre></div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="kesimpulan-dan-rekomendasi">
+<h2>📝 Kesimpulan dan Rekomendasi<a class="headerlink" href="#kesimpulan-dan-rekomendasi" title="Link to this heading">#</a></h2>
+<section id="untuk-proyek-ini-model-prediksi">
+<h3>Untuk Proyek Ini (Model Prediksi):<a class="headerlink" href="#untuk-proyek-ini-model-prediksi" title="Link to this heading">#</a></h3>
+<p>✅ <strong>Valid untuk</strong>:</p>
+<ul class="simple">
+<li><p>Analisis pola dan tren NO₂ di Bangkalan</p></li>
+<li><p>Sistem prediksi dan early warning</p></li>
+<li><p>Riset dan pengembangan model time series</p></li>
+</ul>
+<p>⚠️ <strong>Keterbatasan</strong>:</p>
+<ul class="simple">
+<li><p>TIDAK menggantikan monitoring permukaan</p></li>
+<li><p>TIDAK untuk penilaian risiko kesehatan langsung</p></li>
+<li><p>Threshold bersifat RELATIF, bukan absolut</p></li>
+</ul>
+</section>
+<section id="rekomendasi-pengembangan">
+<h3>Rekomendasi Pengembangan:<a class="headerlink" href="#rekomendasi-pengembangan" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Jangka Pendek</strong>:</p>
+<ul class="simple">
+<li><p>Dokumentasikan dengan jelas perbedaan threshold model vs WHO</p></li>
+<li><p>Tambahkan disclaimer di semua output prediksi</p></li>
+<li><p>Fokus pada analisis pola dan tren</p></li>
+</ul>
+</li>
+<li><p><strong>Jangka Menengah</strong>:</p>
+<ul class="simple">
+<li><p>Kerjasama dengan ground monitoring station</p></li>
+<li><p>Validasi prediksi satelit dengan data permukaan</p></li>
+<li><p>Kembangkan model konversi yang lebih akurat</p></li>
+</ul>
+</li>
+<li><p><strong>Jangka Panjang</strong>:</p>
+<ul class="simple">
+<li><p>Integrasikan data satelit + ground station</p></li>
+<li><p>Implementasi sistem peringatan dini terintegrasi</p></li>
+<li><p>Link ke sistem kesehatan publik</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="untuk-stakeholder">
+<h3>Untuk Stakeholder:<a class="headerlink" href="#untuk-stakeholder" title="Link to this heading">#</a></h3>
+<p><strong>Jika Anda adalah</strong>:</p>
+<ul class="simple">
+<li><p>🎓 <strong>Peneliti</strong>: Gunakan model ini untuk analisis tren dan prediksi</p></li>
+<li><p>🏛️ <strong>Pembuat Kebijakan</strong>: Kombinasikan dengan data ground station untuk keputusan</p></li>
+<li><p>👨‍⚕️ <strong>Ahli Kesehatan</strong>: Gunakan standar WHO dengan data permukaan untuk assessment</p></li>
+<li><p>👨‍💼 <strong>Industri</strong>: Gunakan prediksi untuk compliance planning</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="referensi">
+<h2>📚 Referensi<a class="headerlink" href="#referensi" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>WHO Air Quality Guidelines (2021)</strong></p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.who.int/publications/i/item/9789240034228">https://www.who.int/publications/i/item/9789240034228</a></p></li>
+<li><p>Global Air Quality Guidelines: Particulate matter (PM2.5 and PM10), ozone, nitrogen dioxide, sulfur dioxide and carbon monoxide</p></li>
+</ul>
+</li>
+<li><p><strong>Sentinel-5P TROPOMI NO₂</strong></p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://sentinel.esa.int/web/sentinel/missions/sentinel-5p">https://sentinel.esa.int/web/sentinel/missions/sentinel-5p</a></p></li>
+<li><p>Technical documentation on vertical column density measurements</p></li>
+</ul>
+</li>
+<li><p><strong>Konversi Satelit ke Permukaan</strong></p>
+<ul class="simple">
+<li><p>Lamsal et al. (2021): “Ground-level nitrogen dioxide concentrations inferred from the satellite-borne Ozone Monitoring Instrument”</p></li>
+<li><p>Duncan et al. (2014): “A space-based, high-resolution view of notable changes in urban NOx pollution around the world”</p></li>
+</ul>
+</li>
+</ol>
+<hr class="docutils" />
+<p><strong>Tanggal</strong>: 27 Oktober 2025<br />
+<strong>Project</strong>: Prediksi NO₂ Bangkalan dengan KNN Regression<br />
+<strong>Status</strong>: Dokumentasi Standar WHO dan Perbandingan Metodologi</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pedoman-who-untuk-nitrogen-dioxide-no2">🏥 Pedoman WHO untuk Nitrogen Dioxide (NO₂)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ambang-batas-kesehatan-who">Ambang Batas Kesehatan WHO:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dampak-kesehatan">Dampak Kesehatan:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#perbedaan-model-prediksi-vs-standar-who">📊 Perbedaan: Model Prediksi vs Standar WHO</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#unit-pengukuran">1. Unit Pengukuran</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#metodologi-threshold">2. Metodologi Threshold</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#model-prediksi-proyek-ini">Model Prediksi (Proyek Ini):</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#standar-who">Standar WHO:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mengapa-konversi-tidak-sederhana">⚙️ Mengapa Konversi Tidak Sederhana?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perbedaan-fundamental">Perbedaan Fundamental:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#faktor-yang-mempengaruhi-konversi">Faktor yang Mempengaruhi Konversi:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rumus-konversi-simplified">Rumus Konversi (Simplified):</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#penggunaan-yang-tepat-untuk-setiap-metode">🎯 Penggunaan yang Tepat untuk Setiap Metode</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-prediksi-proyek-ini-cocok-untuk">Model Prediksi (Proyek Ini) Cocok Untuk:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#standar-who-cocok-untuk">Standar WHO Cocok Untuk:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#integrasi-kedua-pendekatan">🔄 Integrasi Kedua Pendekatan</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#workflow-ideal">Workflow Ideal:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#contoh-implementasi">Contoh Implementasi:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan-dan-rekomendasi">📝 Kesimpulan dan Rekomendasi</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#untuk-proyek-ini-model-prediksi">Untuk Proyek Ini (Model Prediksi):</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rekomendasi-pengembangan">Rekomendasi Pengembangan:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#untuk-stakeholder">Untuk Stakeholder:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#referensi">📚 Referensi</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book Community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
