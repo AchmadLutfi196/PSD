@@ -60,6 +60,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'Prediksi Ambang Batas Aman NO2';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Identifikasi Suara Buka Tutup Menggunakan Feature Statistik Time Series" href="voice_open_close_identification.html" />
     <link rel="prev" title="Workflow KNIME" href="Dokumentasi%20Project%20Pra%20Uts.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -199,6 +200,7 @@
 
 
 
+<li class="toctree-l1"><a class="reference internal" href="voice_open_close_identification.html">Identifikasi Suara Buka Tutup Menggunakan Feature Statistik Time Series</a></li>
 </ul>
 
     </div>
@@ -1527,7 +1529,7 @@ Implementasi berhasil!
 <span class="c1"># Skenario 3: Nilai tinggi (harapan: BERBAHAYA)</span>
 
 <span class="n">test_scenarios</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;Skenario 1 - Rendah&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.00010</span><span class="p">,</span> <span class="mf">0.00012</span><span class="p">],</span>  <span class="c1"># Rendah</span>
+    <span class="s2">&quot;Skenario 1 - Rendah&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.10</span><span class="p">,</span> <span class="mf">0.12</span><span class="p">],</span>  <span class="c1"># Rendah</span>
     <span class="s2">&quot;Skenario 2 - Sedang&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.00035</span><span class="p">,</span> <span class="mf">0.00040</span><span class="p">],</span>  <span class="c1"># Sedang </span>
     <span class="s2">&quot;Skenario 3 - Tinggi&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.00080</span><span class="p">,</span> <span class="mf">0.00090</span><span class="p">]</span>   <span class="c1"># Tinggi</span>
 <span class="p">}</span>
@@ -1615,7 +1617,7 @@ DEPLOYMENT : PREDIKSI DATA BARU
 
 Testing berbagai skenario dengan data statis:
 Pilih skenario test:
-1. Skenario 1 - Rendah: NO2(t-2)=0.00010, NO2(t-1)=0.00012
+1. Skenario 1 - Rendah: NO2(t-2)=0.10000, NO2(t-1)=0.12000
 2. Skenario 2 - Sedang: NO2(t-2)=0.00035, NO2(t-1)=0.00040
 3. Skenario 3 - Tinggi: NO2(t-2)=0.00080, NO2(t-1)=0.00090
 
@@ -1934,6 +1936,15 @@ PREDIKSI 2 HARI KE DEPAN SELESAI
         <p class="prev-next-subtitle">previous</p>
         <p class="prev-next-title">Workflow KNIME</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="voice_open_close_identification.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Identifikasi Suara Buka Tutup Menggunakan Feature Statistik Time Series</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>

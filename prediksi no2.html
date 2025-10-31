@@ -200,6 +200,7 @@
 
 
 
+<li class="toctree-l1"><a class="reference internal" href="voice_open_close_identification.html">Identifikasi Suara Buka Tutup Menggunakan Feature Statistik Time Series</a></li>
 </ul>
 
     </div>
@@ -1433,6 +1434,44 @@ Nilai NO2 3 hari terakhir: [&#39;1.59&#39;, &#39;1.23&#39;, &#39;1.40&#39;] µg/
 <section id="visualisasi-aktual-vs-prediksi-komprehensif">
 <h1>📊 Visualisasi Aktual vs Prediksi Komprehensif<a class="headerlink" href="#visualisasi-aktual-vs-prediksi-komprehensif" title="Link to this heading">#</a></h1>
 <p>Analisis visual detail performa model prediksi NO2 dengan berbagai perspektif</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span><span class="o">,</span><span class="w"> </span><span class="nn">time</span>
+
+<span class="c1"># Tentukan device</span>
+<span class="n">device_cpu</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+<span class="n">device_gpu</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+
+<span class="c1"># Buat data acak besar</span>
+<span class="n">x_cpu</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device_cpu</span><span class="p">)</span>
+<span class="n">x_gpu</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device_gpu</span><span class="p">)</span>
+
+<span class="c1"># Benchmark CPU</span>
+<span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">mm</span><span class="p">(</span><span class="n">x_cpu</span><span class="p">,</span> <span class="n">x_cpu</span><span class="p">)</span>
+<span class="n">cpu_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
+
+<span class="c1"># Benchmark GPU</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">synchronize</span><span class="p">()</span>
+<span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">mm</span><span class="p">(</span><span class="n">x_gpu</span><span class="p">,</span> <span class="n">x_gpu</span><span class="p">)</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">synchronize</span><span class="p">()</span>
+<span class="n">gpu_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;CPU time: </span><span class="si">{</span><span class="n">cpu_time</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> s&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;GPU time: </span><span class="si">{</span><span class="n">gpu_time</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> s&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Speedup: </span><span class="si">{</span><span class="n">cpu_time</span><span class="o">/</span><span class="n">gpu_time</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">x&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU time: 14.333 s
+GPU time: 24.527 s
+Speedup: 0.58x
+</pre></div>
+</div>
+</div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Visualisasi Komprehensif: Aktual vs Prediksi</span>
