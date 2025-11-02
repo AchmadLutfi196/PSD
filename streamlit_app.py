@@ -17,6 +17,7 @@ warnings.filterwarnings('ignore')
 st.set_page_config(
     page_title="Voice Recognition: Buka/Tutup",
     page_icon="♪",
+    page_icon="♪",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -27,14 +28,17 @@ st.markdown("---")
 st.markdown("**Aplikasi untuk mengklasifikasi suara 'buka' dan 'tutup' menggunakan Machine Learning**")
 
 # Fungsi ekstraksi features (sama dengan notebook - fast mode)
+# Fungsi ekstraksi features (sama dengan notebook - fast mode)
 @st.cache_data
 def extract_statistical_features(audio_data, sr=22050, fast_mode=True):
     """
     Ekstraksi berbagai feature statistik dari sinyal audio time series
     Sesuai dengan training model (fast_mode=True)
+    Sesuai dengan training model (fast_mode=True)
     """
     features = {}
     
+    # 1. Basic Statistical Features (selalu digunakan)
     # 1. Basic Statistical Features (selalu digunakan)
     features['mean'] = np.mean(audio_data)
     features['std'] = np.std(audio_data)
@@ -59,13 +63,22 @@ def extract_statistical_features(audio_data, sr=22050, fast_mode=True):
     features['rms'] = np.sqrt(np.mean(audio_data**2))
     
     # 5. Zero Crossing Rate (penting untuk speech)
+    # 5. Zero Crossing Rate (penting untuk speech)
     features['zcr'] = np.sum(librosa.zero_crossings(audio_data))
     features['zcr_rate'] = features['zcr'] / len(audio_data)
     
     # Fast mode - hanya features paling penting
+    # Fast mode - hanya features paling penting
     try:
         # Spektral centroid (paling diskriminatif)
+        # Spektral centroid (paling diskriminatif)
         features['spectral_centroid'] = np.mean(librosa.feature.spectral_centroid(y=audio_data, sr=sr))
+        
+        # MFCC pertama saja (3 coefficients)
+        mfccs = librosa.feature.mfcc(y=audio_data, sr=sr, n_mfcc=3)
+        for i in range(3):
+            features[f'mfcc_{i+1}_mean'] = np.mean(mfccs[i])
+            features[f'mfcc_{i+1}_std'] = np.std(mfccs[i])
         
         # MFCC pertama saja (3 coefficients)
         mfccs = librosa.feature.mfcc(y=audio_data, sr=sr, n_mfcc=3)
@@ -80,8 +93,17 @@ def extract_statistical_features(audio_data, sr=22050, fast_mode=True):
     
     # Features yang cepat dihitung
     # 8. Autocorrelation Features (simplified)
+        for i in range(3):
+            features[f'mfcc_{i+1}_mean'] = 0
+            features[f'mfcc_{i+1}_std'] = 0
+    
+    # Features yang cepat dihitung
+    # 8. Autocorrelation Features (simplified)
     autocorr = np.correlate(audio_data, audio_data, mode='full')
     autocorr = autocorr[autocorr.size // 2:]
+    if len(autocorr) > 50:  # Reduce window
+        features['autocorr_max'] = np.max(autocorr[1:50])
+        features['autocorr_mean'] = np.mean(autocorr[1:50])
     if len(autocorr) > 50:  # Reduce window
         features['autocorr_max'] = np.max(autocorr[1:50])
         features['autocorr_mean'] = np.mean(autocorr[1:50])
@@ -90,9 +112,11 @@ def extract_statistical_features(audio_data, sr=22050, fast_mode=True):
         features['autocorr_mean'] = np.mean(autocorr[1:]) if len(autocorr) > 1 else 0
     
     # 14. Attack Time (durasi dari mulai hingga peak)
+    # 14. Attack Time (durasi dari mulai hingga peak)
     peak_idx = np.argmax(np.abs(audio_data))
     features['attack_time'] = peak_idx / sr
     
+    # 15. Decay Rate (penurunan setelah peak)
     # 15. Decay Rate (penurunan setelah peak)
     if peak_idx < len(audio_data) - 1:
         decay_signal = audio_data[peak_idx:]
@@ -125,6 +149,9 @@ def load_model():
         model_data = joblib.load('voice_classifier_streamlit_debug.pkl')
         st.success("Loaded debug model: voice_classifier_streamlit_debug.pkl")
         return model_data
+        # Try loading the large dataset model first
+        model_data = joblib.load('voice_classifier_pipeline_large_400_samples.pkl')
+        return model_data
     except FileNotFoundError:
         try:
             # Try loading the large dataset model
@@ -141,6 +168,14 @@ def load_model():
                 st.error("Model file tidak ditemukan!")
                 st.info("Pastikan salah satu file model ada: 'voice_classifier_streamlit_debug.pkl', 'voice_classifier_pipeline_large_400_samples.pkl', atau 'voice_classifier_pipeline.pkl'")
                 return None
+        try:
+            # Fallback to original model
+            model_data = joblib.load('voice_classifier_pipeline.pkl')
+            return model_data
+        except FileNotFoundError:
+            st.error("Model file tidak ditemukan!")
+            st.info("Pastikan file model ada: 'voice_classifier_pipeline_large_400_samples.pkl' atau 'voice_classifier_pipeline.pkl'")
+            return None
 
 # Fungsi prediksi dengan debugging
 def predict_audio_class(audio_data, pipeline):
@@ -189,6 +224,8 @@ def predict_audio_class(audio_data, pipeline):
         
         # Predict dengan pipeline
         prediction_encoded = pipeline['pipeline'].predict(features_selected)[0]
+        # Use pipeline to predict (includes scaling automatically)
+        prediction_encoded = pipeline['pipeline'].predict(features_selected)[0]
         prediction = pipeline['label_encoder'].inverse_transform([prediction_encoded])[0]
         
         # Debug: Prediction details
@@ -197,6 +234,8 @@ def predict_audio_class(audio_data, pipeline):
         st.write(f"DEBUG: Label mapping: {label_mapping}")
         
         # Probabilitas
+        if hasattr(pipeline['pipeline'], 'predict_proba'):
+            probabilities = pipeline['pipeline'].predict_proba(features_selected)[0]
         if hasattr(pipeline['pipeline'], 'predict_proba'):
             probabilities = pipeline['pipeline'].predict_proba(features_selected)[0]
             confidence = np.max(probabilities)
@@ -219,6 +258,11 @@ pipeline = load_model()
 if pipeline is not None:
     # Sidebar - Model Information
     st.sidebar.header("Informasi Model")
+    st.sidebar.write(f"**Model Type**: {pipeline['model_info']['name']}")
+    st.sidebar.write(f"**Accuracy**: {pipeline['model_info']['accuracy']:.4f}")
+    st.sidebar.write(f"**Features**: {pipeline['model_info']['features']}")
+    st.sidebar.write(f"**Training Samples**: {pipeline['model_info']['training_samples']}")
+    st.sidebar.write(f"**Total Samples**: {pipeline['model_info']['total_samples']}")
     st.sidebar.write(f"**Model Type**: {pipeline['model_info']['name']}")
     st.sidebar.write(f"**Accuracy**: {pipeline['model_info']['accuracy']:.4f}")
     st.sidebar.write(f"**Features**: {pipeline['model_info']['features']}")
@@ -270,7 +314,7 @@ if pipeline is not None:
             
             # Prediksi
             st.subheader("Hasil Prediksi")
-            
+
             if st.button("Klasifikasi Audio", type="primary"):
                 with st.spinner("Memproses audio..."):
                     st.write("DEBUG: Starting prediction...")
@@ -295,6 +339,7 @@ if pipeline is not None:
                         )
                     
                     with col3:
+                        status = "TINGGI" if confidence > 0.8 else "SEDANG" if confidence > 0.6 else "RENDAH"
                         status = "TINGGI" if confidence > 0.8 else "SEDANG" if confidence > 0.6 else "RENDAH"
                         st.metric(
                             label="Status Confidence",
@@ -344,6 +389,7 @@ st.sidebar.markdown("""
 
 Aplikasi ini menggunakan:
 - **28 Statistical Features** dari time series audio
+- **28 Statistical Features** dari time series audio
 - **Machine Learning Models** untuk klasifikasi
 - **Real-time Processing** untuk prediksi instan
 
@@ -353,6 +399,8 @@ Aplikasi ini menggunakan:
 3. Lihat hasil prediksi dan confidence score
 
 **Supported Classes:**
+- Buka
+- Tutup
 - Buka
 - Tutup
 """)
