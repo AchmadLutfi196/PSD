@@ -121,51 +121,96 @@ def preprocess_audio(audio_data, sr, noise_threshold=0.01):
 def load_model():
     """Load model pipeline"""
     try:
-        # Try loading the large dataset model first
-        model_data = joblib.load('voice_classifier_pipeline_large_400_samples.pkl')
+        # Try loading the debug model first
+        model_data = joblib.load('voice_classifier_streamlit_debug.pkl')
+        st.success("Loaded debug model: voice_classifier_streamlit_debug.pkl")
         return model_data
     except FileNotFoundError:
         try:
-            # Fallback to original model
-            model_data = joblib.load('voice_classifier_pipeline.pkl')
+            # Try loading the large dataset model
+            model_data = joblib.load('voice_classifier_pipeline_large_400_samples.pkl')
+            st.success("Loaded large model: voice_classifier_pipeline_large_400_samples.pkl")
             return model_data
         except FileNotFoundError:
-            st.error("Model file tidak ditemukan!")
-            st.info("Pastikan file model ada: 'voice_classifier_pipeline_large_400_samples.pkl' atau 'voice_classifier_pipeline.pkl'")
-            return None
+            try:
+                # Fallback to original model
+                model_data = joblib.load('voice_classifier_pipeline.pkl')
+                st.success("Loaded original model: voice_classifier_pipeline.pkl")
+                return model_data
+            except FileNotFoundError:
+                st.error("Model file tidak ditemukan!")
+                st.info("Pastikan salah satu file model ada: 'voice_classifier_streamlit_debug.pkl', 'voice_classifier_pipeline_large_400_samples.pkl', atau 'voice_classifier_pipeline.pkl'")
+                return None
 
-# Fungsi prediksi
+# Fungsi prediksi dengan debugging
 def predict_audio_class(audio_data, pipeline):
-    """Prediksi kelas untuk audio baru"""
+    """Prediksi kelas untuk audio baru dengan debugging"""
     if pipeline is None:
+        st.error("Pipeline is None!")
         return None, None, None
     
     try:
-        # Ekstraksi features
-        features = extract_statistical_features(audio_data)
+        # Ekstraksi features dengan fast_mode=True (konsisten dengan training)
+        features = extract_statistical_features(audio_data, fast_mode=True)
         
-        # Convert ke DataFrame dan pilih features yang sama
+        # Debug info
+        st.write(f"DEBUG: Features extracted: {len(features)}")
+        
+        # Convert ke DataFrame
         features_df = pd.DataFrame([features])
-        features_selected = features_df[pipeline['feature_names']]
         
-        # Replace inf values
-        features_selected = features_selected.replace([np.inf, -np.inf], np.nan)
-        features_selected = features_selected.fillna(0)
+        # Debug: Check available vs required features
+        available_features = list(features_df.columns)
+        required_features = pipeline['feature_names']
+        st.write(f"DEBUG: Available features: {len(available_features)}")
+        st.write(f"DEBUG: Required features: {len(required_features)}")
         
-        # Use pipeline to predict (includes scaling automatically)
+        missing_features = [f for f in required_features if f not in available_features]
+        if missing_features:
+            st.warning(f"Missing features: {missing_features}")
+            # Add missing features with 0 values
+            for feat in missing_features:
+                features_df[feat] = 0
+        
+        # Select required features in correct order
+        features_selected = features_df[required_features]
+        
+        # Replace inf/nan values
+        inf_count = np.isinf(features_selected.values).sum()
+        nan_count = np.isnan(features_selected.values).sum()
+        if inf_count > 0 or nan_count > 0:
+            st.write(f"DEBUG: Replacing {inf_count} inf and {nan_count} nan values")
+            features_selected = features_selected.replace([np.inf, -np.inf], np.nan).fillna(0)
+        
+        # Debug: Feature stats
+        feat_min = features_selected.min().min()
+        feat_max = features_selected.max().max()
+        st.write(f"DEBUG: Feature range: [{feat_min:.6f}, {feat_max:.6f}]")
+        
+        # Predict dengan pipeline
         prediction_encoded = pipeline['pipeline'].predict(features_selected)[0]
         prediction = pipeline['label_encoder'].inverse_transform([prediction_encoded])[0]
+        
+        # Debug: Prediction details
+        st.write(f"DEBUG: Encoded prediction: {prediction_encoded}")
+        label_mapping = {i: pipeline['label_encoder'].inverse_transform([i])[0] for i in [0, 1]}
+        st.write(f"DEBUG: Label mapping: {label_mapping}")
         
         # Probabilitas
         if hasattr(pipeline['pipeline'], 'predict_proba'):
             probabilities = pipeline['pipeline'].predict_proba(features_selected)[0]
             confidence = np.max(probabilities)
+            st.write(f"DEBUG: Probabilities: buka={probabilities[0]:.4f}, tutup={probabilities[1]:.4f}")
         else:
             confidence = 1.0
         
         return prediction, confidence, features
+        
     except Exception as e:
         st.error(f"Error dalam prediksi: {str(e)}")
+        import traceback
+        st.text("Full traceback:")
+        st.text(traceback.format_exc())
         return None, None, None
 
 # Load model
@@ -228,6 +273,7 @@ if pipeline is not None:
             
             if st.button("Klasifikasi Audio", type="primary"):
                 with st.spinner("Memproses audio..."):
+                    st.write("DEBUG: Starting prediction...")
                     prediction, confidence, features = predict_audio_class(audio_processed, pipeline)
                 
                 if prediction is not None:
