@@ -27,16 +27,16 @@ st.markdown("---")
 st.markdown("**Aplikasi untuk mengidentifikasi speaker (Lutfi/Harits) dan command (buka/tutup) menggunakan Machine Learning**")
 st.info("🔒 **Two-Stage Security System:** Speaker Authentication → Command Recognition")
 
-# Fungsi ekstraksi features (sama dengan notebook - fast mode)
+# Fungsi ekstraksi features (lengkap sesuai notebook)
 @st.cache_data
-def extract_statistical_features(audio_data, sr=22050, fast_mode=True):
+def extract_statistical_features(audio_data, sr=22050):
     """
     Ekstraksi berbagai feature statistik dari sinyal audio time series
-    Sesuai dengan training model (fast_mode=True)
+    HARUS SAMA dengan function di notebook untuk konsistensi!
     """
     features = {}
     
-    # 1. Basic Statistical Features (selalu digunakan)
+    # 1. Basic Statistical Features
     features['mean'] = np.mean(audio_data)
     features['std'] = np.std(audio_data)
     features['var'] = np.var(audio_data)
@@ -59,36 +59,88 @@ def extract_statistical_features(audio_data, sr=22050, fast_mode=True):
     features['power'] = features['energy'] / len(audio_data)
     features['rms'] = np.sqrt(np.mean(audio_data**2))
     
-    # 5. Zero Crossing Rate (penting untuk speech)
+    # 5. Zero Crossing Rate
     features['zcr'] = np.sum(librosa.zero_crossings(audio_data))
     features['zcr_rate'] = features['zcr'] / len(audio_data)
     
-    # Fast mode - hanya features paling penting
+    # 6. Spectral Features
     try:
-        # Spektral centroid (paling diskriminatif)
         features['spectral_centroid'] = np.mean(librosa.feature.spectral_centroid(y=audio_data, sr=sr))
-        
-        # MFCC pertama saja (3 coefficients)
-        mfccs = librosa.feature.mfcc(y=audio_data, sr=sr, n_mfcc=3)
-        for i in range(3):
-            features[f'mfcc_{i+1}_mean'] = np.mean(mfccs[i])
-            features[f'mfcc_{i+1}_std'] = np.std(mfccs[i])
+        features['spectral_bandwidth'] = np.mean(librosa.feature.spectral_bandwidth(y=audio_data, sr=sr))
+        features['spectral_rolloff'] = np.mean(librosa.feature.spectral_rolloff(y=audio_data, sr=sr))
     except:
         features['spectral_centroid'] = 0
-        for i in range(3):
-            features[f'mfcc_{i+1}_mean'] = 0
-            features[f'mfcc_{i+1}_std'] = 0
+        features['spectral_bandwidth'] = 0
+        features['spectral_rolloff'] = 0
     
-    # Features yang cepat dihitung
-    # 8. Autocorrelation Features (simplified)
+    # 7. Temporal Features
+    try:
+        onset_frames = librosa.onset.onset_detect(y=audio_data, sr=sr)
+        features['onset_count'] = len(onset_frames)
+        tempo = librosa.beat.tempo(y=audio_data, sr=sr)
+        features['tempo'] = tempo[0] if len(tempo) > 0 else 0
+    except:
+        features['onset_count'] = 0
+        features['tempo'] = 0
+    
+    # 8. Autocorrelation Features
     autocorr = np.correlate(audio_data, audio_data, mode='full')
     autocorr = autocorr[autocorr.size // 2:]
-    if len(autocorr) > 50:  # Reduce window
-        features['autocorr_max'] = np.max(autocorr[1:50])
-        features['autocorr_mean'] = np.mean(autocorr[1:50])
+    if len(autocorr) > 100:
+        features['autocorr_max'] = np.max(autocorr[1:100])  # exclude lag 0
+        features['autocorr_mean'] = np.mean(autocorr[1:100])
     else:
         features['autocorr_max'] = np.max(autocorr[1:]) if len(autocorr) > 1 else 0
         features['autocorr_mean'] = np.mean(autocorr[1:]) if len(autocorr) > 1 else 0
+    
+    # 9. Envelope Features
+    try:
+        envelope = np.abs(signal.hilbert(audio_data))
+        features['envelope_mean'] = np.mean(envelope)
+        features['envelope_std'] = np.std(envelope)
+        features['envelope_max'] = np.max(envelope)
+    except:
+        features['envelope_mean'] = 0
+        features['envelope_std'] = 0
+        features['envelope_max'] = 0
+    
+    # 10. MFCC Statistical Features
+    try:
+        mfccs = librosa.feature.mfcc(y=audio_data, sr=sr, n_mfcc=13)
+        for i in range(13):
+            features[f'mfcc_{i+1}_mean'] = np.mean(mfccs[i])
+            features[f'mfcc_{i+1}_std'] = np.std(mfccs[i])
+    except:
+        for i in range(13):
+            features[f'mfcc_{i+1}_mean'] = 0
+            features[f'mfcc_{i+1}_std'] = 0
+    
+    # 11. Chroma Features
+    try:
+        chroma = librosa.feature.chroma_stft(y=audio_data, sr=sr)
+        features['chroma_mean'] = np.mean(chroma)
+        features['chroma_std'] = np.std(chroma)
+    except:
+        features['chroma_mean'] = 0
+        features['chroma_std'] = 0
+    
+    # 12. Contrast Features
+    try:
+        contrast = librosa.feature.spectral_contrast(y=audio_data, sr=sr)
+        features['contrast_mean'] = np.mean(contrast)
+        features['contrast_std'] = np.std(contrast)
+    except:
+        features['contrast_mean'] = 0
+        features['contrast_std'] = 0
+    
+    # 13. Tonnetz Features
+    try:
+        tonnetz = librosa.feature.tonnetz(y=audio_data, sr=sr)
+        features['tonnetz_mean'] = np.mean(tonnetz)
+        features['tonnetz_std'] = np.std(tonnetz)
+    except:
+        features['tonnetz_mean'] = 0
+        features['tonnetz_std'] = 0
     
     # 14. Attack Time (durasi dari mulai hingga peak)
     peak_idx = np.argmax(np.abs(audio_data))
@@ -150,8 +202,8 @@ def predict_voice_two_stage(audio_data, speaker_pipeline, command_pipeline, debu
         return None, None, None, None, "Error: Model not loaded"
     
     try:
-        # Ekstraksi features dengan fast_mode=True (konsisten dengan training)
-        features = extract_statistical_features(audio_data, fast_mode=True)
+        # Ekstraksi features (konsisten dengan training notebook)
+        features = extract_statistical_features(audio_data, sr=22050)
         
         if debug:
             st.write(f"🔍 **DEBUG**: Features extracted: {len(features)}")
