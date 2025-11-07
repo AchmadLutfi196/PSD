@@ -27,10 +27,10 @@ st.set_page_config(
 )
 
 # Judul aplikasi
-st.title("🎤 Sistem Identifikasi Suara: Two-Stage Recognition")
+st.title("Sistem Identifikasi Suara: Two-Stage Recognition")
 st.markdown("---")
 st.markdown("**Aplikasi untuk mengidentifikasi speaker (Lutfi/Harits) dan command (buka/tutup) menggunakan Machine Learning**")
-st.info("🔒 **Two-Stage Security System:** Speaker Authentication → Command Recognition")
+st.info("**Two-Stage Security System:** Speaker Authentication → Command Recognition")
 
 # Fungsi ekstraksi features (lengkap sesuai notebook)
 @st.cache_data
@@ -211,14 +211,14 @@ def predict_voice_two_stage(audio_data, speaker_pipeline, command_pipeline, debu
         features = extract_statistical_features(audio_data, sr=22050)
         
         if debug:
-            st.write(f"🔍 **DEBUG**: Features extracted: {len(features)}")
+            st.write(f"**DEBUG**: Features extracted: {len(features)}")
         
         # Convert ke DataFrame
         features_df = pd.DataFrame([features])
         
         # STAGE 1: SPEAKER RECOGNITION
         if debug:
-            st.write("🎯 **STAGE 1: Speaker Recognition**")
+            st.write("**STAGE 1: Speaker Recognition**")
         
         # Speaker prediction
         speaker_features = features_df[speaker_pipeline['feature_names']]
@@ -241,17 +241,17 @@ def predict_voice_two_stage(audio_data, speaker_pipeline, command_pipeline, debu
         speaker_confidence = np.max(speaker_pipeline['model'].predict_proba(speaker_features_scaled))
         
         if debug:
-            st.write(f"   👤 Speaker: {speaker_pred} (confidence: {speaker_confidence:.3f})")
+            st.write(f"   Speaker: {speaker_pred} (confidence: {speaker_confidence:.3f})")
         
         # Check if authorized speaker
         SPEAKER_THRESHOLD = 0.7
         if speaker_confidence < SPEAKER_THRESHOLD:
-            status = f"❌ Suara tidak dikenal (confidence: {speaker_confidence:.3f}) - Akses ditolak"
+            status = f"Suara tidak dikenal (confidence: {speaker_confidence:.3f}) - Akses ditolak"
             return None, None, speaker_confidence, None, status
         
         # STAGE 2: COMMAND RECOGNITION (only if speaker is authorized)
         if debug:
-            st.write("🗣️ **STAGE 2: Command Recognition**")
+            st.write("**STAGE 2: Command Recognition**")
         
         command_features = features_df[command_pipeline['feature_names']]
         
@@ -273,12 +273,12 @@ def predict_voice_two_stage(audio_data, speaker_pipeline, command_pipeline, debu
         command_confidence = np.max(command_pipeline['model'].predict_proba(command_features_scaled))
         
         if debug:
-            st.write(f"   🗣️ Command: {command_pred} (confidence: {command_confidence:.3f})")
+            st.write(f"   Command: {command_pred} (confidence: {command_confidence:.3f})")
         
         # Overall confidence (minimum of both stages)
         overall_confidence = min(speaker_confidence, command_confidence)
         
-        status = f"✅ **{speaker_pred.title()}** mengatakan '**{command_pred}**'"
+        status = f"**{speaker_pred.title()}** mengatakan '**{command_pred}**'"
         
         return speaker_pred, command_pred, overall_confidence, features, status
         
@@ -339,7 +339,7 @@ def display_audio_analysis(uploaded_file, audio_data, audio_processed, sr, speak
     col1, col2 = st.columns(2)
     
     with col1:
-        st.subheader("📊 Informasi Audio")
+        st.subheader("Informasi Audio")
         st.write(f"**Durasi**: {len(audio_data)/sr:.2f} detik")
         st.write(f"**Sample Rate**: {sr} Hz")
         st.write(f"**Jumlah Sample**: {len(audio_data)}")
@@ -347,7 +347,7 @@ def display_audio_analysis(uploaded_file, audio_data, audio_processed, sr, speak
         
         # Play audio
         if is_recorded:
-            st.info("🎙️ Audio dari rekaman langsung")
+            st.info("Audio dari rekaman langsung")
             # Create audio array for playback
             audio_for_playback = (audio_data * 32767).astype(np.int16)
             st.audio(audio_for_playback, sample_rate=sr)
@@ -355,7 +355,7 @@ def display_audio_analysis(uploaded_file, audio_data, audio_processed, sr, speak
             st.audio(uploaded_file)
     
     with col2:
-        st.subheader("📈 Visualisasi Waveform")
+        st.subheader("Visualisasi Waveform")
         fig, ax = plt.subplots(figsize=(10, 4))
         time_axis = np.linspace(0, len(audio_data)/sr, len(audio_data))
         ax.plot(time_axis, audio_data, color='steelblue', linewidth=0.8)
@@ -367,15 +367,15 @@ def display_audio_analysis(uploaded_file, audio_data, audio_processed, sr, speak
         st.pyplot(fig)
     
     # Prediksi Two-Stage
-    st.subheader("🎯 Hasil Prediksi Two-Stage")
+    st.subheader("Hasil Prediksi Two-Stage")
     
     # Control untuk debug mode
-    debug_mode = st.checkbox("🔧 Debug Mode", value=False, help="Tampilkan informasi debug detail", key=f"debug_{is_recorded}")
+    debug_mode = st.checkbox("Debug Mode", value=False, help="Tampilkan informasi debug detail", key=f"debug_{is_recorded}")
     
-    if st.button("🔍 Analisis Voice (Two-Stage)", type="primary", key=f"analyze_{is_recorded}"):
-        with st.spinner("🔄 Processing two-stage recognition..."):
+    if st.button("Analisis Voice (Two-Stage)", type="primary", key=f"analyze_{is_recorded}"):
+        with st.spinner("Processing two-stage recognition..."):
             if debug_mode:
-                st.write("🚀 **Starting two-stage prediction...**")
+                st.write("**Starting two-stage prediction...**")
             
             speaker, command, confidence, features, status = predict_voice_two_stage(
                 audio_processed, speaker_pipeline, command_pipeline, debug=debug_mode
@@ -387,7 +387,7 @@ def display_audio_analysis(uploaded_file, audio_data, audio_processed, sr, speak
         if speaker is None:
             # Access denied - unauthorized speaker
             st.error(status)
-            st.metric("🚫 Status", "ACCESS DENIED", help="Suara tidak dikenal atau confidence terlalu rendah")
+            st.metric("Status", "ACCESS DENIED", help="Suara tidak dikenal atau confidence terlalu rendah")
             
         else:
             # Success - authorized speaker with command
@@ -398,29 +398,29 @@ def display_audio_analysis(uploaded_file, audio_data, audio_processed, sr, speak
             
             with col1:
                 st.metric(
-                    label="👤 Speaker",
+                    label="Speaker",
                     value=speaker.title(),
                     help="Speaker yang diidentifikasi"
                 )
             
             with col2:
                 st.metric(
-                    label="🗣️ Command",
+                    label="Command",
                     value=command.title(),
                     help="Perintah yang diucapkan"
                 )
             
             with col3:
                 st.metric(
-                    label="🎯 Confidence",
+                    label="Confidence",
                     value=f"{confidence:.1%}",
                     help="Tingkat kepercayaan gabungan"
                 )
             
             with col4:
-                conf_status = "🟢 TINGGI" if confidence > 0.8 else "🟡 SEDANG" if confidence > 0.6 else "🔴 RENDAH"
+                conf_status = "TINGGI" if confidence > 0.8 else "SEDANG" if confidence > 0.6 else "RENDAH"
                 st.metric(
-                    label="📊 Status",
+                    label="Status",
                     value=conf_status,
                     help="Interpretasi confidence"
                 )
@@ -431,20 +431,20 @@ def display_audio_analysis(uploaded_file, audio_data, audio_processed, sr, speak
             # Action based on command
             if command == "buka":
                 st.balloons()
-                st.info("🔓 **AKSI:** Pintu dibuka!")
+                st.info("**AKSI:** Pintu dibuka!")
             else:
-                st.info("🔒 **AKSI:** Pintu ditutup!")
+                st.info("**AKSI:** Pintu ditutup!")
             
             # Feature analysis (optional)
-            with st.expander("🔬 Analisis Features (Advanced)"):
+            with st.expander("Analisis Features (Advanced)"):
                 if features:
-                    st.subheader("📊 Feature Analysis")
+                    st.subheader("Feature Analysis")
                     
                     # Create two columns for speaker and command features
                     col1, col2 = st.columns(2)
                     
                     with col1:
-                        st.write("**👤 Speaker Features (Top 10)**")
+                        st.write("**Speaker Features (Top 10)**")
                         top_speaker_features = speaker_pipeline['feature_names'][:10]
                         top_speaker_values = [features.get(f, 0) for f in top_speaker_features]
                         
@@ -456,7 +456,7 @@ def display_audio_analysis(uploaded_file, audio_data, audio_processed, sr, speak
                         st.pyplot(fig)
                     
                     with col2:
-                        st.write("**🗣️ Command Features (Top 10)**")
+                        st.write("**Command Features (Top 10)**")
                         top_command_features = command_pipeline['feature_names'][:10]
                         top_command_values = [features.get(f, 0) for f in top_command_features]
                         
@@ -468,7 +468,7 @@ def display_audio_analysis(uploaded_file, audio_data, audio_processed, sr, speak
                         st.pyplot(fig)
                     
                     # Key feature statistics
-                    st.subheader("📈 Key Statistics")
+                    st.subheader("Key Statistics")
                     key_features = ['mean', 'std', 'zcr_rate', 'spectral_centroid', 'energy']
                     stats_data = {f: features.get(f, 0) for f in key_features if f in features}
                     
@@ -481,28 +481,28 @@ speaker_pipeline, command_pipeline = load_models()
 
 if speaker_pipeline is not None and command_pipeline is not None:
     # Sidebar - Model Information
-    st.sidebar.header("📊 Informasi Model")
+    st.sidebar.header("Informasi Model")
     
-    st.sidebar.subheader("👤 Speaker Recognition")
+    st.sidebar.subheader("Speaker Recognition")
     st.sidebar.write(f"**Model**: {speaker_pipeline['model_info']['model_type']}")
     st.sidebar.write(f"**Accuracy**: {speaker_pipeline['model_info']['accuracy']:.1%}")
     st.sidebar.write(f"**Classes**: {', '.join(speaker_pipeline['model_info']['classes'])}")
     
-    st.sidebar.subheader("🗣️ Command Recognition") 
+    st.sidebar.subheader("Command Recognition") 
     st.sidebar.write(f"**Model**: {command_pipeline['model_info']['model_type']}")
     st.sidebar.write(f"**Accuracy**: {command_pipeline['model_info']['accuracy']:.1%}")
     st.sidebar.write(f"**Classes**: {', '.join(command_pipeline['model_info']['classes'])}")
     
-    st.sidebar.subheader("🔧 Technical Details")
+    st.sidebar.subheader("Technical Details")
     st.sidebar.write(f"**Speaker Features**: {len(speaker_pipeline['feature_names'])}")
     st.sidebar.write(f"**Command Features**: {len(command_pipeline['feature_names'])}")
     st.sidebar.write("**Security**: Access control enabled")
     
     # Main interface dengan tabs
-    st.header("🎵 Input Audio")
+    st.header("Input Audio")
     
     # Create tabs for different input methods
-    tab1, tab2 = st.tabs(["📁 Upload File", "🎙️ Rekam Langsung"])
+    tab1, tab2 = st.tabs(["Upload File", "Rekam Langsung"])
     
     with tab1:
         st.subheader("Upload Audio File")
@@ -522,7 +522,7 @@ if speaker_pipeline is not None and command_pipeline is not None:
         col1, col2 = st.columns([1, 1])
         
         with col1:
-            st.info("🎙️ **Instruksi Rekaman:**")
+            st.info("**Instruksi Rekaman:**")
             st.markdown("""
             1. Klik tombol **"Start Recording"**
             2. Ucapkan **"buka"** atau **"tutup"** dengan jelas
@@ -531,7 +531,7 @@ if speaker_pipeline is not None and command_pipeline is not None:
             """)
         
         with col2:
-            st.warning("⚠️ **Tips untuk hasil terbaik:**")
+            st.warning("**Tips untuk hasil terbaik:**")
             st.markdown("""
             - Rekam di tempat yang tenang
             - Bicara dengan jelas dan normal
@@ -553,18 +553,18 @@ if speaker_pipeline is not None and command_pipeline is not None:
             )
             
             if audio_bytes:
-                st.success("✅ Audio berhasil direkam!")
+                st.success("Audio berhasil direkam!")
                 
                 # Process recorded audio
                 process_recorded_audio(audio_bytes, speaker_pipeline, command_pipeline)
                 
         except Exception as e:
-            st.error(f"❌ Error dengan audio recorder: {str(e)}")
-            st.info("💡 **Solusi alternatif:** Gunakan tab 'Upload File' untuk menganalisis audio yang sudah ada.")
+            st.error(f"Error dengan audio recorder: {str(e)}")
+            st.info("**Solusi alternatif:** Gunakan tab 'Upload File' untuk menganalisis audio yang sudah ada.")
             
             # Fallback manual recording option
             st.markdown("---")
-            st.subheader("🔄 Alternatif: Upload Rekaman Manual")
+            st.subheader("Alternatif: Upload Rekaman Manual")
             st.markdown("""
             Jika fitur rekam langsung tidak berfungsi:
             1. Rekam suara menggunakan aplikasi lain (Voice Recorder, dll)
@@ -576,21 +576,21 @@ if speaker_pipeline is not None and command_pipeline is not None:
 
 else:
     # Model loading failed
-    st.error("🚨 **System Error:** Model tidak dapat dimuat!")
+    st.error("**System Error:** Model tidak dapat dimuat!")
     
-    st.markdown("### 📋 Checklist File yang Dibutuhkan:")
+    st.markdown("### Checklist File yang Dibutuhkan:")
     st.markdown("""
     - [ ] `speaker_model_pipeline.pkl` - Model untuk speaker recognition  
     - [ ] `command_model_pipeline.pkl` - Model untuk command recognition
     
-    **💡 Tip:** Jalankan notebook training terlebih dahulu untuk generate model files.
+    **Tip:** Jalankan notebook training terlebih dahulu untuk generate model files.
     """)
 
 # Sidebar - Additional Info  
 st.sidebar.markdown("---")
-st.sidebar.header("📖 Tentang Aplikasi")
+st.sidebar.header("Tentang Aplikasi")
 st.sidebar.markdown("""
-**🎤 Two-Stage Voice Recognition System**
+**Two-Stage Voice Recognition System**
 
 **Arsitektur:**
 - **Stage 1:** Speaker Recognition (Lutfi/Harits)
@@ -615,7 +615,7 @@ st.sidebar.markdown("""
 """)
 
 st.sidebar.markdown("---")
-st.sidebar.header("⚙️ Setup & Dependencies")
+st.sidebar.header("Setup & Dependencies")
 st.sidebar.markdown("""
 **Untuk fitur rekam langsung:**
 ```bash
@@ -629,16 +629,16 @@ pip install audio-recorder-streamlit
 """)
 
 st.sidebar.markdown("---")
-st.sidebar.info("🎓 Dikembangkan untuk Proyek PSD - Two-Stage Voice Recognition")
+st.sidebar.info("Dikembangkan untuk Proyek PSD - Two-Stage Voice Recognition")
 
 # Instructions section
 st.markdown("---")
-st.header("📋 Petunjuk Penggunaan")
+st.header("Petunjuk Penggunaan")
 
 col1, col2 = st.columns(2)
 
 with col1:
-    st.subheader("🎯 Sistem Two-Stage")
+    st.subheader("Sistem Two-Stage")
     st.markdown("""
     **Stage 1: Speaker Recognition**
     - Identifikasi apakah suara dari Lutfi atau Harits
@@ -652,7 +652,7 @@ with col1:
     """)
 
 with col2:
-    st.subheader("🔧 Technical Details")
+    st.subheader("Technical Details")
     st.markdown("""
     **Feature Extraction:**
     - 61 statistical time series features
@@ -666,4 +666,4 @@ with col2:
     """)
 
 st.markdown("---")
-st.info("💡 **Tip:** Untuk hasil terbaik, gunakan file audio dengan kualitas baik dan durasi 3-5 detik")
+st.info("**Tip:** Untuk hasil terbaik, gunakan file audio dengan kualitas baik dan durasi 3-5 detik")
