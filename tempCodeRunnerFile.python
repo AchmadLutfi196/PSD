@@ -1,25 +1,22 @@
-import torch, time
+from pydub import AudioSegment
+import os
 
-# Tentukan device
-device_cpu = torch.device("cpu")
-device_gpu = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+def convert_m4a_to_wav(source_folder, target_folder):
+    os.makedirs(target_folder, exist_ok=True)
 
-# Buat data acak besar
-x_cpu = torch.rand(10000, 10000, device=device_cpu)
-x_gpu = torch.rand(10000, 10000, device=device_gpu)
+    for root, _, files in os.walk(source_folder):
+        for file in files:
+            if file.lower().endswith(".m4a"):
+                m4a_path = os.path.join(root, file)
+                wav_name = os.path.splitext(file)[0] + ".wav"
+                wav_path = os.path.join(target_folder, wav_name)
 
-# Benchmark CPU
-start = time.time()
-_ = torch.mm(x_cpu, x_cpu)
-cpu_time = time.time() - start
+                sound = AudioSegment.from_file(m4a_path, format="m4a")
+                sound.export(wav_path, format="wav")
+                print(f"Converted: {file} → {wav_name}")
 
-# Benchmark GPU
-torch.cuda.synchronize()
-start = time.time()
-_ = torch.mm(x_gpu, x_gpu)
-torch.cuda.synchronize()
-gpu_time = time.time() - start
-
-print(f"CPU time: {cpu_time:.3f} s")
-print(f"GPU time: {gpu_time:.3f} s")
-print(f"Speedup: {cpu_time/gpu_time:.2f}x")
+# contoh pemakaian
+convert_m4a_to_wav(
+    source_folder=r"C:\Users\achma\OneDrive\Documents\1Semester 5\PSD\speaker_datasets\Lutfi",
+    target_folder=r"C:\Users\achma\OneDrive\Documents\1Semester 5\PSD\speaker_datasets\Lutfi\wav"
+)
