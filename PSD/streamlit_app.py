@@ -13,77 +13,39 @@ def load_models():
     command_pipeline = joblib.load('command_model_pipeline.pkl')
     return speaker_pipeline, command_pipeline
 
-def predict_voice(audio_data, speaker_pipeline, command_pipeline, confidence_threshold=0.4):
+def predict_voice(audio_data, speaker_pipeline, command_pipeline):
     """
     Two-stage prediction: Speaker identification + Command recognition
-    FIXED VERSION - dengan feature consistency dan authorization logic yang benar
     """
-    try:
-        # Extract ALL features
-        all_features = extract_statistical_features(audio_data)
-        features_df = pd.DataFrame([all_features])
-        
-        # STAGE 1: Speaker Recognition
-        # Gunakan HANYA features yang digunakan saat training
-        speaker_feature_names = speaker_pipeline['feature_names']
-        
-        # Handle missing features
-        for feature_name in speaker_feature_names:
-            if feature_name not in features_df.columns:
-                features_df[feature_name] = 0.0
-        
-        # Select features sesuai training
-        speaker_features = features_df[speaker_feature_names]
-        speaker_features = speaker_features.replace([np.inf, -np.inf], np.nan).fillna(0)
-        speaker_features_scaled = speaker_pipeline['scaler'].transform(speaker_features)
-        
-        # Predict speaker
-        speaker_pred_encoded = speaker_pipeline['model'].predict(speaker_features_scaled)[0]
-        speaker_pred = speaker_pipeline['label_encoder'].inverse_transform([speaker_pred_encoded])[0]
-        speaker_confidence = np.max(speaker_pipeline['model'].predict_proba(speaker_features_scaled))
-        
-        # ACCESS CONTROL - FIXED LOGIC!
-        predicted_speaker_lower = speaker_pred.lower()
-        authorized_speakers = ['lutfi', 'harits']
-        
-        # BUG FIX: Gunakan IN bukan NOT IN!
-        if predicted_speaker_lower in authorized_speakers:
-            # Speaker authorized, check confidence
-            if speaker_confidence >= confidence_threshold:
-                # STAGE 2: Command Recognition
-                command_feature_names = command_pipeline['feature_names']
-                
-                # Handle missing command features
-                for feature_name in command_feature_names:
-                    if feature_name not in features_df.columns:
-                        features_df[feature_name] = 0.0
-                
-                # Select command features
-                command_features = features_df[command_feature_names]
-                command_features = command_features.replace([np.inf, -np.inf], np.nan).fillna(0)
-                command_features_scaled = command_pipeline['scaler'].transform(command_features)
-                
-                # Predict command
-                command_pred_encoded = command_pipeline['model'].predict(command_features_scaled)[0]
-                command_pred = command_pipeline['label_encoder'].inverse_transform([command_pred_encoded])[0]
-                command_confidence = np.max(command_pipeline['model'].predict_proba(command_features_scaled))
-                
-                if command_confidence >= confidence_threshold:
-                    status = f"SUCCESS: {speaker_pred} mengatakan '{command_pred}'"
-                    return speaker_pred, command_pred, min(speaker_confidence, command_confidence), status
-                else:
-                    status = f"Speaker {speaker_pred} diizinkan, tapi command tidak pasti"
-                    return speaker_pred, command_pred, min(speaker_confidence, command_confidence), status
-            else:
-                status = f"Speaker confidence terlalu rendah ({speaker_confidence:.3f})"
-                return speaker_pred, None, speaker_confidence, status
-        else:
-            # Speaker tidak diizinkan
-            status = f"AKSES DITOLAK: Speaker '{speaker_pred}' tidak diizinkan"
-            return speaker_pred, None, speaker_confidence, status
-            
-    except Exception as e:
-        return None, None, 0, f"Error: {str(e)}"
+    # Stage 1: Speaker Recognition
+    features = extract_statistical_features(audio_data)
+    features_df = pd.DataFrame([features])
+    
+    # Speaker prediction
+    speaker_features = features_df[speaker_pipeline['feature_names']]
+    speaker_features = speaker_features.replace([np.inf, -np.inf], np.nan).fillna(0)
+    speaker_features_scaled = speaker_pipeline['scaler'].transform(speaker_features)
+    
+    speaker_pred_encoded = speaker_pipeline['model'].predict(speaker_features_scaled)[0]
+    speaker_pred = speaker_pipeline['label_encoder'].inverse_transform([speaker_pred_encoded])[0]
+    speaker_confidence = np.max(speaker_pipeline['model'].predict_proba(speaker_features_scaled))
+    
+    # Check if authorized speaker
+    if speaker_confidence < 0.7:  # Threshold untuk menolak suara tidak dikenal
+        return None, None, speaker_confidence, "Suara tidak dikenal - Akses ditolak"
+    
+    # Stage 2: Command Recognition (only if speaker is authorized)
+    command_features = features_df[command_pipeline['feature_names']]
+    command_features = command_features.replace([np.inf, -np.inf], np.nan).fillna(0)
+    command_features_scaled = command_pipeline['scaler'].transform(command_features)
+    
+    command_pred_encoded = command_pipeline['model'].predict(command_features_scaled)[0]
+    command_pred = command_pipeline['label_encoder'].inverse_transform([command_pred_encoded])[0]
+    command_confidence = np.max(command_pipeline['model'].predict_proba(command_features_scaled))
+    
+    status = f"Suara {speaker_pred} mengatakan '{command_pred}'"
+    
+    return speaker_pred, command_pred, min(speaker_confidence, command_confidence), status
 
 # Streamlit App
 def main():
@@ -118,48 +80,16 @@ def main():
         # Predict button
         if st.button("🔍 Analyze Voice", type="primary"):
             with st.spinner("Analyzing voice..."):
-                speaker, command, confidence, status = predict_voice(audio, speaker_pipeline, command_pipeline, confidence_threshold=0.4)
+                speaker, command, confidence, status = predict_voice(audio, speaker_pipeline, command_pipeline)
                 
                 # Display results
-                st.header("🎯 Analysis Results")
+                st.header("🎯 Results")
                 
                 if speaker is None:
                     st.error(f"❌ {status}")
-                    st.write(f"**Confidence:** {confidence:.1%}")
+                    st.write("**Confidence:** {:.1%}".format(confidence))
                 else:
-                    # Determine result type
-                    if "SUCCESS" in status:
-                        st.success(f"✅ {status}")
-                    elif "AKSES DITOLAK" in status:
-                        st.error(f"🚫 {status}")
-                    else:
-                        st.warning(f"⚠️ {status}")
-                    
-                    # Show detailed results
-                    col1, col2 = st.columns(2)
-                    
-                    with col1:
-                        st.metric(
-                            label="🗣️ Speaker Identified",
-                            value=speaker.title() if speaker else "Unknown",
-                        )
-                    
-                    with col2:
-                        st.metric(
-                            label="🎯 Command Detected", 
-                            value=command.title() if command else "None",
-                        )
-                    
-                    # Confidence bar
-                    st.write("**Overall Confidence:**")
-                    st.progress(confidence)
-                    st.write(f"{confidence:.1%}")
-                    
-                    # Authorization status
-                    if speaker and speaker.lower() in ['lutfi', 'harits']:
-                        st.success("✅ **Speaker Authorized**")
-                    else:
-                        st.error("❌ **Speaker Not Authorized**")
+                    st.success(f"✅ {status}")
                     
                     col1, col2, col3 = st.columns(3)
                     with col1:
