@@ -66,9 +66,11 @@ def extract_basic_audio_features(audio_data, sr=22050):
     return features
 
 # Load model components
-optimized_model = joblib.load('optimized_model.pkl')
-optimized_scaler = joblib.load('optimized_scaler.pkl') 
-optimized_le = joblib.load('optimized_le.pkl')
+import os
+script_dir = os.path.dirname(os.path.abspath(__file__))
+optimized_model = joblib.load(os.path.join(script_dir, 'optimized_model.pkl'))
+optimized_scaler = joblib.load(os.path.join(script_dir, 'optimized_scaler.pkl')) 
+optimized_le = joblib.load(os.path.join(script_dir, 'optimized_le.pkl'))
 
 def streamlit_voice_recognition(audio_data, sr=22050):
     """
@@ -160,3 +162,11 @@ def streamlit_voice_recognition(audio_data, sr=22050):
             'status': 'error',
             'error_message': str(e)
         }
+
+def load_model():
+    """Load model untuk streamlit app"""
+    return {
+        'model': optimized_model,
+        'scaler': optimized_scaler,
+        'label_encoder': optimized_le
+    }
