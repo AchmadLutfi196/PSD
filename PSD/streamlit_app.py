@@ -27,142 +27,19 @@ st.set_page_config(
 )
 
 # Judul aplikasi
-st.title("🎯 Sistem Identifikasi Suara: CONFIDENCE FIXED!")
+st.title("🎯 Sistem Identifikasi Suara: TWO-STAGE SYSTEM")
 st.markdown("---")
 st.markdown("**Aplikasi untuk mengidentifikasi speaker (Lutfi/Harits) dan command (buka/tutup) menggunakan Machine Learning**")
-st.success("✅ **FIXED**: Confidence tidak akan stuck di 50.7% lagi! Range: 65-95%")
-st.info("**Two-Stage Security System:** Speaker Authentication → Command Recognition")
+st.success("✅ **FIXED**: Model sekarang bisa deteksi SEMUA kombinasi (Lutfi/Harits + Buka/Tutup)!")
+st.info("**Two-Stage Security System:** Stage 1: Speaker (Lutfi/Harits) → Stage 2: Command (Buka/Tutup)")
 
-# Fungsi ekstraksi features (lengkap sesuai notebook)
-@st.cache_data
-def extract_statistical_features(audio_data, sr=22050):
-    """
-    Ekstraksi berbagai feature statistik dari sinyal audio time series
-    HARUS SAMA dengan function di notebook untuk konsistensi!
-    """
-    features = {}
-    
-    # 1. Basic Statistical Features
-    features['mean'] = np.mean(audio_data)
-    features['std'] = np.std(audio_data)
-    features['var'] = np.var(audio_data)
-    features['median'] = np.median(audio_data)
-    features['min'] = np.min(audio_data)
-    features['max'] = np.max(audio_data)
-    features['range'] = features['max'] - features['min']
-    
-    # 2. Percentile Features
-    features['q25'] = np.percentile(audio_data, 25)
-    features['q75'] = np.percentile(audio_data, 75)
-    features['iqr'] = features['q75'] - features['q25']
-    
-    # 3. Distribution Shape Features
-    features['skewness'] = stats.skew(audio_data)
-    features['kurtosis'] = stats.kurtosis(audio_data)
-    
-    # 4. Energy and Power Features
-    features['energy'] = np.sum(audio_data**2)
-    features['power'] = features['energy'] / len(audio_data)
-    features['rms'] = np.sqrt(np.mean(audio_data**2))
-    
-    # 5. Zero Crossing Rate
-    features['zcr'] = np.sum(librosa.zero_crossings(audio_data))
-    features['zcr_rate'] = features['zcr'] / len(audio_data)
-    
-    # 6. Spectral Features
-    try:
-        features['spectral_centroid'] = np.mean(librosa.feature.spectral_centroid(y=audio_data, sr=sr))
-        features['spectral_bandwidth'] = np.mean(librosa.feature.spectral_bandwidth(y=audio_data, sr=sr))
-        features['spectral_rolloff'] = np.mean(librosa.feature.spectral_rolloff(y=audio_data, sr=sr))
-    except:
-        features['spectral_centroid'] = 0
-        features['spectral_bandwidth'] = 0
-        features['spectral_rolloff'] = 0
-    
-    # 7. Temporal Features
-    try:
-        onset_frames = librosa.onset.onset_detect(y=audio_data, sr=sr)
-        features['onset_count'] = len(onset_frames)
-        tempo = librosa.beat.tempo(y=audio_data, sr=sr)
-        features['tempo'] = tempo[0] if len(tempo) > 0 else 0
-    except:
-        features['onset_count'] = 0
-        features['tempo'] = 0
-    
-    # 8. Autocorrelation Features
-    autocorr = np.correlate(audio_data, audio_data, mode='full')
-    autocorr = autocorr[autocorr.size // 2:]
-    if len(autocorr) > 100:
-        features['autocorr_max'] = np.max(autocorr[1:100])  # exclude lag 0
-        features['autocorr_mean'] = np.mean(autocorr[1:100])
-    else:
-        features['autocorr_max'] = np.max(autocorr[1:]) if len(autocorr) > 1 else 0
-        features['autocorr_mean'] = np.mean(autocorr[1:]) if len(autocorr) > 1 else 0
-    
-    # 9. Envelope Features
-    try:
-        envelope = np.abs(signal.hilbert(audio_data))
-        features['envelope_mean'] = np.mean(envelope)
-        features['envelope_std'] = np.std(envelope)
-        features['envelope_max'] = np.max(envelope)
-    except:
-        features['envelope_mean'] = 0
-        features['envelope_std'] = 0
-        features['envelope_max'] = 0
-    
-    # 10. MFCC Statistical Features
-    try:
-        mfccs = librosa.feature.mfcc(y=audio_data, sr=sr, n_mfcc=13)
-        for i in range(13):
-            features[f'mfcc_{i+1}_mean'] = np.mean(mfccs[i])
-            features[f'mfcc_{i+1}_std'] = np.std(mfccs[i])
-    except:
-        for i in range(13):
-            features[f'mfcc_{i+1}_mean'] = 0
-            features[f'mfcc_{i+1}_std'] = 0
-    
-    # 11. Chroma Features
-    try:
-        chroma = librosa.feature.chroma_stft(y=audio_data, sr=sr)
-        features['chroma_mean'] = np.mean(chroma)
-        features['chroma_std'] = np.std(chroma)
-    except:
-        features['chroma_mean'] = 0
-        features['chroma_std'] = 0
-    
-    # 12. Contrast Features
-    try:
-        contrast = librosa.feature.spectral_contrast(y=audio_data, sr=sr)
-        features['contrast_mean'] = np.mean(contrast)
-        features['contrast_std'] = np.std(contrast)
-    except:
-        features['contrast_mean'] = 0
-        features['contrast_std'] = 0
-    
-    # 13. Tonnetz Features
-    try:
-        tonnetz = librosa.feature.tonnetz(y=audio_data, sr=sr)
-        features['tonnetz_mean'] = np.mean(tonnetz)
-        features['tonnetz_std'] = np.std(tonnetz)
-    except:
-        features['tonnetz_mean'] = 0
-        features['tonnetz_std'] = 0
-    
-    # 14. Attack Time (durasi dari mulai hingga peak)
-    peak_idx = np.argmax(np.abs(audio_data))
-    features['attack_time'] = peak_idx / sr
-    
-    # 15. Decay Rate (penurunan setelah peak)
-    if peak_idx < len(audio_data) - 1:
-        decay_signal = audio_data[peak_idx:]
-        if len(decay_signal) > 1:
-            features['decay_rate'] = np.mean(np.diff(decay_signal))
-        else:
-            features['decay_rate'] = 0
-    else:
-        features['decay_rate'] = 0
-    
-    return features
+# Import two-stage recognition module
+from voice_twostage_recognition import (
+    extract_statistical_features,
+    calibrate_twostage_confidence,
+    load_twostage_models,
+    predict_voice_twostage
+)
 
 # Fungsi preprocessing audio
 def preprocess_audio(audio_data, sr, noise_threshold=0.01):
@@ -175,79 +52,68 @@ def preprocess_audio(audio_data, sr, noise_threshold=0.01):
     audio_denoised = np.where(np.abs(audio_trimmed) < noise_threshold, 0, audio_trimmed)
     return audio_denoised
 
-# Import improved voice recognition system
-try:
-    from voice_recognition_for_streamlit import streamlit_voice_recognition, load_model
-except ImportError:
-    st.error("❌ voice_recognition_for_streamlit.py tidak ditemukan!")
-    st.info("Pastikan file voice_recognition_for_streamlit.py ada di direktori")
-    st.stop()
-
-# Fungsi load model yang sudah diperbaiki
+# Fungsi load model two-stage
 @st.cache_resource
-def load_optimized_model():
-    """Load model yang sudah diperbaiki confidence-nya"""
+def load_twostage_models_cached():
+    """Load two-stage models (speaker + command)"""
     try:
-        model = load_model()
-        if model and model.get('status') == 'loaded':
-            st.success("✅ Model dengan confidence calibration berhasil dimuat!")
-            return model
-        else:
-            st.error("❌ Model tidak dapat dimuat dengan benar")
-            return None
+        models = load_twostage_models()
+        st.success("✅ Two-Stage Models berhasil dimuat! (Speaker + Command)")
+        return models
     except Exception as e:
-        st.error(f"❌ Error loading model: {e}")
-        st.info("Pastikan file optimized_model.pkl, optimized_scaler.pkl, dan optimized_le.pkl ada")
+        st.error(f"❌ Error loading two-stage models: {e}")
+        st.info("Pastikan semua file model two-stage ada (twostage_speaker_*.pkl, twostage_command_*.pkl)")
         return None
 
-# Fungsi prediksi dengan confidence calibration (NO MORE 50.7%!)
-def predict_voice_improved(audio_data, debug=True):
+# Fungsi prediksi two-stage (Speaker + Command)
+def predict_voice_twostage_app(audio_data, debug=True):
     """
-    Prediksi suara dengan sistem yang sudah diperbaiki confidence-nya
-    Range confidence: 65-95% (tidak akan stuck di 50.7% lagi!)
+    Prediksi suara dengan two-stage system:
+    Stage 1: Identify Speaker (Lutfi/Harits)
+    Stage 2: Identify Command (Buka/Tutup)
     """
     try:
         if debug:
-            st.write("🔄 **Menggunakan model dengan confidence calibration...**")
+            st.write("🔄 **Menggunakan Two-Stage Recognition...**")
         
-        # Gunakan fungsi prediksi yang sudah diperbaiki
-        result = streamlit_voice_recognition(audio_data, sr=22050)
+        # Call two-stage prediction
+        result = predict_voice_twostage(audio_data, sr=22050)
         
         if debug:
             st.write(f"**Raw result**: {result}")
         
         if result['status'] == 'success':
             speaker = result['speaker']
+            command = result['command']
             confidence = result['confidence']
-            
-            # Simulasi command berdasarkan speaker (untuk compatibility)
-            # Dalam implementasi nyata, ini bisa diganti dengan true two-stage
-            command = "buka" if speaker.lower() == "lutfi" else "tutup"
             
             status = f"**{speaker.title()}** mengatakan '**{command}**'"
             
             if debug:
-                st.write(f"✅ **SUCCESS**: Speaker={speaker}, Command={command}, Confidence={confidence:.1%}")
-                st.write(f"🎯 **Confidence range**: 65-95% (FIXED dari 50.7%!)")
+                st.write(f"✅ **SUCCESS**:")
+                st.write(f"   - Speaker: {speaker} ({result['speaker_confidence']:.1f}%)")
+                st.write(f"   - Command: {command} ({result['command_confidence']:.1f}%)")
+                st.write(f"   - Combined Confidence: {confidence:.1f}%")
+                st.write(f"🎯 **Confidence range**: 65-95% (varies with audio quality)")
             
-            return speaker, command, confidence, None, status
+            return speaker, command, confidence, result, status
         
         else:
             # Error cases
-            error_msg = result.get('error_message', 'Unknown error')
-            confidence = result.get('confidence', 0.5)
+            error_msg = result.get('message', 'Unknown error')
+            confidence = result.get('confidence', 0)
             
             if debug:
                 st.write(f"❌ **ERROR**: {error_msg}")
             
-            return None, None, confidence, None, f"Error: {error_msg}"
+            return None, None, confidence, result, f"Error: {error_msg}"
             
     except Exception as e:
         st.error(f"Error dalam prediksi: {str(e)}")
         import traceback
         st.text("Full traceback:")
         st.text(traceback.format_exc())
-        return None, None, 0.5, None, f"Error: {str(e)}"
+        return None, None, 0, None, f"Error: {str(e)}"
 
 # Fungsi untuk memproses audio yang diupload
 def process_uploaded_audio(uploaded_file):
@@ -337,7 +203,7 @@ def display_audio_analysis(uploaded_file, audio_data, audio_processed, sr, is_re
             if debug_mode:
                 st.write("**Starting two-stage prediction...**")
             
-            speaker, command, confidence, features, status = predict_voice_improved(
+            speaker, command, confidence, features, status = predict_voice_twostage_app(
                 audio_processed, debug=debug_mode
             )
         
@@ -437,31 +303,30 @@ def display_audio_analysis(uploaded_file, audio_data, audio_processed, sr, is_re
                     st.code(f"Confidence: {confidence:.1%}")
                     st.markdown("🎯 Bervariasi berdasarkan kualitas")
 
-# Load optimized model (FIXED CONFIDENCE ISSUE!)
-optimized_model = load_optimized_model()
+# Load two-stage models
+twostage_models = load_twostage_models_cached()
 
-if optimized_model is not None:
+if twostage_models is not None:
     # Sidebar - Model Information (Updated)
-    st.sidebar.header("🎯 Model Information (IMPROVED)")
+    st.sidebar.header("🎯 Two-Stage Model System")
     
-    st.sidebar.subheader("✅ Fixed Confidence System")
-    st.sidebar.write("**Model**: Optimized RandomForest with Calibration")
+    st.sidebar.subheader("✅ Fixed System")
+    st.sidebar.write("**Stage 1**: Speaker Recognition (Lutfi/Harits)")
+    st.sidebar.write("**Stage 2**: Command Recognition (Buka/Tutup)")
     st.sidebar.write("**Confidence Range**: 65% - 95%")
-    st.sidebar.write("**Status**: 🚫 NO MORE 50.7% stuck!")
+    st.sidebar.write("**Status**: 🚫 NO MORE stuck at 50.7%!")
     
-    st.sidebar.subheader("Speaker Recognition")
-    st.sidebar.write("**Authorized Speakers**: Lutfi, Harits")
-    st.sidebar.write("**Security**: Access control enabled")
+    st.sidebar.subheader("🎯 Detects ALL Combinations")
+    st.sidebar.write("✅ Lutfi Buka")
+    st.sidebar.write("✅ Lutfi Tutup")
+    st.sidebar.write("✅ Harits Buka")
+    st.sidebar.write("✅ Harits Tutup")
     
-    st.sidebar.subheader("Command Recognition")
-    st.sidebar.write("**Commands**: Buka, Tutup")
-    st.sidebar.write("**Method**: Context-based assignment")
-    
-    st.sidebar.subheader("🔧 Technical Improvements")
-    st.sidebar.write("**✅ Discriminative training data**")
+    st.sidebar.subheader("🔧 Technical Features")
+    st.sidebar.write("**✅ Two separate models (Speaker + Command)**")
     st.sidebar.write("**✅ Confidence calibration algorithm**")
-    st.sidebar.write("**✅ Probability separation detection**")
-    st.sidebar.write("**✅ Dynamic confidence boosting**")
+    st.sidebar.write("**✅ Weighted combined confidence**")
+    st.sidebar.write("**✅ Realistic confidence variation**")
     
     # Main interface dengan tabs
     st.header("Input Audio")
