@@ -26,8 +26,8 @@ st.set_page_config(
 )
 
 # Judul aplikasi
-st.title("Sistem Identifikasi Suara")
-st.markdown("Identifikasi speaker (Lutfi/Harits) dan command (buka/tutup)")
+st.title("🎤 Sistem Voice Recognition Two-Stage")
+st.markdown("**Stage 1:** Speaker Recognition (Lutfi/Harits) → **Stage 2:** Command Recognition (Buka/Tutup)")
 
 @st.cache_data
 def extract_statistical_features(audio_data, sr=22050):
@@ -180,32 +180,35 @@ def load_optimized_model():
         st.error(f"❌ Error: {str(e)}")
         return None
 
-def predict_voice(audio_data, model):
-    """Prediksi suara menggunakan model yang sudah diperbaiki"""
+def predict_voice_two_stage(audio_data, model):
+    """Prediksi suara two-stage: Speaker + Command"""
     if model is None:
-        return None, 0.0, "Error: Model not loaded"
+        return None, None, 0.0, "Error: Model not loaded"
     
     try:
-        # Import fungsi dari notebook yang sudah diperbaiki
-        from voice_recognition_for_streamlit import streamlit_voice_recognition
+        # Import fungsi two-stage dari file yang sudah diperbaiki
+        from voice_recognition_for_streamlit import streamlit_voice_recognition_two_stage
         
-        # Gunakan fungsi yang sudah fix confidence issue
-        result = streamlit_voice_recognition(audio_data, sr=22050)
+        # Gunakan fungsi two-stage system
+        result = streamlit_voice_recognition_two_stage(audio_data, sr=22050)
         
         if result['status'] == 'success':
             speaker = result['speaker']
+            command = result['command']
             confidence = result['confidence']
-            status = f"Speaker: **{speaker.title()}** (Confidence: {confidence:.1%})"
-            return speaker, confidence, status
+            status = f"**{speaker.title()}** mengatakan '**{command}**' (Confidence: {confidence:.1%})"
+            return speaker, command, confidence, status
+        elif result['status'] == 'unauthorized':
+            return None, None, result['confidence'], result['message']
         else:
-            return None, 0.0, f"Error: {result.get('error_message', 'Unknown error')}"
+            return None, None, 0.0, f"Error: {result.get('error_message', 'Unknown error')}"
         
     except ImportError:
         st.error("File voice_recognition_for_streamlit.py tidak ditemukan!")
-        return None, 0.0, "Error: Import failed"
+        return None, None, 0.0, "Error: Import failed"
     except Exception as e:
         st.error(f"Error: {str(e)}")
-        return None, 0.0, f"Error: {str(e)}"
+        return None, None, 0.0, f"Error: {str(e)}"
 
 def process_uploaded_audio(uploaded_file, model):
     """Process uploaded audio file"""
@@ -276,25 +279,39 @@ def display_audio_analysis(uploaded_file, audio_data, audio_processed, sr, model
     debug_mode = st.checkbox("Debug Mode", value=False, help="Tampilkan informasi debug detail", key=f"debug_{is_recorded}")
     
     if st.button("Analisis Voice (Two-Stage)", type="primary", key=f"analyze_{is_recorded}"):
-        with st.spinner("🔄 Processing audio..."):
-            speaker, confidence, status = predict_voice(audio_processed, model)
+        with st.spinner("🔄 Processing two-stage recognition..."):
+            speaker, command, confidence, status = predict_voice_two_stage(audio_processed, model)
         
         # Display hasil prediksi
         st.markdown("---")
         
         if speaker is None:
             st.error(status)
-            st.metric("Status", "ERROR")
+            if command is None:
+                st.metric("Status", "ACCESS DENIED", help="Suara tidak dikenal atau confidence terlalu rendah")
+            else:
+                st.metric("Status", "ERROR")
         else:
             st.success(status)
             
-            col1, col2 = st.columns(2)
+            # Metrics dalam 4 kolom
+            col1, col2, col3, col4 = st.columns(4)
             
             with col1:
-                st.metric("Speaker", speaker.title())
+                st.metric("Speaker", speaker.title(), help="Speaker yang diidentifikasi")
             
             with col2:
-                st.metric("Confidence", f"{confidence:.1%}")
+                st.metric("Command", command.title(), help="Perintah yang diucapkan")
+            
+            with col3:
+                st.metric("Confidence", f"{confidence:.1%}", help="Tingkat kepercayaan prediksi")
+            
+            with col4:
+                # Action indicator berdasarkan command
+                if command == "buka":
+                    st.metric("Action", "🔓 OPEN", help="Membuka pintu")
+                else:
+                    st.metric("Action", "🔒 CLOSE", help="Menutup pintu")
             
             # Progress bar
             st.progress(confidence)
@@ -303,12 +320,23 @@ def display_audio_analysis(uploaded_file, audio_data, audio_processed, sr, model
 model = load_optimized_model()
 
 if model is not None:
-    # Sidebar
+    # Sidebar - Model Information
     st.sidebar.header("Model Info")
-    st.sidebar.write("**Model**: RandomForest (Optimized)")
-    st.sidebar.write("**Status**: Confidence Fixed")
-    st.sidebar.write("**Range**: 65-95%")
-    st.sidebar.write("**Security**: Access control enabled")
+    
+    st.sidebar.subheader("Two-Stage System")
+    st.sidebar.write("**Speaker Recognition**: RandomForest")
+    st.sidebar.write("**Command Recognition**: SVM")
+    st.sidebar.write("**Security**: Authorized speakers only")
+    st.sidebar.write("**Threshold**: 70% confidence")
+    
+    st.sidebar.subheader("Supported Classes")
+    st.sidebar.write("**Speakers**: Lutfi, Harits")
+    st.sidebar.write("**Commands**: Buka, Tutup")
+    
+    st.sidebar.subheader("Technical Details")
+    st.sidebar.write("**Features**: 61 statistical audio features")
+    st.sidebar.write("**Confidence Range**: 65-95%")
+    st.sidebar.write("**Status**: Production Ready")
     
     # Main interface dengan tabs
     st.header("Input Audio")
@@ -392,10 +420,14 @@ else:
     
     st.markdown("### Checklist File yang Dibutuhkan:")
     st.markdown("""
+    - [ ] `voice_recognition_for_streamlit.py` - File fungsi utama
     - [ ] `speaker_model_pipeline.pkl` - Model untuk speaker recognition  
     - [ ] `command_model_pipeline.pkl` - Model untuk command recognition
+    - [ ] `optimized_model.pkl` - Backup model
+    - [ ] `optimized_scaler.pkl` - Feature scaler
+    - [ ] `optimized_le.pkl` - Label encoder
     
-    **Tip:** Jalankan notebook training terlebih dahulu untuk generate model files.
+    **Tip:** Pastikan semua file model ada di direktori yang sama dengan streamlit_app.py
     """)
 
 # Sidebar - Additional Info  

@@ -170,3 +170,103 @@ def load_model():
         'scaler': optimized_scaler,
         'label_encoder': optimized_le
     }
+
+def load_two_stage_models():
+    """Load both speaker and command models for two-stage recognition"""
+    try:
+        speaker_pipeline = joblib.load(os.path.join(script_dir, 'speaker_model_pipeline.pkl'))
+        command_pipeline = joblib.load(os.path.join(script_dir, 'command_model_pipeline.pkl'))
+        return speaker_pipeline, command_pipeline
+    except Exception as e:
+        print(f"Error loading two-stage models: {e}")
+        return None, None
+
+def streamlit_voice_recognition_two_stage(audio_data, sr=22050):
+    """
+    Two-stage voice recognition: Speaker identification + Command recognition
+    """
+    try:
+        # Load both models
+        speaker_pipeline, command_pipeline = load_two_stage_models()
+        
+        if speaker_pipeline is None or command_pipeline is None:
+            return {
+                'status': 'error',
+                'error_message': 'Model tidak dapat dimuat'
+            }
+        
+        # Extract features
+        features = extract_basic_audio_features(audio_data, sr)
+        features_df = pd.DataFrame([features])
+        
+        # STAGE 1: Speaker Recognition
+        speaker_features = features_df.copy()
+        
+        # Ensure all required speaker features exist
+        for feat in speaker_pipeline['feature_names']:
+            if feat not in speaker_features.columns:
+                speaker_features[feat] = 0
+        
+        # Select only required features
+        speaker_features = speaker_features[speaker_pipeline['feature_names']]
+        
+        # Clean and scale
+        speaker_features = speaker_features.replace([np.inf, -np.inf], np.nan).fillna(0)
+        speaker_features_scaled = speaker_pipeline['scaler'].transform(speaker_features)
+        
+        # Speaker prediction
+        speaker_pred = speaker_pipeline['model'].predict(speaker_features_scaled)[0]
+        speaker_proba = speaker_pipeline['model'].predict_proba(speaker_features_scaled)[0]
+        speaker_confidence = np.max(speaker_proba)
+        speaker_name = speaker_pipeline['label_encoder'].inverse_transform([speaker_pred])[0]
+        
+        # Check if authorized speaker (threshold)
+        SPEAKER_THRESHOLD = 0.7
+        if speaker_confidence < SPEAKER_THRESHOLD:
+            return {
+                'status': 'unauthorized',
+                'speaker': 'unknown',
+                'command': None,
+                'confidence': speaker_confidence,
+                'message': f'Suara tidak dikenal (confidence: {speaker_confidence:.1%})'
+            }
+        
+        # STAGE 2: Command Recognition (only if speaker authorized)
+        command_features = features_df.copy()
+        
+        # Ensure all required command features exist
+        for feat in command_pipeline['feature_names']:
+            if feat not in command_features.columns:
+                command_features[feat] = 0
+        
+        # Select only required features
+        command_features = command_features[command_pipeline['feature_names']]
+        
+        # Clean and scale
+        command_features = command_features.replace([np.inf, -np.inf], np.nan).fillna(0)
+        command_features_scaled = command_pipeline['scaler'].transform(command_features)
+        
+        # Command prediction
+        command_pred = command_pipeline['model'].predict(command_features_scaled)[0]
+        command_proba = command_pipeline['model'].predict_proba(command_features_scaled)[0]
+        command_confidence = np.max(command_proba)
+        command_name = command_pipeline['label_encoder'].inverse_transform([command_pred])[0]
+        
+        # Overall confidence (minimum of both stages)
+        overall_confidence = min(speaker_confidence, command_confidence)
+        
+        return {
+            'status': 'success',
+            'speaker': speaker_name,
+            'command': command_name,
+            'confidence': overall_confidence,
+            'speaker_confidence': speaker_confidence,
+            'command_confidence': command_confidence,
+            'message': f'{speaker_name.title()} mengatakan "{command_name}"'
+        }
+        
+    except Exception as e:
+        return {
+            'status': 'error',
+            'error_message': str(e)
+        }
