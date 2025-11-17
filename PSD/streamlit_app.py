@@ -338,7 +338,6 @@ def display_prediction_results(speaker, command, confidence, status):
         # Success result
         if command == "buka":
             st.success(f"🔓 **{speaker.title()}** → **BUKA** ({confidence:.1%})")
-            st.balloons()
         else:
             st.success(f"🔒 **{speaker.title()}** → **TUTUP** ({confidence:.1%})")
 
