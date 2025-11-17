@@ -341,6 +341,91 @@ def display_prediction_results(speaker, command, confidence, status):
         else:
             st.success(f"🔒 **{speaker.title()}** → **TUTUP** ({confidence:.1%})")
 
+# Fungsi untuk menampilkan analisis features
+def display_audio_features(features, speaker_pipeline, command_pipeline):
+    """Display key audio features analysis"""
+    
+    st.markdown("---")
+    st.subheader("📊 Analisis Audio")
+    
+    # Key audio characteristics
+    col1, col2, col3, col4 = st.columns(4)
+    
+    with col1:
+        st.metric(
+            label="📈 Energy", 
+            value=f"{features.get('energy', 0):.2e}",
+            help="Total energy sinyal audio"
+        )
+    
+    with col2:
+        st.metric(
+            label="🔊 RMS", 
+            value=f"{features.get('rms', 0):.4f}",
+            help="Root Mean Square amplitude"
+        )
+    
+    with col3:
+        st.metric(
+            label="🎵 Spectral Centroid", 
+            value=f"{features.get('spectral_centroid', 0):.0f} Hz",
+            help="Pusat spektral (brightness)"
+        )
+    
+    with col4:
+        st.metric(
+            label="⚡ ZCR", 
+            value=f"{features.get('zcr_rate', 0):.4f}",
+            help="Zero Crossing Rate"
+        )
+    
+    # Feature comparison charts
+    with st.expander("📋 Detail Features", expanded=False):
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            st.write("**🎤 Speaker Features (Top 8)**")
+            top_speaker_features = speaker_pipeline['feature_names'][:8]
+            top_speaker_values = [features.get(f, 0) for f in top_speaker_features]
+            
+            fig, ax = plt.subplots(figsize=(6, 4))
+            bars = ax.barh(top_speaker_features, top_speaker_values, color='skyblue')
+            ax.set_xlabel('Nilai Feature')
+            ax.set_title('Speaker Recognition Features')
+            
+            # Add value labels on bars
+            for bar, value in zip(bars, top_speaker_values):
+                ax.text(bar.get_width(), bar.get_y() + bar.get_height()/2, 
+                       f'{value:.3f}', ha='left', va='center', fontsize=8)
+            
+            plt.tight_layout()
+            st.pyplot(fig)
+        
+        with col2:
+            st.write("**💬 Command Features (Top 8)**")
+            top_command_features = command_pipeline['feature_names'][:8]
+            top_command_values = [features.get(f, 0) for f in top_command_features]
+            
+            fig, ax = plt.subplots(figsize=(6, 4))
+            bars = ax.barh(top_command_features, top_command_values, color='lightcoral')
+            ax.set_xlabel('Nilai Feature')
+            ax.set_title('Command Recognition Features')
+            
+            # Add value labels on bars
+            for bar, value in zip(bars, top_command_values):
+                ax.text(bar.get_width(), bar.get_y() + bar.get_height()/2, 
+                       f'{value:.3f}', ha='left', va='center', fontsize=8)
+            
+            plt.tight_layout()
+            st.pyplot(fig)
+        
+        # MFCC Summary
+        st.write("**🎼 MFCC Summary**")
+        mfcc_features = {k: v for k, v in features.items() if k.startswith('mfcc_') and k.endswith('_mean')}
+        if mfcc_features:
+            mfcc_df = pd.DataFrame([mfcc_features])
+            st.bar_chart(mfcc_df.T, height=200)
+
 # Fungsi untuk menampilkan analisis audio
 def display_audio_analysis(uploaded_file, audio_data, audio_processed, sr, speaker_pipeline, command_pipeline, is_recorded=False):
     """Display audio analysis and prediction results"""
@@ -366,6 +451,10 @@ def display_audio_analysis(uploaded_file, audio_data, audio_processed, sr, speak
         
         # Display hasil prediksi langsung
         display_prediction_results(speaker, command, confidence, status)
+    
+    # Display analysis if successful
+    if speaker is not None and features is not None:
+        display_audio_features(features, speaker_pipeline, command_pipeline)
 
 
 # Load models (two-stage system)
