@@ -181,14 +181,14 @@ def load_models():
     
     try:
         speaker_pipeline = joblib.load('speaker_model_pipeline.pkl')
-        st.success("✅ Loaded speaker model: speaker_model_pipeline.pkl")
+        # st.success("✅ Loaded speaker model: speaker_model_pipeline.pkl")
     except FileNotFoundError:
         st.error("❌ Speaker model file tidak ditemukan!")
         st.info("Pastikan file 'speaker_model_pipeline.pkl' ada di direktori ini")
     
     try:
         command_pipeline = joblib.load('command_model_pipeline.pkl')
-        st.success("✅ Loaded command model: command_model_pipeline.pkl")
+        # st.success("✅ Loaded command model: command_model_pipeline.pkl")
     except FileNotFoundError:
         st.error("❌ Command model file tidak ditemukan!")
         st.info("Pastikan file 'command_model_pipeline.pkl' ada di direktori ini")
