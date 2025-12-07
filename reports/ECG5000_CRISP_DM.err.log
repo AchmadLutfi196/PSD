@@ -22,73 +22,31 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-# Install required packages
-%pip install seaborn
-
-# Import library yang diperlukan
-import pandas as pd
+# Import libraries
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler, LabelEncoder
+from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
 import warnings
 warnings.filterwarnings('ignore')
 
-# Import PyCaret untuk EDA dan classification
-try:
-    from pycaret.datasets import get_data
-    from pycaret.classification import *
-    from pycaret.anomaly import *
-    print("PyCaret berhasil diimport")
-except ImportError:
-    print("PyCaret tidak tersedia. Install dengan: pip install pycaret")
-
-# Atur style untuk visualisasi
-plt.style.use('default')
-sns.set_palette("husl")
-
-print("Library berhasil diimport")
+# Set style
+plt.style.use('seaborn-v0_8-whitegrid')
+sns.set_palette('husl')
 ------------------
 
------ stdout -----
-Requirement already satisfied: seaborn in c:\laragon\bin\python\python-3.10\lib\site-packages (0.13.2)
-Requirement already satisfied: numpy!=1.24.0,>=1.20 in c:\laragon\bin\python\python-3.10\lib\site-packages (from seaborn) (2.2.6)
-Requirement already satisfied: pandas>=1.2 in c:\laragon\bin\python\python-3.10\lib\site-packages (from seaborn) (2.0.3)
-Requirement already satisfied: matplotlib!=3.6.1,>=3.4 in c:\laragon\bin\python\python-3.10\lib\site-packages (from seaborn) (3.10.1)
-Requirement already satisfied: contourpy>=1.0.1 in c:\laragon\bin\python\python-3.10\lib\site-packages (from matplotlib!=3.6.1,>=3.4->seaborn) (1.3.1)
-Requirement already satisfied: cycler>=0.10 in c:\laragon\bin\python\python-3.10\lib\site-packages (from matplotlib!=3.6.1,>=3.4->seaborn) (0.12.1)
-Requirement already satisfied: fonttools>=4.22.0 in c:\laragon\bin\python\python-3.10\lib\site-packages (from matplotlib!=3.6.1,>=3.4->seaborn) (4.56.0)
-Requirement already satisfied: kiwisolver>=1.3.1 in c:\laragon\bin\python\python-3.10\lib\site-packages (from matplotlib!=3.6.1,>=3.4->seaborn) (1.4.8)
-Requirement already satisfied: packaging>=20.0 in c:\laragon\bin\python\python-3.10\lib\site-packages (from matplotlib!=3.6.1,>=3.4->seaborn) (23.2)
-Requirement already satisfied: pillow>=8 in c:\laragon\bin\python\python-3.10\lib\site-packages (from matplotlib!=3.6.1,>=3.4->seaborn) (10.4.0)
-Requirement already satisfied: pyparsing>=2.3.1 in c:\laragon\bin\python\python-3.10\lib\site-packages (from matplotlib!=3.6.1,>=3.4->seaborn) (3.0.9)
-Requirement already satisfied: python-dateutil>=2.7 in c:\laragon\bin\python\python-3.10\lib\site-packages (from matplotlib!=3.6.1,>=3.4->seaborn) (2.9.0.post0)
-Requirement already satisfied: pytz>=2020.1 in c:\laragon\bin\python\python-3.10\lib\site-packages (from pandas>=1.2->seaborn) (2025.1)
-Requirement already satisfied: tzdata>=2022.1 in c:\laragon\bin\python\python-3.10\lib\site-packages (from pandas>=1.2->seaborn) (2025.1)
-Requirement already satisfied: six>=1.5 in c:\laragon\bin\python\python-3.10\lib\site-packages (from python-dateutil>=2.7->matplotlib!=3.6.1,>=3.4->seaborn) (1.17.0)
-Note: you may need to restart the kernel to use updated packages.
------ stderr -----
-WARNING: Ignoring invalid distribution -cikit-learn (c:\users\achma\appdata\roaming\python\python310\site-packages)
-WARNING: Ignoring invalid distribution -cikit-learn (c:\users\achma\appdata\roaming\python\python310\site-packages)
-WARNING: Ignoring invalid distribution -cipy (c:\laragon\bin\python\python-3.10\lib\site-packages)
-WARNING: Ignoring invalid distribution -cikit-learn (c:\users\achma\appdata\roaming\python\python310\site-packages)
-WARNING: Ignoring invalid distribution -cipy (c:\laragon\bin\python\python-3.10\lib\site-packages)
-WARNING: Ignoring invalid distribution -cikit-learn (c:\laragon\bin\python\python-3.10\lib\site-packages)
-WARNING: Ignoring invalid distribution -cipy (c:\laragon\bin\python\python-3.10\lib\site-packages)
-WARNING: Ignoring invalid distribution -cikit-learn (c:\users\achma\appdata\roaming\python\python310\site-packages)
-WARNING: Ignoring invalid distribution -cikit-learn (c:\users\achma\appdata\roaming\python\python310\site-packages)
-
-[notice] A new release of pip is available: 25.2 -> 25.3
-[notice] To update, run: python.exe -m pip install --upgrade pip
-------------------
 
 [1;31m---------------------------------------------------------------------------[0m
 [1;31mValueError[0m                                Traceback (most recent call last)
-Cell [1;32mIn[1], line 5[0m
-[0;32m      2[0m get_ipython()[38;5;241m.[39mrun_line_magic([38;5;124m'[39m[38;5;124mpip[39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124minstall seaborn[39m[38;5;124m'[39m)
-[0;32m      4[0m [38;5;66;03m# Import library yang diperlukan[39;00m
-[1;32m----> 5[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mpandas[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[38;5;21;01mpd[39;00m
-[0;32m      6[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mnumpy[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[38;5;21;01mnp[39;00m
-[0;32m      7[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mpyplot[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[38;5;21;01mplt[39;00m
+Cell [1;32mIn[1], line 3[0m
+[0;32m      1[0m [38;5;66;03m# Import libraries[39;00m
+[0;32m      2[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mnumpy[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[38;5;21;01mnp[39;00m
+[1;32m----> 3[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mpandas[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[38;5;21;01mpd[39;00m
+[0;32m      4[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mpyplot[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[38;5;21;01mplt[39;00m
+[0;32m      5[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mseaborn[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[38;5;21;01msns[39;00m
 
 File [1;32mC:\laragon\bin\python\python-3.10\lib\site-packages\pandas\__init__.py:22[0m
 [0;32m     19[0m [38;5;28;01mdel[39;00m _hard_dependencies, _dependency, _missing_dependencies
