@@ -201,6 +201,14 @@
 
 
 <li class="toctree-l1"><a class="reference internal" href="voice_open_close_identification.html">Identifikasi Suara Buka Tutup Menggunakan Feature Statistik Time Series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ECG5000/ECG5000_CRISP_DM.html">ECG5000 Classification Project</a></li>
+
+
+
+
+
+
+
 </ul>
 
     </div>
@@ -479,13 +487,93 @@ Penanganan outliers dari multi-model PyCaret (ABOD, KNN, COF)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>PyCaret berhasil diimport
-Libraries berhasil diimport untuk preprocessing
-Libraries yang tersedia:
-   • Pandas &amp; NumPy: Data manipulation
-   • Matplotlib &amp; Seaborn: Visualisasi
-   • Scikit-learn: Preprocessing tools
-   • PyCaret: Advanced ML preprocessing
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Import libraries yang diperlukan untuk preprocessing</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">File</span> <span class="n">C</span><span class="p">:</span>\<span class="n">laragon</span>\<span class="nb">bin</span>\<span class="n">python</span>\<span class="n">python</span><span class="o">-</span><span class="mf">3.10</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">pandas</span>\<span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">22</span>
+<span class="g g-Whitespace">     </span><span class="mi">19</span> <span class="k">del</span> <span class="n">_hard_dependencies</span><span class="p">,</span> <span class="n">_dependency</span><span class="p">,</span> <span class="n">_missing_dependencies</span>
+<span class="g g-Whitespace">     </span><span class="mi">21</span> <span class="c1"># numpy compat</span>
+<span class="ne">---&gt; </span><span class="mi">22</span> <span class="kn">from</span><span class="w"> </span><span class="nn">pandas.compat</span><span class="w"> </span><span class="kn">import</span> <span class="n">is_numpy_dev</span> <span class="k">as</span> <span class="n">_is_numpy_dev</span>  <span class="c1"># pyright: ignore # noqa:F401</span>
+<span class="g g-Whitespace">     </span><span class="mi">24</span> <span class="k">try</span><span class="p">:</span>
+<span class="g g-Whitespace">     </span><span class="mi">25</span>     <span class="kn">from</span><span class="w"> </span><span class="nn">pandas._libs</span><span class="w"> </span><span class="kn">import</span> <span class="n">hashtable</span> <span class="k">as</span> <span class="n">_hashtable</span><span class="p">,</span> <span class="n">lib</span> <span class="k">as</span> <span class="n">_lib</span><span class="p">,</span> <span class="n">tslib</span> <span class="k">as</span> <span class="n">_tslib</span>
+
+<span class="n">File</span> <span class="n">C</span><span class="p">:</span>\<span class="n">laragon</span>\<span class="nb">bin</span>\<span class="n">python</span>\<span class="n">python</span><span class="o">-</span><span class="mf">3.10</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">pandas</span>\<span class="n">compat</span>\<span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">25</span>
+<span class="g g-Whitespace">     </span><span class="mi">17</span> <span class="kn">from</span><span class="w"> </span><span class="nn">pandas.compat._constants</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">18</span>     <span class="n">IS64</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">19</span>     <span class="n">PY39</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">22</span>     <span class="n">PYPY</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">23</span> <span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">24</span> <span class="kn">import</span><span class="w"> </span><span class="nn">pandas.compat.compressors</span>
+<span class="ne">---&gt; </span><span class="mi">25</span> <span class="kn">from</span><span class="w"> </span><span class="nn">pandas.compat.numpy</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">26</span>     <span class="n">is_numpy_dev</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">27</span>     <span class="n">np_version_under1p21</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">28</span> <span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">29</span> <span class="kn">from</span><span class="w"> </span><span class="nn">pandas.compat.pyarrow</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">30</span>     <span class="n">pa_version_under7p0</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">31</span>     <span class="n">pa_version_under8p0</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">32</span>     <span class="n">pa_version_under9p0</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">33</span>     <span class="n">pa_version_under11p0</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">34</span> <span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">37</span> <span class="k">def</span><span class="w"> </span><span class="nf">set_function_name</span><span class="p">(</span><span class="n">f</span><span class="p">:</span> <span class="n">F</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">F</span><span class="p">:</span>
+
+<span class="n">File</span> <span class="n">C</span><span class="p">:</span>\<span class="n">laragon</span>\<span class="nb">bin</span>\<span class="n">python</span>\<span class="n">python</span><span class="o">-</span><span class="mf">3.10</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">pandas</span>\<span class="n">compat</span>\<span class="n">numpy</span>\<span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">4</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span><span class="w"> </span><span class="sd">&quot;&quot;&quot; support numpy compatibility across versions &quot;&quot;&quot;</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="ne">----&gt; </span><span class="mi">4</span> <span class="kn">from</span><span class="w"> </span><span class="nn">pandas.util.version</span><span class="w"> </span><span class="kn">import</span> <span class="n">Version</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="c1"># numpy versioning</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="n">_np_version</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">__version__</span>
+
+<span class="n">File</span> <span class="n">C</span><span class="p">:</span>\<span class="n">laragon</span>\<span class="nb">bin</span>\<span class="n">python</span>\<span class="n">python</span><span class="o">-</span><span class="mf">3.10</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">pandas</span>\<span class="n">util</span>\<span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">2</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># pyright: reportUnusedImport = false</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">from</span><span class="w"> </span><span class="nn">pandas.util._decorators</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>  <span class="c1"># noqa:F401</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span>     <span class="n">Appender</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span>     <span class="n">Substitution</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span>     <span class="n">cache_readonly</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="kn">from</span><span class="w"> </span><span class="nn">pandas.core.util.hashing</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>  <span class="c1"># noqa:F401</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span>     <span class="n">hash_array</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span>     <span class="n">hash_pandas_object</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="p">)</span>
+
+<span class="n">File</span> <span class="n">C</span><span class="p">:</span>\<span class="n">laragon</span>\<span class="nb">bin</span>\<span class="n">python</span>\<span class="n">python</span><span class="o">-</span><span class="mf">3.10</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">pandas</span>\<span class="n">util</span>\<span class="n">_decorators</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">14</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span>     <span class="n">Any</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span>     <span class="n">Callable</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span>     <span class="n">Mapping</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span>     <span class="n">cast</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span> <span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="ne">---&gt; </span><span class="mi">14</span> <span class="kn">from</span><span class="w"> </span><span class="nn">pandas._libs.properties</span><span class="w"> </span><span class="kn">import</span> <span class="n">cache_readonly</span>
+<span class="g g-Whitespace">     </span><span class="mi">15</span> <span class="kn">from</span><span class="w"> </span><span class="nn">pandas._typing</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">16</span>     <span class="n">F</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">17</span>     <span class="n">T</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">18</span> <span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">19</span> <span class="kn">from</span><span class="w"> </span><span class="nn">pandas.util._exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">find_stack_level</span>
+
+<span class="n">File</span> <span class="n">C</span><span class="p">:</span>\<span class="n">laragon</span>\<span class="nb">bin</span>\<span class="n">python</span>\<span class="n">python</span><span class="o">-</span><span class="mf">3.10</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">pandas</span>\<span class="n">_libs</span>\<span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">13</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span>     <span class="s2">&quot;NaT&quot;</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span>     <span class="s2">&quot;NaTType&quot;</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span>     <span class="s2">&quot;Interval&quot;</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="p">]</span>
+<span class="ne">---&gt; </span><span class="mi">13</span> <span class="kn">from</span><span class="w"> </span><span class="nn">pandas._libs.interval</span><span class="w"> </span><span class="kn">import</span> <span class="n">Interval</span>
+<span class="g g-Whitespace">     </span><span class="mi">14</span> <span class="kn">from</span><span class="w"> </span><span class="nn">pandas._libs.tslibs</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">15</span>     <span class="n">NaT</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">16</span>     <span class="n">NaTType</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">21</span>     <span class="n">iNaT</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">22</span> <span class="p">)</span>
+
+<span class="nn">File C:\laragon\bin\python\python-3.10\lib\site-packages\pandas\_libs\interval.pyx:1,</span> in <span class="ni">init pandas._libs.interval</span><span class="nt">()</span>
+
+<span class="ne">ValueError</span>: numpy.dtype size changed, may indicate binary incompatibility. Expected 96 from C header, got 88 from PyObject
 </pre></div>
 </div>
 </div>
@@ -1020,6 +1108,354 @@ STEP 1: Visualisasi Koordinat Data Original
 Koordinat Outliers (Strong Consensus):
 Index  Sepal_L  Sepal_W  Petal_L  Petal_W  Species 
 -------------------------------------------------------
+
+
+Outliers teridentifikasi (Strong Consensus):
+   • Jumlah: 0 dari 150 data (0.0%)
+   • Indices: []
+
+STEP 1: Visualisasi Koordinat Data Original
+
+Koordinat Outliers (Strong Consensus):
+Index  Sepal_L  Sepal_W  Petal_L  Petal_W  Species 
+-------------------------------------------------------
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== OUTLIER REMOVAL DAN IMPUTATION PROCESS ===
+
+Outliers teridentifikasi (Strong Consensus):
+   • Jumlah: 0 dari 150 data (0.0%)
+   • Indices: []
+
+STEP 1: Visualisasi Koordinat Data Original
+
+Koordinat Outliers (Strong Consensus):
+Index  Sepal_L  Sepal_W  Petal_L  Petal_W  Species 
+-------------------------------------------------------
+
+
+Outliers teridentifikasi (Strong Consensus):
+   • Jumlah: 0 dari 150 data (0.0%)
+   • Indices: []
+
+STEP 1: Visualisasi Koordinat Data Original
+
+Koordinat Outliers (Strong Consensus):
+Index  Sepal_L  Sepal_W  Petal_L  Petal_W  Species 
+-------------------------------------------------------
+</pre></div>
+</div>
+<img alt="_images/18b62e5c169f8776500c75a4f343a97e18db20c79b1d93bfbdf8e2d308fe293a.png" src="_images/18b62e5c169f8776500c75a4f343a97e18db20c79b1d93bfbdf8e2d308fe293a.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== OUTLIER REMOVAL DAN IMPUTATION PROCESS ===
+
+Outliers teridentifikasi (Strong Consensus):
+   • Jumlah: 0 dari 150 data (0.0%)
+   • Indices: []
+
+STEP 1: Visualisasi Koordinat Data Original
+
+Koordinat Outliers (Strong Consensus):
+Index  Sepal_L  Sepal_W  Petal_L  Petal_W  Species 
+-------------------------------------------------------
+
+
+Outliers teridentifikasi (Strong Consensus):
+   • Jumlah: 0 dari 150 data (0.0%)
+   • Indices: []
+
+STEP 1: Visualisasi Koordinat Data Original
+
+Koordinat Outliers (Strong Consensus):
+Index  Sepal_L  Sepal_W  Petal_L  Petal_W  Species 
+-------------------------------------------------------
+</pre></div>
+</div>
+<img alt="_images/18b62e5c169f8776500c75a4f343a97e18db20c79b1d93bfbdf8e2d308fe293a.png" src="_images/18b62e5c169f8776500c75a4f343a97e18db20c79b1d93bfbdf8e2d308fe293a.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>STEP 2: Menghapus Outliers (Set sebagai NaN)
+
+Missing values setelah outlier removal:
+   • sepal length (cm): 0 missing (0.0%)
+   • sepal width (cm): 0 missing (0.0%)
+   • petal length (cm): 0 missing (0.0%)
+   • petal width (cm): 0 missing (0.0%)
+
+STEP 3: Koordinat Data dengan Missing Values
+
+Koordinat Data Setelah Outlier Removal (NaN untuk outliers):
+Index  Sepal_L  Sepal_W  Petal_L  Petal_W  Status  
+-------------------------------------------------------
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== OUTLIER REMOVAL DAN IMPUTATION PROCESS ===
+
+Outliers teridentifikasi (Strong Consensus):
+   • Jumlah: 0 dari 150 data (0.0%)
+   • Indices: []
+
+STEP 1: Visualisasi Koordinat Data Original
+
+Koordinat Outliers (Strong Consensus):
+Index  Sepal_L  Sepal_W  Petal_L  Petal_W  Species 
+-------------------------------------------------------
+
+
+Outliers teridentifikasi (Strong Consensus):
+   • Jumlah: 0 dari 150 data (0.0%)
+   • Indices: []
+
+STEP 1: Visualisasi Koordinat Data Original
+
+Koordinat Outliers (Strong Consensus):
+Index  Sepal_L  Sepal_W  Petal_L  Petal_W  Species 
+-------------------------------------------------------
+</pre></div>
+</div>
+<img alt="_images/18b62e5c169f8776500c75a4f343a97e18db20c79b1d93bfbdf8e2d308fe293a.png" src="_images/18b62e5c169f8776500c75a4f343a97e18db20c79b1d93bfbdf8e2d308fe293a.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>STEP 2: Menghapus Outliers (Set sebagai NaN)
+
+Missing values setelah outlier removal:
+   • sepal length (cm): 0 missing (0.0%)
+   • sepal width (cm): 0 missing (0.0%)
+   • petal length (cm): 0 missing (0.0%)
+   • petal width (cm): 0 missing (0.0%)
+
+STEP 3: Koordinat Data dengan Missing Values
+
+Koordinat Data Setelah Outlier Removal (NaN untuk outliers):
+Index  Sepal_L  Sepal_W  Petal_L  Petal_W  Status  
+-------------------------------------------------------
+</pre></div>
+</div>
+<img alt="_images/1197390cd3c11dab6d09e4178db061cf7acb7473daa077cf70339d4862ff603b.png" src="_images/1197390cd3c11dab6d09e4178db061cf7acb7473daa077cf70339d4862ff603b.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== OUTLIER REMOVAL DAN IMPUTATION PROCESS ===
+
+Outliers teridentifikasi (Strong Consensus):
+   • Jumlah: 0 dari 150 data (0.0%)
+   • Indices: []
+
+STEP 1: Visualisasi Koordinat Data Original
+
+Koordinat Outliers (Strong Consensus):
+Index  Sepal_L  Sepal_W  Petal_L  Petal_W  Species 
+-------------------------------------------------------
+
+
+Outliers teridentifikasi (Strong Consensus):
+   • Jumlah: 0 dari 150 data (0.0%)
+   • Indices: []
+
+STEP 1: Visualisasi Koordinat Data Original
+
+Koordinat Outliers (Strong Consensus):
+Index  Sepal_L  Sepal_W  Petal_L  Petal_W  Species 
+-------------------------------------------------------
+</pre></div>
+</div>
+<img alt="_images/18b62e5c169f8776500c75a4f343a97e18db20c79b1d93bfbdf8e2d308fe293a.png" src="_images/18b62e5c169f8776500c75a4f343a97e18db20c79b1d93bfbdf8e2d308fe293a.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>STEP 2: Menghapus Outliers (Set sebagai NaN)
+
+Missing values setelah outlier removal:
+   • sepal length (cm): 0 missing (0.0%)
+   • sepal width (cm): 0 missing (0.0%)
+   • petal length (cm): 0 missing (0.0%)
+   • petal width (cm): 0 missing (0.0%)
+
+STEP 3: Koordinat Data dengan Missing Values
+
+Koordinat Data Setelah Outlier Removal (NaN untuk outliers):
+Index  Sepal_L  Sepal_W  Petal_L  Petal_W  Status  
+-------------------------------------------------------
+</pre></div>
+</div>
+<img alt="_images/1197390cd3c11dab6d09e4178db061cf7acb7473daa077cf70339d4862ff603b.png" src="_images/1197390cd3c11dab6d09e4178db061cf7acb7473daa077cf70339d4862ff603b.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>STEP 4: Metode Imputation untuk Mengisi Missing Values
+
+Metode Imputation yang digunakan:
+   1. Mean Imputation: Menggunakan rata-rata kolom
+   2. Median Imputation: Menggunakan median kolom
+   3. Species Median: Menggunakan median per spesies
+   4. KNN Imputation: Menggunakan 5 nearest neighbors
+
+STEP 5: Koordinat Perbandingan Metode Imputation
+
+Koordinat Imputed untuk Outlier Indices:
+Method          Index  Sepal_L  Sepal_W  Petal_L  Petal_W 
+----------------------------------------------------------------------
+Mean            0      5.10     3.50     1.40     0.20    
+Median          0      5.10     3.50     1.40     0.20    
+Species Med     0      5.10     3.50     1.40     0.20    
+KNN             0      5.10     3.50     1.40     0.20    
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== OUTLIER REMOVAL DAN IMPUTATION PROCESS ===
+
+Outliers teridentifikasi (Strong Consensus):
+   • Jumlah: 0 dari 150 data (0.0%)
+   • Indices: []
+
+STEP 1: Visualisasi Koordinat Data Original
+
+Koordinat Outliers (Strong Consensus):
+Index  Sepal_L  Sepal_W  Petal_L  Petal_W  Species 
+-------------------------------------------------------
+
+
+Outliers teridentifikasi (Strong Consensus):
+   • Jumlah: 0 dari 150 data (0.0%)
+   • Indices: []
+
+STEP 1: Visualisasi Koordinat Data Original
+
+Koordinat Outliers (Strong Consensus):
+Index  Sepal_L  Sepal_W  Petal_L  Petal_W  Species 
+-------------------------------------------------------
+</pre></div>
+</div>
+<img alt="_images/18b62e5c169f8776500c75a4f343a97e18db20c79b1d93bfbdf8e2d308fe293a.png" src="_images/18b62e5c169f8776500c75a4f343a97e18db20c79b1d93bfbdf8e2d308fe293a.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>STEP 2: Menghapus Outliers (Set sebagai NaN)
+
+Missing values setelah outlier removal:
+   • sepal length (cm): 0 missing (0.0%)
+   • sepal width (cm): 0 missing (0.0%)
+   • petal length (cm): 0 missing (0.0%)
+   • petal width (cm): 0 missing (0.0%)
+
+STEP 3: Koordinat Data dengan Missing Values
+
+Koordinat Data Setelah Outlier Removal (NaN untuk outliers):
+Index  Sepal_L  Sepal_W  Petal_L  Petal_W  Status  
+-------------------------------------------------------
+</pre></div>
+</div>
+<img alt="_images/1197390cd3c11dab6d09e4178db061cf7acb7473daa077cf70339d4862ff603b.png" src="_images/1197390cd3c11dab6d09e4178db061cf7acb7473daa077cf70339d4862ff603b.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>STEP 4: Metode Imputation untuk Mengisi Missing Values
+
+Metode Imputation yang digunakan:
+   1. Mean Imputation: Menggunakan rata-rata kolom
+   2. Median Imputation: Menggunakan median kolom
+   3. Species Median: Menggunakan median per spesies
+   4. KNN Imputation: Menggunakan 5 nearest neighbors
+
+STEP 5: Koordinat Perbandingan Metode Imputation
+
+Koordinat Imputed untuk Outlier Indices:
+Method          Index  Sepal_L  Sepal_W  Petal_L  Petal_W 
+----------------------------------------------------------------------
+Mean            0      5.10     3.50     1.40     0.20    
+Median          0      5.10     3.50     1.40     0.20    
+Species Med     0      5.10     3.50     1.40     0.20    
+KNN             0      5.10     3.50     1.40     0.20    
+</pre></div>
+</div>
+<img alt="_images/c71056e57d7f0f5774cb1889de397b6ea9bb51682c090a307b532f742a10a739.png" src="_images/c71056e57d7f0f5774cb1889de397b6ea9bb51682c090a307b532f742a10a739.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== OUTLIER REMOVAL DAN IMPUTATION PROCESS ===
+
+Outliers teridentifikasi (Strong Consensus):
+   • Jumlah: 0 dari 150 data (0.0%)
+   • Indices: []
+
+STEP 1: Visualisasi Koordinat Data Original
+
+Koordinat Outliers (Strong Consensus):
+Index  Sepal_L  Sepal_W  Petal_L  Petal_W  Species 
+-------------------------------------------------------
+
+
+Outliers teridentifikasi (Strong Consensus):
+   • Jumlah: 0 dari 150 data (0.0%)
+   • Indices: []
+
+STEP 1: Visualisasi Koordinat Data Original
+
+Koordinat Outliers (Strong Consensus):
+Index  Sepal_L  Sepal_W  Petal_L  Petal_W  Species 
+-------------------------------------------------------
+</pre></div>
+</div>
+<img alt="_images/18b62e5c169f8776500c75a4f343a97e18db20c79b1d93bfbdf8e2d308fe293a.png" src="_images/18b62e5c169f8776500c75a4f343a97e18db20c79b1d93bfbdf8e2d308fe293a.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>STEP 2: Menghapus Outliers (Set sebagai NaN)
+
+Missing values setelah outlier removal:
+   • sepal length (cm): 0 missing (0.0%)
+   • sepal width (cm): 0 missing (0.0%)
+   • petal length (cm): 0 missing (0.0%)
+   • petal width (cm): 0 missing (0.0%)
+
+STEP 3: Koordinat Data dengan Missing Values
+
+Koordinat Data Setelah Outlier Removal (NaN untuk outliers):
+Index  Sepal_L  Sepal_W  Petal_L  Petal_W  Status  
+-------------------------------------------------------
+</pre></div>
+</div>
+<img alt="_images/1197390cd3c11dab6d09e4178db061cf7acb7473daa077cf70339d4862ff603b.png" src="_images/1197390cd3c11dab6d09e4178db061cf7acb7473daa077cf70339d4862ff603b.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>STEP 4: Metode Imputation untuk Mengisi Missing Values
+
+Metode Imputation yang digunakan:
+   1. Mean Imputation: Menggunakan rata-rata kolom
+   2. Median Imputation: Menggunakan median kolom
+   3. Species Median: Menggunakan median per spesies
+   4. KNN Imputation: Menggunakan 5 nearest neighbors
+
+STEP 5: Koordinat Perbandingan Metode Imputation
+
+Koordinat Imputed untuk Outlier Indices:
+Method          Index  Sepal_L  Sepal_W  Petal_L  Petal_W 
+----------------------------------------------------------------------
+Mean            0      5.10     3.50     1.40     0.20    
+Median          0      5.10     3.50     1.40     0.20    
+Species Med     0      5.10     3.50     1.40     0.20    
+KNN             0      5.10     3.50     1.40     0.20    
+</pre></div>
+</div>
+<img alt="_images/c71056e57d7f0f5774cb1889de397b6ea9bb51682c090a307b532f742a10a739.png" src="_images/c71056e57d7f0f5774cb1889de397b6ea9bb51682c090a307b532f742a10a739.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>STEP 6: Pilih Metode Imputation Terbaik
+
+✓ Metode dipilih: SPECIES MEDIAN
+   Alasan: Sesuai dengan karakteristik biologis per spesies
+
+Perbandingan hasil imputation (sepal length (cm)):
+Method       Mean    
+-------------------------
+Original     5.84   
+Mean         5.84   
+Median       5.84   
+Species      5.84   
+
+→ Species median dipilih karena mempertahankan perbedaan antar spesies
+
+STEP 7: Hasil Akhir Preprocessing
+
+Preprocessing Summary:
+   • Outliers ditemukan: 0 data points
+   • Metode imputation: Species-based median
+   • Dataset size tetap: 150 samples
+
+Contoh perubahan koordinat outliers:
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== OUTLIER REMOVAL DAN IMPUTATION PROCESS ===
+
+Outliers teridentifikasi (Strong Consensus):
+   • Jumlah: 0 dari 150 data (0.0%)
+   • Indices: []
+
+STEP 1: Visualisasi Koordinat Data Original
+
+Koordinat Outliers (Strong Consensus):
+Index  Sepal_L  Sepal_W  Petal_L  Petal_W  Species 
+-------------------------------------------------------
+
+
+Outliers teridentifikasi (Strong Consensus):
+   • Jumlah: 0 dari 150 data (0.0%)
+   • Indices: []
+
+STEP 1: Visualisasi Koordinat Data Original
+
+Koordinat Outliers (Strong Consensus):
+Index  Sepal_L  Sepal_W  Petal_L  Petal_W  Species 
+-------------------------------------------------------
 </pre></div>
 </div>
 <img alt="_images/18b62e5c169f8776500c75a4f343a97e18db20c79b1d93bfbdf8e2d308fe293a.png" src="_images/18b62e5c169f8776500c75a4f343a97e18db20c79b1d93bfbdf8e2d308fe293a.png" />
@@ -1430,21 +1866,54 @@ Manual Dataset Ready:
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== TRAIN-TEST SPLIT DAN PERSIAPAN FINAL DENGAN PYCARET ===
-</pre></div>
-</div>
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">7</span><span class="p">],</span> <span class="n">line</span> <span class="mi">7</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== TRAIN-TEST SPLIT DAN PERSIAPAN FINAL DENGAN PYCARET ===&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="k">if</span> <span class="n">df_final</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span>     
-<span class="g g-Whitespace">      </span><span class="mi">6</span>     <span class="c1"># Check apakah sudah ada split dari PyCaret atau perlu manual split</span>
-<span class="ne">----&gt; </span><span class="mi">7</span>     <span class="k">if</span> <span class="n">df_test_final</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span>         <span class="c1"># PyCaret sudah melakukan split</span>
-<span class="g g-Whitespace">      </span><span class="mi">9</span>         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Menggunakan PyCaret train-test split:&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">10</span>         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • PyCaret telah melakukan stratified split otomatis&quot;</span><span class="p">)</span>
+Melakukan manual train-test split:
+Dataset Preparation:
+   • Total samples: 150
+   • Features: 7
+   • Target classes: 3 (setosa=0, versicolor=1, virginica=2)
+   • Train set: 120 samples
+   • Test set: 30 samples
 
-<span class="ne">NameError</span>: name &#39;df_test_final&#39; is not defined
+Distribusi Kelas:
+Class        Train Count  Train %    Test Count  Test %  
+-----------------------------------------------------------------
+setosa       40           33.3     % 10          33.3   %
+versicolor   40           33.3     % 10          33.3   %
+virginica    40           33.3     % 10          33.3   %
+
+Preprocessing Information:
+   • Outlier treatment: consensus_based_removal
+   • Scaling method: manual
+   • Total features: 7
+   • Random state: 42
+
+Sample Data Final (Train Set - First 5 rows):
+     sepal length (cm)  petal length (cm)  petal_area  petal_sepal_ratio
+8            -1.748856          -1.341272    1.761059           0.766943
+106          -1.143017           0.421564    0.277861          -0.368817
+76            1.159173           0.592162    0.156745           0.510848
+9            -1.143017          -1.284407    1.855261           1.123699
+89           -0.416010           0.137236    0.018283          -0.329886
+
+Target Labels (Train Set - First 10):
+[0, 2, 1, 0, 1, 2, 1, 2, 2, 2]
+
+PERSIAPAN UNTUK PYCARET MODELING:
+   • df_pycaret: (120, 8) (untuk training &amp; validation)
+   • df_pycaret_test: (30, 8) (untuk final evaluation)
+   • Target column: &#39;species&#39;
+   • Feature columns: 7 features
+
+SUMMARY PREPROCESSING:
+   • Objective: Multi-class classification (3 classes)
+   • Data quality: High (outliers handled dengan PyCaret)
+   • Preprocessing: MANUAL pipeline
+   • Features: 7 total features
+   • Class balance: Good (stratified split maintained)
+   • Ready for: PyCaret automated ML pipeline
+
+PREPROCESSING DENGAN PYCARET COMPLETED!
+Dataset siap untuk modeling dengan PyCaret
 </pre></div>
 </div>
 </div>

@@ -16,44 +16,18 @@ Traceback (most recent call last):
     return future.result()
   File "C:\laragon\bin\python\python-3.10\lib\site-packages\nbclient\client.py", line 709, in async_execute
     await self.async_execute_cell(
-  File "C:\laragon\bin\python\python-3.10\lib\site-packages\nbclient\client.py", line 1062, in async_execute_cell
-    await self._check_raise_for_error(cell, cell_index, exec_reply)
-  File "C:\laragon\bin\python\python-3.10\lib\site-packages\nbclient\client.py", line 918, in _check_raise_for_error
-    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
-nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
-------------------
-# Load data
-def load_data():
-    if MYSQL_OK:
-        try:
-            engine = create_engine("mysql+pymysql://root:@localhost/ecoli")
-            query = "SELECT protein_name, mcg, gvh, lip, chg, aac, alm1, alm2, localization_class FROM protein_localization"
-            df = pd.read_sql(query, engine)
-            print(f"Data loaded from MySQL: {df.shape}")
-            return df
-        except Exception as e:
-            print(f"MySQL failed: {e}")
-    
-
-df = load_data()
-print(f"Dataset shape: {df.shape}")
-print(f"Classes: {sorted(df['localization_class'].unique())}")
-display(df.head())
-------------------
-
------ stdout -----
-MySQL failed: (pymysql.err.OperationalError) (2003, "Can't connect to MySQL server on 'localhost' ([WinError 10061] No connection could be made because the target machine actively refused it)")
-(Background on this error at: https://sqlalche.me/e/20/e3q8)
-------------------
-
-[1;31m---------------------------------------------------------------------------[0m
-[1;31mAttributeError[0m                            Traceback (most recent call last)
-Cell [1;32mIn[3], line 15[0m
-[0;32m     11[0m             [38;5;28mprint[39m([38;5;124mf[39m[38;5;124m"[39m[38;5;124mMySQL failed: [39m[38;5;132;01m{[39;00me[38;5;132;01m}[39;00m[38;5;124m"[39m)
-[0;32m     14[0m df [38;5;241m=[39m load_data()
-[1;32m---> 15[0m [38;5;28mprint[39m([38;5;124mf[39m[38;5;124m"[39m[38;5;124mDataset shape: [39m[38;5;132;01m{[39;00m[43mdf[49m[38;5;241;43m.[39;49m[43mshape[49m[38;5;132;01m}[39;00m[38;5;124m"[39m)
-[0;32m     16[0m [38;5;28mprint[39m([38;5;124mf[39m[38;5;124m"[39m[38;5;124mClasses: [39m[38;5;132;01m{[39;00m[38;5;28msorted[39m(df[[38;5;124m'[39m[38;5;124mlocalization_class[39m[38;5;124m'[39m][38;5;241m.[39munique())[38;5;132;01m}[39;00m[38;5;124m"[39m)
-[0;32m     17[0m display(df[38;5;241m.[39mhead())
-
-[1;31mAttributeError[0m: 'NoneType' object has no attribute 'shape'
+  File "C:\laragon\bin\python\python-3.10\lib\site-packages\nbclient\client.py", line 1005, in async_execute_cell
+    exec_reply = await self.task_poll_for_reply
+  File "C:\laragon\bin\python\python-3.10\lib\site-packages\nbclient\client.py", line 806, in _async_poll_for_reply
+    error_on_timeout_execute_reply = await self._async_handle_timeout(timeout, cell)
+  File "C:\laragon\bin\python\python-3.10\lib\site-packages\nbclient\client.py", line 856, in _async_handle_timeout
+    raise CellTimeoutError.error_from_timeout_and_cell(
+nbclient.exceptions.CellTimeoutError: A cell timed out while it was being executed, after 30 seconds.
+The message was: Cell execution timed out.
+Here is a preview of the cell contents:
+-------------------
+['# Install required packages', 'import subprocess', 'import sys', '', 'try:']
+...
+['except ImportError:', '    print("Installing pymysql...")', '    subprocess.check_call([sys.executable, "-m", "pip", "install", "pymysql"])', '', 'print("Packages ready")']
+-------------------
 

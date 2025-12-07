@@ -201,6 +201,14 @@
 
 
 <li class="toctree-l1"><a class="reference internal" href="voice_open_close_identification.html">Identifikasi Suara Buka Tutup Menggunakan Feature Statistik Time Series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ECG5000/ECG5000_CRISP_DM.html">ECG5000 Classification Project</a></li>
+
+
+
+
+
+
+
 </ul>
 
     </div>
@@ -414,6 +422,8 @@ document.write(`
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-preparation">DATA PREPARATION</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-2-preprocessing-missing-values">LANGKAH 2: Preprocessing Missing Values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-2-1-deteksi-dan-analisis-outlier">LANGKAH 2.1: Deteksi dan Analisis Outlier</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-2-2-outlier-treatment-opsional">LANGKAH 2.2: Outlier Treatment (Opsional)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-3-transformasi-ke-supervised-learning">LANGKAH 3: Transformasi ke Supervised Learning</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-4-train-test-split">LANGKAH 4: Train-Test Split</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-5-normalisasi-data">LANGKAH 5: Normalisasi Data</a></li>
@@ -518,7 +528,93 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Semua library berhasil diimport
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span><span class="w"> </span><span class="nn">openeo</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">File</span> <span class="n">C</span><span class="p">:</span>\<span class="n">laragon</span>\<span class="nb">bin</span>\<span class="n">python</span>\<span class="n">python</span><span class="o">-</span><span class="mf">3.10</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">pandas</span>\<span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">22</span>
+<span class="g g-Whitespace">     </span><span class="mi">19</span> <span class="k">del</span> <span class="n">_hard_dependencies</span><span class="p">,</span> <span class="n">_dependency</span><span class="p">,</span> <span class="n">_missing_dependencies</span>
+<span class="g g-Whitespace">     </span><span class="mi">21</span> <span class="c1"># numpy compat</span>
+<span class="ne">---&gt; </span><span class="mi">22</span> <span class="kn">from</span><span class="w"> </span><span class="nn">pandas.compat</span><span class="w"> </span><span class="kn">import</span> <span class="n">is_numpy_dev</span> <span class="k">as</span> <span class="n">_is_numpy_dev</span>  <span class="c1"># pyright: ignore # noqa:F401</span>
+<span class="g g-Whitespace">     </span><span class="mi">24</span> <span class="k">try</span><span class="p">:</span>
+<span class="g g-Whitespace">     </span><span class="mi">25</span>     <span class="kn">from</span><span class="w"> </span><span class="nn">pandas._libs</span><span class="w"> </span><span class="kn">import</span> <span class="n">hashtable</span> <span class="k">as</span> <span class="n">_hashtable</span><span class="p">,</span> <span class="n">lib</span> <span class="k">as</span> <span class="n">_lib</span><span class="p">,</span> <span class="n">tslib</span> <span class="k">as</span> <span class="n">_tslib</span>
+
+<span class="n">File</span> <span class="n">C</span><span class="p">:</span>\<span class="n">laragon</span>\<span class="nb">bin</span>\<span class="n">python</span>\<span class="n">python</span><span class="o">-</span><span class="mf">3.10</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">pandas</span>\<span class="n">compat</span>\<span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">25</span>
+<span class="g g-Whitespace">     </span><span class="mi">17</span> <span class="kn">from</span><span class="w"> </span><span class="nn">pandas.compat._constants</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">18</span>     <span class="n">IS64</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">19</span>     <span class="n">PY39</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">22</span>     <span class="n">PYPY</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">23</span> <span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">24</span> <span class="kn">import</span><span class="w"> </span><span class="nn">pandas.compat.compressors</span>
+<span class="ne">---&gt; </span><span class="mi">25</span> <span class="kn">from</span><span class="w"> </span><span class="nn">pandas.compat.numpy</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">26</span>     <span class="n">is_numpy_dev</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">27</span>     <span class="n">np_version_under1p21</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">28</span> <span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">29</span> <span class="kn">from</span><span class="w"> </span><span class="nn">pandas.compat.pyarrow</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">30</span>     <span class="n">pa_version_under7p0</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">31</span>     <span class="n">pa_version_under8p0</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">32</span>     <span class="n">pa_version_under9p0</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">33</span>     <span class="n">pa_version_under11p0</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">34</span> <span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">37</span> <span class="k">def</span><span class="w"> </span><span class="nf">set_function_name</span><span class="p">(</span><span class="n">f</span><span class="p">:</span> <span class="n">F</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">F</span><span class="p">:</span>
+
+<span class="n">File</span> <span class="n">C</span><span class="p">:</span>\<span class="n">laragon</span>\<span class="nb">bin</span>\<span class="n">python</span>\<span class="n">python</span><span class="o">-</span><span class="mf">3.10</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">pandas</span>\<span class="n">compat</span>\<span class="n">numpy</span>\<span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">4</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span><span class="w"> </span><span class="sd">&quot;&quot;&quot; support numpy compatibility across versions &quot;&quot;&quot;</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="ne">----&gt; </span><span class="mi">4</span> <span class="kn">from</span><span class="w"> </span><span class="nn">pandas.util.version</span><span class="w"> </span><span class="kn">import</span> <span class="n">Version</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="c1"># numpy versioning</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="n">_np_version</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">__version__</span>
+
+<span class="n">File</span> <span class="n">C</span><span class="p">:</span>\<span class="n">laragon</span>\<span class="nb">bin</span>\<span class="n">python</span>\<span class="n">python</span><span class="o">-</span><span class="mf">3.10</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">pandas</span>\<span class="n">util</span>\<span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">2</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># pyright: reportUnusedImport = false</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">from</span><span class="w"> </span><span class="nn">pandas.util._decorators</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>  <span class="c1"># noqa:F401</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span>     <span class="n">Appender</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span>     <span class="n">Substitution</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span>     <span class="n">cache_readonly</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="kn">from</span><span class="w"> </span><span class="nn">pandas.core.util.hashing</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>  <span class="c1"># noqa:F401</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span>     <span class="n">hash_array</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span>     <span class="n">hash_pandas_object</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="p">)</span>
+
+<span class="n">File</span> <span class="n">C</span><span class="p">:</span>\<span class="n">laragon</span>\<span class="nb">bin</span>\<span class="n">python</span>\<span class="n">python</span><span class="o">-</span><span class="mf">3.10</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">pandas</span>\<span class="n">util</span>\<span class="n">_decorators</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">14</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span>     <span class="n">Any</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span>     <span class="n">Callable</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span>     <span class="n">Mapping</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span>     <span class="n">cast</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span> <span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="ne">---&gt; </span><span class="mi">14</span> <span class="kn">from</span><span class="w"> </span><span class="nn">pandas._libs.properties</span><span class="w"> </span><span class="kn">import</span> <span class="n">cache_readonly</span>
+<span class="g g-Whitespace">     </span><span class="mi">15</span> <span class="kn">from</span><span class="w"> </span><span class="nn">pandas._typing</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">16</span>     <span class="n">F</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">17</span>     <span class="n">T</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">18</span> <span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">19</span> <span class="kn">from</span><span class="w"> </span><span class="nn">pandas.util._exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">find_stack_level</span>
+
+<span class="n">File</span> <span class="n">C</span><span class="p">:</span>\<span class="n">laragon</span>\<span class="nb">bin</span>\<span class="n">python</span>\<span class="n">python</span><span class="o">-</span><span class="mf">3.10</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">pandas</span>\<span class="n">_libs</span>\<span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">13</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span>     <span class="s2">&quot;NaT&quot;</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span>     <span class="s2">&quot;NaTType&quot;</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span>     <span class="s2">&quot;Interval&quot;</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="p">]</span>
+<span class="ne">---&gt; </span><span class="mi">13</span> <span class="kn">from</span><span class="w"> </span><span class="nn">pandas._libs.interval</span><span class="w"> </span><span class="kn">import</span> <span class="n">Interval</span>
+<span class="g g-Whitespace">     </span><span class="mi">14</span> <span class="kn">from</span><span class="w"> </span><span class="nn">pandas._libs.tslibs</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">15</span>     <span class="n">NaT</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">16</span>     <span class="n">NaTType</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">21</span>     <span class="n">iNaT</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">22</span> <span class="p">)</span>
+
+<span class="nn">File C:\laragon\bin\python\python-3.10\lib\site-packages\pandas\_libs\interval.pyx:1,</span> in <span class="ni">init pandas._libs.interval</span><span class="nt">()</span>
+
+<span class="ne">ValueError</span>: numpy.dtype size changed, may indicate binary incompatibility. Expected 96 from C header, got 88 from PyObject
 </pre></div>
 </div>
 </div>
@@ -794,8 +890,711 @@ Missing values: 0 → 0
 Data shape: (395, 3) | Range: [0.00000309, 0.00028601]
 </pre></div>
 </div>
-<img alt="_images/9fb6b6e6117beb4cefe9207f6b42eeae40384aa43f9f4c605718cf6f0a9e4033.png" src="_images/9fb6b6e6117beb4cefe9207f6b42eeae40384aa43f9f4c605718cf6f0a9e4033.png" />
+<img alt="_images/bf1eb77495bccf3f42fabdd581d0c9c330d62a1ffc3e866df7bb30401a3b94ba.png" src="_images/bf1eb77495bccf3f42fabdd581d0c9c330d62a1ffc3e866df7bb30401a3b94ba.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Preprocessing completed.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="langkah-2-1-deteksi-dan-analisis-outlier">
+<h2>LANGKAH 2.1: Deteksi dan Analisis Outlier<a class="headerlink" href="#langkah-2-1-deteksi-dan-analisis-outlier" title="Link to this heading">#</a></h2>
+<p><strong>Kategori: DATA QUALITY ASSESSMENT</strong></p>
+<p>Deteksi outlier menggunakan berbagai metode:</p>
+<ol class="arabic simple">
+<li><p><strong>IQR Method</strong>: Menggunakan Interquartile Range</p></li>
+<li><p><strong>Z-Score Method</strong>: Menggunakan standar deviasi</p></li>
+<li><p><strong>Isolation Forest</strong>: Metode ensemble untuk deteksi anomali</p></li>
+<li><p><strong>Visualisasi</strong>: Boxplot dan scatter plot untuk identifikasi outlier</p></li>
+</ol>
+<p><strong>Tujuan</strong>:</p>
+<ul class="simple">
+<li><p>Mengidentifikasi nilai NO₂ yang tidak normal</p></li>
+<li><p>Memahami distribusi data dan kemungkinan kesalahan pengukuran</p></li>
+<li><p>Memberikan informasi untuk preprocessing lanjutan</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># LANGKAH 2.1: DETEKSI DAN ANALISIS OUTLIER</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;LANGKAH 2.1: DETEKSI DAN ANALISIS OUTLIER&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">IsolationForest</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">stats</span>
+
+<span class="c1"># Pastikan data sudah di-load</span>
+<span class="n">NO2_data</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;NO2&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">NO2_series</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;NO2&quot;</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Data untuk analisis outlier:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;- Total data points: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">NO2_series</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;- Range: [</span><span class="si">{</span><span class="n">NO2_series</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">:</span><span class="s2">.8f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">NO2_series</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">:</span><span class="s2">.8f</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;- Mean: </span><span class="si">{</span><span class="n">NO2_series</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.8f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;- Std: </span><span class="si">{</span><span class="n">NO2_series</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.8f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># METHOD 1: IQR METHOD (Interquartile Range)</span>
+<span class="c1"># =============================================================================</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="s1">&#39;=&#39;</span><span class="o">*</span><span class="mi">50</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;METHOD 1: IQR METHOD&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;=&#39;</span><span class="o">*</span><span class="mi">50</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">Q1</span> <span class="o">=</span> <span class="n">NO2_series</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.25</span><span class="p">)</span>
+<span class="n">Q3</span> <span class="o">=</span> <span class="n">NO2_series</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.75</span><span class="p">)</span>
+<span class="n">IQR</span> <span class="o">=</span> <span class="n">Q3</span> <span class="o">-</span> <span class="n">Q1</span>
+<span class="n">lower_bound</span> <span class="o">=</span> <span class="n">Q1</span> <span class="o">-</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">IQR</span>
+<span class="n">upper_bound</span> <span class="o">=</span> <span class="n">Q3</span> <span class="o">+</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">IQR</span>
+
+<span class="n">iqr_outliers</span> <span class="o">=</span> <span class="p">(</span><span class="n">NO2_series</span> <span class="o">&lt;</span> <span class="n">lower_bound</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">NO2_series</span> <span class="o">&gt;</span> <span class="n">upper_bound</span><span class="p">)</span>
+<span class="n">iqr_outlier_count</span> <span class="o">=</span> <span class="n">iqr_outliers</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;IQR Statistics:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;- Q1 (25%): </span><span class="si">{</span><span class="n">Q1</span><span class="si">:</span><span class="s2">.8f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;- Q3 (75%): </span><span class="si">{</span><span class="n">Q3</span><span class="si">:</span><span class="s2">.8f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;- IQR: </span><span class="si">{</span><span class="n">IQR</span><span class="si">:</span><span class="s2">.8f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;- Lower bound: </span><span class="si">{</span><span class="n">lower_bound</span><span class="si">:</span><span class="s2">.8f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;- Upper bound: </span><span class="si">{</span><span class="n">upper_bound</span><span class="si">:</span><span class="s2">.8f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;- Outliers detected: </span><span class="si">{</span><span class="n">iqr_outlier_count</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">iqr_outlier_count</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">NO2_series</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%)&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">iqr_outlier_count</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">outlier_values</span> <span class="o">=</span> <span class="n">NO2_series</span><span class="p">[</span><span class="n">iqr_outliers</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;- Outlier range: [</span><span class="si">{</span><span class="n">outlier_values</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">:</span><span class="s2">.8f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">outlier_values</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">:</span><span class="s2">.8f</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># METHOD 2: Z-SCORE METHOD</span>
+<span class="c1"># =============================================================================</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="s1">&#39;=&#39;</span><span class="o">*</span><span class="mi">50</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;METHOD 2: Z-SCORE METHOD&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;=&#39;</span><span class="o">*</span><span class="mi">50</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">z_scores</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">stats</span><span class="o">.</span><span class="n">zscore</span><span class="p">(</span><span class="n">NO2_series</span><span class="p">))</span>
+<span class="n">z_threshold</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># Standard threshold for outliers</span>
+<span class="n">zscore_outliers</span> <span class="o">=</span> <span class="n">z_scores</span> <span class="o">&gt;</span> <span class="n">z_threshold</span>
+<span class="n">zscore_outlier_count</span> <span class="o">=</span> <span class="n">zscore_outliers</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Z-Score Statistics:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;- Threshold: </span><span class="si">{</span><span class="n">z_threshold</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;- Max Z-score: </span><span class="si">{</span><span class="n">z_scores</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;- Outliers detected: </span><span class="si">{</span><span class="n">zscore_outlier_count</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">zscore_outlier_count</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">NO2_series</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%)&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">zscore_outlier_count</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">outlier_z_values</span> <span class="o">=</span> <span class="n">NO2_series</span><span class="p">[</span><span class="n">zscore_outliers</span><span class="p">]</span>
+    <span class="n">outlier_z_scores</span> <span class="o">=</span> <span class="n">z_scores</span><span class="p">[</span><span class="n">zscore_outliers</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;- Outlier Z-scores range: [</span><span class="si">{</span><span class="n">outlier_z_scores</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">outlier_z_scores</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;- Outlier values range: [</span><span class="si">{</span><span class="n">outlier_z_values</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">:</span><span class="s2">.8f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">outlier_z_values</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">:</span><span class="s2">.8f</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># METHOD 3: ISOLATION FOREST</span>
+<span class="c1"># =============================================================================</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="s1">&#39;=&#39;</span><span class="o">*</span><span class="mi">50</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;METHOD 3: ISOLATION FOREST&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;=&#39;</span><span class="o">*</span><span class="mi">50</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Isolation Forest untuk deteksi anomali</span>
+<span class="n">iso_forest</span> <span class="o">=</span> <span class="n">IsolationForest</span><span class="p">(</span><span class="n">contamination</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">isolation_outliers</span> <span class="o">=</span> <span class="n">iso_forest</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">NO2_data</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span>
+<span class="n">isolation_outlier_count</span> <span class="o">=</span> <span class="n">isolation_outliers</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Isolation Forest Statistics:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;- Contamination rate: 10%&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;- Outliers detected: </span><span class="si">{</span><span class="n">isolation_outlier_count</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">isolation_outlier_count</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">NO2_series</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%)&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">isolation_outlier_count</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">outlier_iso_values</span> <span class="o">=</span> <span class="n">NO2_series</span><span class="p">[</span><span class="n">isolation_outliers</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;- Outlier range: [</span><span class="si">{</span><span class="n">outlier_iso_values</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">:</span><span class="s2">.8f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">outlier_iso_values</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">:</span><span class="s2">.8f</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># COMPREHENSIVE OUTLIER SUMMARY</span>
+<span class="c1"># =============================================================================</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="s1">&#39;=&#39;</span><span class="o">*</span><span class="mi">60</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;COMPREHENSIVE OUTLIER SUMMARY&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;=&#39;</span><span class="o">*</span><span class="mi">60</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Combine all methods</span>
+<span class="n">all_outliers</span> <span class="o">=</span> <span class="n">iqr_outliers</span> <span class="o">|</span> <span class="n">zscore_outliers</span> <span class="o">|</span> <span class="n">isolation_outliers</span>
+<span class="n">total_unique_outliers</span> <span class="o">=</span> <span class="n">all_outliers</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Outlier Detection Summary:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;- IQR Method: </span><span class="si">{</span><span class="n">iqr_outlier_count</span><span class="si">}</span><span class="s2"> outliers&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;- Z-Score Method: </span><span class="si">{</span><span class="n">zscore_outlier_count</span><span class="si">}</span><span class="s2"> outliers&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;- Isolation Forest: </span><span class="si">{</span><span class="n">isolation_outlier_count</span><span class="si">}</span><span class="s2"> outliers&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;- Combined (unique): </span><span class="si">{</span><span class="n">total_unique_outliers</span><span class="si">}</span><span class="s2"> outliers (</span><span class="si">{</span><span class="n">total_unique_outliers</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">NO2_series</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%)&quot;</span><span class="p">)</span>
+
+<span class="c1"># Detailed outlier analysis</span>
+<span class="k">if</span> <span class="n">total_unique_outliers</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">outlier_indices</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">all_outliers</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="n">outlier_dates</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">all_outliers</span><span class="p">,</span> <span class="s1">&#39;date&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="n">outlier_values</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">all_outliers</span><span class="p">,</span> <span class="s1">&#39;NO2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Detailed Outlier Information:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;- Outlier indices: </span><span class="si">{</span><span class="n">outlier_indices</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span><span class="si">}{</span><span class="s1">&#39;...&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">outlier_indices</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;- Date range: </span><span class="si">{</span><span class="nb">min</span><span class="p">(</span><span class="n">outlier_dates</span><span class="p">)</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="nb">max</span><span class="p">(</span><span class="n">outlier_dates</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;- Value range: [</span><span class="si">{</span><span class="nb">min</span><span class="p">(</span><span class="n">outlier_values</span><span class="p">)</span><span class="si">:</span><span class="s2">.8f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="nb">max</span><span class="p">(</span><span class="n">outlier_values</span><span class="p">)</span><span class="si">:</span><span class="s2">.8f</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="s1">&#39;=&#39;</span><span class="o">*</span><span class="mi">60</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;OUTLIER DETECTION COMPLETED&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;=&#39;</span><span class="o">*</span><span class="mi">60</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>============================================================
+LANGKAH 2.1: DETEKSI DAN ANALISIS OUTLIER
+============================================================
+Data untuk analisis outlier:
+- Total data points: 395
+- Range: [0.00000309, 0.00028601]
+- Mean: 0.00003394
+- Std: 0.00002251
+
+==================================================
+METHOD 1: IQR METHOD
+==================================================
+IQR Statistics:
+- Q1 (25%): 0.00002465
+- Q3 (75%): 0.00003703
+- IQR: 0.00001238
+- Lower bound: 0.00000608
+- Upper bound: 0.00005559
+- Outliers detected: 17 (4.30%)
+- Outlier range: [0.00000309, 0.00028601]
+
+==================================================
+METHOD 2: Z-SCORE METHOD
+==================================================
+Z-Score Statistics:
+- Threshold: 3
+- Max Z-score: 11.2140
+- Outliers detected: 7 (1.77%)
+- Outlier Z-scores range: [3.6169, 11.2140]
+- Outlier values range: [0.00011524, 0.00028601]
+
+==================================================
+METHOD 3: ISOLATION FOREST
+==================================================
+Isolation Forest Statistics:
+- Contamination rate: 10%
+- Outliers detected: 40 (10.13%)
+- Outlier range: [0.00000309, 0.00028601]
+
+============================================================
+COMPREHENSIVE OUTLIER SUMMARY
+============================================================
+Outlier Detection Summary:
+- IQR Method: 17 outliers
+- Z-Score Method: 7 outliers
+- Isolation Forest: 40 outliers
+- Combined (unique): 40 outliers (10.13%)
+
+Detailed Outlier Information:
+- Outlier indices: [4, 19, 32, 45, 58, 74, 77, 81, 94, 101]...
+- Date range: 2020-06-05 00:00:00 to 2021-06-27 00:00:00
+- Value range: [0.00000309, 0.00028601]
+
+============================================================
+OUTLIER DETECTION COMPLETED
+============================================================
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># VISUALISASI OUTLIER DETECTION</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;VISUALISASI OUTLIER DETECTION&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+
+<span class="c1"># Create comprehensive visualization</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span>
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># PLOT 1: TIME SERIES DENGAN OUTLIER HIGHLIGHTING</span>
+<span class="c1"># =============================================================================</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;NO2&quot;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Normal Data&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">iqr_outlier_count</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">iqr_outliers</span><span class="p">,</span> <span class="s2">&quot;date&quot;</span><span class="p">],</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">iqr_outliers</span><span class="p">,</span> <span class="s2">&quot;NO2&quot;</span><span class="p">],</span> 
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;IQR Outliers (</span><span class="si">{</span><span class="n">iqr_outlier_count</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Time Series - IQR Outliers&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;NO₂ (mol/m²)&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># PLOT 2: TIME SERIES DENGAN Z-SCORE OUTLIERS</span>
+<span class="c1"># =============================================================================</span>
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;NO2&quot;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Normal Data&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">zscore_outlier_count</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">zscore_outliers</span><span class="p">,</span> <span class="s2">&quot;date&quot;</span><span class="p">],</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">zscore_outliers</span><span class="p">,</span> <span class="s2">&quot;NO2&quot;</span><span class="p">],</span> 
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;orange&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Z-Score Outliers (</span><span class="si">{</span><span class="n">zscore_outlier_count</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Time Series - Z-Score Outliers&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;NO₂ (mol/m²)&quot;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># PLOT 3: TIME SERIES DENGAN ISOLATION FOREST OUTLIERS</span>
+<span class="c1"># =============================================================================</span>
+<span class="n">ax3</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;NO2&quot;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Normal Data&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">isolation_outlier_count</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">ax3</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">isolation_outliers</span><span class="p">,</span> <span class="s2">&quot;date&quot;</span><span class="p">],</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">isolation_outliers</span><span class="p">,</span> <span class="s2">&quot;NO2&quot;</span><span class="p">],</span> 
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;purple&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Isolation Forest (</span><span class="si">{</span><span class="n">isolation_outlier_count</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Time Series - Isolation Forest Outliers&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;NO₂ (mol/m²)&quot;</span><span class="p">)</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># PLOT 4: BOXPLOT UNTUK DETEKSI VISUAL OUTLIERS</span>
+<span class="c1"># =============================================================================</span>
+<span class="n">ax4</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">box_plot</span> <span class="o">=</span> <span class="n">ax4</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;NO2&quot;</span><span class="p">],</span> <span class="n">patch_artist</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;NO₂&quot;</span><span class="p">])</span>
+<span class="n">box_plot</span><span class="p">[</span><span class="s1">&#39;boxes&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="s1">&#39;lightblue&#39;</span><span class="p">)</span>
+<span class="n">ax4</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Boxplot - Outlier Detection&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">ax4</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;NO₂ (mol/m²)&quot;</span><span class="p">)</span>
+<span class="n">ax4</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="c1"># Add statistics text</span>
+<span class="n">stats_text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Q1: </span><span class="si">{</span><span class="n">Q1</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="se">\n</span><span class="s2">Q3: </span><span class="si">{</span><span class="n">Q3</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="se">\n</span><span class="s2">IQR: </span><span class="si">{</span><span class="n">IQR</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="se">\n</span><span class="s2">Outliers: </span><span class="si">{</span><span class="n">iqr_outlier_count</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="n">ax4</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.98</span><span class="p">,</span> <span class="n">stats_text</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ax4</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+         <span class="n">verticalalignment</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="n">bbox</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">boxstyle</span><span class="o">=</span><span class="s1">&#39;round&#39;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">))</span>
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># PLOT 5: HISTOGRAM DENGAN OUTLIER BOUNDARIES</span>
+<span class="c1"># =============================================================================</span>
+<span class="n">ax5</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">ax5</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;NO2&quot;</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;skyblue&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ax5</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">lower_bound</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Lower Bound (</span><span class="si">{</span><span class="n">lower_bound</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+<span class="n">ax5</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">upper_bound</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Upper Bound (</span><span class="si">{</span><span class="n">upper_bound</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+<span class="n">ax5</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">NO2_series</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Mean (</span><span class="si">{</span><span class="n">NO2_series</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+<span class="n">ax5</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Distribution with IQR Bounds&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">ax5</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;NO₂ (mol/m²)&quot;</span><span class="p">)</span>
+<span class="n">ax5</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Density&quot;</span><span class="p">)</span>
+<span class="n">ax5</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">ax5</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># PLOT 6: Z-SCORE DISTRIBUTION</span>
+<span class="c1"># =============================================================================</span>
+<span class="n">ax6</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<span class="n">ax6</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">z_scores</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;lightcoral&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+<span class="n">ax6</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">z_threshold</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Threshold (</span><span class="si">{</span><span class="n">z_threshold</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+<span class="n">ax6</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Z-Score Distribution&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">ax6</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Absolute Z-Score&quot;</span><span class="p">)</span>
+<span class="n">ax6</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Frequency&quot;</span><span class="p">)</span>
+<span class="n">ax6</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax6</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># PLOT 7: OUTLIER COMPARISON VENN-STYLE BAR CHART</span>
+<span class="c1"># =============================================================================</span>
+<span class="n">ax7</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+<span class="n">methods</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;IQR&#39;</span><span class="p">,</span> <span class="s1">&#39;Z-Score&#39;</span><span class="p">,</span> <span class="s1">&#39;Isolation</span><span class="se">\n</span><span class="s1">Forest&#39;</span><span class="p">,</span> <span class="s1">&#39;Combined&#39;</span><span class="p">]</span>
+<span class="n">counts</span> <span class="o">=</span> <span class="p">[</span><span class="n">iqr_outlier_count</span><span class="p">,</span> <span class="n">zscore_outlier_count</span><span class="p">,</span> <span class="n">isolation_outlier_count</span><span class="p">,</span> <span class="n">total_unique_outliers</span><span class="p">]</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="s1">&#39;purple&#39;</span><span class="p">,</span> <span class="s1">&#39;darkred&#39;</span><span class="p">]</span>
+
+<span class="n">bars</span> <span class="o">=</span> <span class="n">ax7</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">methods</span><span class="p">,</span> <span class="n">counts</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">ax7</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Outlier Count by Method&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">ax7</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Number of Outliers&quot;</span><span class="p">)</span>
+<span class="n">ax7</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="c1"># Add count labels on bars</span>
+<span class="k">for</span> <span class="n">bar</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">bars</span><span class="p">,</span> <span class="n">counts</span><span class="p">):</span>
+    <span class="n">ax7</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">bar</span><span class="o">.</span><span class="n">get_x</span><span class="p">()</span> <span class="o">+</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">,</span>
+             <span class="nb">str</span><span class="p">(</span><span class="n">count</span><span class="p">),</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># PLOT 8: OUTLIER VALUES SCATTER PLOT</span>
+<span class="c1"># =============================================================================</span>
+<span class="n">ax8</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">total_unique_outliers</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">normal_data</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="o">~</span><span class="n">all_outliers</span><span class="p">]</span>
+    <span class="n">outlier_data</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">all_outliers</span><span class="p">]</span>
+    
+    <span class="n">ax8</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">normal_data</span><span class="p">)),</span> <span class="n">normal_data</span><span class="p">[</span><span class="s2">&quot;NO2&quot;</span><span class="p">],</span> 
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Normal (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">normal_data</span><span class="p">)</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+    <span class="n">ax8</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">outlier_data</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">outlier_data</span><span class="p">[</span><span class="s2">&quot;NO2&quot;</span><span class="p">],</span> 
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Outliers (</span><span class="si">{</span><span class="n">total_unique_outliers</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">ax8</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)),</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;NO2&quot;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;All Normal&quot;</span><span class="p">)</span>
+
+<span class="n">ax8</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Data Points: Normal vs Outliers&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">ax8</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Index&quot;</span><span class="p">)</span>
+<span class="n">ax8</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;NO₂ (mol/m²)&quot;</span><span class="p">)</span>
+<span class="n">ax8</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax8</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># PLOT 9: SEASONAL OUTLIER PATTERN</span>
+<span class="c1"># =============================================================================</span>
+<span class="n">ax9</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;month&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">month</span>
+<span class="n">monthly_outlier_count</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">all_outliers</span><span class="p">]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;month&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+<span class="n">all_months</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">13</span><span class="p">)</span>
+<span class="n">monthly_counts</span> <span class="o">=</span> <span class="p">[</span><span class="n">monthly_outlier_count</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">month</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">month</span> <span class="ow">in</span> <span class="n">all_months</span><span class="p">]</span>
+
+<span class="n">ax9</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">all_months</span><span class="p">,</span> <span class="n">monthly_counts</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;salmon&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">ax9</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Outliers by Month&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">ax9</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Month&quot;</span><span class="p">)</span>
+<span class="n">ax9</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Outlier Count&quot;</span><span class="p">)</span>
+<span class="n">ax9</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">all_months</span><span class="p">)</span>
+<span class="n">ax9</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># OUTLIER TREATMENT RECOMMENDATION</span>
+<span class="c1"># =============================================================================</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="s1">&#39;=&#39;</span><span class="o">*</span><span class="mi">60</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;OUTLIER TREATMENT RECOMMENDATIONS&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;=&#39;</span><span class="o">*</span><span class="mi">60</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">outlier_percentage</span> <span class="o">=</span> <span class="n">total_unique_outliers</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">NO2_series</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
+
+<span class="k">if</span> <span class="n">outlier_percentage</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
+    <span class="n">recommendation</span> <span class="o">=</span> <span class="s2">&quot;LOW OUTLIER RATE - Keep outliers for model robustness&quot;</span>
+    <span class="n">treatment</span> <span class="o">=</span> <span class="s2">&quot;No action required&quot;</span>
+<span class="k">elif</span> <span class="n">outlier_percentage</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+    <span class="n">recommendation</span> <span class="o">=</span> <span class="s2">&quot;MODERATE OUTLIER RATE - Consider investigation&quot;</span>
+    <span class="n">treatment</span> <span class="o">=</span> <span class="s2">&quot;Investigate outlier patterns, consider capping extreme values&quot;</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">recommendation</span> <span class="o">=</span> <span class="s2">&quot;HIGH OUTLIER RATE - Requires attention&quot;</span>
+    <span class="n">treatment</span> <span class="o">=</span> <span class="s2">&quot;Investigate data quality, consider outlier removal or transformation&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Recommendation: </span><span class="si">{</span><span class="n">recommendation</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Suggested Treatment: </span><span class="si">{</span><span class="n">treatment</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Outlier Rate: </span><span class="si">{</span><span class="n">outlier_percentage</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+
+<span class="c1"># Save outlier information for later use</span>
+<span class="n">outlier_info</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;iqr_outliers&#39;</span><span class="p">:</span> <span class="n">iqr_outliers</span><span class="p">,</span>
+    <span class="s1">&#39;zscore_outliers&#39;</span><span class="p">:</span> <span class="n">zscore_outliers</span><span class="p">,</span>
+    <span class="s1">&#39;isolation_outliers&#39;</span><span class="p">:</span> <span class="n">isolation_outliers</span><span class="p">,</span>
+    <span class="s1">&#39;combined_outliers&#39;</span><span class="p">:</span> <span class="n">all_outliers</span><span class="p">,</span>
+    <span class="s1">&#39;outlier_percentage&#39;</span><span class="p">:</span> <span class="n">outlier_percentage</span><span class="p">,</span>
+    <span class="s1">&#39;recommendation&#39;</span><span class="p">:</span> <span class="n">recommendation</span>
+<span class="p">}</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">[INFO] Outlier detection completed successfully!&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[INFO] Outlier information saved for preprocessing decisions.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;=&#39;</span><span class="o">*</span><span class="mi">60</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>============================================================
+VISUALISASI OUTLIER DETECTION
+============================================================
+</pre></div>
+</div>
+<img alt="_images/bf933b1f5baafad1fbedeab84ea0906d5df0f1e6726b62b75890e0ea156c2a56.png" src="_images/bf933b1f5baafad1fbedeab84ea0906d5df0f1e6726b62b75890e0ea156c2a56.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>============================================================
+OUTLIER TREATMENT RECOMMENDATIONS
+============================================================
+Recommendation: HIGH OUTLIER RATE - Requires attention
+Suggested Treatment: Investigate data quality, consider outlier removal or transformation
+Outlier Rate: 10.13%
+
+[INFO] Outlier detection completed successfully!
+[INFO] Outlier information saved for preprocessing decisions.
+============================================================
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="langkah-2-2-outlier-treatment-opsional">
+<h2>LANGKAH 2.2: Outlier Treatment (Opsional)<a class="headerlink" href="#langkah-2-2-outlier-treatment-opsional" title="Link to this heading">#</a></h2>
+<p><strong>Kategori: DATA PREPROCESSING</strong></p>
+<p>Berdasarkan hasil deteksi outlier, berikut opsi treatment yang dapat dipilih:</p>
+<ol class="arabic simple">
+<li><p><strong>No Treatment</strong>: Mempertahankan outlier untuk robustness model</p></li>
+<li><p><strong>Winsorization</strong>: Mengganti outlier dengan nilai percentile tertentu</p></li>
+<li><p><strong>Capping</strong>: Membatasi nilai ekstrem dengan threshold</p></li>
+<li><p><strong>Removal</strong>: Menghapus outlier dari dataset</p></li>
+<li><p><strong>Transformation</strong>: Log atau Box-Cox transformation</p></li>
+</ol>
+<p><strong>Catatan</strong>: Untuk time series, removal outlier dapat mengganggu kontinuitas temporal. Winsorization atau capping lebih disarankan.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># LANGKAH 2.2: OUTLIER TREATMENT (OPSIONAL)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;LANGKAH 2.2: OUTLIER TREATMENT OPTIONS&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+
+<span class="c1"># Copy original data untuk comparison</span>
+<span class="n">df_original</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">NO2_original</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;NO2&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># TREATMENT OPTION 1: WINSORIZATION (RECOMMENDED FOR TIME SERIES)</span>
+<span class="c1"># =============================================================================</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">winsorize_outliers</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">lower_percentile</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">upper_percentile</span><span class="o">=</span><span class="mi">95</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Winsorization: Replace outliers with percentile values&quot;&quot;&quot;</span>
+    <span class="n">lower_val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">lower_percentile</span><span class="p">)</span>
+    <span class="n">upper_val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">upper_percentile</span><span class="p">)</span>
+    
+    <span class="n">data_winsorized</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">data_winsorized</span><span class="p">[</span><span class="n">data_winsorized</span> <span class="o">&lt;</span> <span class="n">lower_val</span><span class="p">]</span> <span class="o">=</span> <span class="n">lower_val</span>
+    <span class="n">data_winsorized</span><span class="p">[</span><span class="n">data_winsorized</span> <span class="o">&gt;</span> <span class="n">upper_val</span><span class="p">]</span> <span class="o">=</span> <span class="n">upper_val</span>
+    
+    <span class="k">return</span> <span class="n">data_winsorized</span><span class="p">,</span> <span class="n">lower_val</span><span class="p">,</span> <span class="n">upper_val</span>
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># TREATMENT OPTION 2: IQR CAPPING</span>
+<span class="c1"># =============================================================================</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">iqr_cap_outliers</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">iqr_multiplier</span><span class="o">=</span><span class="mf">1.5</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;IQR Capping: Cap values at IQR boundaries&quot;&quot;&quot;</span>
+    <span class="n">Q1</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.25</span><span class="p">)</span>
+    <span class="n">Q3</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.75</span><span class="p">)</span>
+    <span class="n">IQR</span> <span class="o">=</span> <span class="n">Q3</span> <span class="o">-</span> <span class="n">Q1</span>
+    <span class="n">lower_cap</span> <span class="o">=</span> <span class="n">Q1</span> <span class="o">-</span> <span class="n">iqr_multiplier</span> <span class="o">*</span> <span class="n">IQR</span>
+    <span class="n">upper_cap</span> <span class="o">=</span> <span class="n">Q3</span> <span class="o">+</span> <span class="n">iqr_multiplier</span> <span class="o">*</span> <span class="n">IQR</span>
+    
+    <span class="n">data_capped</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">data_capped</span><span class="p">[</span><span class="n">data_capped</span> <span class="o">&lt;</span> <span class="n">lower_cap</span><span class="p">]</span> <span class="o">=</span> <span class="n">lower_cap</span>
+    <span class="n">data_capped</span><span class="p">[</span><span class="n">data_capped</span> <span class="o">&gt;</span> <span class="n">upper_cap</span><span class="p">]</span> <span class="o">=</span> <span class="n">upper_cap</span>
+    
+    <span class="k">return</span> <span class="n">data_capped</span><span class="p">,</span> <span class="n">lower_cap</span><span class="p">,</span> <span class="n">upper_cap</span>
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># TREATMENT OPTION 3: LOG TRANSFORMATION</span>
+<span class="c1"># =============================================================================</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">log_transform_outliers</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Log transformation for right-skewed data&quot;&quot;&quot;</span>
+    <span class="c1"># Add small constant to handle zero/negative values</span>
+    <span class="n">min_val</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">min_val</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">shift</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">min_val</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1e-8</span>
+        <span class="n">data_shifted</span> <span class="o">=</span> <span class="n">data</span> <span class="o">+</span> <span class="n">shift</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">data_shifted</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="n">shift</span> <span class="o">=</span> <span class="mi">0</span>
+    
+    <span class="n">data_log</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">data_shifted</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">data_log</span><span class="p">,</span> <span class="n">shift</span>
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># APPLY DIFFERENT TREATMENTS AND COMPARE</span>
+<span class="c1"># =============================================================================</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Applying different outlier treatments:&quot;</span><span class="p">)</span>
+
+<span class="c1"># Option 1: No treatment (keep original)</span>
+<span class="n">df_no_treatment</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;1. No Treatment: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df_no_treatment</span><span class="p">)</span><span class="si">}</span><span class="s2"> records maintained&quot;</span><span class="p">)</span>
+
+<span class="c1"># Option 2: Winsorization (5th and 95th percentiles)</span>
+<span class="n">NO2_winsorized</span><span class="p">,</span> <span class="n">win_lower</span><span class="p">,</span> <span class="n">win_upper</span> <span class="o">=</span> <span class="n">winsorize_outliers</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;NO2&quot;</span><span class="p">],</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">95</span><span class="p">)</span>
+<span class="n">df_winsorized</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">df_winsorized</span><span class="p">[</span><span class="s2">&quot;NO2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">NO2_winsorized</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;2. Winsorization: Capped at [</span><span class="si">{</span><span class="n">win_lower</span><span class="si">:</span><span class="s2">.8f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">win_upper</span><span class="si">:</span><span class="s2">.8f</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
+
+<span class="c1"># Option 3: IQR Capping</span>
+<span class="n">NO2_iqr_capped</span><span class="p">,</span> <span class="n">iqr_lower</span><span class="p">,</span> <span class="n">iqr_upper</span> <span class="o">=</span> <span class="n">iqr_cap_outliers</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;NO2&quot;</span><span class="p">])</span>
+<span class="n">df_iqr_capped</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">df_iqr_capped</span><span class="p">[</span><span class="s2">&quot;NO2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">NO2_iqr_capped</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;3. IQR Capping: Capped at [</span><span class="si">{</span><span class="n">iqr_lower</span><span class="si">:</span><span class="s2">.8f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">iqr_upper</span><span class="si">:</span><span class="s2">.8f</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
+
+<span class="c1"># Option 4: Log Transformation</span>
+<span class="n">NO2_log</span><span class="p">,</span> <span class="n">log_shift</span> <span class="o">=</span> <span class="n">log_transform_outliers</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;NO2&quot;</span><span class="p">])</span>
+<span class="n">df_log_transformed</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">df_log_transformed</span><span class="p">[</span><span class="s2">&quot;NO2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">NO2_log</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;4. Log Transform: Applied log(x + </span><span class="si">{</span><span class="n">log_shift</span><span class="si">:</span><span class="s2">.8f</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+
+<span class="c1"># Option 5: Remove outliers (not recommended for time series)</span>
+<span class="n">df_outliers_removed</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="o">~</span><span class="n">all_outliers</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;5. Outlier Removal: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df_outliers_removed</span><span class="p">)</span><span class="si">}</span><span class="s2"> records remaining (</span><span class="si">{</span><span class="n">total_unique_outliers</span><span class="si">}</span><span class="s2"> removed)&quot;</span><span class="p">)</span>
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># COMPARE TREATMENT EFFECTS</span>
+<span class="c1"># =============================================================================</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="s1">&#39;=&#39;</span><span class="o">*</span><span class="mi">60</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;TREATMENT COMPARISON&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;=&#39;</span><span class="o">*</span><span class="mi">60</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">treatments</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Original&#39;</span><span class="p">:</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;NO2&quot;</span><span class="p">],</span>
+    <span class="s1">&#39;Winsorized&#39;</span><span class="p">:</span> <span class="n">df_winsorized</span><span class="p">[</span><span class="s2">&quot;NO2&quot;</span><span class="p">],</span> 
+    <span class="s1">&#39;IQR Capped&#39;</span><span class="p">:</span> <span class="n">df_iqr_capped</span><span class="p">[</span><span class="s2">&quot;NO2&quot;</span><span class="p">],</span>
+    <span class="s1">&#39;Log Transformed&#39;</span><span class="p">:</span> <span class="n">df_log_transformed</span><span class="p">[</span><span class="s2">&quot;NO2&quot;</span><span class="p">],</span>
+    <span class="s1">&#39;Outliers Removed&#39;</span><span class="p">:</span> <span class="n">df_outliers_removed</span><span class="p">[</span><span class="s2">&quot;NO2&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_outliers_removed</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="n">comparison_stats</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">treatments</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">stats_dict</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;Treatment&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+            <span class="s1">&#39;Count&#39;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">),</span>
+            <span class="s1">&#39;Mean&#39;</span><span class="p">:</span> <span class="n">data</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span>
+            <span class="s1">&#39;Std&#39;</span><span class="p">:</span> <span class="n">data</span><span class="o">.</span><span class="n">std</span><span class="p">(),</span>
+            <span class="s1">&#39;Min&#39;</span><span class="p">:</span> <span class="n">data</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span>
+            <span class="s1">&#39;Max&#39;</span><span class="p">:</span> <span class="n">data</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span>
+            <span class="s1">&#39;Skewness&#39;</span><span class="p">:</span> <span class="n">stats</span><span class="o">.</span><span class="n">skew</span><span class="p">(</span><span class="n">data</span><span class="p">),</span>
+            <span class="s1">&#39;Kurtosis&#39;</span><span class="p">:</span> <span class="n">stats</span><span class="o">.</span><span class="n">kurtosis</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="p">}</span>
+        <span class="n">comparison_stats</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stats_dict</span><span class="p">)</span>
+
+<span class="n">comparison_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">comparison_stats</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">comparison_df</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># VISUALIZATION COMPARISON</span>
+<span class="c1"># =============================================================================</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="s1">&#39;=&#39;</span><span class="o">*</span><span class="mi">60</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;VISUAL COMPARISON OF TREATMENTS&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;=&#39;</span><span class="o">*</span><span class="mi">60</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+
+<span class="c1"># Plot 1: Original vs Winsorized</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;NO2&quot;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Original&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df_winsorized</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">],</span> <span class="n">df_winsorized</span><span class="p">[</span><span class="s2">&quot;NO2&quot;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Winsorized&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Original vs Winsorized&quot;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="c1"># Plot 2: Original vs IQR Capped</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;NO2&quot;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Original&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df_iqr_capped</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">],</span> <span class="n">df_iqr_capped</span><span class="p">[</span><span class="s2">&quot;NO2&quot;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;orange&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;IQR Capped&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Original vs IQR Capped&quot;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="c1"># Plot 3: Log Transformed</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df_log_transformed</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">],</span> <span class="n">df_log_transformed</span><span class="p">[</span><span class="s2">&quot;NO2&quot;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Log Transformed&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Log Transformed Time Series&quot;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="c1"># Plot 4: Outliers Removed</span>
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_outliers_removed</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df_outliers_removed</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">],</span> <span class="n">df_outliers_removed</span><span class="p">[</span><span class="s2">&quot;NO2&quot;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;purple&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Outliers Removed&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Outliers Removed Time Series&quot;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s2">&quot;No outliers to remove&quot;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">transAxes</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Outliers Removed (Empty)&quot;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+
+<span class="c1"># Plot 5: Distribution Comparison</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;NO2&quot;</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Original&quot;</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">df_winsorized</span><span class="p">[</span><span class="s2">&quot;NO2&quot;</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Winsorized&quot;</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">df_iqr_capped</span><span class="p">[</span><span class="s2">&quot;NO2&quot;</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;orange&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;IQR Capped&quot;</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Distribution Comparison&quot;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># RECOMMENDATION AND FINAL CHOICE</span>
+<span class="c1"># =============================================================================</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="s1">&#39;=&#39;</span><span class="o">*</span><span class="mi">60</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;TREATMENT RECOMMENDATION&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;=&#39;</span><span class="o">*</span><span class="mi">60</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Based on analysis:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;- Original outlier rate: </span><span class="si">{</span><span class="n">outlier_percentage</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;- Data type: Time series (NO₂ concentrations)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;- Model type: KNN Regression&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">outlier_percentage</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
+    <span class="n">recommended_treatment</span> <span class="o">=</span> <span class="s2">&quot;no_treatment&quot;</span>
+    <span class="n">reason</span> <span class="o">=</span> <span class="s2">&quot;Low outlier rate, model should be robust to these variations&quot;</span>
+<span class="k">elif</span> <span class="n">outlier_percentage</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+    <span class="n">recommended_treatment</span> <span class="o">=</span> <span class="s2">&quot;winsorization&quot;</span>
+    <span class="n">reason</span> <span class="o">=</span> <span class="s2">&quot;Moderate outlier rate, winsorization preserves temporal continuity&quot;</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">recommended_treatment</span> <span class="o">=</span> <span class="s2">&quot;iqr_capping&quot;</span>
+    <span class="n">reason</span> <span class="o">=</span> <span class="s2">&quot;Higher outlier rate, IQR capping provides better boundary control&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ Recommended Treatment: </span><span class="si">{</span><span class="n">recommended_treatment</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ Reason: </span><span class="si">{</span><span class="n">reason</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Apply recommended treatment</span>
+<span class="k">if</span> <span class="n">recommended_treatment</span> <span class="o">==</span> <span class="s2">&quot;no_treatment&quot;</span><span class="p">:</span>
+    <span class="n">df_final</span> <span class="o">=</span> <span class="n">df_no_treatment</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ Applied: No treatment - using original data&quot;</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">recommended_treatment</span> <span class="o">==</span> <span class="s2">&quot;winsorization&quot;</span><span class="p">:</span>
+    <span class="n">df_final</span> <span class="o">=</span> <span class="n">df_winsorized</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ Applied: Winsorization at 5th-95th percentiles&quot;</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">recommended_treatment</span> <span class="o">==</span> <span class="s2">&quot;iqr_capping&quot;</span><span class="p">:</span>
+    <span class="n">df_final</span> <span class="o">=</span> <span class="n">df_iqr_capped</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ Applied: IQR capping with 1.5x multiplier&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">[SUCCESS] Outlier treatment completed!&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[INFO] Final dataset shape: </span><span class="si">{</span><span class="n">df_final</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[INFO] Final NO₂ range: [</span><span class="si">{</span><span class="n">df_final</span><span class="p">[</span><span class="s1">&#39;NO2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">:</span><span class="s2">.8f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">df_final</span><span class="p">[</span><span class="s1">&#39;NO2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">:</span><span class="s2">.8f</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[INFO] Ready for supervised learning transformation&quot;</span><span class="p">)</span>
+
+<span class="c1"># Update main dataframe with treated data</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df_final</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;=&#39;</span><span class="o">*</span><span class="mi">60</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>============================================================
+LANGKAH 2.2: OUTLIER TREATMENT OPTIONS
+============================================================
+
+Applying different outlier treatments:
+1. No Treatment: 395 records maintained
+2. Winsorization: Capped at [0.00001818, 0.00004953]
+3. IQR Capping: Capped at [0.00000608, 0.00005559]
+4. Log Transform: Applied log(x + 0.00000000)
+5. Outlier Removal: 355 records remaining (40 removed)
+
+============================================================
+TREATMENT COMPARISON
+============================================================
+          Treatment  Count       Mean       Std        Min       Max  \
+0          Original    395   0.000032  0.000010   0.000006  0.000056   
+1        Winsorized    395   0.000032  0.000009   0.000018  0.000050   
+2        IQR Capped    395   0.000032  0.000010   0.000006  0.000056   
+3   Log Transformed    395 -10.412871  0.333594 -12.010036 -9.797496   
+4  Outliers Removed    355   0.000031  0.000007   0.000018  0.000048   
+
+   Skewness  Kurtosis  
+0  0.420087  0.186626  
+1  0.383991 -0.668168  
+2  0.420087  0.186626  
+3 -1.013097  3.437956  
+4  0.263665 -0.744253  
+
+============================================================
+VISUAL COMPARISON OF TREATMENTS
+============================================================
+</pre></div>
+</div>
+<img alt="_images/9eabf6db4c2704317bfe183558020a1021acd12b8d8c400601d7353c42c5a00b.png" src="_images/9eabf6db4c2704317bfe183558020a1021acd12b8d8c400601d7353c42c5a00b.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>============================================================
+TREATMENT RECOMMENDATION
+============================================================
+Based on analysis:
+- Original outlier rate: 10.13%
+- Data type: Time series (NO₂ concentrations)
+- Model type: KNN Regression
+✅ Recommended Treatment: IQR_CAPPING
+✅ Reason: Higher outlier rate, IQR capping provides better boundary control
+✅ Applied: IQR capping with 1.5x multiplier
+
+[SUCCESS] Outlier treatment completed!
+[INFO] Final dataset shape: (395, 3)
+[INFO] Final NO₂ range: [0.00000608, 0.00005559]
+[INFO] Ready for supervised learning transformation
+============================================================
 </pre></div>
 </div>
 </div>
@@ -892,17 +1691,17 @@ Target: NO2(t)
       <th>4</th>
       <td>0.000032</td>
       <td>0.000032</td>
-      <td>0.000286</td>
+      <td>0.000056</td>
     </tr>
     <tr>
       <th>5</th>
       <td>0.000032</td>
-      <td>0.000286</td>
+      <td>0.000056</td>
       <td>0.000030</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>0.000286</td>
+      <td>0.000056</td>
       <td>0.000030</td>
       <td>0.000025</td>
     </tr>
@@ -958,10 +1757,10 @@ Target: NO2(t)
 LANGKAH 4: TRAIN-TEST SPLIT
 ==================================================
 Data split: Train (314, 2) | Test (79, 2)
-Target range: [0.00000309, 0.00028601]
+Target range: [0.00000608, 0.00005559]
 </pre></div>
 </div>
-<img alt="_images/cf4a24313e8aa53fc0e6fa74b0e99b132bcbcdc8c06a429538b5a151aff186c3.png" src="_images/cf4a24313e8aa53fc0e6fa74b0e99b132bcbcdc8c06a429538b5a151aff186c3.png" />
+<img alt="_images/2338cf93221b91e2821462d39e87bad6598b78628f2c5ff07290354e156349f8.png" src="_images/2338cf93221b91e2821462d39e87bad6598b78628f2c5ff07290354e156349f8.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Train-test split completed.
 </pre></div>
 </div>
@@ -1033,7 +1832,7 @@ Normalisasi completed:
 - Scaler saved: minmax_scaler.pkl
 </pre></div>
 </div>
-<img alt="_images/bfefeab7447f50b53219a5d5c7fa936702cc7e733823b5a27d5695b279cbf50c.png" src="_images/bfefeab7447f50b53219a5d5c7fa936702cc7e733823b5a27d5695b279cbf50c.png" />
+<img alt="_images/695abee03f9f8507bfcd113bd3ac0d8226a9ffd03d4b0563145e8cd8f07ae6cc.png" src="_images/695abee03f9f8507bfcd113bd3ac0d8226a9ffd03d4b0563145e8cd8f07ae6cc.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Normalization completed successfully.
 </pre></div>
 </div>
@@ -1119,17 +1918,17 @@ Normalisasi completed:
 LANGKAH 6: KNN REGRESSION MODELING
 ==================================================
 Testing K values:
-K=2 | RMSE=0.00003675 | R²=-4.2362
-K=3 | RMSE=0.00002896 | R²=-2.2522
-K=5 | RMSE=0.00002219 | R²=-0.9098
-K=7 | RMSE=0.00001998 | R²=-0.5478
-K=9 | RMSE=0.00001900 | R²=-0.3990
-K=11 | RMSE=0.00001840 | R²=-0.3125
+K=2 | RMSE=0.00000894 | R²=-0.8993
+K=3 | RMSE=0.00000832 | R²=-0.6437
+K=5 | RMSE=0.00000786 | R²=-0.4685
+K=7 | RMSE=0.00000781 | R²=-0.4479
+K=9 | RMSE=0.00000784 | R²=-0.4609
+K=11 | RMSE=0.00000771 | R²=-0.4140
 
-Best K: 11 (RMSE: 0.00001840)
+Best K: 11 (RMSE: 0.00000771)
 </pre></div>
 </div>
-<img alt="_images/3c0c576f393d1874586cf03910395d5ff2552ac8cad1cce57f43b7c1bfe86f26.png" src="_images/3c0c576f393d1874586cf03910395d5ff2552ac8cad1cce57f43b7c1bfe86f26.png" />
+<img alt="_images/7fecc5ee0a575f6134d0078a3ede6f2787be36b9f5bac25e1695a93e8a1de9b1.png" src="_images/7fecc5ee0a575f6134d0078a3ede6f2787be36b9f5bac25e1695a93e8a1de9b1.png" />
 </div>
 </div>
 </section>
@@ -1273,19 +2072,19 @@ LANGKAH 7: EVALUASI REGRESSION DENGAN STANDAR WHO
   → Model ini akan digunakan untuk prediksi data baru saat deployment
 
 [A] REGRESSION METRICS (K=11):
-  - MSE:  0.0000000003
-  - RMSE: 0.0000183987
-  - MAE:  0.0000094240
-  - MAPE: 36.47%
-  - R²:   -0.3125
+  - MSE:  0.0000000001
+  - RMSE: 0.0000077139
+  - MAE:  0.0000059813
+  - MAPE: 26.17%
+  - R²:   -0.4140
 
 [INTERPRETASI MAPE]:
   ⚠ MAPE 20-50%: Model CUKUP (Reasonable Forecasting)
 
 [B] KONVERSI KE µg/m³ DAN PERBANDINGAN WHO:
   - Conversion factor: 46010
-  - Test set range: [0.19, 7.41] µg/m³
-  - Predicted range: [0.88, 2.70] µg/m³
+  - Test set range: [0.28, 2.56] µg/m³
+  - Predicted range: [0.88, 1.80] µg/m³
 
   - WHO Annual Standard: 10 µg/m³
   - WHO 24-Hour Standard: 25 µg/m³
@@ -1299,7 +2098,7 @@ LANGKAH 7: EVALUASI REGRESSION DENGAN STANDAR WHO
     - Di atas WHO 24-Hour (25 µg/m³): 0/79 (0.0%)
 </pre></div>
 </div>
-<img alt="_images/18bdcaae12205af50cd5f7f61e1727ac300d41fb5114b375dca239494ddbabf2.png" src="_images/18bdcaae12205af50cd5f7f61e1727ac300d41fb5114b375dca239494ddbabf2.png" />
+<img alt="_images/d851afe2527f15402de3f81acbd6e9a89c5f9f807e18aee200b966a3fad103df.png" src="_images/d851afe2527f15402de3f81acbd6e9a89c5f9f807e18aee200b966a3fad103df.png" />
 </div>
 </div>
 </section>
@@ -1359,10 +2158,10 @@ LANGKAH 7: EVALUASI REGRESSION DENGAN STANDAR WHO
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>==================================================
 LANGKAH 8: ANALISIS PERFORMA MODEL
 ==================================================
-Error Analysis - MAE: 0.00000942 | RMSE: 0.00001840
+Error Analysis - MAE: 0.00000598 | RMSE: 0.00000771
 </pre></div>
 </div>
-<img alt="_images/2ebb023fac6889c2cfddc0f6a2ac1eeef03f5d9af82b778d6b1d011d73b03e33.png" src="_images/2ebb023fac6889c2cfddc0f6a2ac1eeef03f5d9af82b778d6b1d011d73b03e33.png" />
+<img alt="_images/ad26b087f28b60678fff86112b7bc81850a1f024f51c980d45a92767e8265e02.png" src="_images/ad26b087f28b60678fff86112b7bc81850a1f024f51c980d45a92767e8265e02.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model evaluation completed.
 </pre></div>
 </div>
@@ -1451,7 +2250,7 @@ Prediksi NO2 besok: 0.000030 mol/m² = 1.36 µg/m³
 Status WHO: SANGAT BAIK
 </pre></div>
 </div>
-<img alt="_images/b2552ddf7785600fb9d9f184f148d9637fa30ee9bd8f0f3c4df2c538df87b1d1.png" src="_images/b2552ddf7785600fb9d9f184f148d9637fa30ee9bd8f0f3c4df2c538df87b1d1.png" />
+<img alt="_images/6e8daea1e483900b3258e0b5ec5b0e6a1d1480e5fd0bcbfc0c71c628366579e8.png" src="_images/6e8daea1e483900b3258e0b5ec5b0e6a1d1480e5fd0bcbfc0c71c628366579e8.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Prediction completed.
 </pre></div>
 </div>
@@ -1501,7 +2300,7 @@ Status WHO: SANGAT BAIK
 CONTOH IMPLEMENTASI: PREDIKSI DATA BARU
 ==================================================
 Input: NO2(t-2)=0.000200, NO2(t-1)=0.000220
-Prediksi: 0.000037 mol/m² = 1.68 µg/m³
+Prediksi: 0.000042 mol/m² = 1.92 µg/m³
 Status WHO: SANGAT BAIK
 
 Implementasi berhasil!
@@ -1626,11 +2425,11 @@ NO2(t-2): 0.000350 mol/m²
 NO2(t-1): 0.000400 mol/m²
 
 HASIL PREDIKSI:
-- NO2: 0.000036 mol/m² = 1.64 µg/m³
+- NO2: 0.000042 mol/m² = 1.92 µg/m³
 - Status: [SANGAT BAIK]
 </pre></div>
 </div>
-<img alt="_images/e4638901476f0866f25e947ce2ab45a875b732f284f8ae94ccb409638ee34c68.png" src="_images/e4638901476f0866f25e947ce2ab45a875b732f284f8ae94ccb409638ee34c68.png" />
+<img alt="_images/91591851110c090f4c1c2fbc2edebe35229f38b725c4fc79aabca1ee904d4f1f.png" src="_images/91591851110c090f4c1c2fbc2edebe35229f38b725c4fc79aabca1ee904d4f1f.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Deployment completed: [SANGAT BAIK]
 </pre></div>
 </div>
@@ -1875,7 +2674,7 @@ Hari +1: 1.36 µg/m³ → SANGAT BAIK
 Hari +2: 1.54 µg/m³ → SANGAT BAIK
 </pre></div>
 </div>
-<img alt="_images/7f0fd19bd8b8b2fcd2623f4b3b494a8dda40ea0e4d25cada056fe497ef9b45bb.png" src="_images/7f0fd19bd8b8b2fcd2623f4b3b494a8dda40ea0e4d25cada056fe497ef9b45bb.png" />
+<img alt="_images/14843ddfd15868cb26487f4f650281dff6e76f741df07d4898b8f31c94a3d9d2.png" src="_images/14843ddfd15868cb26487f4f650281dff6e76f741df07d4898b8f31c94a3d9d2.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>============================================================
 ANALISIS TREND:
 ============================================================
@@ -1980,6 +2779,8 @@ PREDIKSI 2 HARI KE DEPAN SELESAI
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-preparation">DATA PREPARATION</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-2-preprocessing-missing-values">LANGKAH 2: Preprocessing Missing Values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-2-1-deteksi-dan-analisis-outlier">LANGKAH 2.1: Deteksi dan Analisis Outlier</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-2-2-outlier-treatment-opsional">LANGKAH 2.2: Outlier Treatment (Opsional)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-3-transformasi-ke-supervised-learning">LANGKAH 3: Transformasi ke Supervised Learning</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-4-train-test-split">LANGKAH 4: Train-Test Split</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-5-normalisasi-data">LANGKAH 5: Normalisasi Data</a></li>

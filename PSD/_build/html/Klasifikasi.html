@@ -201,6 +201,14 @@
 
 
 <li class="toctree-l1"><a class="reference internal" href="voice_open_close_identification.html">Identifikasi Suara Buka Tutup Menggunakan Feature Statistik Time Series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ECG5000/ECG5000_CRISP_DM.html">ECG5000 Classification Project</a></li>
+
+
+
+
+
+
+
 </ul>
 
     </div>
@@ -449,7 +457,92 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Libraries berhasil diimport!
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="n">File</span> <span class="n">C</span><span class="p">:</span>\<span class="n">laragon</span>\<span class="nb">bin</span>\<span class="n">python</span>\<span class="n">python</span><span class="o">-</span><span class="mf">3.10</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">pandas</span>\<span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">22</span>
+<span class="g g-Whitespace">     </span><span class="mi">19</span> <span class="k">del</span> <span class="n">_hard_dependencies</span><span class="p">,</span> <span class="n">_dependency</span><span class="p">,</span> <span class="n">_missing_dependencies</span>
+<span class="g g-Whitespace">     </span><span class="mi">21</span> <span class="c1"># numpy compat</span>
+<span class="ne">---&gt; </span><span class="mi">22</span> <span class="kn">from</span><span class="w"> </span><span class="nn">pandas.compat</span><span class="w"> </span><span class="kn">import</span> <span class="n">is_numpy_dev</span> <span class="k">as</span> <span class="n">_is_numpy_dev</span>  <span class="c1"># pyright: ignore # noqa:F401</span>
+<span class="g g-Whitespace">     </span><span class="mi">24</span> <span class="k">try</span><span class="p">:</span>
+<span class="g g-Whitespace">     </span><span class="mi">25</span>     <span class="kn">from</span><span class="w"> </span><span class="nn">pandas._libs</span><span class="w"> </span><span class="kn">import</span> <span class="n">hashtable</span> <span class="k">as</span> <span class="n">_hashtable</span><span class="p">,</span> <span class="n">lib</span> <span class="k">as</span> <span class="n">_lib</span><span class="p">,</span> <span class="n">tslib</span> <span class="k">as</span> <span class="n">_tslib</span>
+
+<span class="n">File</span> <span class="n">C</span><span class="p">:</span>\<span class="n">laragon</span>\<span class="nb">bin</span>\<span class="n">python</span>\<span class="n">python</span><span class="o">-</span><span class="mf">3.10</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">pandas</span>\<span class="n">compat</span>\<span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">25</span>
+<span class="g g-Whitespace">     </span><span class="mi">17</span> <span class="kn">from</span><span class="w"> </span><span class="nn">pandas.compat._constants</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">18</span>     <span class="n">IS64</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">19</span>     <span class="n">PY39</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">22</span>     <span class="n">PYPY</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">23</span> <span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">24</span> <span class="kn">import</span><span class="w"> </span><span class="nn">pandas.compat.compressors</span>
+<span class="ne">---&gt; </span><span class="mi">25</span> <span class="kn">from</span><span class="w"> </span><span class="nn">pandas.compat.numpy</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">26</span>     <span class="n">is_numpy_dev</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">27</span>     <span class="n">np_version_under1p21</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">28</span> <span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">29</span> <span class="kn">from</span><span class="w"> </span><span class="nn">pandas.compat.pyarrow</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">30</span>     <span class="n">pa_version_under7p0</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">31</span>     <span class="n">pa_version_under8p0</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">32</span>     <span class="n">pa_version_under9p0</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">33</span>     <span class="n">pa_version_under11p0</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">34</span> <span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">37</span> <span class="k">def</span><span class="w"> </span><span class="nf">set_function_name</span><span class="p">(</span><span class="n">f</span><span class="p">:</span> <span class="n">F</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">F</span><span class="p">:</span>
+
+<span class="n">File</span> <span class="n">C</span><span class="p">:</span>\<span class="n">laragon</span>\<span class="nb">bin</span>\<span class="n">python</span>\<span class="n">python</span><span class="o">-</span><span class="mf">3.10</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">pandas</span>\<span class="n">compat</span>\<span class="n">numpy</span>\<span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">4</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span><span class="w"> </span><span class="sd">&quot;&quot;&quot; support numpy compatibility across versions &quot;&quot;&quot;</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="ne">----&gt; </span><span class="mi">4</span> <span class="kn">from</span><span class="w"> </span><span class="nn">pandas.util.version</span><span class="w"> </span><span class="kn">import</span> <span class="n">Version</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="c1"># numpy versioning</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="n">_np_version</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">__version__</span>
+
+<span class="n">File</span> <span class="n">C</span><span class="p">:</span>\<span class="n">laragon</span>\<span class="nb">bin</span>\<span class="n">python</span>\<span class="n">python</span><span class="o">-</span><span class="mf">3.10</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">pandas</span>\<span class="n">util</span>\<span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">2</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># pyright: reportUnusedImport = false</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">from</span><span class="w"> </span><span class="nn">pandas.util._decorators</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>  <span class="c1"># noqa:F401</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span>     <span class="n">Appender</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span>     <span class="n">Substitution</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span>     <span class="n">cache_readonly</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="kn">from</span><span class="w"> </span><span class="nn">pandas.core.util.hashing</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>  <span class="c1"># noqa:F401</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span>     <span class="n">hash_array</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span>     <span class="n">hash_pandas_object</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="p">)</span>
+
+<span class="n">File</span> <span class="n">C</span><span class="p">:</span>\<span class="n">laragon</span>\<span class="nb">bin</span>\<span class="n">python</span>\<span class="n">python</span><span class="o">-</span><span class="mf">3.10</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">pandas</span>\<span class="n">util</span>\<span class="n">_decorators</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">14</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span>     <span class="n">Any</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span>     <span class="n">Callable</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span>     <span class="n">Mapping</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span>     <span class="n">cast</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span> <span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="ne">---&gt; </span><span class="mi">14</span> <span class="kn">from</span><span class="w"> </span><span class="nn">pandas._libs.properties</span><span class="w"> </span><span class="kn">import</span> <span class="n">cache_readonly</span>
+<span class="g g-Whitespace">     </span><span class="mi">15</span> <span class="kn">from</span><span class="w"> </span><span class="nn">pandas._typing</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">16</span>     <span class="n">F</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">17</span>     <span class="n">T</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">18</span> <span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">19</span> <span class="kn">from</span><span class="w"> </span><span class="nn">pandas.util._exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">find_stack_level</span>
+
+<span class="n">File</span> <span class="n">C</span><span class="p">:</span>\<span class="n">laragon</span>\<span class="nb">bin</span>\<span class="n">python</span>\<span class="n">python</span><span class="o">-</span><span class="mf">3.10</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">pandas</span>\<span class="n">_libs</span>\<span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">13</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span>     <span class="s2">&quot;NaT&quot;</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span>     <span class="s2">&quot;NaTType&quot;</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span>     <span class="s2">&quot;Interval&quot;</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="p">]</span>
+<span class="ne">---&gt; </span><span class="mi">13</span> <span class="kn">from</span><span class="w"> </span><span class="nn">pandas._libs.interval</span><span class="w"> </span><span class="kn">import</span> <span class="n">Interval</span>
+<span class="g g-Whitespace">     </span><span class="mi">14</span> <span class="kn">from</span><span class="w"> </span><span class="nn">pandas._libs.tslibs</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">15</span>     <span class="n">NaT</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">16</span>     <span class="n">NaTType</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">21</span>     <span class="n">iNaT</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">22</span> <span class="p">)</span>
+
+<span class="nn">File C:\laragon\bin\python\python-3.10\lib\site-packages\pandas\_libs\interval.pyx:1,</span> in <span class="ni">init pandas._libs.interval</span><span class="nt">()</span>
+
+<span class="ne">ValueError</span>: numpy.dtype size changed, may indicate binary incompatibility. Expected 96 from C header, got 88 from PyObject
 </pre></div>
 </div>
 </div>
@@ -786,9 +879,7 @@ Class 7: TP=16, FP=10, FN=0, Precision=0.615, Recall=1.000
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>============================================================
 KLASIFIKASI NAIVE BAYES - DATA SMOTE 
 ============================================================
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Membuat SMOTE data dari TRAINING SET saja...
+Membuat SMOTE data dari TRAINING SET saja...
 Training set original: 235 samples
 
 Distribusi training set:
