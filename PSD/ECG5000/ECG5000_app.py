@@ -12,9 +12,10 @@ def load_model():
     # Get the directory of this script
     current_dir = os.path.dirname(os.path.abspath(__file__))
     
-    # Construct paths to model files
-    model_path = os.path.join(current_dir, 'ecg_model.pkl')
-    scaler_path = os.path.join(current_dir, 'ecg_scaler.pkl')
+    # Construct paths to model files (bisa di ECG5000 atau di root folder)
+    # Cek di folder ECG5000 terlebih dahulu
+    model_path = os.path.join(current_dir, 'ECG5000', 'ecg_model.pkl') if not os.path.exists(os.path.join(current_dir, 'ecg_model.pkl')) else os.path.join(current_dir, 'ecg_model.pkl')
+    scaler_path = os.path.join(current_dir, 'ECG5000', 'ecg_scaler.pkl') if not os.path.exists(os.path.join(current_dir, 'ecg_scaler.pkl')) else os.path.join(current_dir, 'ecg_scaler.pkl')
     
     # Check if files exist
     if not os.path.exists(model_path):
@@ -69,11 +70,20 @@ if upload_file is not None:
     X_scaled = scaler.transform(X_new)
     predictions = model.predict(X_scaled)
     
-    # Hasil
+    # Dapatkan probability untuk confidence score
+    if hasattr(model, 'predict_proba'):
+        probabilities = model.predict_proba(X_scaled)
+        # Ambil probability untuk kelas yang diprediksi
+        confidence = np.max(probabilities, axis=1)
+    else:
+        confidence = np.ones(len(predictions))  # Jika model tidak support probability
+    
+    # Hasil (1 = Normal, 0 = Abnormal sesuai notebook)
     st.subheader('Hasil Prediksi')
     result_df = pd.DataFrame({
         'Sample': range(1, len(predictions)+1),
-        'Prediction': ['Normal' if p == 1 else 'Abnormal' for p in predictions]
+        'Prediction': ['Normal' if p == 1 else 'Abnormal' for p in predictions],
+        'Confidence': [f'{c*100:.1f}%' for c in confidence]
     })
     st.dataframe(result_df)
     
@@ -81,9 +91,14 @@ if upload_file is not None:
     st.subheader('Visualisasi Sinyal ECG')
     sample_idx = st.slider('Pilih sample', 0, len(X_new)-1, 0)
     
+    # Tentukan warna berdasarkan prediksi
+    pred_label = result_df.iloc[sample_idx]['Prediction']
+    color = 'green' if pred_label == 'Normal' else 'red'
+    
     fig, ax = plt.subplots(figsize=(12, 4))
-    ax.plot(X_new[sample_idx], color='blue', linewidth=1.5)
-    ax.set_title(f'Sample {sample_idx+1} - {result_df.iloc[sample_idx]["Prediction"]}')
+    ax.plot(X_new[sample_idx], color=color, linewidth=1.5)
+    ax.set_title(f'Sample {sample_idx+1} - {pred_label} (Confidence: {result_df.iloc[sample_idx]["Confidence"]})', 
+                 fontweight='bold')
     ax.set_xlabel('Time Point')
     ax.set_ylabel('Amplitude')
     ax.grid(True, alpha=0.3)
@@ -104,7 +119,8 @@ else:
     if st.button('Demo dengan Sample Data'):
         # Get the directory of this script
         current_dir = os.path.dirname(os.path.abspath(__file__))
-        test_data_path = os.path.join(current_dir, 'ECG5000_TEST.txt')
+        # Cek di folder ECG5000 terlebih dahulu
+        test_data_path = os.path.join(current_dir, 'ECG5000', 'ECG5000_TEST.txt') if not os.path.exists(os.path.join(current_dir, 'ECG5000_TEST.txt')) else os.path.join(current_dir, 'ECG5000_TEST.txt')
         
         if not os.path.exists(test_data_path):
             st.error(f"Test data file not found: {test_data_path}")
@@ -115,9 +131,26 @@ else:
                 X_scaled = scaler.transform(sample_data)
                 predictions = model.predict(X_scaled)
                 
+                # Dapatkan confidence score
+                if hasattr(model, 'predict_proba'):
+                    probabilities = model.predict_proba(X_scaled)
+                    confidence = np.max(probabilities, axis=1)
+                else:
+                    confidence = np.ones(len(predictions))
+                
                 st.subheader('Demo Prediksi (10 Sample)')
-                for i, pred in enumerate(predictions):
-                    status = '✅ Normal' if pred == 1 else '⚠️ Abnormal'
-                    st.write(f'Sample {i+1}: {status}')
+                
+                # Tampilkan dalam format yang lebih baik
+                demo_df = pd.DataFrame({
+                    'Sample': range(1, len(predictions)+1),
+                    'Prediction': ['✅ Normal' if p == 1 else '⚠️ Abnormal' for p in predictions],
+                    'Confidence': [f'{c*100:.1f}%' for c in confidence]
+                })
+                st.dataframe(demo_df, use_container_width=True)
+                
+                # Summary
+                normal_demo = sum(predictions == 1)
+                abnormal_demo = sum(predictions == 0)
+                st.write(f'**Summary:** {normal_demo} Normal, {abnormal_demo} Abnormal')
             except Exception as e:
                 st.error(f"Error loading demo data: {str(e)}")
