@@ -1,0 +1,1093 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Penjelasan Tahapan Code ECG5000 Classification Project &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'ECG5000/PENJELASAN_CODE';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="My sample book - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="My sample book - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Tentang Saya
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../BusinessProblem.html">Business Problem</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../DataUnderstanding.html">Data Understanding</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ExplorasiData.html">Eksplorasi Data</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../PrepocessingData.html">Prepocessing Data</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../PowerBI.html">Power BI Eksplorasi Data Iris</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ecoli_pca_adasyn.html">E. coli Protein PCA &amp; ADASYN Implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Klasifikasi.html"><strong>Klasifikasi Dan BaggingClassifier Pada Dataset Ecoli</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Dokumentasi%20Project%20Pra%20Uts.html">Workflow KNIME</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Prediksi%20Ambang%20Batas%20Aman%20NO2.html">Prediksi Nilai NO2 Satu Hari Kedepan dengan KNN Regression (Lag 2)</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../voice_open_close_identification.html">Identifikasi Suara Buka Tutup Menggunakan Feature Statistik Time Series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ECG5000_CRISP_DM.html">ECG5000 Classification Project</a></li>
+
+
+
+
+
+
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FECG5000/PENJELASAN_CODE.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/ECG5000/PENJELASAN_CODE.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Penjelasan Tahapan Code ECG5000 Classification Project</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#daftar-isi">Daftar Isi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#business-understanding">1. Business Understanding</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tujuan">Tujuan</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#output-yang-diharapkan">Output yang Diharapkan</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-understanding-eda">2. Data Understanding (EDA)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#import-libraries">2.1 Import Libraries</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#load-data">2.2 Load Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pemisahan-features-dan-labels">2.3 Pemisahan Features dan Labels</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-distribusi-label">2.4 Analisis Distribusi Label</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-sinyal-ecg">2.5 Visualisasi Sinyal ECG</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rata-rata-sinyal-per-kelas">2.6 Rata-rata Sinyal per Kelas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#statistik-deskriptif">2.7 Statistik Deskriptif</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-preprocessing">3. Data Preprocessing</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#binary-classification">3.1 Binary Classification</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#train-test-split">3.2 Train-Test Split</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#standarisasi-data">3.3 Standarisasi Data</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pemodelan-data">4. Pemodelan Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definisi-model">4.1 Definisi Model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#training-model">4.2 Training Model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perbandingan-model">4.3 Perbandingan Model</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluasi">5. Evaluasi</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#classification-report">5.1 Classification Report</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#confusion-matrix">5.2 Confusion Matrix</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-importance-random-forest">5.3 Feature Importance (Random Forest)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-validation">5.4 Cross-Validation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deployment">6. Deployment</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#save-model">6.1 Save Model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#streamlit-deployment-rencana">6.2 Streamlit Deployment (Rencana)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ringkasan-flow-keseluruhan">Ringkasan Flow Keseluruhan</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tips-best-practices">Tips &amp; Best Practices</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#yang-sudah-baik">✓ Yang Sudah Baik:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#yang-bisa-ditingkatkan">⚠ Yang Bisa Ditingkatkan:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretasi-hasil">Interpretasi Hasil</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ketika-akurasi-tinggi-90">Ketika Akurasi Tinggi (&gt;90%):</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ketika-recall-rendah-untuk-abnormal">Ketika Recall Rendah untuk Abnormal:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ketika-precision-rendah">Ketika Precision Rendah:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#referensi-tambahan">Referensi Tambahan</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="penjelasan-tahapan-code-ecg5000-classification-project">
+<h1>Penjelasan Tahapan Code ECG5000 Classification Project<a class="headerlink" href="#penjelasan-tahapan-code-ecg5000-classification-project" title="Link to this heading">#</a></h1>
+<section id="daftar-isi">
+<h2>Daftar Isi<a class="headerlink" href="#daftar-isi" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="#1-business-understanding"><span class="xref myst">Business Understanding</span></a></p></li>
+<li><p><a class="reference internal" href="#2-data-understanding-eda"><span class="xref myst">Data Understanding (EDA)</span></a></p></li>
+<li><p><a class="reference internal" href="#3-data-preprocessing"><span class="xref myst">Data Preprocessing</span></a></p></li>
+<li><p><a class="reference internal" href="#4-pemodelan-data"><span class="xref myst">Pemodelan Data</span></a></p></li>
+<li><p><a class="reference internal" href="#5-evaluasi"><span class="xref myst">Evaluasi</span></a></p></li>
+<li><p><a class="reference internal" href="#6-deployment"><span class="xref myst">Deployment</span></a></p></li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="business-understanding">
+<h2>1. Business Understanding<a class="headerlink" href="#business-understanding" title="Link to this heading">#</a></h2>
+<section id="tujuan">
+<h3>Tujuan<a class="headerlink" href="#tujuan" title="Link to this heading">#</a></h3>
+<p>Mengembangkan sistem klasifikasi otomatis untuk mendeteksi anomali dalam sinyal ECG (Elektrokardiogram) guna membantu diagnosis dini penyakit jantung.</p>
+</section>
+<section id="output-yang-diharapkan">
+<h3>Output yang Diharapkan<a class="headerlink" href="#output-yang-diharapkan" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Model machine learning yang dapat mengklasifikasikan sinyal ECG sebagai Normal atau Abnormal</p></li>
+<li><p>Akurasi prediksi yang tinggi (&gt;90%)</p></li>
+<li><p>Sistem yang dapat di-deploy untuk penggunaan praktis</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="data-understanding-eda">
+<h2>2. Data Understanding (EDA)<a class="headerlink" href="#data-understanding-eda" title="Link to this heading">#</a></h2>
+<section id="import-libraries">
+<h3>2.1 Import Libraries<a class="headerlink" href="#import-libraries" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">StandardScaler</span><span class="p">,</span> <span class="n">LabelEncoder</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">classification_report</span><span class="p">,</span> <span class="n">confusion_matrix</span><span class="p">,</span> <span class="n">accuracy_score</span>
+</pre></div>
+</div>
+<p><strong>Penjelasan:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">numpy</span></code> &amp; <code class="docutils literal notranslate"><span class="pre">pandas</span></code>: Manipulasi data numerik dan tabel</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> &amp; <code class="docutils literal notranslate"><span class="pre">seaborn</span></code>: Visualisasi data</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sklearn</span></code>: Tools untuk machine learning (preprocessing, modeling, evaluasi)</p></li>
+</ul>
+</section>
+<section id="load-data">
+<h3>2.2 Load Data<a class="headerlink" href="#load-data" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">train_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s1">&#39;ECG5000_TRAIN.txt&#39;</span><span class="p">)</span>
+<span class="n">test_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s1">&#39;ECG5000_TEST.txt&#39;</span><span class="p">)</span>
+<span class="n">all_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">train_data</span><span class="p">,</span> <span class="n">test_data</span><span class="p">])</span>
+</pre></div>
+</div>
+<p><strong>Penjelasan:</strong></p>
+<ul class="simple">
+<li><p>Memuat dataset ECG5000 yang terbagi dalam file training dan testing</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">np.vstack()</span></code> menggabungkan kedua dataset secara vertikal</p></li>
+<li><p>Dataset berisi sinyal ECG dengan 140 time points per sampel</p></li>
+</ul>
+</section>
+<section id="pemisahan-features-dan-labels">
+<h3>2.3 Pemisahan Features dan Labels<a class="headerlink" href="#pemisahan-features-dan-labels" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="n">all_data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>  <span class="c1"># Kolom pertama = label</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">all_data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span>              <span class="c1"># Kolom sisanya = features</span>
+</pre></div>
+</div>
+<p><strong>Penjelasan:</strong></p>
+<ul class="simple">
+<li><p>Label (y): Kelas ECG (1=Normal, 2-5=Berbagai jenis abnormal)</p></li>
+<li><p>Features (X): 140 nilai amplitudo sinyal ECG dalam time series</p></li>
+</ul>
+</section>
+<section id="analisis-distribusi-label">
+<h3>2.4 Analisis Distribusi Label<a class="headerlink" href="#analisis-distribusi-label" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">label_counts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Penjelasan:</strong></p>
+<ul class="simple">
+<li><p>Menghitung jumlah sampel per kelas</p></li>
+<li><p>Visualisasi dengan bar chart dan pie chart</p></li>
+<li><p>Mengecek apakah data balanced atau imbalanced</p></li>
+</ul>
+</section>
+<section id="visualisasi-sinyal-ecg">
+<h3>2.5 Visualisasi Sinyal ECG<a class="headerlink" href="#visualisasi-sinyal-ecg" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Sample sinyal per kelas</span>
+<span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">unique_labels</span><span class="p">:</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="n">label</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+</pre></div>
+</div>
+<p><strong>Penjelasan:</strong></p>
+<ul class="simple">
+<li><p>Menampilkan contoh sinyal ECG dari setiap kelas</p></li>
+<li><p>Membantu memahami perbedaan visual antar kelas</p></li>
+<li><p>Time points (x-axis) vs Amplitude (y-axis)</p></li>
+</ul>
+</section>
+<section id="rata-rata-sinyal-per-kelas">
+<h3>2.6 Rata-rata Sinyal per Kelas<a class="headerlink" href="#rata-rata-sinyal-per-kelas" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">unique_labels</span><span class="p">:</span>
+    <span class="n">class_data</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="n">label</span><span class="p">]</span>
+    <span class="n">mean_signal</span> <span class="o">=</span> <span class="n">class_data</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">mean_signal</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Kelas </span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Penjelasan:</strong></p>
+<ul class="simple">
+<li><p>Menghitung rata-rata sinyal untuk setiap kelas</p></li>
+<li><p>Mengidentifikasi pola karakteristik tiap kelas</p></li>
+<li><p>Membantu memahami perbedaan antara Normal vs Abnormal</p></li>
+</ul>
+</section>
+<section id="statistik-deskriptif">
+<h3>2.7 Statistik Deskriptif<a class="headerlink" href="#statistik-deskriptif" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Mean amplitude: </span><span class="si">{</span><span class="n">class_data</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Std amplitude: </span><span class="si">{</span><span class="n">class_data</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Penjelasan:</strong></p>
+<ul class="simple">
+<li><p>Menghitung statistik dasar (mean, std, min, max) per kelas</p></li>
+<li><p>Mengidentifikasi range nilai dan variabilitas data</p></li>
+<li><p>Memastikan tidak ada missing values</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="data-preprocessing">
+<h2>3. Data Preprocessing<a class="headerlink" href="#data-preprocessing" title="Link to this heading">#</a></h2>
+<section id="binary-classification">
+<h3>3.1 Binary Classification<a class="headerlink" href="#binary-classification" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y_binary</span> <span class="o">=</span> <span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>  <span class="c1"># 1 = Normal, 0 = Abnormal</span>
+</pre></div>
+</div>
+<p><strong>Penjelasan:</strong></p>
+<ul class="simple">
+<li><p>Mengkonversi multi-class (1-5) menjadi binary (0-1)</p></li>
+<li><p>Kelas 1 tetap sebagai Normal (1)</p></li>
+<li><p>Kelas 2-5 digabung menjadi Abnormal (0)</p></li>
+<li><p>Simplifikasi problem untuk deteksi anomali</p></li>
+</ul>
+</section>
+<section id="train-test-split">
+<h3>3.2 Train-Test Split<a class="headerlink" href="#train-test-split" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y_binary</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">y_binary</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Penjelasan:</strong></p>
+<ul class="simple">
+<li><p>Membagi data: 80% training, 20% testing</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stratify=y_binary</span></code>: Mempertahankan proporsi kelas di train &amp; test</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">random_state=42</span></code>: Untuk reproduktibilitas hasil</p></li>
+</ul>
+</section>
+<section id="standarisasi-data">
+<h3>3.3 Standarisasi Data<a class="headerlink" href="#standarisasi-data" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+<span class="n">X_train_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="n">X_test_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Penjelasan:</strong></p>
+<ul class="simple">
+<li><p>StandardScaler: Mengubah data ke mean=0, std=1</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fit_transform()</span></code> pada training: Belajar parameter &amp; transform</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">transform()</span></code> pada testing: Hanya transform (pakai parameter dari training)</p></li>
+<li><p>Penting untuk algoritma yang sensitif terhadap skala (SVM, KNN)</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="pemodelan-data">
+<h2>4. Pemodelan Data<a class="headerlink" href="#pemodelan-data" title="Link to this heading">#</a></h2>
+<section id="definisi-model">
+<h3>4.1 Definisi Model<a class="headerlink" href="#definisi-model" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">models</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Logistic Regression&#39;</span><span class="p">:</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">),</span>
+    <span class="s1">&#39;Decision Tree&#39;</span><span class="p">:</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">),</span>
+    <span class="s1">&#39;Random Forest&#39;</span><span class="p">:</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">),</span>
+    <span class="s1">&#39;KNN&#39;</span><span class="p">:</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
+    <span class="s1">&#39;SVM&#39;</span><span class="p">:</span> <span class="n">SVC</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s1">&#39;rbf&#39;</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">),</span>
+    <span class="s1">&#39;Gradient Boosting&#39;</span><span class="p">:</span> <span class="n">GradientBoostingClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Penjelasan Model:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Logistic Regression</strong>:</p>
+<ul class="simple">
+<li><p>Model linear untuk klasifikasi binary</p></li>
+<li><p>Cepat, interpretable</p></li>
+<li><p>Baseline model</p></li>
+</ul>
+</li>
+<li><p><strong>Decision Tree</strong>:</p>
+<ul class="simple">
+<li><p>Model berbasis pohon keputusan</p></li>
+<li><p>Mudah dipahami, dapat handle non-linearity</p></li>
+<li><p>Rentan overfit</p></li>
+</ul>
+</li>
+<li><p><strong>Random Forest</strong>:</p>
+<ul class="simple">
+<li><p>Ensemble dari banyak decision trees</p></li>
+<li><p>Lebih robust, mengurangi overfit</p></li>
+<li><p>Feature importance tersedia</p></li>
+</ul>
+</li>
+<li><p><strong>KNN (K-Nearest Neighbors)</strong>:</p>
+<ul class="simple">
+<li><p>Klasifikasi based on similarity dengan neighbors</p></li>
+<li><p>Non-parametric, simple</p></li>
+<li><p>Sensitif terhadap skala data</p></li>
+</ul>
+</li>
+<li><p><strong>SVM (Support Vector Machine)</strong>:</p>
+<ul class="simple">
+<li><p>Mencari hyperplane optimal untuk pemisah kelas</p></li>
+<li><p>Kernel RBF untuk non-linear boundary</p></li>
+<li><p>Powerful untuk high-dimensional data</p></li>
+</ul>
+</li>
+<li><p><strong>Gradient Boosting</strong>:</p>
+<ul class="simple">
+<li><p>Ensemble sequentially, fokus pada error sebelumnya</p></li>
+<li><p>Sangat powerful, sering menang di kompetisi</p></li>
+<li><p>Lebih lambat untuk training</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="training-model">
+<h3>4.2 Training Model<a class="headerlink" href="#training-model" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">models</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_scaled</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_scaled</span><span class="p">)</span>
+    <span class="n">acc</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Penjelasan:</strong></p>
+<ul class="simple">
+<li><p>Loop melalui semua model</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fit()</span></code>: Training model pada data training</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">predict()</span></code>: Prediksi pada data testing</p></li>
+<li><p>Simpan hasil untuk perbandingan</p></li>
+</ul>
+</section>
+<section id="perbandingan-model">
+<h3>4.3 Perbandingan Model<a class="headerlink" href="#perbandingan-model" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">accuracies</span> <span class="o">=</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="n">results</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;accuracy&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">models</span><span class="o">.</span><span class="n">keys</span><span class="p">()}</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">accuracies</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">accuracies</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+</pre></div>
+</div>
+<p><strong>Penjelasan:</strong></p>
+<ul class="simple">
+<li><p>Visualisasi akurasi semua model dalam bar chart</p></li>
+<li><p>Memudahkan identifikasi model terbaik</p></li>
+<li><p>Menampilkan nilai akurasi di atas setiap bar</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="evaluasi">
+<h2>5. Evaluasi<a class="headerlink" href="#evaluasi" title="Link to this heading">#</a></h2>
+<section id="classification-report">
+<h3>5.1 Classification Report<a class="headerlink" href="#classification-report" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_best</span><span class="p">,</span> 
+                          <span class="n">target_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Abnormal&#39;</span><span class="p">,</span> <span class="s1">&#39;Normal&#39;</span><span class="p">]))</span>
+</pre></div>
+</div>
+<p><strong>Penjelasan Metrics:</strong></p>
+<ul class="simple">
+<li><p><strong>Precision</strong>: Dari semua prediksi positif, berapa yang benar?</p>
+<ul>
+<li><p>Formula: TP / (TP + FP)</p></li>
+<li><p>Penting untuk minimalisir false alarm</p></li>
+</ul>
+</li>
+<li><p><strong>Recall (Sensitivity)</strong>: Dari semua actual positif, berapa yang terdeteksi?</p>
+<ul>
+<li><p>Formula: TP / (TP + FN)</p></li>
+<li><p>Penting untuk deteksi penyakit (jangan sampai miss)</p></li>
+</ul>
+</li>
+<li><p><strong>F1-Score</strong>: Harmonic mean dari Precision &amp; Recall</p>
+<ul>
+<li><p>Formula: 2 × (Precision × Recall) / (Precision + Recall)</p></li>
+<li><p>Balance antara precision &amp; recall</p></li>
+</ul>
+</li>
+<li><p><strong>Support</strong>: Jumlah sampel actual per kelas</p></li>
+</ul>
+</section>
+<section id="confusion-matrix">
+<h3>5.2 Confusion Matrix<a class="headerlink" href="#confusion-matrix" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cm</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_best</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Penjelasan:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>                <span class="n">Predicted</span>
+              <span class="n">Abn</span>    <span class="n">Norm</span>
+<span class="n">Actual</span>  <span class="n">Abn</span>   <span class="n">TN</span>     <span class="n">FP</span>
+        <span class="n">Norm</span>  <span class="n">FN</span>     <span class="n">TP</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>True Negative (TN)</strong>: Abnormal diprediksi Abnormal ✓</p></li>
+<li><p><strong>False Positive (FP)</strong>: Abnormal diprediksi Normal ✗</p></li>
+<li><p><strong>False Negative (FN)</strong>: Normal diprediksi Abnormal ✗</p></li>
+<li><p><strong>True Positive (TP)</strong>: Normal diprediksi Normal ✓</p></li>
+</ul>
+</section>
+<section id="feature-importance-random-forest">
+<h3>5.3 Feature Importance (Random Forest)<a class="headerlink" href="#feature-importance-random-forest" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">feature_importance</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;feature&#39;</span><span class="p">:</span> <span class="n">feature_names</span><span class="p">,</span>
+    <span class="s1">&#39;importance&#39;</span><span class="p">:</span> <span class="n">rf_model</span><span class="o">.</span><span class="n">feature_importances_</span>
+<span class="p">})</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;importance&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Penjelasan:</strong></p>
+<ul class="simple">
+<li><p>Menunjukkan time points mana yang paling berpengaruh dalam prediksi</p></li>
+<li><p>Nilai tinggi = fitur penting untuk klasifikasi</p></li>
+<li><p>Berguna untuk interpretasi dan feature selection</p></li>
+</ul>
+</section>
+<section id="cross-validation">
+<h3>5.4 Cross-Validation<a class="headerlink" href="#cross-validation" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cv_scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X_train_scaled</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cv_scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1"> (+/- </span><span class="si">{</span><span class="n">cv_scores</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="o">*</span><span class="mi">2</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Penjelasan:</strong></p>
+<ul class="simple">
+<li><p>Membagi data training menjadi 5 folds</p></li>
+<li><p>Training &amp; testing pada kombinasi berbeda</p></li>
+<li><p>Mengukur stabilitas dan generalisasi model</p></li>
+<li><p>Mean ± 2×Std memberikan confidence interval 95%</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="deployment">
+<h2>6. Deployment<a class="headerlink" href="#deployment" title="Link to this heading">#</a></h2>
+<section id="save-model">
+<h3>6.1 Save Model<a class="headerlink" href="#save-model" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">best_model</span><span class="p">,</span> <span class="s1">&#39;ecg_model.pkl&#39;</span><span class="p">)</span>
+<span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">scaler</span><span class="p">,</span> <span class="s1">&#39;ecg_scaler.pkl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Penjelasan:</strong></p>
+<ul class="simple">
+<li><p>Menyimpan model dan scaler yang sudah di-training</p></li>
+<li><p>Format <code class="docutils literal notranslate"><span class="pre">.pkl</span></code> (pickle) untuk serialisasi object Python</p></li>
+<li><p>Model dapat di-load kembali tanpa perlu re-training</p></li>
+<li><p>Scaler disimpan untuk preprocessing data baru dengan parameter sama</p></li>
+</ul>
+</section>
+<section id="streamlit-deployment-rencana">
+<h3>6.2 Streamlit Deployment (Rencana)<a class="headerlink" href="#streamlit-deployment-rencana" title="Link to this heading">#</a></h3>
+<p>Model akan di-deploy menggunakan Streamlit dengan fitur:</p>
+<ul class="simple">
+<li><p>Upload file ECG atau input manual</p></li>
+<li><p>Preprocessing otomatis menggunakan scaler tersimpan</p></li>
+<li><p>Prediksi real-time</p></li>
+<li><p>Visualisasi sinyal dan hasil prediksi</p></li>
+<li><p>Interface user-friendly untuk non-technical users</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="ringkasan-flow-keseluruhan">
+<h2>Ringkasan Flow Keseluruhan<a class="headerlink" href="#ringkasan-flow-keseluruhan" title="Link to this heading">#</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1. Business Understanding
+   ↓
+2. Load &amp; Explore Data (EDA)
+   ↓
+3. Preprocessing
+   - Binary classification
+   - Train-test split
+   - Standardization
+   ↓
+4. Model Training
+   - Train multiple models
+   - Compare performance
+   ↓
+5. Evaluation
+   - Select best model
+   - Detailed metrics
+   - Cross-validation
+   ↓
+6. Save &amp; Deploy
+   - Save model &amp; scaler
+   - Streamlit app
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="tips-best-practices">
+<h2>Tips &amp; Best Practices<a class="headerlink" href="#tips-best-practices" title="Link to this heading">#</a></h2>
+<section id="yang-sudah-baik">
+<h3>✓ Yang Sudah Baik:<a class="headerlink" href="#yang-sudah-baik" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>EDA Komprehensif</strong>: Visualisasi dan analisis menyeluruh</p></li>
+<li><p><strong>Multiple Models</strong>: Testing berbagai algoritma</p></li>
+<li><p><strong>Proper Splitting</strong>: Stratified train-test split</p></li>
+<li><p><strong>Standardization</strong>: Preprocessing yang tepat</p></li>
+<li><p><strong>Cross-Validation</strong>: Validasi robustness model</p></li>
+</ol>
+</section>
+<section id="yang-bisa-ditingkatkan">
+<h3>⚠ Yang Bisa Ditingkatkan:<a class="headerlink" href="#yang-bisa-ditingkatkan" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Hyperparameter Tuning</strong>: Gunakan GridSearchCV/RandomizedSearchCV</p></li>
+<li><p><strong>Feature Engineering</strong>: Extract statistik (mean, std, peaks, dll)</p></li>
+<li><p><strong>Imbalanced Data</strong>: Jika ada, gunakan SMOTE atau class_weight</p></li>
+<li><p><strong>ROC-AUC Curve</strong>: Tambahkan untuk evaluasi lebih detail</p></li>
+<li><p><strong>Model Ensemble</strong>: Combine beberapa model terbaik</p></li>
+<li><p><strong>Deep Learning</strong>: Coba LSTM/CNN untuk time series</p></li>
+</ol>
+</section>
+</section>
+<hr class="docutils" />
+<section id="interpretasi-hasil">
+<h2>Interpretasi Hasil<a class="headerlink" href="#interpretasi-hasil" title="Link to this heading">#</a></h2>
+<section id="ketika-akurasi-tinggi-90">
+<h3>Ketika Akurasi Tinggi (&gt;90%):<a class="headerlink" href="#ketika-akurasi-tinggi-90" title="Link to this heading">#</a></h3>
+<p>✓ Model berhasil menangkap pola ECG normal vs abnormal
+✓ Features (time points) sudah representatif
+✓ Dapat dipertimbangkan untuk deployment</p>
+</section>
+<section id="ketika-recall-rendah-untuk-abnormal">
+<h3>Ketika Recall Rendah untuk Abnormal:<a class="headerlink" href="#ketika-recall-rendah-untuk-abnormal" title="Link to this heading">#</a></h3>
+<p>⚠ Banyak kasus abnormal yang terlewat (False Negative)
+⚠ Berbahaya dalam konteks medis
+⚠ Perlu tuning threshold atau class weights</p>
+</section>
+<section id="ketika-precision-rendah">
+<h3>Ketika Precision Rendah:<a class="headerlink" href="#ketika-precision-rendah" title="Link to this heading">#</a></h3>
+<p>⚠ Banyak false alarm (False Positive)
+⚠ Dapat menyebabkan kepanikan tidak perlu
+⚠ Perlu penyesuaian decision boundary</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="referensi-tambahan">
+<h2>Referensi Tambahan<a class="headerlink" href="#referensi-tambahan" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Dataset</strong>: ECG5000 from UCR Time Series Archive</p></li>
+<li><p><strong>CRISP-DM</strong>: Cross-Industry Standard Process for Data Mining</p></li>
+<li><p><strong>Scikit-learn Documentation</strong>: <a class="reference external" href="https://scikit-learn.org/">https://scikit-learn.org/</a></p></li>
+<li><p><strong>ECG Interpretation</strong>: Medical literature on ECG analysis</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>Catatan</strong>: Code ini merupakan implementasi standard pipeline machine learning untuk klasifikasi time series. Dalam aplikasi medis nyata, validasi lebih ketat dan kolaborasi dengan tenaga medis sangat diperlukan.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./ECG5000"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#daftar-isi">Daftar Isi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#business-understanding">1. Business Understanding</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tujuan">Tujuan</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#output-yang-diharapkan">Output yang Diharapkan</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-understanding-eda">2. Data Understanding (EDA)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#import-libraries">2.1 Import Libraries</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#load-data">2.2 Load Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pemisahan-features-dan-labels">2.3 Pemisahan Features dan Labels</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-distribusi-label">2.4 Analisis Distribusi Label</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-sinyal-ecg">2.5 Visualisasi Sinyal ECG</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rata-rata-sinyal-per-kelas">2.6 Rata-rata Sinyal per Kelas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#statistik-deskriptif">2.7 Statistik Deskriptif</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-preprocessing">3. Data Preprocessing</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#binary-classification">3.1 Binary Classification</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#train-test-split">3.2 Train-Test Split</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#standarisasi-data">3.3 Standarisasi Data</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pemodelan-data">4. Pemodelan Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definisi-model">4.1 Definisi Model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#training-model">4.2 Training Model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perbandingan-model">4.3 Perbandingan Model</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluasi">5. Evaluasi</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#classification-report">5.1 Classification Report</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#confusion-matrix">5.2 Confusion Matrix</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-importance-random-forest">5.3 Feature Importance (Random Forest)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-validation">5.4 Cross-Validation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deployment">6. Deployment</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#save-model">6.1 Save Model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#streamlit-deployment-rencana">6.2 Streamlit Deployment (Rencana)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ringkasan-flow-keseluruhan">Ringkasan Flow Keseluruhan</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tips-best-practices">Tips &amp; Best Practices</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#yang-sudah-baik">✓ Yang Sudah Baik:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#yang-bisa-ditingkatkan">⚠ Yang Bisa Ditingkatkan:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretasi-hasil">Interpretasi Hasil</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ketika-akurasi-tinggi-90">Ketika Akurasi Tinggi (&gt;90%):</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ketika-recall-rendah-untuk-abnormal">Ketika Recall Rendah untuk Abnormal:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ketika-precision-rendah">Ketika Precision Rendah:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#referensi-tambahan">Referensi Tambahan</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book Community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
