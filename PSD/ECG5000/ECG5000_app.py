@@ -4,15 +4,42 @@ import numpy as np
 import pandas as pd
 import joblib
 import matplotlib.pyplot as plt
+import os
 
 # Load model dan scaler
 @st.cache_resource
 def load_model():
-    model = joblib.load('ecg_model.pkl')
-    scaler = joblib.load('ecg_scaler.pkl')
-    return model, scaler
+    # Get the directory of this script
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    
+    # Construct paths to model files
+    model_path = os.path.join(current_dir, 'ecg_model.pkl')
+    scaler_path = os.path.join(current_dir, 'ecg_scaler.pkl')
+    
+    # Check if files exist
+    if not os.path.exists(model_path):
+        st.error(f"Model file not found: {model_path}")
+        st.info("Please run the notebook first to generate the model files.")
+        return None, None
+    
+    if not os.path.exists(scaler_path):
+        st.error(f"Scaler file not found: {scaler_path}")
+        st.info("Please run the notebook first to generate the scaler files.")
+        return None, None
+    
+    try:
+        model = joblib.load(model_path)
+        scaler = joblib.load(scaler_path)
+        return model, scaler
+    except Exception as e:
+        st.error(f"Error loading model: {str(e)}")
+        return None, None
 
 model, scaler = load_model()
+
+# Check if model loaded successfully
+if model is None or scaler is None:
+    st.stop()
 
 # UI
 st.title('🫀 ECG Classification System')
@@ -75,11 +102,22 @@ else:
     
     # Demo dengan sample data
     if st.button('Demo dengan Sample Data'):
-        sample_data = np.loadtxt('ECG5000_TEST.txt')[:10, 1:]
-        X_scaled = scaler.transform(sample_data)
-        predictions = model.predict(X_scaled)
+        # Get the directory of this script
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        test_data_path = os.path.join(current_dir, 'ECG5000_TEST.txt')
         
-        st.subheader('Demo Prediksi (10 Sample)')
-        for i, pred in enumerate(predictions):
-            status = '✅ Normal' if pred == 1 else '⚠️ Abnormal'
-            st.write(f'Sample {i+1}: {status}')
+        if not os.path.exists(test_data_path):
+            st.error(f"Test data file not found: {test_data_path}")
+            st.info("Please ensure ECG5000_TEST.txt is in the same directory as this app.")
+        else:
+            try:
+                sample_data = np.loadtxt(test_data_path)[:10, 1:]
+                X_scaled = scaler.transform(sample_data)
+                predictions = model.predict(X_scaled)
+                
+                st.subheader('Demo Prediksi (10 Sample)')
+                for i, pred in enumerate(predictions):
+                    status = '✅ Normal' if pred == 1 else '⚠️ Abnormal'
+                    st.write(f'Sample {i+1}: {status}')
+            except Exception as e:
+                st.error(f"Error loading demo data: {str(e)}")
