@@ -415,19 +415,35 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#risiko-dan-pertimbangan-medis">1.5 Risiko dan Pertimbangan Medis</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-understanding-eksplorasi-data-eda">2. Data Understanding (Eksplorasi Data/EDA)</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-preprocessing">3. Data Preprocessing</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-understanding">2. Data Understanding</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deskripsi-dataset">2.1 Deskripsi Dataset</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sumber-data">Sumber Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#berisi-5000-sampel">Berisi 5000 Sampel</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#proses-pengumpulan-data">Proses Pengumpulan Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#terdapat-140-fitur">Terdapat 140 Fitur</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#struktur-label-kelas">Struktur Label Kelas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#komposisi-dataset">Komposisi Dataset</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#konteks-medis">Konteks Medis</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-dan-eksplorasi-data">2.2 Load dan Eksplorasi Data</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-preprocessing">3. Data Preprocessing</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deteksi-outlier-dilewati">2.3 Deteksi Outlier (Dilewati)</a></li>
+</ul>
+</li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pemodelan-data">4. Pemodelan Data</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluasi">5. Evaluasi</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#deployment">6. Deployment</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan-dan-rekomendasi">Kesimpulan dan Rekomendasi</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ringkasan-proyek">Ringkasan Proyek:</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">1. Business Understanding</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-understanding">2. Data Understanding</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">3. Data Preprocessing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2. Data Understanding</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">3. Data Preprocessing</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pemodelan">4. Pemodelan</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">5. Evaluasi</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">6. Deployment</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">5. Evaluasi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">6. Deployment</a></li>
 </ul>
 </li>
 </ul>
@@ -490,8 +506,81 @@ document.write(`
 </section>
 </section>
 <hr class="docutils" />
-<section class="tex2jax_ignore mathjax_ignore" id="data-understanding-eksplorasi-data-eda">
-<h1>2. Data Understanding (Eksplorasi Data/EDA)<a class="headerlink" href="#data-understanding-eksplorasi-data-eda" title="Link to this heading">#</a></h1>
+<section class="tex2jax_ignore mathjax_ignore" id="data-understanding">
+<h1>2. Data Understanding<a class="headerlink" href="#data-understanding" title="Link to this heading">#</a></h1>
+<section id="deskripsi-dataset">
+<h2>2.1 Deskripsi Dataset<a class="headerlink" href="#deskripsi-dataset" title="Link to this heading">#</a></h2>
+<section id="sumber-data">
+<h3>Sumber Data<a class="headerlink" href="#sumber-data" title="Link to this heading">#</a></h3>
+<p>Dataset <strong>ECG5000</strong> berasal dari <strong>UCR Time Series Classification Archive</strong>, repositori yang sering dipakai sebagai benchmark untuk riset klasifikasi sinyal. Dataset ini disusun oleh peneliti dari University of California, Riverside.</p>
+</section>
+<section id="berisi-5000-sampel">
+<h3>Berisi 5000 Sampel<a class="headerlink" href="#berisi-5000-sampel" title="Link to this heading">#</a></h3>
+<p>Dataset ECG5000 berisi <strong>5000 detak jantung yang semuanya diambil dari satu pasien</strong>. Proses pengumpulannya:</p>
+<ul class="simple">
+<li><p>Data berasal dari rekaman ECG panjang dari <strong>BIDMC Congestive Heart Failure Database</strong></p></li>
+<li><p>Rekaman berlangsung sekitar <strong>20 jam tanpa putus</strong> (kontinyu)</p></li>
+<li><p>Rekaman panjang tersebut <strong>dipotong menjadi detak jantung individual</strong></p></li>
+<li><p>Setiap detak mewakili kondisi jantung pasien pada waktu berbeda selama periode 20 jam</p></li>
+<li><p>Dari seluruh detak yang tersedia, <strong>dipilih 5000 detak</strong> untuk membentuk dataset penelitian time series</p></li>
+</ul>
+<p>Dengan struktur ini, dataset merepresentasikan <strong>variasi detak normal dan abnormal yang muncul pada satu pasien</strong> dalam rentang waktu yang panjang. Hal ini memberikan gambaran dinamika jantung yang realistis, termasuk transisi antara kondisi normal dan aritmia.</p>
+</section>
+<section id="proses-pengumpulan-data">
+<h3>Proses Pengumpulan Data<a class="headerlink" href="#proses-pengumpulan-data" title="Link to this heading">#</a></h3>
+<p>Tahap pengumpulan dan persiapan data dilakukan dengan langkah berikut:</p>
+<ol class="arabic simple">
+<li><p><strong>Perekaman ECG</strong>: Sinyal ECG direkam menggunakan <strong>Holter monitor</strong>, alat portabel yang merekam aktivitas listrik jantung secara kontinyu selama 20 jam</p></li>
+<li><p><strong>Segmentasi</strong>: Rekaman ECG panjang dipotong menjadi segmen-segmen individual yang masing-masing mewakili <strong>satu siklus detak jantung (heartbeat)</strong></p></li>
+<li><p><strong>Sampling</strong>: Setiap segmen heartbeat di-sampling ulang (<strong>resampling</strong>) menjadi <strong>140 titik data</strong> dengan interval waktu yang sama</p></li>
+<li><p><strong>Normalisasi</strong>: Amplitudo sinyal dinormalisasi untuk menghilangkan variasi baseline dan memfasilitasi analisis</p></li>
+</ol>
+</section>
+<section id="terdapat-140-fitur">
+<h3>Terdapat 140 Fitur<a class="headerlink" href="#terdapat-140-fitur" title="Link to this heading">#</a></h3>
+<p>Setiap sampel memiliki panjang 140. Panjang ini menunjukkan jumlah titik waktu yang menyusun satu heartbeat.</p>
+<ul class="simple">
+<li><p><strong>Fitur tunggal yang direkam adalah amplitudo sinyal ECG</strong></p></li>
+<li><p>Nilai amplitudo ini disimpan dalam urutan sepanjang 140 time steps</p></li>
+<li><p>Urutan tersebut membentuk satu heartbeat lengkap, dari awal hingga akhir</p></li>
+</ul>
+<p>Dengan demikian, bentuk data satu sampel adalah vektor 140 nilai, misalnya:</p>
+<p><code class="docutils literal notranslate"><span class="pre">[ecg_0,</span> <span class="pre">ecg_1,</span> <span class="pre">…,</span> <span class="pre">ecg_139]</span></code></p>
+<p>Urutan nilai ini mencerminkan perubahan amplitudo dari awal hingga akhir satu detak jantung.</p>
+</section>
+<section id="struktur-label-kelas">
+<h3>Struktur Label Kelas<a class="headerlink" href="#struktur-label-kelas" title="Link to this heading">#</a></h3>
+<p>Dataset terdiri dari 5 kelas heartbeat:</p>
+<ol class="arabic simple">
+<li><p><strong>Kelas 1</strong> mewakili heartbeat normal</p></li>
+<li><p><strong>Kelas 2 sampai 5</strong> mewakili variasi kelainan irama jantung (aritmia)</p></li>
+</ol>
+<p>Distribusi kelas tidak seimbang, kelas normal memiliki jumlah jauh lebih besar dibandingkan kelas abnormal. Hal ini realistis karena pada pasien dengan gagal jantung kongestif, sebagian besar waktu jantung masih berfungsi dalam ritme normal, dengan episode aritmia yang terjadi secara intermiten.</p>
+</section>
+<section id="komposisi-dataset">
+<h3>Komposisi Dataset<a class="headerlink" href="#komposisi-dataset" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Total sampel</strong>: 5000 heartbeat (dari 1 pasien, rekaman 20 jam)</p></li>
+<li><p><strong>Training set awal</strong>: 500 sampel</p></li>
+<li><p><strong>Test set awal</strong>: 4500 sampel</p></li>
+<li><p><strong>Panjang deret waktu per sampel</strong>: 140 time steps</p></li>
+<li><p><strong>Format file</strong>: Berupa teks dengan spasi. Kolom pertama adalah label kelas, diikuti 140 nilai amplitudo</p></li>
+</ul>
+</section>
+<section id="konteks-medis">
+<h3>Konteks Medis<a class="headerlink" href="#konteks-medis" title="Link to this heading">#</a></h3>
+<p>Dataset ini sangat relevan untuk:</p>
+<ul class="simple">
+<li><p>Penelitian <strong>deteksi aritmia otomatis</strong> pada pasien gagal jantung</p></li>
+<li><p>Pengembangan <strong>sistem monitoring jantung real-time</strong></p></li>
+<li><p>Analisis <strong>pola temporal</strong> pada sinyal ECG</p></li>
+<li><p>Validasi algoritma <strong>klasifikasi time series</strong> pada data medis riil</p></li>
+</ul>
+</section>
+</section>
+<section id="load-dan-eksplorasi-data">
+<h2>2.2 Load dan Eksplorasi Data<a class="headerlink" href="#load-dan-eksplorasi-data" title="Link to this heading">#</a></h2>
+<p>Bagian ini memuat proses pembacaan data, konversi ke DataFrame, pengecekan ukuran data, tipe data, jumlah kelas, dan pemeriksaan sampel awal.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import libraries</span>
@@ -607,8 +696,8 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load data</span>
-<span class="n">train_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s1">&#39;ECG5000/ECG5000_TRAIN.txt&#39;</span><span class="p">)</span>
-<span class="n">test_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s1">&#39;ECG5000/ECG5000_TEST.txt&#39;</span><span class="p">)</span>
+<span class="n">train_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s1">&#39;ECG5000_TRAIN.txt&#39;</span><span class="p">)</span>
+<span class="n">test_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s1">&#39;ECG5000_TEST.txt&#39;</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Training data shape: </span><span class="si">{</span><span class="n">train_data</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Test data shape: </span><span class="si">{</span><span class="n">test_data</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
@@ -616,47 +705,8 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Load data</span>
-<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">train_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s1">&#39;ECG5000/ECG5000_TRAIN.txt&#39;</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">test_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s1">&#39;ECG5000/ECG5000_TEST.txt&#39;</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Training data shape: </span><span class="si">{</span><span class="n">train_data</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-
-<span class="nn">File c:\Users\achma\anaconda3\envs\pycaret310\lib\site-packages\numpy\lib\_npyio_impl.py:1395,</span> in <span class="ni">loadtxt</span><span class="nt">(fname, dtype, comments, delimiter, converters, skiprows, usecols, unpack, ndmin, encoding, max_rows, quotechar, like)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1392</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">delimiter</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">):</span>
-<span class="g g-Whitespace">   </span><span class="mi">1393</span>     <span class="n">delimiter</span> <span class="o">=</span> <span class="n">delimiter</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;latin1&#39;</span><span class="p">)</span>
-<span class="ne">-&gt; </span><span class="mi">1395</span> <span class="n">arr</span> <span class="o">=</span> <span class="n">_read</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="n">comment</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="n">delimiter</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1396</span>             <span class="n">converters</span><span class="o">=</span><span class="n">converters</span><span class="p">,</span> <span class="n">skiplines</span><span class="o">=</span><span class="n">skiprows</span><span class="p">,</span> <span class="n">usecols</span><span class="o">=</span><span class="n">usecols</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1397</span>             <span class="n">unpack</span><span class="o">=</span><span class="n">unpack</span><span class="p">,</span> <span class="n">ndmin</span><span class="o">=</span><span class="n">ndmin</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1398</span>             <span class="n">max_rows</span><span class="o">=</span><span class="n">max_rows</span><span class="p">,</span> <span class="n">quote</span><span class="o">=</span><span class="n">quotechar</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1400</span> <span class="k">return</span> <span class="n">arr</span>
-
-<span class="nn">File c:\Users\achma\anaconda3\envs\pycaret310\lib\site-packages\numpy\lib\_npyio_impl.py:1022,</span> in <span class="ni">_read</span><span class="nt">(fname, delimiter, comment, quote, imaginary_unit, usecols, skiplines, max_rows, converters, ndmin, unpack, dtype, encoding)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1020</span>     <span class="n">fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">fspath</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1021</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-<span class="ne">-&gt; </span><span class="mi">1022</span>     <span class="n">fh</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">lib</span><span class="o">.</span><span class="n">_datasource</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s1">&#39;rt&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1023</span>     <span class="k">if</span> <span class="n">encoding</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1024</span>         <span class="n">encoding</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">fh</span><span class="p">,</span> <span class="s1">&#39;encoding&#39;</span><span class="p">,</span> <span class="s1">&#39;latin1&#39;</span><span class="p">)</span>
-
-<span class="nn">File c:\Users\achma\anaconda3\envs\pycaret310\lib\site-packages\numpy\lib\_datasource.py:192,</span> in <span class="ni">open</span><span class="nt">(path, mode, destpath, encoding, newline)</span>
-<span class="g g-Whitespace">    </span><span class="mi">155</span><span class="w"> </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">156</span><span class="sd"> Open `path` with `mode` and return the file object.</span>
-<span class="g g-Whitespace">    </span><span class="mi">157</span><span class="sd"> </span>
-<span class="sd">   (...)</span>
-<span class="g g-Whitespace">    </span><span class="mi">188</span><span class="sd"> </span>
-<span class="g g-Whitespace">    </span><span class="mi">189</span><span class="sd"> &quot;&quot;&quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">191</span> <span class="n">ds</span> <span class="o">=</span> <span class="n">DataSource</span><span class="p">(</span><span class="n">destpath</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">192</span> <span class="k">return</span> <span class="n">ds</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="n">newline</span><span class="p">)</span>
-
-<span class="nn">File c:\Users\achma\anaconda3\envs\pycaret310\lib\site-packages\numpy\lib\_datasource.py:529,</span> in <span class="ni">DataSource.open</span><span class="nt">(self, path, mode, encoding, newline)</span>
-<span class="g g-Whitespace">    </span><span class="mi">526</span>     <span class="k">return</span> <span class="n">_file_openers</span><span class="p">[</span><span class="n">ext</span><span class="p">](</span><span class="n">found</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">527</span>                               <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="n">newline</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">528</span> <span class="k">else</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">529</span>     <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2"> not found.&quot;</span><span class="p">)</span>
-
-<span class="ne">FileNotFoundError</span>: ECG5000/ECG5000_TRAIN.txt not found.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Training data shape: (500, 141)
+Test data shape: (4500, 141)
 </pre></div>
 </div>
 </div>
@@ -1096,65 +1146,6 @@ Kelas 5:
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Deteksi outlier menggunakan IQR per kelas</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Analisis Outlier per Kelas:&#39;</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">unique_labels</span><span class="p">:</span>
-    <span class="n">class_data</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="n">label</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
-    <span class="n">Q1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">class_data</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span>
-    <span class="n">Q3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">class_data</span><span class="p">,</span> <span class="mi">75</span><span class="p">)</span>
-    <span class="n">IQR</span> <span class="o">=</span> <span class="n">Q3</span> <span class="o">-</span> <span class="n">Q1</span>
-    <span class="n">lower_bound</span> <span class="o">=</span> <span class="n">Q1</span> <span class="o">-</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">IQR</span>
-    <span class="n">upper_bound</span> <span class="o">=</span> <span class="n">Q3</span> <span class="o">+</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">IQR</span>
-    
-    <span class="n">outliers</span> <span class="o">=</span> <span class="n">class_data</span><span class="p">[(</span><span class="n">class_data</span> <span class="o">&lt;</span> <span class="n">lower_bound</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">class_data</span> <span class="o">&gt;</span> <span class="n">upper_bound</span><span class="p">)]</span>
-    <span class="n">outlier_percentage</span> <span class="o">=</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">outliers</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">class_data</span><span class="p">))</span> <span class="o">*</span> <span class="mi">100</span>
-    
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Kelas </span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s1">:&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  - Q1: </span><span class="si">{</span><span class="n">Q1</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">, Q3: </span><span class="si">{</span><span class="n">Q3</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">, IQR: </span><span class="si">{</span><span class="n">IQR</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  - Lower bound: </span><span class="si">{</span><span class="n">lower_bound</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">, Upper bound: </span><span class="si">{</span><span class="n">upper_bound</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  - Jumlah outliers: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">outliers</span><span class="p">)</span><span class="si">}</span><span class="s1"> (</span><span class="si">{</span><span class="n">outlier_percentage</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">%)&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  - Catatan: Outlier dalam ECG bisa jadi indikator medis penting, tidak dihapus&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Analisis Outlier per Kelas:
-
-Kelas 1:
-  - Q1: -0.3809, Q3: 0.5066, IQR: 0.8875
-  - Lower bound: -1.7121, Upper bound: 1.8378
-  - Jumlah outliers: 26558 (6.50%)
-  - Catatan: Outlier dalam ECG bisa jadi indikator medis penting, tidak dihapus
-
-Kelas 2:
-  - Q1: -0.0824, Q3: 0.5374, IQR: 0.6199
-  - Lower bound: -1.0122, Upper bound: 1.4672
-  - Jumlah outliers: 31985 (12.93%)
-  - Catatan: Outlier dalam ECG bisa jadi indikator medis penting, tidak dihapus
-
-Kelas 3:
-  - Q1: -0.1988, Q3: 0.4716, IQR: 0.6704
-  - Lower bound: -1.2044, Upper bound: 1.4771
-  - Jumlah outliers: 1417 (10.54%)
-  - Catatan: Outlier dalam ECG bisa jadi indikator medis penting, tidak dihapus
-
-Kelas 4:
-  - Q1: -0.2878, Q3: 0.5327, IQR: 0.8206
-  - Lower bound: -1.5187, Upper bound: 1.7636
-  - Jumlah outliers: 2659 (9.79%)
-  - Catatan: Outlier dalam ECG bisa jadi indikator medis penting, tidak dihapus
-
-Kelas 5:
-  - Q1: -0.2189, Q3: 0.5136, IQR: 0.7325
-  - Lower bound: -1.3177, Upper bound: 1.6124
-  - Jumlah outliers: 328 (9.76%)
-  - Catatan: Outlier dalam ECG bisa jadi indikator medis penting, tidak dihapus
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Analisis karakteristik temporal - Peak Detection</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">scipy.signal</span><span class="w"> </span><span class="kn">import</span> <span class="n">find_peaks</span>
 
@@ -1189,9 +1180,20 @@ Kelas 5:
 </div>
 </div>
 </section>
+</section>
 <hr class="docutils" />
 <section class="tex2jax_ignore mathjax_ignore" id="data-preprocessing">
 <h1>3. Data Preprocessing<a class="headerlink" href="#data-preprocessing" title="Link to this heading">#</a></h1>
+<section id="deteksi-outlier-dilewati">
+<h2>2.3 Deteksi Outlier (Dilewati)<a class="headerlink" href="#deteksi-outlier-dilewati" title="Link to this heading">#</a></h2>
+<p><strong>Catatan Penting:</strong>
+Tahap deteksi dan penghapusan outlier <strong>dilewati</strong> untuk analisis data medis ini.</p>
+<p>Alasan:</p>
+<ul class="simple">
+<li><p>Dalam sinyal ECG, “outlier” statistik seringkali merupakan heartbeat aritmia (abnormal) yang justru menjadi target deteksi.</p></li>
+<li><p>Menghapus data berdasarkan ambang batas statistik (seperti IQR) berisiko menghilangkan data penyakit yang penting.</p></li>
+<li><p>Oleh karena itu, kita menggunakan seluruh dataset asli untuk mempertahankan variasi anomali klinis.</p></li>
+</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Binary classification: Normal (1) vs Abnormal (2,3,4,5)</span>
@@ -1340,6 +1342,7 @@ Data siap untuk pemodelan!
 </div>
 </div>
 </section>
+</section>
 <hr class="docutils" />
 <section class="tex2jax_ignore mathjax_ignore" id="pemodelan-data">
 <h1>4. Pemodelan Data<a class="headerlink" href="#pemodelan-data" title="Link to this heading">#</a></h1>
@@ -1437,36 +1440,6 @@ F1-Score Normal: 0.9810
 ============================================================
 Training Random Forest...
 ============================================================
-Accuracy: 0.9780
-Recall Abnormal (PRIORITAS): 0.9832
-Recall Normal: 0.9743
-Precision Abnormal: 0.9646
-F1-Score Abnormal: 0.9738
-F1-Score Normal: 0.9810
-
-============================================================
-Training Random Forest...
-============================================================
-Accuracy: 0.9920
-Recall Abnormal (PRIORITAS): 0.9928
-Recall Normal: 0.9914
-Precision Abnormal: 0.9880
-F1-Score Abnormal: 0.9904
-F1-Score Normal: 0.9931
-
-============================================================
-Training KNN...
-============================================================
-Accuracy: 0.9890
-Recall Abnormal (PRIORITAS): 0.9904
-Recall Normal: 0.9880
-Precision Abnormal: 0.9833
-F1-Score Abnormal: 0.9868
-F1-Score Normal: 0.9906
-
-============================================================
-Training SVM...
-============================================================
 Accuracy: 0.9920
 Recall Abnormal (PRIORITAS): 0.9928
 Recall Normal: 0.9914
@@ -1497,22 +1470,6 @@ F1-Score Normal: 0.9922
 ============================================================
 Training Gradient Boosting...
 ============================================================
-Accuracy: 0.9910
-Recall Abnormal (PRIORITAS): 0.9976
-Recall Normal: 0.9863
-Precision Abnormal: 0.9811
-F1-Score Abnormal: 0.9893
-F1-Score Normal: 0.9922
-
-============================================================
-Training Gradient Boosting...
-============================================================
-Accuracy: 0.9880
-Recall Abnormal (PRIORITAS): 0.9880
-Recall Normal: 0.9880
-Precision Abnormal: 0.9833
-F1-Score Abnormal: 0.9856
-F1-Score Normal: 0.9897
 Accuracy: 0.9880
 Recall Abnormal (PRIORITAS): 0.9880
 Recall Normal: 0.9880
@@ -1842,20 +1799,6 @@ Logistic Regression:
   Status: Model STABIL ✓ (std &lt; 3%)
 
 Decision Tree:
-  Accuracy:  0.9848 (+/- 0.0097)
-  Recall:    0.9889 (+/- 0.0074)
-  Precision: 0.9852 (+/- 0.0172)
-  F1-Score:  0.9870 (+/- 0.0081)
-  Status: Model STABIL ✓ (std &lt; 3%)
-
-Decision Tree:
-  Accuracy:  0.9782 (+/- 0.0068)
-  Recall:    0.9816 (+/- 0.0198)
-  Precision: 0.9812 (+/- 0.0108)
-  F1-Score:  0.9814 (+/- 0.0061)
-  Status: Model STABIL ✓ (std &lt; 3%)
-
-Random Forest:
   Accuracy:  0.9782 (+/- 0.0068)
   Recall:    0.9816 (+/- 0.0198)
   Precision: 0.9812 (+/- 0.0108)
@@ -1877,20 +1820,6 @@ KNN:
   Status: Model STABIL ✓ (std &lt; 3%)
 
 SVM:
-  Accuracy:  0.9918 (+/- 0.0034)
-  Recall:    0.9957 (+/- 0.0027)
-  Precision: 0.9902 (+/- 0.0057)
-  F1-Score:  0.9930 (+/- 0.0029)
-  Status: Model STABIL ✓ (std &lt; 3%)
-
-KNN:
-  Accuracy:  0.9870 (+/- 0.0064)
-  Recall:    0.9966 (+/- 0.0044)
-  Precision: 0.9815 (+/- 0.0131)
-  F1-Score:  0.9890 (+/- 0.0054)
-  Status: Model STABIL ✓ (std &lt; 3%)
-
-SVM:
   Accuracy:  0.9902 (+/- 0.0051)
   Recall:    0.9901 (+/- 0.0079)
   Precision: 0.9932 (+/- 0.0082)
@@ -1898,20 +1827,6 @@ SVM:
   Status: Model STABIL ✓ (std &lt; 3%)
 
 Gradient Boosting:
-  Accuracy:  0.9902 (+/- 0.0051)
-  Recall:    0.9901 (+/- 0.0079)
-  Precision: 0.9932 (+/- 0.0082)
-  F1-Score:  0.9916 (+/- 0.0044)
-  Status: Model STABIL ✓ (std &lt; 3%)
-
-Gradient Boosting:
-  Accuracy:  0.9915 (+/- 0.0048)
-  Recall:    0.9944 (+/- 0.0034)
-  Precision: 0.9911 (+/- 0.0101)
-  F1-Score:  0.9927 (+/- 0.0041)
-  Status: Model STABIL ✓ (std &lt; 3%)
-
-======================================================================
   Accuracy:  0.9915 (+/- 0.0048)
   Recall:    0.9944 (+/- 0.0034)
   Precision: 0.9911 (+/- 0.0101)
@@ -2020,17 +1935,15 @@ Gradient Boosting: 0.9989
 <li><p><strong>Success Criteria</strong>: Recall Abnormal ≥95%, F1-Score ≥92%, Model stabil (CV std &lt;3%)</p></li>
 </ul>
 </section>
-<section id="data-understanding">
-<h3>2. Data Understanding<a class="headerlink" href="#data-understanding" title="Link to this heading">#</a></h3>
+<section id="id2">
+<h3>2. Data Understanding<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p><strong>Dataset</strong>: ECG5000 dengan 5000 sampel, 140 time points per sinyal</p></li>
 <li><p><strong>Distribusi Kelas</strong>: Mengandung kelas Normal (1) dan Abnormal (2-5)</p></li>
-<li><p><strong>Karakteristik</strong>: Sinyal time series dengan pola temporal yang kompleks</p></li>
-<li><p><strong>Outliers</strong>: Teridentifikasi namun TIDAK dihapus (bisa jadi indikator medis penting)</p></li>
 </ul>
 </section>
-<section id="id2">
-<h3>3. Data Preprocessing<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<section id="id3">
+<h3>3. Data Preprocessing<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p><strong>Binary Classification</strong>: Normal vs Abnormal untuk simplifikasi deteksi anomali</p></li>
 <li><p><strong>Normalisasi</strong>: RobustScaler dipilih (lebih robust terhadap outlier medis)</p></li>
@@ -2046,8 +1959,8 @@ Gradient Boosting: 0.9989
 <li><p><strong>Composite Score</strong>: 50% Recall + 30% F1 + 20% Accuracy</p></li>
 </ul>
 </section>
-<section id="id3">
-<h3>5. Evaluasi<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<section id="id4">
+<h3>5. Evaluasi<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p><strong>Model Terbaik</strong>: [Akan terisi otomatis setelah run]</p></li>
 <li><p><strong>Metrik Utama</strong>:</p>
@@ -2060,8 +1973,8 @@ Gradient Boosting: 0.9989
 <li><p><strong>Stabilitas</strong>: Divalidasi dengan 5-fold cross-validation</p></li>
 </ul>
 </section>
-<section id="id4">
-<h3>6. Deployment<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<section id="id5">
+<h3>6. Deployment<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Model disimpan dengan joblib untuk deployment</p></li>
 <li><p>Siap diintegrasikan ke sistem Streamlit atau API medis</p></li>
@@ -2137,19 +2050,35 @@ Gradient Boosting: 0.9989
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#risiko-dan-pertimbangan-medis">1.5 Risiko dan Pertimbangan Medis</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-understanding-eksplorasi-data-eda">2. Data Understanding (Eksplorasi Data/EDA)</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-preprocessing">3. Data Preprocessing</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-understanding">2. Data Understanding</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deskripsi-dataset">2.1 Deskripsi Dataset</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sumber-data">Sumber Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#berisi-5000-sampel">Berisi 5000 Sampel</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#proses-pengumpulan-data">Proses Pengumpulan Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#terdapat-140-fitur">Terdapat 140 Fitur</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#struktur-label-kelas">Struktur Label Kelas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#komposisi-dataset">Komposisi Dataset</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#konteks-medis">Konteks Medis</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-dan-eksplorasi-data">2.2 Load dan Eksplorasi Data</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-preprocessing">3. Data Preprocessing</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deteksi-outlier-dilewati">2.3 Deteksi Outlier (Dilewati)</a></li>
+</ul>
+</li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pemodelan-data">4. Pemodelan Data</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluasi">5. Evaluasi</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#deployment">6. Deployment</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan-dan-rekomendasi">Kesimpulan dan Rekomendasi</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ringkasan-proyek">Ringkasan Proyek:</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">1. Business Understanding</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-understanding">2. Data Understanding</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">3. Data Preprocessing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2. Data Understanding</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">3. Data Preprocessing</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pemodelan">4. Pemodelan</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">5. Evaluasi</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">6. Deployment</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">5. Evaluasi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">6. Deployment</a></li>
 </ul>
 </li>
 </ul>
