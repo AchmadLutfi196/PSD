@@ -430,7 +430,10 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-preprocessing">3. Data Preprocessing</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deteksi-outlier-dilewati">2.3 Deteksi Outlier (Dilewati)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#konversi-ke-klasifikasi-binary">3.1 Konversi ke Klasifikasi Binary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#train-test-split">3.2 Train-Test Split</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#normalisasi-dengan-robustscaler">3.3 Normalisasi dengan RobustScaler</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#verifikasi-kualitas-data">3.4 Verifikasi Kualitas Data</a></li>
 </ul>
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pemodelan-data">4. Pemodelan Data</a></li>
@@ -1184,16 +1187,21 @@ Kelas 5:
 <hr class="docutils" />
 <section class="tex2jax_ignore mathjax_ignore" id="data-preprocessing">
 <h1>3. Data Preprocessing<a class="headerlink" href="#data-preprocessing" title="Link to this heading">#</a></h1>
-<section id="deteksi-outlier-dilewati">
-<h2>2.3 Deteksi Outlier (Dilewati)<a class="headerlink" href="#deteksi-outlier-dilewati" title="Link to this heading">#</a></h2>
-<p><strong>Catatan Penting:</strong>
-Tahap deteksi dan penghapusan outlier <strong>dilewati</strong> untuk analisis data medis ini.</p>
-<p>Alasan:</p>
+<p>Tahap preprocessing bertujuan untuk menyiapkan data agar siap digunakan dalam pemodelan machine learning. Pada dataset ECG5000, preprocessing meliputi:</p>
+<ol class="arabic simple">
+<li><p><strong>Konversi ke Klasifikasi Binary</strong>: Menyederhanakan 5 kelas menjadi 2 kelas (Normal vs Abnormal) untuk fokus pada deteksi anomali jantung</p></li>
+<li><p><strong>Train-Test Split</strong>: Membagi data menjadi set training dan testing dengan stratified sampling untuk menjaga proporsi kelas</p></li>
+<li><p><strong>Normalisasi/Scaling</strong>: Menskalakan nilai fitur agar berada dalam rentang yang seragam menggunakan RobustScaler</p></li>
+<li><p><strong>Verifikasi Kualitas Data</strong>: Memastikan tidak ada missing values atau infinite values</p></li>
+</ol>
+<section id="konversi-ke-klasifikasi-binary">
+<h2>3.1 Konversi ke Klasifikasi Binary<a class="headerlink" href="#konversi-ke-klasifikasi-binary" title="Link to this heading">#</a></h2>
+<p>Untuk keperluan deteksi anomali medis, kita menyederhanakan klasifikasi menjadi:</p>
 <ul class="simple">
-<li><p>Dalam sinyal ECG, “outlier” statistik seringkali merupakan heartbeat aritmia (abnormal) yang justru menjadi target deteksi.</p></li>
-<li><p>Menghapus data berdasarkan ambang batas statistik (seperti IQR) berisiko menghilangkan data penyakit yang penting.</p></li>
-<li><p>Oleh karena itu, kita menggunakan seluruh dataset asli untuk mempertahankan variasi anomali klinis.</p></li>
+<li><p><strong>Normal (1)</strong>: Heartbeat dengan ritme normal (Kelas 1 asli)</p></li>
+<li><p><strong>Abnormal (0)</strong>: Heartbeat dengan kelainan/aritmia (Kelas 2-5 asli)</p></li>
 </ul>
+<p>Pendekatan binary ini sesuai dengan kebutuhan klinis untuk mendeteksi apakah detak jantung normal atau memerlukan perhatian medis lebih lanjut.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Binary classification: Normal (1) vs Abnormal (2,3,4,5)</span>
@@ -1214,6 +1222,15 @@ Abnormal (0): 2081
 </div>
 </div>
 </div>
+</section>
+<section id="train-test-split">
+<h2>3.2 Train-Test Split<a class="headerlink" href="#train-test-split" title="Link to this heading">#</a></h2>
+<p>Data dibagi menjadi:</p>
+<ul class="simple">
+<li><p><strong>Training set (80%)</strong>: Digunakan untuk melatih model</p></li>
+<li><p><strong>Test set (20%)</strong>: Digunakan untuk mengevaluasi performa model</p></li>
+</ul>
+<p>Pembagian menggunakan <strong>stratified sampling</strong> untuk memastikan proporsi kelas Normal dan Abnormal tetap seimbang di kedua set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Split data</span>
@@ -1238,6 +1255,15 @@ Distribusi test: Normal=584, Abnormal=416
 </div>
 </div>
 </div>
+</section>
+<section id="normalisasi-dengan-robustscaler">
+<h2>3.3 Normalisasi dengan RobustScaler<a class="headerlink" href="#normalisasi-dengan-robustscaler" title="Link to this heading">#</a></h2>
+<p>Normalisasi penting agar semua fitur memiliki skala yang seragam. Kita membandingkan dua metode:</p>
+<ul class="simple">
+<li><p><strong>StandardScaler</strong>: Berbasis mean dan standard deviation, sensitif terhadap nilai ekstrem</p></li>
+<li><p><strong>RobustScaler</strong>: Berbasis median dan IQR (Interquartile Range), lebih robust terhadap nilai ekstrem</p></li>
+</ul>
+<p><strong>RobustScaler dipilih</strong> karena lebih cocok untuk data medis yang mungkin memiliki variasi amplitudo tinggi pada heartbeat tertentu tanpa perlu menghapus data tersebut.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Normalisasi/Standarisasi - Perbandingan metode</span>
@@ -1306,6 +1332,15 @@ RobustScaler (DIPILIH - lebih robust untuk outlier medis):
 <img alt="../_images/e5c08e33d73adc7df459082d132473fd7a720ce8e7b4af1c7b782599c2cf483f.png" src="../_images/e5c08e33d73adc7df459082d132473fd7a720ce8e7b4af1c7b782599c2cf483f.png" />
 </div>
 </div>
+</section>
+<section id="verifikasi-kualitas-data">
+<h2>3.4 Verifikasi Kualitas Data<a class="headerlink" href="#verifikasi-kualitas-data" title="Link to this heading">#</a></h2>
+<p>Langkah terakhir preprocessing adalah memverifikasi bahwa data sudah bersih dan siap untuk pemodelan:</p>
+<ul class="simple">
+<li><p>Tidak ada missing values (NaN)</p></li>
+<li><p>Tidak ada infinite values (Inf)</p></li>
+<li><p>Dimensi data konsisten antara fitur dan label</p></li>
+</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Verifikasi ketiadaan missing values dan data quality</span>
@@ -2065,7 +2100,10 @@ Gradient Boosting: 0.9989
 </ul>
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-preprocessing">3. Data Preprocessing</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deteksi-outlier-dilewati">2.3 Deteksi Outlier (Dilewati)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#konversi-ke-klasifikasi-binary">3.1 Konversi ke Klasifikasi Binary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#train-test-split">3.2 Train-Test Split</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#normalisasi-dengan-robustscaler">3.3 Normalisasi dengan RobustScaler</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#verifikasi-kualitas-data">3.4 Verifikasi Kualitas Data</a></li>
 </ul>
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pemodelan-data">4. Pemodelan Data</a></li>
