@@ -6,6 +6,39 @@ import joblib
 import matplotlib.pyplot as plt
 import os
 
+# Definisi 5 kelas ECG
+CLASS_NAMES = {
+    1: 'Normal',
+    2: 'R-on-T PVC',
+    3: 'Supraventricular',
+    4: 'PVC',
+    5: 'Unknown'
+}
+
+CLASS_DESCRIPTIONS = {
+    1: 'Ritme sinus normal - Detak jantung normal',
+    2: 'R-on-T PVC - Kontraksi prematur ventrikel pada gelombang T (berbahaya)',
+    3: 'Supraventricular - Denyut ektopik supraventrikular',
+    4: 'PVC - Kontraksi prematur ventrikel',
+    5: 'Unknown - Denyut fusi atau tidak terklasifikasi'
+}
+
+CLASS_COLORS = {
+    1: 'green',
+    2: 'red',
+    3: 'orange',
+    4: 'purple',
+    5: 'gray'
+}
+
+CLASS_EMOJI = {
+    1: '✅',
+    2: '🚨',
+    3: '⚠️',
+    4: '⚠️',
+    5: '❓'
+}
+
 # Load model dan scaler
 @st.cache_resource
 def load_model():
@@ -44,10 +77,17 @@ if model is None or scaler is None:
 
 # UI
 st.title('🫀 ECG Classification System')
-st.markdown('Sistem klasifikasi sinyal ECG untuk mendeteksi anomali jantung')
+st.markdown('Sistem klasifikasi sinyal ECG dengan 5 kelas aritmia jantung')
 
 # Sidebar
 st.sidebar.header('Input Data')
+
+# Tampilkan info kelas di sidebar
+st.sidebar.markdown('---')
+st.sidebar.subheader('Keterangan Kelas')
+for cls_id, cls_name in CLASS_NAMES.items():
+    st.sidebar.markdown(f'{CLASS_EMOJI[cls_id]} **{cls_name}**')
+
 upload_file = st.sidebar.file_uploader('Upload ECG data (txt/csv)', type=['txt', 'csv'])
 
 if upload_file is not None:
@@ -78,11 +118,13 @@ if upload_file is not None:
     else:
         confidence = np.ones(len(predictions))  # Jika model tidak support probability
     
-    # Hasil (1 = Normal, 0 = Abnormal sesuai notebook)
+    # Hasil - 5 kelas
     st.subheader('Hasil Prediksi')
     result_df = pd.DataFrame({
         'Sample': range(1, len(predictions)+1),
-        'Prediction': ['Normal' if p == 1 else 'Abnormal' for p in predictions],
+        'Kelas': [int(p) for p in predictions],
+        'Prediction': [f'{CLASS_EMOJI[int(p)]} {CLASS_NAMES[int(p)]}' for p in predictions],
+        'Deskripsi': [CLASS_DESCRIPTIONS[int(p)] for p in predictions],
         'Confidence': [f'{c*100:.1f}%' for c in confidence]
     })
     st.dataframe(result_df)
@@ -92,28 +134,41 @@ if upload_file is not None:
     sample_idx = st.slider('Pilih sample', 0, len(X_new)-1, 0)
     
     # Tentukan warna berdasarkan prediksi
-    pred_label = result_df.iloc[sample_idx]['Prediction']
-    color = 'green' if pred_label == 'Normal' else 'red'
+    pred_class = int(predictions[sample_idx])
+    pred_label = CLASS_NAMES[pred_class]
+    color = CLASS_COLORS[pred_class]
     
     fig, ax = plt.subplots(figsize=(12, 4))
     ax.plot(X_new[sample_idx], color=color, linewidth=1.5)
-    ax.set_title(f'Sample {sample_idx+1} - {pred_label} (Confidence: {result_df.iloc[sample_idx]["Confidence"]})', 
+    ax.set_title(f'Sample {sample_idx+1} - {CLASS_EMOJI[pred_class]} {pred_label} (Confidence: {result_df.iloc[sample_idx]["Confidence"]})', 
                  fontweight='bold')
     ax.set_xlabel('Time Point')
     ax.set_ylabel('Amplitude')
     ax.grid(True, alpha=0.3)
     st.pyplot(fig)
     
-    # Summary
-    normal_count = sum(predictions == 1)
-    abnormal_count = sum(predictions == 0)
+    # Deskripsi kelas
+    st.info(f'**{pred_label}**: {CLASS_DESCRIPTIONS[pred_class]}')
     
-    col1, col2 = st.columns(2)
-    col1.metric('Normal', normal_count, f'{normal_count/len(predictions)*100:.1f}%')
-    col2.metric('Abnormal', abnormal_count, f'{abnormal_count/len(predictions)*100:.1f}%')
+    # Summary - 5 kelas
+    st.subheader('Ringkasan Klasifikasi')
+    cols = st.columns(5)
+    for i, (cls_id, cls_name) in enumerate(CLASS_NAMES.items()):
+        count = sum(predictions == cls_id)
+        percentage = count/len(predictions)*100
+        cols[i].metric(
+            f'{CLASS_EMOJI[cls_id]} {cls_name}', 
+            count, 
+            f'{percentage:.1f}%'
+        )
 
 else:
     st.info('Silakan upload file ECG untuk memulai klasifikasi.')
+    
+    # Tampilkan informasi kelas
+    st.subheader('Tentang Klasifikasi 5 Kelas ECG')
+    for cls_id, cls_name in CLASS_NAMES.items():
+        st.markdown(f'**{CLASS_EMOJI[cls_id]} Kelas {cls_id} - {cls_name}**: {CLASS_DESCRIPTIONS[cls_id]}')
     
     # Demo dengan sample data
     if st.button('Demo dengan Sample Data'):
@@ -140,17 +195,22 @@ else:
                 
                 st.subheader('Demo Prediksi (10 Sample)')
                 
-                # Tampilkan dalam format yang lebih baik
+                # Tampilkan dalam format yang lebih baik - 5 kelas
                 demo_df = pd.DataFrame({
                     'Sample': range(1, len(predictions)+1),
-                    'Prediction': ['✅ Normal' if p == 1 else '⚠️ Abnormal' for p in predictions],
+                    'Kelas': [int(p) for p in predictions],
+                    'Prediction': [f'{CLASS_EMOJI[int(p)]} {CLASS_NAMES[int(p)]}' for p in predictions],
                     'Confidence': [f'{c*100:.1f}%' for c in confidence]
                 })
                 st.dataframe(demo_df, use_container_width=True)
                 
-                # Summary
-                normal_demo = sum(predictions == 1)
-                abnormal_demo = sum(predictions == 0)
-                st.write(f'**Summary:** {normal_demo} Normal, {abnormal_demo} Abnormal')
+                # Summary - 5 kelas
+                st.markdown('**Ringkasan Demo:**')
+                summary_text = []
+                for cls_id, cls_name in CLASS_NAMES.items():
+                    count = sum(predictions == cls_id)
+                    if count > 0:
+                        summary_text.append(f'{CLASS_EMOJI[cls_id]} {cls_name}: {count}')
+                st.write(' | '.join(summary_text))
             except Exception as e:
                 st.error(f"Error loading demo data: {str(e)}")

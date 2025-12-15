@@ -421,7 +421,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#berisi-5000-sampel">Berisi 5000 Sampel</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#proses-pengumpulan-data">Proses Pengumpulan Data</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#terdapat-140-fitur">Terdapat 140 Fitur</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#struktur-label-kelas">Struktur Label Kelas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#struktur-label-5-kelas">Struktur Label 5 Kelas</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#komposisi-dataset">Komposisi Dataset</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#konteks-medis">Konteks Medis</a></li>
 </ul>
@@ -430,7 +430,7 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-preprocessing">3. Data Preprocessing</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#konversi-ke-klasifikasi-binary">3.1 Konversi ke Klasifikasi Binary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mapping-label-5-kelas">3.1 Mapping Label 5 Kelas</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#train-test-split">3.2 Train-Test Split</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#normalisasi-dengan-robustscaler">3.3 Normalisasi dengan RobustScaler</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#verifikasi-kualitas-data">3.4 Verifikasi Kualitas Data</a></li>
@@ -519,7 +519,7 @@ document.write(`
 </section>
 <section id="berisi-5000-sampel">
 <h3>Berisi 5000 Sampel<a class="headerlink" href="#berisi-5000-sampel" title="Link to this heading">#</a></h3>
-<p>Dataset ECG5000 berisi <strong>5000 detak jantung yang semuanya diambil dari satu pasien</strong>. Proses pengumpulannya:</p>
+<p>Dataset ECG5000 berisi <strong>5000 detak jantung yang semuanya diambil dari pasien</strong>. Proses pengumpulannya:</p>
 <ul class="simple">
 <li><p>Data berasal dari rekaman ECG panjang dari <strong>BIDMC Congestive Heart Failure Database</strong></p></li>
 <li><p>Rekaman berlangsung sekitar <strong>20 jam tanpa putus</strong> (kontinyu)</p></li>
@@ -527,7 +527,6 @@ document.write(`
 <li><p>Setiap detak mewakili kondisi jantung pasien pada waktu berbeda selama periode 20 jam</p></li>
 <li><p>Dari seluruh detak yang tersedia, <strong>dipilih 5000 detak</strong> untuk membentuk dataset penelitian time series</p></li>
 </ul>
-<p>Dengan struktur ini, dataset merepresentasikan <strong>variasi detak normal dan abnormal yang muncul pada satu pasien</strong> dalam rentang waktu yang panjang. Hal ini memberikan gambaran dinamika jantung yang realistis, termasuk transisi antara kondisi normal dan aritmia.</p>
 </section>
 <section id="proses-pengumpulan-data">
 <h3>Proses Pengumpulan Data<a class="headerlink" href="#proses-pengumpulan-data" title="Link to this heading">#</a></h3>
@@ -547,18 +546,49 @@ document.write(`
 <li><p>Nilai amplitudo ini disimpan dalam urutan sepanjang 140 time steps</p></li>
 <li><p>Urutan tersebut membentuk satu heartbeat lengkap, dari awal hingga akhir</p></li>
 </ul>
-<p>Dengan demikian, bentuk data satu sampel adalah vektor 140 nilai, misalnya:</p>
+<p>Dengan demikian, bentuk data satu sampel adalah vektor 140 nilai:</p>
 <p><code class="docutils literal notranslate"><span class="pre">[ecg_0,</span> <span class="pre">ecg_1,</span> <span class="pre">…,</span> <span class="pre">ecg_139]</span></code></p>
-<p>Urutan nilai ini mencerminkan perubahan amplitudo dari awal hingga akhir satu detak jantung.</p>
 </section>
-<section id="struktur-label-kelas">
-<h3>Struktur Label Kelas<a class="headerlink" href="#struktur-label-kelas" title="Link to this heading">#</a></h3>
-<p>Dataset terdiri dari 5 kelas heartbeat:</p>
-<ol class="arabic simple">
-<li><p><strong>Kelas 1</strong> mewakili heartbeat normal</p></li>
-<li><p><strong>Kelas 2 sampai 5</strong> mewakili variasi kelainan irama jantung (aritmia)</p></li>
-</ol>
-<p>Distribusi kelas tidak seimbang, kelas normal memiliki jumlah jauh lebih besar dibandingkan kelas abnormal. Hal ini realistis karena pada pasien dengan gagal jantung kongestif, sebagian besar waktu jantung masih berfungsi dalam ritme normal, dengan episode aritmia yang terjadi secara intermiten.</p>
+<section id="struktur-label-5-kelas">
+<h3>Struktur Label 5 Kelas<a class="headerlink" href="#struktur-label-5-kelas" title="Link to this heading">#</a></h3>
+<p>Dataset terdiri dari <strong>5 kelas heartbeat</strong> berdasarkan anotasi medis:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Kelas</p></th>
+<th class="head"><p>Nama</p></th>
+<th class="head"><p>Deskripsi</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>1</strong></p></td>
+<td><p>Normal (N)</p></td>
+<td><p>Detak jantung dengan ritme sinus normal</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>2</strong></p></td>
+<td><p>R-on-T PVC</p></td>
+<td><p>Premature Ventricular Contraction yang terjadi pada gelombang T (berbahaya)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>3</strong></p></td>
+<td><p>Supraventricular Ectopic Beat (S)</p></td>
+<td><p>Detak ektopik yang berasal dari atrium</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>4</strong></p></td>
+<td><p>Premature Ventricular Contraction (V)</p></td>
+<td><p>Kontraksi ventrikel prematur</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>5</strong></p></td>
+<td><p>Unknown/Fusion Beat (F)</p></td>
+<td><p>Detak yang tidak dapat diklasifikasi atau fusion beat</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Catatan Medis:</strong></p>
+<ul class="simple">
+<li><p><strong>Kelas 1 (Normal)</strong> adalah detak jantung sehat dengan pola P-QRS-T yang teratur</p></li>
+<li><p><strong>Kelas 2-5 (Abnormal)</strong> merupakan berbagai jenis aritmia yang memerlukan perhatian medis</p></li>
+<li><p>Distribusi kelas tidak seimbang karena sebagian besar waktu jantung berfungsi normal</p></li>
+</ul>
 </section>
 <section id="komposisi-dataset">
 <h3>Komposisi Dataset<a class="headerlink" href="#komposisi-dataset" title="Link to this heading">#</a></h3>
@@ -567,7 +597,8 @@ document.write(`
 <li><p><strong>Training set awal</strong>: 500 sampel</p></li>
 <li><p><strong>Test set awal</strong>: 4500 sampel</p></li>
 <li><p><strong>Panjang deret waktu per sampel</strong>: 140 time steps</p></li>
-<li><p><strong>Format file</strong>: Berupa teks dengan spasi. Kolom pertama adalah label kelas, diikuti 140 nilai amplitudo</p></li>
+<li><p><strong>Jumlah kelas</strong>: 5 kelas</p></li>
+<li><p><strong>Format file</strong>: Berupa teks dengan spasi. Kolom pertama adalah label kelas (1-5), diikuti 140 nilai amplitudo</p></li>
 </ul>
 </section>
 <section id="konteks-medis">
@@ -576,7 +607,7 @@ document.write(`
 <ul class="simple">
 <li><p>Penelitian <strong>deteksi aritmia otomatis</strong> pada pasien gagal jantung</p></li>
 <li><p>Pengembangan <strong>sistem monitoring jantung real-time</strong></p></li>
-<li><p>Analisis <strong>pola temporal</strong> pada sinyal ECG</p></li>
+<li><p>Klasifikasi <strong>jenis-jenis aritmia</strong> spesifik</p></li>
 <li><p>Validasi algoritma <strong>klasifikasi time series</strong> pada data medis riil</p></li>
 </ul>
 </section>
@@ -1189,28 +1220,83 @@ Kelas 5:
 <h1>3. Data Preprocessing<a class="headerlink" href="#data-preprocessing" title="Link to this heading">#</a></h1>
 <p>Tahap preprocessing bertujuan untuk menyiapkan data agar siap digunakan dalam pemodelan machine learning. Pada dataset ECG5000, preprocessing meliputi:</p>
 <ol class="arabic simple">
-<li><p><strong>Konversi ke Klasifikasi Binary</strong>: Menyederhanakan 5 kelas menjadi 2 kelas (Normal vs Abnormal) untuk fokus pada deteksi anomali jantung</p></li>
+<li><p><strong>Mapping Label Kelas</strong>: Memberikan nama deskriptif untuk setiap kelas (1-5)</p></li>
 <li><p><strong>Train-Test Split</strong>: Membagi data menjadi set training dan testing dengan stratified sampling untuk menjaga proporsi kelas</p></li>
 <li><p><strong>Normalisasi/Scaling</strong>: Menskalakan nilai fitur agar berada dalam rentang yang seragam menggunakan RobustScaler</p></li>
 <li><p><strong>Verifikasi Kualitas Data</strong>: Memastikan tidak ada missing values atau infinite values</p></li>
 </ol>
-<section id="konversi-ke-klasifikasi-binary">
-<h2>3.1 Konversi ke Klasifikasi Binary<a class="headerlink" href="#konversi-ke-klasifikasi-binary" title="Link to this heading">#</a></h2>
-<p>Untuk keperluan deteksi anomali medis, kita menyederhanakan klasifikasi menjadi:</p>
-<ul class="simple">
-<li><p><strong>Normal (1)</strong>: Heartbeat dengan ritme normal (Kelas 1 asli)</p></li>
-<li><p><strong>Abnormal (0)</strong>: Heartbeat dengan kelainan/aritmia (Kelas 2-5 asli)</p></li>
-</ul>
-<p>Pendekatan binary ini sesuai dengan kebutuhan klinis untuk mendeteksi apakah detak jantung normal atau memerlukan perhatian medis lebih lanjut.</p>
+<section id="mapping-label-5-kelas">
+<h2>3.1 Mapping Label 5 Kelas<a class="headerlink" href="#mapping-label-5-kelas" title="Link to this heading">#</a></h2>
+<p>Dataset ECG5000 memiliki 5 kelas dengan label numerik (1-5). Kita akan memberikan nama deskriptif:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Label</p></th>
+<th class="head"><p>Nama Kelas</p></th>
+<th class="head"><p>Keterangan</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>Normal</p></td>
+<td><p>Detak jantung normal</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>R-on-T PVC</p></td>
+<td><p>Premature Ventricular Contraction pada gelombang T</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>Supraventricular</p></td>
+<td><p>Detak ektopik supraventrikular</p></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>PVC</p></td>
+<td><p>Premature Ventricular Contraction</p></td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>Unknown</p></td>
+<td><p>Detak tidak terklasifikasi atau fusion beat</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Binary classification: Normal (1) vs Abnormal (2,3,4,5)</span>
-<span class="c1"># Kelas 1 = Normal, Kelas lainnya = Abnormal</span>
-<span class="n">y_binary</span> <span class="o">=</span> <span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>  <span class="c1"># 1 = Normal, 0 = Abnormal</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Mapping label 5 kelas</span>
+<span class="n">class_names</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="mi">1</span><span class="p">:</span> <span class="s1">&#39;Normal&#39;</span><span class="p">,</span>
+    <span class="mi">2</span><span class="p">:</span> <span class="s1">&#39;R-on-T PVC&#39;</span><span class="p">,</span>
+    <span class="mi">3</span><span class="p">:</span> <span class="s1">&#39;Supraventricular&#39;</span><span class="p">,</span>
+    <span class="mi">4</span><span class="p">:</span> <span class="s1">&#39;PVC&#39;</span><span class="p">,</span>
+    <span class="mi">5</span><span class="p">:</span> <span class="s1">&#39;Unknown&#39;</span>
+<span class="p">}</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Distribusi Label Binary:&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Normal (1): </span><span class="si">{</span><span class="nb">sum</span><span class="p">(</span><span class="n">y_binary</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Abnormal (0): </span><span class="si">{</span><span class="nb">sum</span><span class="p">(</span><span class="n">y_binary</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="c1"># Tampilkan distribusi 5 kelas</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Distribusi Label 5 Kelas:&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">)):</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="n">label</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  Kelas </span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s1"> (</span><span class="si">{</span><span class="n">class_names</span><span class="p">[</span><span class="n">label</span><span class="p">]</span><span class="si">}</span><span class="s1">): </span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s1"> sampel (</span><span class="si">{</span><span class="n">count</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1">%)&#39;</span><span class="p">)</span>
+
+<span class="c1"># Visualisasi distribusi 5 kelas</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">bars</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">([</span><span class="n">class_names</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">))],</span> 
+               <span class="p">[</span><span class="nb">sum</span><span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">))],</span>
+               <span class="n">color</span><span class="o">=</span><span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Distribusi 5 Kelas ECG&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Kelas&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Jumlah Sampel&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">bar</span> <span class="ow">in</span> <span class="n">bars</span><span class="p">:</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">bar</span><span class="o">.</span><span class="n">get_x</span><span class="p">()</span> <span class="o">+</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span> <span class="o">+</span> <span class="mi">50</span><span class="p">,</span>
+             <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">bar</span><span class="o">.</span><span class="n">get_height</span><span class="p">())</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">pie</span><span class="p">([</span><span class="nb">sum</span><span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">))],</span> 
+        <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="n">class_names</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">))],</span>
+        <span class="n">autopct</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%1.1f%%</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Proporsi 5 Kelas ECG&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1233,15 +1319,23 @@ Abnormal (0): 2081
 <p>Pembagian menggunakan <strong>stratified sampling</strong> untuk memastikan proporsi kelas Normal dan Abnormal tetap seimbang di kedua set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Split data</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Split data dengan 5 kelas (menggunakan label asli y, bukan y_binary)</span>
 <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
-    <span class="n">X</span><span class="p">,</span> <span class="n">y_binary</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">y_binary</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">y</span>
 <span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Training set: </span><span class="si">{</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Test set: </span><span class="si">{</span><span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Distribusi training: Normal=</span><span class="si">{</span><span class="nb">sum</span><span class="p">(</span><span class="n">y_train</span><span class="o">==</span><span class="mi">1</span><span class="p">)</span><span class="si">}</span><span class="s1">, Abnormal=</span><span class="si">{</span><span class="nb">sum</span><span class="p">(</span><span class="n">y_train</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Distribusi test: Normal=</span><span class="si">{</span><span class="nb">sum</span><span class="p">(</span><span class="n">y_test</span><span class="o">==</span><span class="mi">1</span><span class="p">)</span><span class="si">}</span><span class="s1">, Abnormal=</span><span class="si">{</span><span class="nb">sum</span><span class="p">(</span><span class="n">y_test</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Distribusi training set:&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">)):</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">y_train</span> <span class="o">==</span> <span class="n">label</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  </span><span class="si">{</span><span class="n">class_names</span><span class="p">[</span><span class="n">label</span><span class="p">]</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s1"> sampel&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Distribusi test set:&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">)):</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">y_test</span> <span class="o">==</span> <span class="n">label</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  </span><span class="si">{</span><span class="n">class_names</span><span class="p">[</span><span class="n">label</span><span class="p">]</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s1"> sampel&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1411,8 +1505,11 @@ Data siap untuk pemodelan!
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Training dan evaluasi model dengan fokus pada metrik medis</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">recall_score</span><span class="p">,</span> <span class="n">precision_score</span><span class="p">,</span> <span class="n">f1_score</span><span class="p">,</span> <span class="n">roc_auc_score</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Training dan evaluasi model dengan 5 kelas</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">recall_score</span><span class="p">,</span> <span class="n">precision_score</span><span class="p">,</span> <span class="n">f1_score</span>
+
+<span class="c1"># Label names untuk classification report</span>
+<span class="n">target_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">class_names</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">))]</span>
 
 <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">models</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="si">{</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
@@ -1422,32 +1519,35 @@ Data siap untuk pemodelan!
     <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_scaled</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
     <span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_scaled</span><span class="p">)</span>
     
-    <span class="c1"># Hitung semua metrik penting untuk konteks medis</span>
+    <span class="c1"># Hitung metrik untuk multi-class</span>
     <span class="n">acc</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
-    <span class="n">recall_abnormal</span> <span class="o">=</span> <span class="n">recall_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># Recall untuk Abnormal</span>
-    <span class="n">recall_normal</span> <span class="o">=</span> <span class="n">recall_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">precision_abnormal</span> <span class="o">=</span> <span class="n">precision_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">f1_abnormal</span> <span class="o">=</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">f1_normal</span> <span class="o">=</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    
+    <span class="c1"># Macro average (rata-rata semua kelas)</span>
+    <span class="n">recall_macro</span> <span class="o">=</span> <span class="n">recall_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="s1">&#39;macro&#39;</span><span class="p">)</span>
+    <span class="n">precision_macro</span> <span class="o">=</span> <span class="n">precision_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="s1">&#39;macro&#39;</span><span class="p">)</span>
+    <span class="n">f1_macro</span> <span class="o">=</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="s1">&#39;macro&#39;</span><span class="p">)</span>
+    
+    <span class="c1"># Weighted average (berbobot berdasarkan jumlah sampel)</span>
+    <span class="n">recall_weighted</span> <span class="o">=</span> <span class="n">recall_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="s1">&#39;weighted&#39;</span><span class="p">)</span>
+    <span class="n">f1_weighted</span> <span class="o">=</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="s1">&#39;weighted&#39;</span><span class="p">)</span>
     
     <span class="c1"># Simpan hasil</span>
     <span class="n">results</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s1">&#39;model&#39;</span><span class="p">:</span> <span class="n">model</span><span class="p">,</span>
         <span class="s1">&#39;accuracy&#39;</span><span class="p">:</span> <span class="n">acc</span><span class="p">,</span>
-        <span class="s1">&#39;recall_abnormal&#39;</span><span class="p">:</span> <span class="n">recall_abnormal</span><span class="p">,</span>
-        <span class="s1">&#39;recall_normal&#39;</span><span class="p">:</span> <span class="n">recall_normal</span><span class="p">,</span>
-        <span class="s1">&#39;precision_abnormal&#39;</span><span class="p">:</span> <span class="n">precision_abnormal</span><span class="p">,</span>
-        <span class="s1">&#39;f1_abnormal&#39;</span><span class="p">:</span> <span class="n">f1_abnormal</span><span class="p">,</span>
-        <span class="s1">&#39;f1_normal&#39;</span><span class="p">:</span> <span class="n">f1_normal</span><span class="p">,</span>
+        <span class="s1">&#39;recall_macro&#39;</span><span class="p">:</span> <span class="n">recall_macro</span><span class="p">,</span>
+        <span class="s1">&#39;precision_macro&#39;</span><span class="p">:</span> <span class="n">precision_macro</span><span class="p">,</span>
+        <span class="s1">&#39;f1_macro&#39;</span><span class="p">:</span> <span class="n">f1_macro</span><span class="p">,</span>
+        <span class="s1">&#39;recall_weighted&#39;</span><span class="p">:</span> <span class="n">recall_weighted</span><span class="p">,</span>
+        <span class="s1">&#39;f1_weighted&#39;</span><span class="p">:</span> <span class="n">f1_weighted</span><span class="p">,</span>
         <span class="s1">&#39;predictions&#39;</span><span class="p">:</span> <span class="n">y_pred</span>
     <span class="p">}</span>
     
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Accuracy: </span><span class="si">{</span><span class="n">acc</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Recall Abnormal (PRIORITAS): </span><span class="si">{</span><span class="n">recall_abnormal</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Recall Normal: </span><span class="si">{</span><span class="n">recall_normal</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Precision Abnormal: </span><span class="si">{</span><span class="n">precision_abnormal</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;F1-Score Abnormal: </span><span class="si">{</span><span class="n">f1_abnormal</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;F1-Score Normal: </span><span class="si">{</span><span class="n">f1_normal</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Recall (Macro): </span><span class="si">{</span><span class="n">recall_macro</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Precision (Macro): </span><span class="si">{</span><span class="n">precision_macro</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;F1-Score (Macro): </span><span class="si">{</span><span class="n">f1_macro</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;F1-Score (Weighted): </span><span class="si">{</span><span class="n">f1_weighted</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1517,16 +1617,17 @@ F1-Score Normal: 0.9897
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Perbandingan metrik model - fokus pada metrik klinis</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Perbandingan metrik model - multiclass (5 kelas)</span>
 <span class="n">metrics_comparison</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
     <span class="s1">&#39;Model&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">keys</span><span class="p">()),</span>
     <span class="s1">&#39;Accuracy&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">results</span><span class="p">[</span><span class="n">m</span><span class="p">][</span><span class="s1">&#39;accuracy&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">results</span><span class="o">.</span><span class="n">keys</span><span class="p">()],</span>
-    <span class="s1">&#39;Recall_Abnormal&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">results</span><span class="p">[</span><span class="n">m</span><span class="p">][</span><span class="s1">&#39;recall_abnormal&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">results</span><span class="o">.</span><span class="n">keys</span><span class="p">()],</span>
-    <span class="s1">&#39;F1_Abnormal&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">results</span><span class="p">[</span><span class="n">m</span><span class="p">][</span><span class="s1">&#39;f1_abnormal&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">results</span><span class="o">.</span><span class="n">keys</span><span class="p">()],</span>
-    <span class="s1">&#39;Precision_Abnormal&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">results</span><span class="p">[</span><span class="n">m</span><span class="p">][</span><span class="s1">&#39;precision_abnormal&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">results</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
+    <span class="s1">&#39;Recall_Macro&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">results</span><span class="p">[</span><span class="n">m</span><span class="p">][</span><span class="s1">&#39;recall_macro&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">results</span><span class="o">.</span><span class="n">keys</span><span class="p">()],</span>
+    <span class="s1">&#39;Precision_Macro&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">results</span><span class="p">[</span><span class="n">m</span><span class="p">][</span><span class="s1">&#39;precision_macro&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">results</span><span class="o">.</span><span class="n">keys</span><span class="p">()],</span>
+    <span class="s1">&#39;F1_Macro&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">results</span><span class="p">[</span><span class="n">m</span><span class="p">][</span><span class="s1">&#39;f1_macro&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">results</span><span class="o">.</span><span class="n">keys</span><span class="p">()],</span>
+    <span class="s1">&#39;F1_Weighted&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">results</span><span class="p">[</span><span class="n">m</span><span class="p">][</span><span class="s1">&#39;f1_weighted&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">results</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
 <span class="p">})</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Perbandingan Metrik Semua Model:&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Perbandingan Metrik Semua Model (5 Kelas):&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">metrics_comparison</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
 
 <span class="c1"># Visualisasi perbandingan metrik</span>
@@ -1537,42 +1638,40 @@ F1-Score Normal: 0.9897
                <span class="n">color</span><span class="o">=</span><span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">metrics_comparison</span><span class="p">)))</span>
 <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">)</span>
 <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Score&#39;</span><span class="p">)</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
 <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">metrics_comparison</span><span class="p">[</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">]):</span>
-    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="o">+</span> <span class="mf">0.005</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">v</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="o">+</span> <span class="mf">0.01</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">v</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
 
-<span class="c1"># Recall Abnormal (PALING PENTING untuk medis)</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">metrics_comparison</span><span class="p">[</span><span class="s1">&#39;Model&#39;</span><span class="p">],</span> <span class="n">metrics_comparison</span><span class="p">[</span><span class="s1">&#39;Recall_Abnormal&#39;</span><span class="p">],</span> 
+<span class="c1"># Recall Macro</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">metrics_comparison</span><span class="p">[</span><span class="s1">&#39;Model&#39;</span><span class="p">],</span> <span class="n">metrics_comparison</span><span class="p">[</span><span class="s1">&#39;Recall_Macro&#39;</span><span class="p">],</span> 
                <span class="n">color</span><span class="o">=</span><span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s1">&#39;Reds_r&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">metrics_comparison</span><span class="p">)))</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Recall Abnormal (PRIORITAS MEDIS)&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Recall (Macro Average)&#39;</span><span class="p">)</span>
 <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Score&#39;</span><span class="p">)</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
 <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Target ≥95%&#39;</span><span class="p">)</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">metrics_comparison</span><span class="p">[</span><span class="s1">&#39;Recall_Abnormal&#39;</span><span class="p">]):</span>
-    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="o">+</span> <span class="mf">0.005</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">v</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">metrics_comparison</span><span class="p">[</span><span class="s1">&#39;Recall_Macro&#39;</span><span class="p">]):</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="o">+</span> <span class="mf">0.01</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">v</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
 
-<span class="c1"># F1-Score Abnormal</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">metrics_comparison</span><span class="p">[</span><span class="s1">&#39;Model&#39;</span><span class="p">],</span> <span class="n">metrics_comparison</span><span class="p">[</span><span class="s1">&#39;F1_Abnormal&#39;</span><span class="p">],</span> 
+<span class="c1"># F1-Score Macro</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">metrics_comparison</span><span class="p">[</span><span class="s1">&#39;Model&#39;</span><span class="p">],</span> <span class="n">metrics_comparison</span><span class="p">[</span><span class="s1">&#39;F1_Macro&#39;</span><span class="p">],</span> 
                <span class="n">color</span><span class="o">=</span><span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s1">&#39;Blues_r&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">metrics_comparison</span><span class="p">)))</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;F1-Score Abnormal&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;F1-Score (Macro Average)&#39;</span><span class="p">)</span>
 <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Score&#39;</span><span class="p">)</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
 <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">metrics_comparison</span><span class="p">[</span><span class="s1">&#39;F1_Abnormal&#39;</span><span class="p">]):</span>
-    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="o">+</span> <span class="mf">0.005</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">v</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">metrics_comparison</span><span class="p">[</span><span class="s1">&#39;F1_Macro&#39;</span><span class="p">]):</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="o">+</span> <span class="mf">0.01</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">v</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
 
-<span class="c1"># Precision Abnormal</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">metrics_comparison</span><span class="p">[</span><span class="s1">&#39;Model&#39;</span><span class="p">],</span> <span class="n">metrics_comparison</span><span class="p">[</span><span class="s1">&#39;Precision_Abnormal&#39;</span><span class="p">],</span> 
+<span class="c1"># Precision Macro</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">metrics_comparison</span><span class="p">[</span><span class="s1">&#39;Model&#39;</span><span class="p">],</span> <span class="n">metrics_comparison</span><span class="p">[</span><span class="s1">&#39;Precision_Macro&#39;</span><span class="p">],</span> 
                <span class="n">color</span><span class="o">=</span><span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s1">&#39;Greens_r&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">metrics_comparison</span><span class="p">)))</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Precision Abnormal&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Precision (Macro Average)&#39;</span><span class="p">)</span>
 <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Score&#39;</span><span class="p">)</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
 <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">metrics_comparison</span><span class="p">[</span><span class="s1">&#39;Precision_Abnormal&#39;</span><span class="p">]):</span>
-    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="o">+</span> <span class="mf">0.005</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">v</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">metrics_comparison</span><span class="p">[</span><span class="s1">&#39;Precision_Macro&#39;</span><span class="p">]):</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="o">+</span> <span class="mf">0.01</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">v</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -1595,14 +1694,14 @@ Logistic Regression     0.991         0.990385     0.989196            0.988010
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pemilihan model terbaik berdasarkan kriteria medis</span>
-<span class="c1"># Prioritas: Recall Abnormal &gt; F1 Abnormal &gt; Accuracy</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pemilihan model terbaik untuk klasifikasi 5 kelas</span>
+<span class="c1"># Prioritas: F1 Macro (balance semua kelas) &gt; Recall Macro &gt; Accuracy</span>
 
-<span class="c1"># Scoring: 50% Recall + 30% F1 + 20% Accuracy</span>
+<span class="c1"># Scoring: 50% F1_Macro + 30% Recall_Macro + 20% Accuracy</span>
 <span class="n">scores</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">results</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-    <span class="n">score</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">results</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;recall_abnormal&#39;</span><span class="p">]</span> <span class="o">+</span> 
-             <span class="mf">0.3</span> <span class="o">*</span> <span class="n">results</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;f1_abnormal&#39;</span><span class="p">]</span> <span class="o">+</span> 
+    <span class="n">score</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">results</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;f1_macro&#39;</span><span class="p">]</span> <span class="o">+</span> 
+             <span class="mf">0.3</span> <span class="o">*</span> <span class="n">results</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;recall_macro&#39;</span><span class="p">]</span> <span class="o">+</span> 
              <span class="mf">0.2</span> <span class="o">*</span> <span class="n">results</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;accuracy&#39;</span><span class="p">])</span>
     <span class="n">scores</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">score</span>
 
@@ -1610,27 +1709,26 @@ Logistic Regression     0.991         0.990385     0.989196            0.988010
 <span class="n">best_model</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="n">best_model_name</span><span class="p">][</span><span class="s1">&#39;model&#39;</span><span class="p">]</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="si">{</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">70</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;MODEL TERBAIK BERDASARKAN KRITERIA MEDIS&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;MODEL TERBAIK UNTUK KLASIFIKASI 5 KELAS ECG&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">70</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Nama Model: </span><span class="si">{</span><span class="n">best_model_name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Composite Score: </span><span class="si">{</span><span class="n">scores</span><span class="p">[</span><span class="n">best_model_name</span><span class="p">]</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Metrik Detail:&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  - Accuracy: </span><span class="si">{</span><span class="n">results</span><span class="p">[</span><span class="n">best_model_name</span><span class="p">][</span><span class="s2">&quot;accuracy&quot;</span><span class="p">]</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  - Recall Abnormal (Prioritas): </span><span class="si">{</span><span class="n">results</span><span class="p">[</span><span class="n">best_model_name</span><span class="p">][</span><span class="s2">&quot;recall_abnormal&quot;</span><span class="p">]</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  - Precision Abnormal: </span><span class="si">{</span><span class="n">results</span><span class="p">[</span><span class="n">best_model_name</span><span class="p">][</span><span class="s2">&quot;precision_abnormal&quot;</span><span class="p">]</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  - F1-Score Abnormal: </span><span class="si">{</span><span class="n">results</span><span class="p">[</span><span class="n">best_model_name</span><span class="p">][</span><span class="s2">&quot;f1_abnormal&quot;</span><span class="p">]</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  - Recall Normal: </span><span class="si">{</span><span class="n">results</span><span class="p">[</span><span class="n">best_model_name</span><span class="p">][</span><span class="s2">&quot;recall_normal&quot;</span><span class="p">]</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  - F1-Score Normal: </span><span class="si">{</span><span class="n">results</span><span class="p">[</span><span class="n">best_model_name</span><span class="p">][</span><span class="s2">&quot;f1_normal&quot;</span><span class="p">]</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  - Recall Macro: </span><span class="si">{</span><span class="n">results</span><span class="p">[</span><span class="n">best_model_name</span><span class="p">][</span><span class="s2">&quot;recall_macro&quot;</span><span class="p">]</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  - Precision Macro: </span><span class="si">{</span><span class="n">results</span><span class="p">[</span><span class="n">best_model_name</span><span class="p">][</span><span class="s2">&quot;precision_macro&quot;</span><span class="p">]</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  - F1-Score Macro: </span><span class="si">{</span><span class="n">results</span><span class="p">[</span><span class="n">best_model_name</span><span class="p">][</span><span class="s2">&quot;f1_macro&quot;</span><span class="p">]</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  - F1-Score Weighted: </span><span class="si">{</span><span class="n">results</span><span class="p">[</span><span class="n">best_model_name</span><span class="p">][</span><span class="s2">&quot;f1_weighted&quot;</span><span class="p">]</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="si">{</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">70</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 
 <span class="c1"># Visualisasi composite score</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 <span class="n">bars</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">scores</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">scores</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> 
                <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;red&#39;</span> <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="n">best_model_name</span> <span class="k">else</span> <span class="s1">&#39;steelblue&#39;</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">scores</span><span class="o">.</span><span class="n">keys</span><span class="p">()])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Composite Score (50% Recall + 30</span><span class="si">% F</span><span class="s1">1 + 20% Accuracy)&#39;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Composite Score (50</span><span class="si">% F</span><span class="s1">1_Macro + 30% Recall_Macro + 20% Accuracy)&#39;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Model&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Composite Score&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mf">0.85</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
 
 <span class="k">for</span> <span class="n">bar</span><span class="p">,</span> <span class="n">score</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">bars</span><span class="p">,</span> <span class="n">scores</span><span class="o">.</span><span class="n">values</span><span class="p">()):</span>
@@ -1670,12 +1768,12 @@ Metrik Detail:
 <h1>5. Evaluasi<a class="headerlink" href="#evaluasi" title="Link to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Evaluasi model terbaik</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Evaluasi model terbaik - 5 kelas</span>
 <span class="n">y_pred_best</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="n">best_model_name</span><span class="p">][</span><span class="s1">&#39;predictions&#39;</span><span class="p">]</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">=== Evaluasi </span><span class="si">{</span><span class="n">best_model_name</span><span class="si">}</span><span class="s1"> ===&#39;</span> <span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Classification Report:&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_best</span><span class="p">,</span> <span class="n">target_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Abnormal&#39;</span><span class="p">,</span> <span class="s1">&#39;Normal&#39;</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Classification Report (5 Kelas):&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_best</span><span class="p">,</span> <span class="n">target_names</span><span class="o">=</span><span class="n">target_names</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -1697,15 +1795,18 @@ weighted avg       0.99      0.99      0.99      1000
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Confusion Matrix</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Confusion Matrix - 5 kelas</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
 <span class="n">cm</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_best</span><span class="p">)</span>
 <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">,</span> 
-            <span class="n">xticklabels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Abnormal&#39;</span><span class="p">,</span> <span class="s1">&#39;Normal&#39;</span><span class="p">],</span> 
-            <span class="n">yticklabels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Abnormal&#39;</span><span class="p">,</span> <span class="s1">&#39;Normal&#39;</span><span class="p">])</span>
+            <span class="n">xticklabels</span><span class="o">=</span><span class="n">target_names</span><span class="p">,</span> 
+            <span class="n">yticklabels</span><span class="o">=</span><span class="n">target_names</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Confusion Matrix - </span><span class="si">{</span><span class="n">best_model_name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Predicted&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Actual&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1716,24 +1817,35 @@ weighted avg       0.99      0.99      0.99      1000
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Analisis Error - False Negative dan False Positive</span>
-<span class="n">cm</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_best</span><span class="p">)</span>
-<span class="n">tn</span><span class="p">,</span> <span class="n">fp</span><span class="p">,</span> <span class="n">fn</span><span class="p">,</span> <span class="n">tp</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Analisis performa per kelas</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">precision_recall_fscore_support</span>
+
+<span class="n">precision_per_class</span><span class="p">,</span> <span class="n">recall_per_class</span><span class="p">,</span> <span class="n">f1_per_class</span><span class="p">,</span> <span class="n">support_per_class</span> <span class="o">=</span> <span class="n">precision_recall_fscore_support</span><span class="p">(</span>
+    <span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_best</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="nb">sorted</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+<span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="si">{</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">70</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;ANALISIS ERROR DETAIL&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;ANALISIS PERFORMA PER KELAS&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">70</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Confusion Matrix Breakdown:&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  True Negative (TN): </span><span class="si">{</span><span class="n">tn</span><span class="si">}</span><span class="s1"> - Abnormal terdeteksi sebagai Abnormal ✓&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  False Positive (FP): </span><span class="si">{</span><span class="n">fp</span><span class="si">}</span><span class="s1"> - Abnormal salah terdeteksi sebagai Normal ✗✗&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  False Negative (FN): </span><span class="si">{</span><span class="n">fn</span><span class="si">}</span><span class="s1"> - Normal salah terdeteksi sebagai Abnormal ✗&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  True Positive (TP): </span><span class="si">{</span><span class="n">tp</span><span class="si">}</span><span class="s1"> - Normal terdeteksi sebagai Normal ✓&#39;</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">IMPLIKASI MEDIS:&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  - False Negative Rate: </span><span class="si">{</span><span class="n">fn</span><span class="o">/</span><span class="p">(</span><span class="n">fn</span><span class="o">+</span><span class="n">tp</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">% (KRITIS - pasien abnormal terlewat)&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  - False Positive Rate: </span><span class="si">{</span><span class="n">fp</span><span class="o">/</span><span class="p">(</span><span class="n">fp</span><span class="o">+</span><span class="n">tn</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">% (RENDAH - hanya perlu konfirmasi ulang)&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  - True Negative Rate (Sensitivity Abnormal): </span><span class="si">{</span><span class="n">tn</span><span class="o">/</span><span class="p">(</span><span class="n">tn</span><span class="o">+</span><span class="n">fp</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">%&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  - True Positive Rate (Sensitivity Normal): </span><span class="si">{</span><span class="n">tp</span><span class="o">/</span><span class="p">(</span><span class="n">tp</span><span class="o">+</span><span class="n">fn</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">%&#39;</span><span class="p">)</span>
+<span class="n">class_analysis</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;Kelas&#39;</span><span class="p">:</span> <span class="n">target_names</span><span class="p">,</span>
+    <span class="s1">&#39;Precision&#39;</span><span class="p">:</span> <span class="n">precision_per_class</span><span class="p">,</span>
+    <span class="s1">&#39;Recall&#39;</span><span class="p">:</span> <span class="n">recall_per_class</span><span class="p">,</span>
+    <span class="s1">&#39;F1-Score&#39;</span><span class="p">:</span> <span class="n">f1_per_class</span><span class="p">,</span>
+    <span class="s1">&#39;Support&#39;</span><span class="p">:</span> <span class="n">support_per_class</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="p">})</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">class_analysis</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="si">{</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">70</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;KETERANGAN:&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  - Kelas 1 (Normal): Ritme sinus normal&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  - Kelas 2 (R-on-T PVC): Kontraksi prematur ventrikel pada gelombang T (berbahaya)&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  - Kelas 3 (Supraventricular): Denyut ektopik supraventrikular&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  - Kelas 4 (PVC): Kontraksi prematur ventrikel&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  - Kelas 5 (Unknown): Denyut fusi/unknown&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="si">{</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">70</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1789,14 +1901,15 @@ IMPLIKASI MEDIS:
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Cross-validation dengan multiple metrics</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Cross-validation dengan multiple metrics untuk 5 kelas</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">cross_val_score</span><span class="p">,</span> <span class="n">cross_validate</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="si">{</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">70</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;CROSS-VALIDATION (5-Fold) - Evaluasi Stabilitas Model&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">70</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 
-<span class="n">scoring</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">,</span> <span class="s1">&#39;recall&#39;</span><span class="p">,</span> <span class="s1">&#39;precision&#39;</span><span class="p">,</span> <span class="s1">&#39;f1&#39;</span><span class="p">]</span>
+<span class="c1"># Untuk multiclass, gunakan macro average</span>
+<span class="n">scoring</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">,</span> <span class="s1">&#39;recall_macro&#39;</span><span class="p">,</span> <span class="s1">&#39;precision_macro&#39;</span><span class="p">,</span> <span class="s1">&#39;f1_macro&#39;</span><span class="p">]</span>
 
 <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">results</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">:&#39;</span><span class="p">)</span>
@@ -1807,9 +1920,9 @@ IMPLIKASI MEDIS:
     <span class="p">)</span>
     
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  Accuracy:  </span><span class="si">{</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_accuracy&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1"> (+/- </span><span class="si">{</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_accuracy&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="o">*</span><span class="mi">2</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  Recall:    </span><span class="si">{</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_recall&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1"> (+/- </span><span class="si">{</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_recall&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="o">*</span><span class="mi">2</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  Precision: </span><span class="si">{</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_precision&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1"> (+/- </span><span class="si">{</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_precision&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="o">*</span><span class="mi">2</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  F1-Score:  </span><span class="si">{</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_f1&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1"> (+/- </span><span class="si">{</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_f1&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="o">*</span><span class="mi">2</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  Recall (Macro):    </span><span class="si">{</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_recall_macro&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1"> (+/- </span><span class="si">{</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_recall_macro&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="o">*</span><span class="mi">2</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  Precision (Macro): </span><span class="si">{</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_precision_macro&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1"> (+/- </span><span class="si">{</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_precision_macro&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="o">*</span><span class="mi">2</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  F1 (Macro):  </span><span class="si">{</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_f1_macro&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1"> (+/- </span><span class="si">{</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_f1_macro&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="o">*</span><span class="mi">2</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
     
     <span class="c1"># Check stability</span>
     <span class="k">if</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_accuracy&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.03</span><span class="p">:</span>
@@ -1875,49 +1988,52 @@ Gradient Boosting:
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ROC Curve dan AUC Score</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ROC Curve dan AUC Score untuk multiclass (One-vs-Rest)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">roc_curve</span><span class="p">,</span> <span class="n">roc_auc_score</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">label_binarize</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="c1"># Binarize labels untuk multiclass ROC</span>
+<span class="n">classes</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+<span class="n">y_test_bin</span> <span class="o">=</span> <span class="n">label_binarize</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">classes</span><span class="p">)</span>
 
-<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">results</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-    <span class="n">model</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+
+<span class="c1"># Plot ROC untuk setiap kelas dari model terbaik</span>
+<span class="n">best_model_obj</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="n">best_model_name</span><span class="p">][</span><span class="s1">&#39;model&#39;</span><span class="p">]</span>
+
+<span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">best_model_obj</span><span class="p">,</span> <span class="s1">&#39;predict_proba&#39;</span><span class="p">):</span>
+    <span class="n">y_prob</span> <span class="o">=</span> <span class="n">best_model_obj</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_test_scaled</span><span class="p">)</span>
     
-    <span class="c1"># Get probability predictions</span>
-    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s1">&#39;predict_proba&#39;</span><span class="p">):</span>
-        <span class="n">y_prob</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_test_scaled</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span>
-    <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s1">&#39;decision_function&#39;</span><span class="p">):</span>
-        <span class="n">y_prob</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">decision_function</span><span class="p">(</span><span class="n">X_test_scaled</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">continue</span>
+    <span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="s1">&#39;purple&#39;</span><span class="p">]</span>
     
-    <span class="c1"># Calculate ROC curve</span>
-    <span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">,</span> <span class="n">thresholds</span> <span class="o">=</span> <span class="n">roc_curve</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_prob</span><span class="p">)</span>
-    <span class="n">auc_score</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_prob</span><span class="p">)</span>
-    
-    <span class="c1"># Plot</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1"> (AUC = </span><span class="si">{</span><span class="n">auc_score</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">color</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">classes</span><span class="p">,</span> <span class="n">colors</span><span class="p">)):</span>
+        <span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">roc_curve</span><span class="p">(</span><span class="n">y_test_bin</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="n">y_prob</span><span class="p">[:,</span> <span class="n">i</span><span class="p">])</span>
+        <span class="n">auc_score</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_test_bin</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="n">y_prob</span><span class="p">[:,</span> <span class="n">i</span><span class="p">])</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> 
+                <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">class_names</span><span class="p">[</span><span class="bp">cls</span><span class="p">]</span><span class="si">}</span><span class="s1"> (AUC = </span><span class="si">{</span><span class="n">auc_score</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;k--&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Random Classifier&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;False Positive Rate&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;True Positive Rate (Recall)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;ROC Curve - Semua Model&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;ROC Curve - </span><span class="si">{</span><span class="n">best_model_name</span><span class="si">}</span><span class="s1"> (One-vs-Rest)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;lower right&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">AUC Scores (Area Under ROC Curve):&#39;</span><span class="p">)</span>
+<span class="c1"># Macro-average AUC untuk semua model</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Macro-Average AUC Scores (Area Under ROC Curve):&#39;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">results</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
     <span class="n">model</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">]</span>
     <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s1">&#39;predict_proba&#39;</span><span class="p">):</span>
-        <span class="n">y_prob</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_test_scaled</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span>
-    <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s1">&#39;decision_function&#39;</span><span class="p">):</span>
-        <span class="n">y_prob</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">decision_function</span><span class="p">(</span><span class="n">X_test_scaled</span><span class="p">)</span>
+        <span class="n">y_prob</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_test_scaled</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">auc_score</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_test_bin</span><span class="p">,</span> <span class="n">y_prob</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="s1">&#39;macro&#39;</span><span class="p">,</span> <span class="n">multi_class</span><span class="o">=</span><span class="s1">&#39;ovr&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">auc_score</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">: N/A&#39;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">continue</span>
-    <span class="n">auc_score</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_prob</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">auc_score</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">: N/A (no predict_proba)&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1965,22 +2081,30 @@ Gradient Boosting: 0.9989
 <section id="id1">
 <h3>1. Business Understanding<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p><strong>Tujuan</strong>: Sistem deteksi dini aritmia jantung melalui klasifikasi sinyal ECG</p></li>
-<li><p><strong>Konteks Medis</strong>: Prioritas pada minimalisir false negative (miss detection)</p></li>
-<li><p><strong>Success Criteria</strong>: Recall Abnormal ≥95%, F1-Score ≥92%, Model stabil (CV std &lt;3%)</p></li>
+<li><p><strong>Tujuan</strong>: Sistem deteksi dan klasifikasi aritmia jantung melalui sinyal ECG</p></li>
+<li><p><strong>Konteks Medis</strong>: Klasifikasi 5 kelas untuk diagnosis yang lebih spesifik</p></li>
+<li><p><strong>Success Criteria</strong>: F1-Score Macro tinggi, model stabil (CV std &lt;3%)</p></li>
 </ul>
 </section>
 <section id="id2">
 <h3>2. Data Understanding<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p><strong>Dataset</strong>: ECG5000 dengan 5000 sampel, 140 time points per sinyal</p></li>
-<li><p><strong>Distribusi Kelas</strong>: Mengandung kelas Normal (1) dan Abnormal (2-5)</p></li>
+<li><p><strong>Distribusi Kelas</strong>:</p>
+<ul>
+<li><p>Kelas 1 (Normal): Ritme sinus normal</p></li>
+<li><p>Kelas 2 (R-on-T PVC): Kontraksi prematur ventrikel pada gelombang T</p></li>
+<li><p>Kelas 3 (Supraventricular): Denyut ektopik supraventrikular</p></li>
+<li><p>Kelas 4 (PVC): Kontraksi prematur ventrikel</p></li>
+<li><p>Kelas 5 (Unknown): Denyut fusi/unknown</p></li>
+</ul>
+</li>
 </ul>
 </section>
 <section id="id3">
 <h3>3. Data Preprocessing<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p><strong>Binary Classification</strong>: Normal vs Abnormal untuk simplifikasi deteksi anomali</p></li>
+<li><p><strong>Klasifikasi 5 Kelas</strong>: Mempertahankan struktur asli untuk diagnosis spesifik</p></li>
 <li><p><strong>Normalisasi</strong>: RobustScaler dipilih (lebih robust terhadap outlier medis)</p></li>
 <li><p><strong>Data Quality</strong>: Verified - No missing values, no infinite values</p></li>
 <li><p><strong>Train-Test Split</strong>: 80-20 dengan stratified sampling</p></li>
@@ -1990,8 +2114,8 @@ Gradient Boosting: 0.9989
 <h3>4. Pemodelan<a class="headerlink" href="#pemodelan" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p><strong>Algoritma Diuji</strong>: 6 model (Logistic Regression, Decision Tree, Random Forest, KNN, SVM, Gradient Boosting)</p></li>
-<li><p><strong>Metrik Prioritas</strong>: Recall Abnormal &gt; F1-Score &gt; Accuracy</p></li>
-<li><p><strong>Composite Score</strong>: 50% Recall + 30% F1 + 20% Accuracy</p></li>
+<li><p><strong>Metrik Prioritas</strong>: F1-Score Macro &gt; Recall Macro &gt; Accuracy</p></li>
+<li><p><strong>Composite Score</strong>: 50% F1_Macro + 30% Recall_Macro + 20% Accuracy</p></li>
 </ul>
 </section>
 <section id="id4">
@@ -2000,9 +2124,10 @@ Gradient Boosting: 0.9989
 <li><p><strong>Model Terbaik</strong>: [Akan terisi otomatis setelah run]</p></li>
 <li><p><strong>Metrik Utama</strong>:</p>
 <ul>
-<li><p>Recall Abnormal: Mengukur kemampuan deteksi kasus abnormal</p></li>
-<li><p>F1-Score: Keseimbangan precision dan recall</p></li>
-<li><p>AUC-ROC: Evaluasi trade-off sensitivity vs specificity</p></li>
+<li><p>Recall Macro: Rata-rata kemampuan deteksi semua kelas</p></li>
+<li><p>Precision Macro: Rata-rata ketepatan prediksi semua kelas</p></li>
+<li><p>F1-Score Macro: Keseimbangan precision dan recall</p></li>
+<li><p>AUC-ROC (OvR): Evaluasi multiclass dengan one-vs-rest</p></li>
 </ul>
 </li>
 <li><p><strong>Stabilitas</strong>: Divalidasi dengan 5-fold cross-validation</p></li>
@@ -2012,7 +2137,7 @@ Gradient Boosting: 0.9989
 <h3>6. Deployment<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Model disimpan dengan joblib untuk deployment</p></li>
-<li><p>Siap diintegrasikan ke sistem Streamlit atau API medis</p></li>
+<li><p>Siap diintegrasikan ke sistem Streamlit dengan output 5 kelas</p></li>
 </ul>
 </section>
 </section>
@@ -2091,7 +2216,7 @@ Gradient Boosting: 0.9989
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#berisi-5000-sampel">Berisi 5000 Sampel</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#proses-pengumpulan-data">Proses Pengumpulan Data</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#terdapat-140-fitur">Terdapat 140 Fitur</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#struktur-label-kelas">Struktur Label Kelas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#struktur-label-5-kelas">Struktur Label 5 Kelas</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#komposisi-dataset">Komposisi Dataset</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#konteks-medis">Konteks Medis</a></li>
 </ul>
@@ -2100,7 +2225,7 @@ Gradient Boosting: 0.9989
 </ul>
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-preprocessing">3. Data Preprocessing</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#konversi-ke-klasifikasi-binary">3.1 Konversi ke Klasifikasi Binary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mapping-label-5-kelas">3.1 Mapping Label 5 Kelas</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#train-test-split">3.2 Train-Test Split</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#normalisasi-dengan-robustscaler">3.3 Normalisasi dengan RobustScaler</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#verifikasi-kualitas-data">3.4 Verifikasi Kualitas Data</a></li>
