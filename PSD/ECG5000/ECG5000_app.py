@@ -39,6 +39,23 @@ CLASS_EMOJI = {
     5: '❓'
 }
 
+# Helper function untuk mendapatkan info kelas dengan fallback
+def get_class_name(p):
+    p = int(p)
+    return CLASS_NAMES.get(p, f'Unknown ({p})')
+
+def get_class_emoji(p):
+    p = int(p)
+    return CLASS_EMOJI.get(p, '❓')
+
+def get_class_color(p):
+    p = int(p)
+    return CLASS_COLORS.get(p, 'gray')
+
+def get_class_description(p):
+    p = int(p)
+    return CLASS_DESCRIPTIONS.get(p, 'Kelas tidak dikenal')
+
 # Load model dan scaler
 @st.cache_resource
 def load_model():
@@ -86,7 +103,7 @@ st.sidebar.header('Input Data')
 st.sidebar.markdown('---')
 st.sidebar.subheader('Keterangan Kelas')
 for cls_id, cls_name in CLASS_NAMES.items():
-    st.sidebar.markdown(f'{CLASS_EMOJI[cls_id]} **{cls_name}**')
+    st.sidebar.markdown(f'{get_class_emoji(cls_id)} **{cls_name}**')
 
 upload_file = st.sidebar.file_uploader('Upload ECG data (txt/csv)', type=['txt', 'csv'])
 
@@ -123,8 +140,8 @@ if upload_file is not None:
     result_df = pd.DataFrame({
         'Sample': range(1, len(predictions)+1),
         'Kelas': [int(p) for p in predictions],
-        'Prediction': [f'{CLASS_EMOJI[int(p)]} {CLASS_NAMES[int(p)]}' for p in predictions],
-        'Deskripsi': [CLASS_DESCRIPTIONS[int(p)] for p in predictions],
+        'Prediction': [f'{get_class_emoji(p)} {get_class_name(p)}' for p in predictions],
+        'Deskripsi': [get_class_description(p) for p in predictions],
         'Confidence': [f'{c*100:.1f}%' for c in confidence]
     })
     st.dataframe(result_df)
@@ -135,12 +152,12 @@ if upload_file is not None:
     
     # Tentukan warna berdasarkan prediksi
     pred_class = int(predictions[sample_idx])
-    pred_label = CLASS_NAMES[pred_class]
-    color = CLASS_COLORS[pred_class]
+    pred_label = get_class_name(pred_class)
+    color = get_class_color(pred_class)
     
     fig, ax = plt.subplots(figsize=(12, 4))
     ax.plot(X_new[sample_idx], color=color, linewidth=1.5)
-    ax.set_title(f'Sample {sample_idx+1} - {CLASS_EMOJI[pred_class]} {pred_label} (Confidence: {result_df.iloc[sample_idx]["Confidence"]})', 
+    ax.set_title(f'Sample {sample_idx+1} - {get_class_emoji(pred_class)} {pred_label} (Confidence: {result_df.iloc[sample_idx]["Confidence"]})', 
                  fontweight='bold')
     ax.set_xlabel('Time Point')
     ax.set_ylabel('Amplitude')
@@ -148,7 +165,7 @@ if upload_file is not None:
     st.pyplot(fig)
     
     # Deskripsi kelas
-    st.info(f'**{pred_label}**: {CLASS_DESCRIPTIONS[pred_class]}')
+    st.info(f'**{pred_label}**: {get_class_description(pred_class)}')
     
     # Summary - 5 kelas
     st.subheader('Ringkasan Klasifikasi')
@@ -157,7 +174,7 @@ if upload_file is not None:
         count = sum(predictions == cls_id)
         percentage = count/len(predictions)*100
         cols[i].metric(
-            f'{CLASS_EMOJI[cls_id]} {cls_name}', 
+            f'{get_class_emoji(cls_id)} {cls_name}', 
             count, 
             f'{percentage:.1f}%'
         )
@@ -168,7 +185,7 @@ else:
     # Tampilkan informasi kelas
     st.subheader('Tentang Klasifikasi 5 Kelas ECG')
     for cls_id, cls_name in CLASS_NAMES.items():
-        st.markdown(f'**{CLASS_EMOJI[cls_id]} Kelas {cls_id} - {cls_name}**: {CLASS_DESCRIPTIONS[cls_id]}')
+        st.markdown(f'**{get_class_emoji(cls_id)} Kelas {cls_id} - {cls_name}**: {get_class_description(cls_id)}')
     
     # Demo dengan sample data
     if st.button('Demo dengan Sample Data'):
@@ -199,7 +216,7 @@ else:
                 demo_df = pd.DataFrame({
                     'Sample': range(1, len(predictions)+1),
                     'Kelas': [int(p) for p in predictions],
-                    'Prediction': [f'{CLASS_EMOJI[int(p)]} {CLASS_NAMES[int(p)]}' for p in predictions],
+                    'Prediction': [f'{get_class_emoji(p)} {get_class_name(p)}' for p in predictions],
                     'Confidence': [f'{c*100:.1f}%' for c in confidence]
                 })
                 st.dataframe(demo_df, use_container_width=True)
@@ -210,7 +227,7 @@ else:
                 for cls_id, cls_name in CLASS_NAMES.items():
                     count = sum(predictions == cls_id)
                     if count > 0:
-                        summary_text.append(f'{CLASS_EMOJI[cls_id]} {cls_name}: {count}')
+                        summary_text.append(f'{get_class_emoji(cls_id)} {cls_name}: {count}')
                 st.write(' | '.join(summary_text))
             except Exception as e:
                 st.error(f"Error loading demo data: {str(e)}")
